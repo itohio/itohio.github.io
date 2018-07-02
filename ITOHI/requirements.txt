@@ -1,2 +1,4 @@
-Django==1.11.13
+Django==1.11.14
+Cartridge==0.13.0
+mysqlclient==1.3.13
 Mezzanine==4.3.0
