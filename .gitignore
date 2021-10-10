@@ -102,3 +102,9 @@ ENV/
 
 .vscode
 db.sqlite3
+
+mysql/sql/*
+mysql/sql1/*
+mysql/data/*
+static/*
+nginx/run/*

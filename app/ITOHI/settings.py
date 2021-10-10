@@ -94,7 +94,7 @@ DEFAULT_FROM_EMAIL = "webmaster@itohi.com"
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("DJANGO_HOSTS", "::1").split(",")
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -120,7 +120,7 @@ LANGUAGES = (
 # A boolean that turns on/off debug mode. When set to ``True``, stack traces
 # are displayed for error pages. Should always be set to ``False`` in
 # production. Best set to ``True`` in local_settings.py
-DEBUG = False
+DEBUG = not not os.environ.get("DJANGO_DEBUG", False)
 
 # Whether a user's session cookie expires when the Web browser is closed.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -137,6 +137,9 @@ AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
 # a mode you'd pass directly to os.chmod.
 FILE_UPLOAD_PERMISSIONS = 0o644
 
+ADMINS = [i.split(":") for i in os.environ.get("DJANGO_ADMINS", "").split(",")]
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+NEVERCACHE_KEY = os.environ.get("DJANGO_NEVERCACHE_KEY")
 
 #############
 # DATABASES #
@@ -145,15 +148,15 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 DATABASES = {
     "default": {
         # Add "postgresql_psycopg2", "mysql", "sqlite3" or "oracle".
-        "ENGINE": "django.db.backends.",
+        "ENGINE": "django.db.backends.mysql",
         # DB name or path to database file if using sqlite3.
-        "NAME": "",
+        "NAME": os.environ.get("MYSQL_DATABASE"),
         # Not used with sqlite3.
-        "USER": "",
+        "USER": os.environ.get("MYSQL_USER"),
         # Not used with sqlite3.
-        "PASSWORD": "",
+        "PASSWORD": os.environ.get("MYSQL_PASSWORD"),
         # Set to empty string for localhost. Not used with sqlite3.
-        "HOST": "",
+        "HOST": "db",
         # Set to empty string for default. Not used with sqlite3.
         "PORT": "",
     }
@@ -344,3 +347,4 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+
