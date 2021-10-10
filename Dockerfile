@@ -9,7 +9,7 @@ RUN pip wheel --wheel-dir=/root/wheels -r /requirements.txt
 FROM base
 COPY --from=builder /root/wheels /root/wheels
 ADD app /app
-RUN pip3 install --no-index --find-links=/root/wheels -r /app/requirements.txt && rm -r /app/static
+RUN pip3 install --no-index --find-links=/root/wheels -r /app/requirements.txt
 EXPOSE 8080
 WORKDIR "/app"
 CMD ["/usr/local/bin/uwsgi", "--ini", "uwsgi.ini"]
