@@ -1,6 +1,6 @@
 # set `baseurl` to your root domain
 # if you set it to "/" share icons won't work properly on production
-baseURL = 'https://itohio.github.io/'
+baseURL = 'https://itohi.com/'
 title = "ITOHI"
 copyright = "2022 @ ITOHI - All rights reserved"
 # canonifyurls = true
