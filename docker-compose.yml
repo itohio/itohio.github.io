@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  nginx:
+      image: nginx:1.13
+      ports:
+        - "80:80"
+      volumes:
+        - ./nginx/conf:/etc/nginx/conf.d
+        - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
+        - ./nginx/run:/var/run/app
+        - ./static:/static
+      depends_on:
+        - app
+      user: root
+
+  db:
+      image: mysql:5.7
+      command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+      expose:
+        - 3306
+      env_file: .env
+      volumes:
+        - ./mysql/data:/var/lib/mysql
+        - ./mysql/sql1:/docker-entrypoint-initdb.d
+
+  app:
+      build: .
+      env_file: .env
+      volumes:
+        - ./static:/app/static
+        - ./env:/app/.env
+        - ./nginx/run:/var/run
+      depends_on:
+        - db
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
