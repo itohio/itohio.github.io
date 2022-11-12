@@ -1,0 +1,9 @@
+[submodule "blog/themes/mediumish"]
+	path = blog/themes/mediumish
+	url = git@github.com:itohio/mediumish-gohugo-theme.git
+[submodule "blog/themes/beautifulhugo"]
+	path = blog/themes/beautifulhugo
+	url = https://github.com/halogenica/beautifulhugo.git
+[submodule "blog/themes/hugo-clarity"]
+	path = blog/themes/hugo-clarity
+	url = https://github.com/chipzoller/hugo-clarity
