@@ -108,3 +108,6 @@ mysql/sql1/*
 mysql/data/*
 static/*
 nginx/run/*
+
+
+.hugo_build.lock
