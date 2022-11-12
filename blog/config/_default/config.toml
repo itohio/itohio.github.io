@@ -5,7 +5,7 @@ title = "ITOHI"
 copyright = "2022 @ ITOHI - All rights reserved"
 # canonifyurls = true
 paginate = 13
-theme = "hugo-clarity"
+theme = ["github.com/chipzoller/hugo-clarity"]
 disqusShortname = "www-itohi-com"
 
 DefaultContentLanguage = "en"
