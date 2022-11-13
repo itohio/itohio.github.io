@@ -3,9 +3,11 @@ title: "Changelog"
 date: 2022-11-12T01:01:28+02:00
 comments: false
 showShare: false
+headless: true
 ---
 
 # 2022
+- Multilanguage support
 - Migrate to Hugo
 - Migrate backend from Python to Go
 - Explore tinygo and embedded

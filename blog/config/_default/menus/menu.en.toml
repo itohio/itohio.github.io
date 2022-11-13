@@ -1,12 +1,34 @@
 [[main]]
-  name = "Blog"
+  name = "ITOHI"
   url = ""
-  weight = -110
+  weight = -1300
 
-# Submenus are done this way: parent -> identifier
+[[main]]
+  name = "Blog"
+  url = "blog/"
+  weight = -300
+
+[[main]]
+  name = "Projects"
+  identifier = "Projects"
+  weight = -120
+[[main]]
+  parent = "Projects"
+  name = "ESP Reflow"
+  url = "esp-reflow"
+[[main]]
+  parent = "Projects"
+  name = "ESP Weather"
+  url = "esp-weather"
+[[main]]
+  parent = "Projects"
+  name = "ESP Motion"
+  url = "esp-motion"
+
 [[main]]
   name = "About"
   identifier = "About"
+  weight = -100
 [[main]]
   parent = "About"
   name = "About me"
@@ -31,6 +53,10 @@
   name = "twitter"
   weight = 2
   url = "https://twitter.com/andriusmikonis"
+[[social]]
+  name = "facebook"
+  weight = 2
+  url = "https://www.facebook.com/ititohi"
 [[social]]
   name = "linkedin"
   weight = 3

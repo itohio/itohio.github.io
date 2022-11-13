@@ -3,3 +3,8 @@
   title = "ITOHI"
   LanguageName = "English"
   weight = 1
+
+[lt]
+  title = "ITOHI"
+  LanguageName = "Lietuviškai"
+  weight = 2

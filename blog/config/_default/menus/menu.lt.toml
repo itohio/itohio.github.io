@@ -1,0 +1,85 @@
+[[main]]
+  name = "ITOHI"
+  url = ""
+  weight = -1300
+
+[[main]]
+  name = "Blogas"
+  url = "blog/"
+  weight = -300
+
+[[main]]
+  name = "Projektai"
+  identifier = "Projects"
+  weight = -120
+[[main]]
+  parent = "Projects"
+  name = "ESP Reflow"
+  url = "esp-reflow"
+[[main]]
+  parent = "Projects"
+  name = "ESP Weather"
+  url = "esp-weather"
+[[main]]
+  parent = "Projects"
+  name = "ESP Motion"
+  url = "esp-motion"
+
+[[main]]
+  name = "Apie"
+  identifier = "About"
+  weight = -100
+[[main]]
+  parent = "About"
+  name = "Apie autorių"
+  url = "about/me"
+[[main]]
+  parent = "About"
+  name = "Kontaktai"
+  url = "about/contact"
+[[main]]
+  parent = "About"
+  name = "Pakeitimų istorija"
+  url = "about/changelog"
+
+# social menu links
+
+[[social]]
+  name = "github"
+  type = "social"
+  weight = 1
+  url = "https://github.com/itohio"
+[[social]]
+  name = "twitter"
+  weight = 2
+  url = "https://twitter.com/andriusmikonis"
+[[social]]
+  name = "facebook"
+  weight = 2
+  url = "https://www.facebook.com/ititohi"
+[[social]]
+  name = "linkedin"
+  weight = 3
+  url = "https://www.linkedin.com/in/andriusmikonis"
+[[social]]
+  name = "instagram"
+  weight = 3
+  url = "https://www.instagram.com/nopperabo_"
+# [[social]]
+#   name = "rss"
+#   weight = 4
+#   url = "index.xml"
+
+# other supported social links
+# name = "youtube"
+# url = "https://www.youtube.com/#"
+# name = "facebook"
+# url = "https://facebook.com/#"
+# name = "instagram"
+# url = "https://instagram.com/#"
+# name = "stackoverflow"
+# url = "https://stackoverflow.com/#"
+# name = "gitlab"
+# url = "https://gitlab.com/#"
+# name = "discord"
+# url = "https://discord.gg/#"
