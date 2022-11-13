@@ -5,6 +5,9 @@ on:
   push:
     paths-ignore:
       - 'docker-compose.yml'
+      - 'dev.env'
+      - 'dev.Dockerfile'
+      - 'README.md'
   pull_request:
     paths-ignore:
       - 'docker-compose.yml'
