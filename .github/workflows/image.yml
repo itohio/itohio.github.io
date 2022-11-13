@@ -9,6 +9,12 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'docker-compose.yml'
+      - 'dev.env'
+      - 'blog'
+      - 'dev.Dockerfile'
+      - 'README.md'
     tags:
       - '*'
 

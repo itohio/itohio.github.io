@@ -10,7 +10,16 @@ on:
   push:
     branches:
       - main  # Set a branch to deploy
-  pull_request:
+    paths-ignore:
+      - 'pkg'
+      - 'cmd'
+      - 'go.mod'
+      - 'go.sum'
+      - 'docker-compose.yml'
+      - 'dev.env'
+      - 'Dockerfile'
+      - 'dev.Dockerfile'
+      - 'README.md'
 
 jobs:
   deploy:
