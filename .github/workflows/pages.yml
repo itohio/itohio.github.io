@@ -1,6 +1,12 @@
 name: github pages
 
 on:
+  workflow_run:
+    workflows: ["Run Tests"]
+    branches: [main]
+    types: 
+      - completed
+
   push:
     branches:
       - main  # Set a branch to deploy
@@ -8,6 +14,7 @@ on:
 
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3

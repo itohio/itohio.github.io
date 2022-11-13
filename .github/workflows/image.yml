@@ -1,6 +1,11 @@
 name: Build Docker Image
 
 on:
+  workflow_run:
+    workflows: ["Run Tests"]
+    branches: [main]
+    types: 
+      - completed
   push:
     branches:
       - main
@@ -9,6 +14,7 @@ on:
 
 jobs:
   create-container:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
