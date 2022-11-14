@@ -5,6 +5,7 @@ date: 2018-07-03T01:01:28+02:00
 tags: ["arduino","esp8266", "IoT", "Sensors"]
 categories: ["iot"]
 thumbnail: espweather.jpg
+url: /blog/building-esp8266-weather-station-part-i
 ---
 
 

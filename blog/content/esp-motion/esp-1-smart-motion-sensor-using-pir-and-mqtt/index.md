@@ -5,6 +5,7 @@ date: 2019-04-19T01:01:28+02:00
 tags: ["arduino", "atom", "esp8266", "IoT", "Sensors"]
 categories: ["iot"]
 thumbnail: 20190419_154023.jpg
+url: /blog/esp-1-smart-motion-sensor-using-pir-and-mqtt
 ---
 
 My son has a cat. And I've become very curious about the cat's feeding and toilet habits. Mainly I'm interested in how long does it take him to go to the toilet after eating as I've noticed a pattern: At first he goes to the kitchen, eats and then runs around the house wrecking havoc for some time and then goes to the toilet. So I'm curious whether this is his usual routine and moreover how many times during the day and night does he need to use his toilet. I might even build a collar for him to track the magnitude of his movements in the future :)

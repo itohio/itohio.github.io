@@ -5,6 +5,7 @@ date: 2019-04-15T01:01:28+02:00
 tags: ["arduino","esp8266", "IoT", "Sensors"]
 categories: ["iot"]
 thumbnail: headless_weatherstation.jpg
+url: /blog/building-esp8266-weather-station-part-ii
 ---
 
 In a [previous post](/blog/building-esp8266-weather-station-part-i/)  I've described how to build a Weather Station based on ESP8266 chip and various breakout boards you can buy e.g. on Aliexpress. In this post, however I'll share with you how I built a standalone PCB boards containing all the required components.
