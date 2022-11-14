@@ -3,7 +3,6 @@ title: "Pakeitimų istorija"
 date: 2022-11-12T01:01:28+02:00
 comments: false
 showShare: false
-headless: true
 ---
 
 # 2022

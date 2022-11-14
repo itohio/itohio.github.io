@@ -3,7 +3,6 @@ title: "About"
 date: 2022-11-12T01:01:17+02:00
 showShare: false
 comments: false
-headless: true
 ---
 
 # What is ITOHI?
