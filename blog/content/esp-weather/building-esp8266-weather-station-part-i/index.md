@@ -16,7 +16,7 @@ Basically the operation of the station is as follows: the station will try to co
 
 During development and playing around, three variants were born: OLED, E-Paper and Headless.
 
-The source code for the station is [here](https://github.com/foxis/ESPWeather/tree/4cd0792d931e3d90914811b759ead50369527e78).
+The source code for the station is [here](https://github.com/itohio/ESPWeather/tree/4cd0792d931e3d90914811b759ead50369527e78).
 
 # Features
 - mDNS
