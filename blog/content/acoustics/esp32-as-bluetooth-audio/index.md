@@ -7,14 +7,14 @@ categories: ["acoustics"]
 thumbnail: bluetooth.jpg
 ---
 
-I was building a christmas set of spherical speakers just to familarize myself with ADAU1401 Sigma DSP. And I wanted to add Bluetooth
-capability to the speakers, so that it could receive sound data from an old Samsung Galaxy Node 10.1 in the kitchen.
+I was building a Christmas set of spherical speakers just to familiarize myself with ADAU1401 Sigma DSP. And I wanted to add Bluetooth
+capability to the speakers so that they could receive sound data from an old Samsung Galaxy Node 10.1 in the kitchen.
 
 Granted, I have ordered some Bluetooth audio receivers, however, while they are being shipped, I thought to myself: Hey, I already have 
 powerful CPUs(ESP32) with Bluetooth. These chips have I2S and I have I2S DACs waiting for another project! Why don't I give it a try and just google
 some Arduino projects that connect ESP32 A2DP sink with I2S and use that as a receiver?
 
-Well, It would be really simple, except that I decided to use dirt cheap Cirrus Logic CS4344 modules... And these modules require a master clock to function properly.
+Well, It would be really simple, except that I decided to use dirt-cheap Cirrus Logic CS4344 modules... And these modules require a master clock to function properly.
 Little did I know, that MCLK output of the WROOM modules that I had was really unstable. I was even doubting my logic analyzer recordings!
 
 # Firmware
@@ -73,16 +73,14 @@ It is well known, that ESP32 has two built-in DACs that also accept I2S input. Y
   a2dp_sink.set_i2s_config(i2s_config);
 ```
 
-The resolution of that DAC is only 8 bits, therefore it is unsutable for HiFi music I was trying to extract from this module :)
+The resolution of that DAC is only 8 bits, therefore it is unsuitable for HiFi music I was trying to extract from this module :)
 Therefore, I did not even consider using it. But, for those who would like to try it out, you can find examples in [ESP32-A2DP](https://github.com/pschatzmann/ESP32-A2DP).
 
 # Hooking up CS4344 DAC
 
 ![CS4344 - image from Aliexpress](cs4344.jpg)
 
-After downloading the firmware, I hooked up the DAC to the ESP32 and listened to the output of it via 3.5mm jack. And the sound was horrible. I was very frustrated, tried different
-clock rates, pins. I even tried to build IDF A2DP examples... Although the sound was a little bit better with raw IDF framework, it was still garbadge. I even thought it was due to very low
-output driving capabilities of the CS4344, even thought it was defective... Until I hooked up a logic analyzer to monitor what is happening on the I2S interface.
+After downloading the firmware, I hooked up the DAC to the ESP32 and listened to the output of it via 3.5mm jack. And the sound was horrible. I was very frustrated and tried different clock rates, pins. I even tried to build IDF A2DP examples... Although the sound was a little bit better with raw IDF framework, it was still garbage. I even thought it was due to the very low output driving capabilities of the CS4344, even though it was defective... Until I hooked up a logic analyzer to monitor what is happening on the I2S interface.
 
 This is what should be on the I2S interface(not particularly phase-correct):
 
@@ -106,8 +104,7 @@ However, this is what I got on two different ESP32 dev boards as well as the raw
 ]}
 ```
 
-According to CS4344 [datasheet](https://www.mouser.com/datasheet/2/76/CS4344-45-48_F2-472818.pdf), the MCLK duty cycle should be 50% with a very small margin. There is no strong
-requirement on phase relationship between MCLK and other signals except that they should be synchronous. CS4344 even can generate BCLK clock from MCLK, however, I barely see why that would be more 
+According to CS4344 [datasheet](https://www.mouser.com/datasheet/2/76/CS4344-45-48_F2-472818.pdf), the MCLK duty cycle should be 50% with a very small margin. There is no strong requirement for the phase relationship between MCLK and other signals except that they should be synchronous. CS4344 even can generate BCLK clock from MCLK, however, I barely see why that would be more 
 convenient than generating MCLK from BCLK, but hey, the module is dirt-cheap :)
 
 In both cases, LRCLK run at 48kHz, which was right. As well as BCLK(which is Fs*2*BitsPerSample). DOUT was a bit off, but CS4344 claims to detect the mode properly. And even if it didn't detect the I2S signal mode, the sound should still not contain so much noise and distortion!
@@ -118,12 +115,12 @@ But the problem seemed evident - MCLK was not stable at all.
 
 ![PCM5102 - image from Aliexpress](pcm5102-board.jpg)
 
-Frustrated, I desoldered the Cirrus Logic DAC and plugged in PCM5102 and vuola! Perfect sound! No noise, no distortion - perfect.
+Frustrated, I desoldered the Cirrus Logic DAC and plugged in PCM5102 and viola! Perfect sound! No noise, no distortion - perfect.
 Although, this board has to be configured like so:
 
 ![PCM5102 Jumpers - image from Aliexpress](pcm5102-jumpers.jpg)
 
-The thing is, PCM5102 can generate its own MCLK from BCLK provided by ESP32, so that confirms my(grounded and confirmed by a logic analyser) suspision, that the MCLK output from ESP32 is garbage.
+The thing is, PCM5102 can generate its own MCLK from BCLK provided by ESP32, so that confirms my(grounded and confirmed by a logic analyzer) suspicion, that the MCLK output from ESP32 is garbage.
 Interestingly enough, I did not find any useful articles about marrying ESP32 and CS4344, but there was one elusive question on some forum regarding dirty MCLK output... But there were no further messages
 on that topic :(
 
@@ -132,7 +129,7 @@ on that topic :(
 ![Bluetooth addon](bluetooth1.jpg)
 
 After I calmed down from frustration about CS4344, I added filters on the power side of the board, soldered everything to ESP32 proto board and attached it to a refactored
-subwoofer of Christmas spherical speakers with a double-side sticky tape...
+subwoofer of Christmas spherical speakers with a double-sided sticky tape...
 
 # TODO
 

@@ -16,23 +16,25 @@ I have decided to create all the projects as Open Source/Open Hardware so that t
 Until I reach the maturity of selling, you are free to support my inventing stuff by donating :)
 
 # Freelancing
-I've been having a really interesting career as a freelancer both in hardware and software worlds. I take circuit engineering, soldering jobs as well as development primarily using ASM, C/C++, C#, Python languages for embedded platforms, or PC both Linux and Windows.
+I've been having a really interesting career as a freelancer both in the hardware and software worlds. I take circuit engineering, and soldering jobs as well as development primarily using ASM, C/C++, C#, Python, Go languages for embedded platforms, or PC both Linux and Windows.
 
-I've been doing all kinds of projects ranging from some signal processing, various process controllers to image processing and machine learning. When I was doing my Ph.D. I was writing various math-intensive algorithms as well as scientific apparatus controlling software that is being used even today.
+I've been doing all kinds of projects ranging from some signal processing, and various process controllers to image processing and machine learning. When I was doing my Ph.D. I was writing various math-intensive algorithms as well as scientific apparatus controlling software that is being used even today.
 
 I've designed both hardware and software parts of the light spectrum analyzer that was used for liquid crystal research.
 
 I've built autonomous robots and written navigation AI for them.
 
-I've designed and built massively parallel surveillance application.
+I've designed and built a massively parallel surveillance application.
 
-I've created a state of the art algorithm for 3D model slicing designed for 3x independent printing heads 3D Printer during my CTO career at a 3D printer company. 
+I've created a state-of-the-art algorithm for 3D model slicing designed for 3x independent printing heads 3D Printer during my CTO career at a 3D printer company. 
 
-Developed an OpenVRL engine - Opensource Virtual Reality Library for 3D simulations...
+Developed an OpenVRL engine - Opensource Virtual Reality Library for 3D simulations in C++ that could run using D3D as well as my software renderer and OpenGL...
+
+Developed C++ template library for training and running neural networks (from simple Perceptrons to LSTMs) on embedded platforms...
 
 And many more...
 
-Currently I'm working as a freelancer with blockchain related projects.
+Currently, I'm working as a freelancer on blockchain-related projects.
 
 Anyway, if you have any kind of interesting project, I'd gladly participate - just let me know :)
 Also, feel free to support me using Github Sponsorship!
