@@ -1,0 +1,65 @@
+<!-- Mermaid rendering -->
+{{ if .Page.Store.Get "hasMermaid" }}
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+{{ end }}
+
+<!-- waveforms rendering -->
+{{ if .Page.Store.Get "hasWave" }}
+<!-- getting waveform generation scripts -->
+<script src="https://cdn.jsdelivr.net/npm/wavedrom@2.9.1/skins/default.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/wavedrom@2.9.1/wavedrom.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  window.addEventListener("load", (event) => {
+    WaveDrom.ProcessAll();
+  });
+</script>
+{{ end }}
+
+<!-- chart.js rendering -->
+{{ if .Page.Store.Get "hasChart" }}
+<!-- <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css"> -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    const chartPrefix = "codeblock-chart";
+    window.addEventListener("load", (event) => {
+      var index = 0;
+      Array.prototype.forEach.call(document.querySelectorAll("[class^=" + chartPrefix + "]"), function (x) {
+          x.style.display = 'none'
+
+          node0 = document.createElement('canvas');
+          node0.height = 200;
+          node0.style.height = 200;
+          node0.id = 'myChart' + index;
+          source = JSON.parse(x.innerText);
+          x.parentNode.insertBefore(node0, x);
+          var ctx = document.getElementById('myChart' + index).getContext('2d');
+          var myChart = new Chart(ctx, source);
+          index += 1;
+      });
+    });
+</script>
+{{ end }}
+
+<!-- graphviz rendering -->
+{{ if .Page.Store.Get "hasGraphViz" }}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/viz.js@2.1.2/viz.min.js"> </script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/viz.js@2.1.2/full.render.js"> </script>
+<script type="text/javascript">
+  window.addEventListener("load", (event) => {
+    var vizPrefix = "codeblock-viz-dot";
+    Array.prototype.forEach.call(document.querySelectorAll("[class^=" + vizPrefix + "]"), function (x) {
+        x.style.display = 'none'
+        var viz = new Viz();
+        viz.renderSVGElement(x.innerText)
+            .then(function (element) {
+                element.style.width = "100%";
+                x.parentNode.insertBefore(element, x);
+            })
+    });
+  });
+</script>
+{{ end }}
