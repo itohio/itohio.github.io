@@ -1,0 +1,8 @@
+<div id='p5jsContainer{{ .Page.Store.Get "P5JSInstances" }}'>
+</div>
+<script>
+new p5((sketch) => {
+  {{ .Inner | safeJS }}
+}, 'p5jsContainer{{ .Page.Store.Get "P5JSInstances" }}');
+</script>
+{{ .Page.Store.Add "P5JSInstances" 1 }}

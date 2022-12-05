@@ -63,3 +63,9 @@
   });
 </script>
 {{ end }}
+
+
+<!-- Processing P5JS rendering -->
+{{ if .Page.Store.Get "P5JSInstances" }}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.min.js"></script>
+{{ end }}

@@ -342,6 +342,158 @@ digraph structs {
 
 Note to self: Table-like labels are not supported in this version of Graphviz. Also, this version of GraphViz requires ports to be numbers and record names to be surrounded by double quotes in order to properly connect ports.
 
+# p5js
+
+[P5js](https://github.com/processing/p5.js) is a very powerful JavaScript library that allows you to create intricate animations and graphics. P5js is even used in NFTs!
+For example, this snippet:
+
+````markdown
+```p5js
+// this class describes the properties of a single particle.
+class Particle {
+// setting the co-ordinates, radius and the
+// speed of a particle in both the co-ordinates axes.
+  constructor(){
+    this.x = sketch.random(0,sketch.width);
+    this.y = sketch.random(0,sketch.height);
+    this.r = sketch.random(1,8);
+    this.xSpeed = sketch.random(-2,2);
+    this.ySpeed = sketch.random(-1,1.5);
+  }
+
+// creation of a particle.
+  createParticle() {
+    sketch.noStroke();
+    sketch.fill('rgba(200,169,169,0.5)');
+    sketch.circle(this.x,this.y,this.r);
+  }
+
+// setting the particle in motion.
+  moveParticle() {
+    if(this.x < 0 || this.x > sketch.width)
+      this.xSpeed*=-1;
+    if(this.y < 0 || this.y > sketch.height)
+      this.ySpeed*=-1;
+    this.x+=this.xSpeed;
+    this.y+=this.ySpeed;
+  }
+
+// this function creates the connections(lines)
+// between particles which are less than a certain distance apart
+  joinParticles(particles) {
+    particles.forEach(element =>{
+      let dis = sketch.dist(this.x,this.y,element.x,element.y);
+      if(dis<85) {
+        sketch.stroke('rgba(255,255,255,0.04)');
+        sketch.line(this.x,this.y,element.x,element.y);
+      }
+    });
+  }
+}
+
+// an array to add multiple particles
+let particles = [];
+
+sketch.setup = () => {
+  sketch.createCanvas(720, 400);
+  for(let i = 0;i<sketch.width/10;i++){
+    particles.push(new Particle());
+  }
+}
+
+sketch.draw = () => {
+  sketch.background('#0f0f0f');
+  for(let i = 0;i<particles.length;i++) {
+    particles[i].createParticle();
+    particles[i].moveParticle();
+    particles[i].joinParticles(particles.slice(i));
+  }
+}
+```
+````
+
+will create this kind of embedded application:
+
+```p5js
+// this class describes the properties of a single particle.
+class Particle {
+// setting the co-ordinates, radius and the
+// speed of a particle in both the co-ordinates axes.
+  constructor(){
+    this.x = sketch.random(0,sketch.width);
+    this.y = sketch.random(0,sketch.height);
+    this.r = sketch.random(1,8);
+    this.xSpeed = sketch.random(-2,2);
+    this.ySpeed = sketch.random(-1,1.5);
+  }
+
+// creation of a particle.
+  createParticle() {
+    sketch.noStroke();
+    sketch.fill('rgba(200,169,169,0.5)');
+    sketch.circle(this.x,this.y,this.r);
+  }
+
+// setting the particle in motion.
+  moveParticle() {
+    if(this.x < 0 || this.x > sketch.width)
+      this.xSpeed*=-1;
+    if(this.y < 0 || this.y > sketch.height)
+      this.ySpeed*=-1;
+    this.x+=this.xSpeed;
+    this.y+=this.ySpeed;
+  }
+
+// this function creates the connections(lines)
+// between particles which are less than a certain distance apart
+  joinParticles(particles) {
+    particles.forEach(element =>{
+      let dis = sketch.dist(this.x,this.y,element.x,element.y);
+      if(dis<85) {
+        sketch.stroke('rgba(255,255,255,0.04)');
+        sketch.line(this.x,this.y,element.x,element.y);
+      }
+    });
+  }
+}
+
+// an array to add multiple particles
+let particles = [];
+
+sketch.setup = () => {
+  sketch.createCanvas(720, 400);
+  for(let i = 0;i<sketch.width/10;i++){
+    particles.push(new Particle());
+  }
+}
+
+sketch.draw = () => {
+  sketch.background('#0f0f0f');
+  for(let i = 0;i<particles.length;i++) {
+    particles[i].createParticle();
+    particles[i].moveParticle();
+    particles[i].joinParticles(particles.slice(i));
+  }
+}
+```
+
+Please note, though, that the content must be trusted since JS code is injected in the resulting page as is. This unfortunately opens up for XSS attacks.
+Also, note how `sketch.` is all over the place? This is due to the way the code block is rendered in the shortcode:
+
+```markdown
+<div id='p5jsContainer{{ .Page.Store.Get "P5JSInstances" }}'>
+</div>
+<script>
+new p5((sketch) => {
+  {{ .Inner | safeJS }}
+}, 'p5jsContainer{{ .Page.Store.Get "P5JSInstances" }}');
+</script>
+{{ .Page.Store.Add "P5JSInstances" 1 }}
+```
+
+In this case, `sketch` variable is the context of the p5 rendering engine. Therefore, if you were to transfer any sketches from p5 editor, you would also add `sketch.` to things that are normally 
+declared by p5 when it loads.
+
 # Conclusion
 
 So far I've been enjoying Hugo and the concept of SSW. And I only touched the surface of it. All the features mentioned previously were added sloppily and might induce certain unpleasant emotions in
