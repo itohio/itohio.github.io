@@ -5,6 +5,11 @@ comments: false
 showShare: false
 ---
 
+# 2023-2025
+- Exploring DML
+- Exploring colorimetry
+- Exploring Coil guns
+
 # 2022
 - Multilanguage support
 - Migrate to Hugo

@@ -8,7 +8,7 @@ thumbnail: bluetooth.jpg
 ---
 
 I was building a Christmas set of spherical speakers just to familiarize myself with ADAU1401 Sigma DSP. And I wanted to add Bluetooth
-capability to the speakers so that they could receive sound data from an old Samsung Galaxy Node 10.1 in the kitchen.
+capability to the speakers so that they could receive sound data from an old Samsung Galaxy Note 10.1 in the kitchen.
 
 Granted, I have ordered some Bluetooth audio receivers, however, while they are being shipped, I thought to myself: Hey, I already have 
 powerful CPUs(ESP32) with Bluetooth. These chips have I2S and I have I2S DACs waiting for another project! Why don't I give it a try and just google
@@ -174,5 +174,5 @@ subwoofer of Christmas spherical speakers with a double-sided sticky tape...
 
 I'll need to investigate further why ESP32 MCLK is so jittery and connect CS4344 to ADAU1701 to confirm that the DAC itself is working...
 
-If the MCLK output of ESP32 was stable, I then could then route it to the ADAU1401 directly, so that the DSP could operate as a slave and would
+If the MCLK output of ESP32 was stable, I then could route it to the ADAU1401 directly, so that the DSP could operate as a slave and would
 be able to receive I2S data stream directly. This way I wouldn't even need so heavy filtering on the power supply side from both ADAU and the ESP32...

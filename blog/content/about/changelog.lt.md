@@ -5,6 +5,11 @@ comments: false
 showShare: false
 ---
 
+# 2023-2025
+- Garso eksperimentai su DML
+- Mokausi Kolorimetrijos (Spalvų mokslas)
+- Elektromagnetinė mechanika - Coilgun
+
 # 2022
 - Pridėjau lietuvišką versiją
 - Migravau blog'ą į Hugo

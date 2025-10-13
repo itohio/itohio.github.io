@@ -12,6 +12,13 @@ I am using Hugo modules.
 Simetimes the site fails to render locally when running `hugo serve` with `found no layout file for "JSON" for kind "home": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.` error messages all over the place.
 In that case I need to simply run `hugo mod clean`, and then `hugo serve` again.
 
+### Serve locally
+
+```sh
+cd blog
+go run github.com/gohugoio/hugo@v0.100.0 serve
+```
+
 ### Hugo GoAT diagrams
 
 Native support from Hugo - use `goat` code block.
