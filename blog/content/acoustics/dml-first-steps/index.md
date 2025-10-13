@@ -1,7 +1,7 @@
 ---
 title: "Exploring the sound of DML"
 author: admin
-date: 2024-05-10T20:01:28+02:00
+date: 2023-05-10T20:01:28+02:00
 tags: ["audio", "speakers", "dml", "distributed mode loudspeaker"]
 categories: ["acoustics"]
 thumbnail: speakers.jpg
