@@ -1,4 +1,4 @@
-name: github pages
+name: Build and Deploy to GitHub Pages
 
 on:
   workflow_run:
@@ -6,13 +6,12 @@ on:
     branches: [main]
     types: 
       - completed
-
   push:
     branches:
-      - main  # Set a branch to deploy
+      - main
     paths-ignore:
-      - 'pkg'
-      - 'cmd'
+      - 'pkg/**'
+      - 'cmd/**'
       - 'go.mod'
       - 'go.sum'
       - 'docker-compose.yml'
@@ -20,29 +19,103 @@ on:
       - 'Dockerfile'
       - 'dev.Dockerfile'
       - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
-  deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  build:
+    # Fixed: Handle case where workflow_run doesn't exist for push/workflow_dispatch
+    if: |
+      github.event_name == 'workflow_dispatch' || 
+      github.event_name == 'push' || 
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-22.04
+    env:
+      HUGO_VERSION: v0.100.0
+      GO_VERSION: '1.21'
+      TZ: Europe/Oslo
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          submodules: true  # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+          submodules: recursive
+          fetch-depth: 0
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+      - name: Setup Go
+        uses: actions/setup-go@v5
         with:
-          hugo-version: 'v0.100.0'
-          extended: true
+          go-version: ${{ env.GO_VERSION }}
+          cache: false
 
-      - name: Build
-        run: cd blog && hugo --minify
+      - name: Install Hugo
+        run: |
+          # CGO is required for extended version
+          CGO_ENABLED=1 go install -tags extended github.com/gohugoio/hugo@${{ env.HUGO_VERSION }}
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
+      - name: Verify Hugo installation
+        run: |
+          hugo version
+          # Verify it's the extended version
+          hugo version | grep -i extended
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Cache restore
+        id: cache-restore
+        uses: actions/cache/restore@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./blog/public
+          path: |
+            blog/resources
+            ${{ runner.temp }}/hugo_cache
+          key: hugo-${{ env.HUGO_VERSION }}-${{ runner.os }}-${{ hashFiles('blog/config.*', 'blog/go.sum') }}
+          restore-keys: |
+            hugo-${{ env.HUGO_VERSION }}-${{ runner.os }}-
+
+      - name: Build the site
+        working-directory: ./blog
+        run: |
+          hugo \
+            --gc \
+            --minify \
+            --baseURL "${{ steps.pages.outputs.base_url }}/" \
+            --cacheDir "${{ runner.temp }}/hugo_cache"
+
+      - name: Cache save
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            blog/resources
+            ${{ runner.temp }}/hugo_cache
+          key: hugo-${{ env.HUGO_VERSION }}-${{ runner.os }}-${{ hashFiles('blog/config.*', 'blog/go.sum') }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./blog/public
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-22.04
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
