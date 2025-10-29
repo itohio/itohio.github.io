@@ -14,6 +14,8 @@ Years passed, and my audio experiments evolved beyond PC sound. I moved into ope
 
 Despite these successes, I kept chasing something: all-encompassing sound. I progressed from 2.0 to 2.1, then 5.1, but conventional speakers always felt like point sources. Open baffle improved things, but here's where it gets interesting: open baffle works best with large full-range drivers. However, full-range drivers exhibit cone breakup at certain frequencies - the cone itself develops standing wave modes, causing phase inconsistencies and directivity problems. The very thing that makes a driver "full-range" becomes its limitation.
 
+By the way, I must say that it is much better to fix room modes(with diffusers and absorbers) than to fight them using DSP. This particular experiment is on the extreme where there is absolutely no absorbtion in the bathroom...
+
 This realization led me to DML (Distributed Mode Loudspeakers). Consider a guitar or cello - listeners hear sound emanating from the entire instrument body, not a small vibrating point. DML attempts to replicate this principle. The panel becomes the instrument. Yes, it's suboptimal for highly localized high-frequency reproduction (solvable with small mid/high-range speakers on my TODO list), but for creating an immersive soundfield, DML represents a logical progression from open baffle.
 
 Which brings us to the practical application: getting quality music in the shower. This post documents my bathroom ceiling DML installation, from hardware selection through DSP calibration.
