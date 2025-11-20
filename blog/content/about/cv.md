@@ -172,7 +172,7 @@ Selected projects demonstrating breadth:
 - Effective technical leadership across specialized teams
 - Pattern recognition across disparate technical domains
 
-**Note:** Seeking short-to-medium term engagements focused on initial design, prototyping, and architectural phases rather than long-term single-project maintenance.
+Seeking short-to-medium term engagements focused on initial design, prototyping, and architectural phases but can work on long-term single-project maintenance given enough variety and room for growth.
 
 ---
 
@@ -186,10 +186,10 @@ Selected projects demonstrating breadth:
 
 ## Personality & Work Style
 
-**MBTI:** ENTP | **Socionics:** ILE | **Enneagram:** 7w5 | ADHD | High functioning Autism
+**MBTI:** ENTP | **Socionics:** ILE | **Enneagram:** 7w5 | ADHD | High Functioning Autism
 
 Thrive on complex, ambiguous challenges requiring creative problem-solving. Dislike routine work; excel when given autonomy to explore and prototype solutions. Rapidly acquire new technical domains. Natural bridge between technical and non-technical stakeholders. Ideal for projects pushing boundaries of current capabilities.
 
 ---
 
-**Interests:** Ice skating, swimming, diving, hiking, meditation, psychology, photography, guitar, physics, electronics, philosophy, Lindy Hop, poker
+**Interests:** Ice skating, swimming, diving, biking, hiking, travelling, meditation, psychology, photography, guitar, physics, electronics, robotics, AGI, philosophy, Lindy Hop, poker

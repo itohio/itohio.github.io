@@ -23,7 +23,7 @@ go run github.com/gohugoio/hugo@v0.100.0 serve
 
 ```sh
 exiftool -gps:all= -overwrite_original -P *.jpg
-magick -resize 1024x1024> -quality 85 *.jpg
+magick mogrify -resize "1024x1024>" -quality 85 *.jpg
 ```
 
 ### Hugo GoAT diagrams
