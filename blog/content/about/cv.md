@@ -123,19 +123,19 @@ Selected projects demonstrating breadth:
 
 **Experience in:** C/C++, C#, Java, JavaScript, Bash, Lisp, PHP, Perl
 
-**Blockchain & Web3:** Cosmos SDK, IBC, Tendermint, Ethereum, Solidity, Web3, validator operations
+**Blockchain & Web3:** Cosmos SDK, IBC, Tendermint, IPFS, Ethereum, Solana, Solidity, Web3, validator operations
 
 **AI/ML & LLM Integration:** OpenRouter, ChatGPT API, Claude API, MCP (Model Context Protocol), PyTorch, TensorFlow/Keras, scikit-learn, OpenCV, neural networks
 
 **Infrastructure & DevOps:** Docker, Kubernetes, NATS, AWS (Lambda, Fargate, S3, SageMaker), GCP, Ansible, CloudFormation
 
-**Backend & APIs:** gRPC, GraphQL, REST APIs, Django, ABCI
+**Backend & APIs:** gRPC, Protobuf, GraphQL, REST APIs, Django, ABCI
 
 **Frontend:** React (preferred), Angular
 
-**Databases:** PostgreSQL, MySQL, MariaDB
+**Databases:** PostgreSQL, MySQL, MariaDB, Neo4j
 
-**Communication Protocols:** gRPC, NATS, RTSP/RTP, WebSockets, MQTT
+**Communication Protocols:** gRPC, NATS, RTSP/RTP, WebSockets, MQTT, LibP2P
 
 **Embedded:** AVR, ARM, MSP430, DSP programming, 8051 RISC
 
