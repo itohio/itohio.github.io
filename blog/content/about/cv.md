@@ -123,6 +123,8 @@ Selected projects demonstrating breadth:
 
 **Experience in:** C/C++, C#, Java, JavaScript, Bash, Lisp, PHP, Perl
 
+**Vibe-Coding Experience:** Claude, Cursor
+
 **Blockchain & Web3:** Cosmos SDK, IBC, Tendermint, IPFS, Ethereum, Solana, Solidity, Web3, validator operations
 
 **AI/ML & LLM Integration:** OpenRouter, ChatGPT API, Claude API, MCP (Model Context Protocol), PyTorch, TensorFlow/Keras, scikit-learn, OpenCV, neural networks
