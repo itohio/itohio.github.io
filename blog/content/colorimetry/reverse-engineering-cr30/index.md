@@ -53,7 +53,7 @@ This is how the mother board is connected to the sensor interconnect board:
 
 ![Inside the CR10 colorimeter - The sensor itself](cr10sensor.jpg)
 
-I assume this is a lower grade sensor than what is present in CR30. I don't want to verify this assumption since I broke quite fragile posts the whole construction is attached to and had to glue them with super glue and some UV glue. Never got the smell out of it and I fear the sensor will gonna degrade over time as the glue vapors condense on the sensitive interference filters on the chip...
+I assume this is a lower grade sensor than what is present in CR30, looks like OSRAM AS7341 or even AS7343. I don't want to verify this assumption since I broke quite fragile posts the whole construction is attached to and had to glue them with super glue and some UV glue. Never got the smell out of it and I fear the sensor will gonna degrade over time as the glue vapors condense on the sensitive interference filters on the chip...
 
 ![Inside the CR10 colorimeter - fragile posts just broke off](cr10posts.jpg)
 
