@@ -2,7 +2,7 @@
 title: "Adventures in Color Science: Reverse Engineering a Chinese Colorimeter CR30"
 date: 2025-10-19T20:05:19+02:00
 description: "A deep dive into reverse engineering the CR30 colorimeter protocol and discovering the fascinating world of color science"
-thumbnail: "cr30-device.jpg"
+thumbnail: "cr30device.jpg"
 author: admin
 categories:
   - Technology
@@ -25,7 +25,7 @@ The very first time I got into color science was when I was developing some soft
 
 Anyway, I don't have the calibrated scanner anymore. So I looked at printer calibration devices - and they are expensive! I did not want such a niche device if I only used it once for an experiment... So, I stumbled upon upon a cheap Chinese CR30 colorimeter on AliExpress and thought: "What if I could reverse engineer its protocol and build my own color measurement software?" Little did I know this would lead me down a rabbit hole into the fascinating world of [color science](https://en.wikipedia.org/wiki/Color_science) and [colorimetry](https://en.wikipedia.org/wiki/Colorimetry). All the observers, color spaces, and illuminants... Aghhrrrr...
 
-![The CR30 colorimeter - a surprisingly capable device for its price point](cr30-device.jpg)
+![The CR30 colorimeter - a surprisingly capable device for its price point](cr30device.jpg)
 
 ## The Device
 
@@ -33,11 +33,58 @@ The CR30 is a very compact handheld colorimeter that measures color using [spect
 
 What makes this device interesting is that it's essentially a [spectrophotometer](https://en.wikipedia.org/wiki/Spectrophotometry) in a handheld form factor. It measures light across 31 wavelength bands from 400nm to 700nm in 10nm increments, which is sufficient for most color measurement applications. However, I was not able to find a small enough chip or device in the price range of this device that could measue 31 bands. So I guess it uses at least 11 bands, or maybe even 18 bands(including clear, Visible, and flicker) and calculates the spectrum from that! Even if it was only 6 bands - this is much better than most Datacolor devices that only measure RGB(Maybe actually LSM that can be directly transformed into XYZ, and then LAB)!
 
+## Its less capable sibling
+
+I've purchased CR10 device for more serious hacking. It lacks the LCD, has smaller resolution, repeatability, however, mostly funcions very much the same as CR30 device. I assume CR10 use a sensor that has less photosites(less bands to reconstruct the spectrum from).
+
+![Inside the CR10 colorimeter - The only thing seems to be missing is the LCD screen](cr10device.jpg)
+
+Notice the lack of black electric tape - since I removed it for this shoot! It is used to protect the sensor from stray ligh that seeps through white plastic! I coated the inside of it with pure black acryllic paint when I put it back together instead. And this is all necessary since the head is comprised of two pieces that hold the LEDs and the aperture. There is a gap between these two parts - I assume so that the flexible PCB can be passed from the inside to the connector board.
+
+![Inside the CR10 colorimeter - The only thing seems to be missing is the LCD screen](cr10board.jpg)
+
+![Inside the CR10 colorimeter - USB-C board with some charging circuits](cr10charge1.jpg)
+![Inside the CR10 colorimeter - USB-C board with some charging circuits](cr10charge2.jpg)
+
+This is how the mother board is connected to the sensor interconnect board:
+
+![Inside the CR10 colorimeter - Neat engineering went into these devices](cr10sensor-board.jpg)
+![Inside the CR10 colorimeter - This hall effect sensor senses the magnet in the cap](calibsense.jpg)
+
+![Inside the CR10 colorimeter - The sensor itself](cr10sensor.jpg)
+
+I assume this is a lower grade sensor than what is present in CR30. I don't want to verify this assumption since I broke quite fragile posts the whole construction is attached to and had to glue them with super glue and some UV glue. Never got the smell out of it and I fear the sensor will gonna degrade over time as the glue vapors condense on the sensitive interference filters on the chip...
+
+![Inside the CR10 colorimeter - fragile posts just broke off](cr10posts.jpg)
+
+I did not disassemble the main head assembly that contains the aperture and LEDs. They clame the LEDs have D65 (daylight) spectrum, but they a rather not! However, these are not your regular white LEDs that get excited into white-ish spectrum by some actual blue LED and they get rather close, but not quite - the reds are tailing off faster than in D65. I managed to capture the actual spectrum of the LEDs while they quickly blink.
+
+![CR10 colorimeter LEDs - white light spectrum - not so D65, isn't it?](cr10spectrum.png)
+
+I guess this doesn't matter much when you properly characterize your sensor and LEDs and normalize the sensor readings to produce reflectance spectrum. Then you can mathematically calculate XYZ and LAB values from the spectrum regardless of your light source. Off course, the trade off is the lower accuracy in reds, but hey - this is not a scientific instrument!
+
 ## The Protocol Discovery
 
 The first challenge was understanding how the device communicates. Using a serial port sniffer, I captured the communication between the original software and the device. The protocol turned out to be surprisingly well-structured:
 
-![Serial communication capture showing the 60-byte packet structure](protocol-capture.png)
+```
+Test Target
+
+LAB: 36.62, -20.74, -2.87
+
+< 5 11/10/2025 22:34:37 IRP_MJ_WRITE UP STATUS_SUCCESS bb 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff bb  ».........................................................ÿ» 60  COM5  
+> 22 11/10/2025 22:34:38 IRP_MJ_READ UP STATUS_SUCCESS bb 01 09 00 28 1f 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff 15  »...(.....................................................ÿ. 60  COM5  
+< 28 11/10/2025 22:34:38 IRP_MJ_WRITE UP STATUS_SUCCESS bb 01 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff cb  ».........................................................ÿË 60  COM5  
+> 48 11/10/2025 22:34:38 IRP_MJ_READ UP STATUS_SUCCESS bb 01 10 00 00 00 2e 3b b0 40 6d 38 e6 40 6a fd 00 41 ca 9f 09 41 ef 30 13 41 df 22 1f 41 b0 90 2b 41 d1 94 39 41 74 87 49 41 dc 97 59 41 4b 4d 66 41 f1 79 68 41 00 00 00 00 ff 8d  »......;°@m8æ@jý.AÊŸ.Aï0.Aß".A°+AÑ”9At‡IAÜ—YAKMfAñyhA....ÿ 60  COM5  
+< 54 11/10/2025 22:34:38 IRP_MJ_WRITE UP STATUS_SUCCESS bb 01 11 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff cc  ».........................................................ÿÌ 60  COM5  
+> 71 11/10/2025 22:34:38 IRP_MJ_READ UP STATUS_SUCCESS bb 01 11 00 00 00 18 6d 5d 41 96 41 48 41 a8 77 30 41 f6 5b 19 41 04 27 05 41 9c c7 e9 40 74 52 cd 40 06 44 ae 40 08 45 93 40 f3 7d 87 40 cc ab 8b 40 b1 e6 8d 40 00 00 00 00 ff 8f  »......m]A–AHA¨w0Aö[.A.'.AœÇé@tRÍ@.D®@.E“@ó}‡@Ì«‹@±æ@....ÿ 60  COM5  
+< 78 11/10/2025 22:34:38 IRP_MJ_WRITE UP STATUS_SUCCESS bb 01 12 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff cd  ».........................................................ÿÍ 60  COM5  
+> 96 11/10/2025 22:34:38 IRP_MJ_READ UP STATUS_SUCCESS bb 01 12 00 00 00 a3 23 8b 40 46 9d 8a 40 e9 51 8d 40 ca a1 93 40 cf 8f 9a 40 cb e8 a0 40 6b 12 a6 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff 7e  ».....£#‹@FŠ@éQ@Ê¡“@Ïš@Ëè @k.¦@........................ÿ~ 60  COM5  
+< 102 11/10/2025 22:34:38 IRP_MJ_WRITE UP STATUS_SUCCESS bb 01 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ff ce  ».........................................................ÿÎ 60  COM5  
+> 122 11/10/2025 22:34:38 IRP_MJ_READ UP STATUS_SUCCESS bb 01 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2e 3b b0 40 6d 38 e6 40 6a fd 00 41 ca 9f 09 41 ef 30 13 41 00 00 00 00 ff c0  »..................................;°@m8æ@jý.AÊŸ.Aï0.A....ÿÀ 60  COM5  
+```
+
+NOTE: Unfortunately I did not purchase the serial monitor and the demo license expired before I could screenshot the actual capture...
 
 The neat, and most surprising thing was, I myself did not even look at the data! I simply fed the captured data during various operation modes to AI and it detected what commands there were and how the data was encoded. Although, I spent around 24h nudging the AI to properly detect XYZ measurements... And in fact there were none, as later I discovered when started writing the Jupyter Notebook that allowed me to experiment with the protocol in more detail.
 
@@ -93,9 +140,7 @@ def spectrum_to_xyz(spd, cmf_x, cmf_y, cmf_z):
 The [CIE standard observer](https://en.wikipedia.org/wiki/CIE_1931_color_space#Color_matching_functions) represents the average human eye's response to different wavelengths. There are two main variants:
 - **2° observer**: For small field viewing (like color matching)
 - **10° observer**: For large field viewing (like real-world scenes)
-
-![CIE Observer Functions](cie-observer-functions.png)
-*The CIE 1931 2° and 1964 10° color matching functions*
+- **The CIE 1931 2° and 1964 10° color matching functions**
 
 ### Illuminants
 
@@ -138,9 +183,9 @@ The software is supposed to be compatible with Aargyll chart formats and should 
 
 ### Measurement Results
 
-The device produces surprisingly accurate results. Here's a sample measurement of a white patch:
+The device produces surprisingly accurate results. Here's a sample measurement of a built in white calibration patch(blue) and some cyan color painted on a regular white thick paper(that also has some fluorescence):
 
-![Spectral reflectance data from a white sample](spectrum-plot.png)
+![Spectral reflectance data from a white calibration disk v.s. primary cyan acryllic paint](spectrum-plot.png)
 
 **Measurement Results:**
 - **XYZ**: (72.94, 77.43, 83.01)
