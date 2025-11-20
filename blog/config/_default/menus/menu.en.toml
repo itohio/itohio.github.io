@@ -35,6 +35,10 @@
   url = "about/me"
 [[main]]
   parent = "About"
+  name = "My CV"
+  url = "about/cv"
+[[main]]
+  parent = "About"
   name = "Contact"
   url = "about/contact"
 [[main]]
