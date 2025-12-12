@@ -61,7 +61,7 @@ codeMaxLines = 7
 codeLineNumbers = false
 
 # enable math notation. Switch to `true` to enable mathjax in your site.
-enableMathNotation = false
+enableMathNotation = true
 
 # directory(s) where your articles are located
 mainSections = ["blog", "colorimetry", "acoustics", "blog-2023", "esp-reflow", "esp-weather", "esp-motion", "acoustics"]
