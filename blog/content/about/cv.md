@@ -11,7 +11,7 @@ comments: false
 
 ## Professional Summary
 
-Deep technical problem-solver with 20+ years of experience engineering solutions across blockchain, AI/ML, robotics, and embedded systems. Proven track record of inventing novel algorithms (patented decentralized DARP protocol), architecting complex distributed systems, and delivering innovative products from concept to production. Excels at tackling ambiguous, high-complexity challenges requiring lateral thinking and cross-domain expertise.
+Deep technical problem-solver with 20+ years of experience engineering solutions across blockchain, AI/ML, robotics, and embedded systems. Proven track record of inventing novel algorithms (patented decentralized DARP protocol), architecting complex distributed systems, and delivering innovative products from concept to production. I excel at tackling ambiguous, high-complexity challenges requiring lateral thinking and cross-domain expertise.
 
 **Specialization:** Research, rapid prototyping, POC/MVP development, system architecture design and evaluation. Strong at translating ideas into working implementations and coordinating multi-team technical initiatives. Natural bridge between technical and non-technical stakeholders.
 
