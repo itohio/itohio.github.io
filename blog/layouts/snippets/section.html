@@ -3,55 +3,38 @@
 {{- $p := .Params }}
 <div class="grid-inverse wrap content">
   <div>
-    {{- if .Content }}
+    {{- $sections := where .Pages "Kind" "section" }}
+    {{- $pages := where .Pages "Kind" "page" }}
+    
     <article class="post_content">
       <h1 class="post_title">{{ .Title | markdownify }}</h1>
       {{- partial "post-meta" . }}
       <div class="post_body">
         {{- .Content }}
+        
+        {{- if $sections }}
+        {{- /* Main snippets page - show categories */ -}}
+        <h2 class="post_related">Categories</h2>
+        <ul>
+          {{- range $sections.ByTitle }}
+          <li>
+            <a href="{{ .RelPermalink }}" class="nav-link" title="{{ .Title }}">{{ .Title }}</a>
+            {{- $desc := "" }}
+            {{- with .Params.description }}
+              {{- $desc = . }}
+            {{- else }}
+              {{- $desc = .Summary | plainify | truncate 80 }}
+            {{- end }}
+            {{- if $desc }}<br><small>{{ $desc }}</small>{{ end }}
+          </li>
+          {{- end }}
+        </ul>
+        {{- else if $pages }}
+        {{- /* Category page - show all snippets in that category */ -}}
+        {{- partial "related-snippets.html" (dict "Page" . "heading" "Snippets" "excludeCurrent" false) }}
+        {{- end }}
       </div>
     </article>
-    {{- end }}
-    
-    {{- $sections := where .Pages "Kind" "section" }}
-    {{- $pages := where .Pages "Kind" "page" }}
-    
-    {{- if or $sections $pages }}
-    <div style="margin-top: 3rem;">
-      {{- if $sections }}
-      <h2>Categories</h2>
-      <ul class="posts">
-        {{- range $sections.ByTitle }}
-        <li class="post_item">
-          <div class="excerpt">
-            <div class="excerpt_header">
-              <h3 class="post_link">
-                <a href="{{ .RelPermalink }}" title="{{ .Title }}">{{ .Title | markdownify }}</a>
-              </h3>
-            </div>
-            {{- if .Description }}
-            <div class="excerpt_footer">
-              <div class="pale">
-                <p>{{ .Description | markdownify }}</p>
-              </div>
-            </div>
-            {{- end }}
-          </div>
-        </li>
-        {{- end }}
-      </ul>
-      {{- end }}
-      
-      {{- if $pages }}
-      <h2>{{ if $sections }}Snippets{{ else }}Pages{{ end }}</h2>
-      <ul class="posts">
-        {{- range $pages.ByTitle }}
-          {{ partial "excerpt" . }}
-        {{- end }}
-      </ul>
-      {{- end }}
-    </div>
-    {{- end }}
   </div>
   {{- if ( ne $p.sidebar false ) }}
     {{- partial "sidebar" . }}

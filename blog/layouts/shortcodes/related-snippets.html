@@ -1,0 +1,37 @@
+{{- /* 
+  Shortcode: related-snippets
+  Automatically generates a list of related snippets in the same category
+  Usage in markdown: {{< related-snippets >}}
+*/ -}}
+
+{{- $currentPage := .Page }}
+{{- $currentDir := path.Dir .Page.File.Path }}
+
+{{- /* Get all pages in the same directory (same category) */ -}}
+{{- $relatedPages := slice }}
+{{- range where .Page.Site.RegularPages "Section" .Page.Section }}
+  {{- $pageDir := path.Dir .File.Path }}
+  {{- if and (eq $pageDir $currentDir) (ne .File.Path $currentPage.File.Path) }}
+    {{- $relatedPages = $relatedPages | append . }}
+  {{- end }}
+{{- end }}
+
+{{- /* Remove duplicates by using a map */ -}}
+{{- $uniquePages := slice }}
+{{- $seen := dict }}
+{{- range $relatedPages }}
+  {{- if not (isset $seen .File.Path) }}
+    {{- $uniquePages = $uniquePages | append . }}
+    {{- $seen = merge $seen (dict .File.Path true) }}
+  {{- end }}
+{{- end }}
+
+{{- if gt (len $uniquePages) 0 -}}
+<h2 class="post_related">Related Snippets</h2>
+<ul>
+  {{- range $uniquePages.ByTitle }}
+  <li><a href="{{ .RelPermalink }}" class="nav-link" title="{{ .Title }}">{{ .Title }}</a></li>
+  {{- end }}
+</ul>
+{{- end -}}
+

@@ -1,0 +1,21 @@
+{{- define "main" }}
+{{- $s := .Site.Params }}
+{{- $p := .Params }}
+<div class="grid-inverse wrap content">
+  <div>
+    <article class="post_content">
+      <h1 class="post_title">{{ .Title | markdownify }}</h1>
+      {{- partial "post-meta" . }}
+      <div class="post_body">
+        {{- .Content }}
+        {{- /* Automatically add related snippets at the end */ -}}
+        {{- partial "related-snippets.html" . }}
+      </div>
+    </article>
+  </div>
+  {{- if ( ne $p.sidebar false ) }}
+    {{- partial "sidebar" . }}
+  {{ end }}
+</div>
+{{- end }}
+

@@ -1,0 +1,62 @@
+{{- /* 
+  Partial: related-snippets.html
+  Automatically generates a list of related snippets in the same category
+  Usage: 
+    {{ partial "related-snippets.html" . }}
+    {{ partial "related-snippets.html" (dict "Page" . "heading" "Snippets" "excludeCurrent" false) }}
+*/ -}}
+
+{{- $currentPage := . }}
+{{- $heading := "Related Snippets" }}
+{{- $excludeCurrent := true }}
+
+{{- /* Support dict parameters */ -}}
+{{- if reflect.IsMap . }}
+  {{- $currentPage = .Page }}
+  {{- with .heading }}{{ $heading = . }}{{ end }}
+  {{- if isset . "excludeCurrent" }}{{ $excludeCurrent = .excludeCurrent }}{{ end }}
+{{- end }}
+
+{{- $currentDir := path.Dir $currentPage.File.Path }}
+
+{{- /* Get all pages in the same directory (same category) */ -}}
+{{- $relatedPages := slice }}
+{{- range where $currentPage.Site.RegularPages "Section" $currentPage.Section }}
+  {{- $pageDir := path.Dir .File.Path }}
+  {{- $shouldInclude := eq $pageDir $currentDir }}
+  {{- if $excludeCurrent }}
+    {{- $shouldInclude = and $shouldInclude (ne .File.Path $currentPage.File.Path) }}
+  {{- end }}
+  {{- if $shouldInclude }}
+    {{- $relatedPages = $relatedPages | append . }}
+  {{- end }}
+{{- end }}
+
+{{- /* Remove duplicates by using a map */ -}}
+{{- $uniquePages := slice }}
+{{- $seen := dict }}
+{{- range $relatedPages }}
+  {{- if not (isset $seen .File.Path) }}
+    {{- $uniquePages = $uniquePages | append . }}
+    {{- $seen = merge $seen (dict .File.Path true) }}
+  {{- end }}
+{{- end }}
+
+{{- if gt (len $uniquePages) 0 }}
+<h2 class="post_related">{{ $heading }}</h2>
+<ul>
+  {{- range $uniquePages.ByTitle }}
+  <li>
+    <a href="{{ .RelPermalink }}" class="nav-link" title="{{ .Title }}">{{ .Title }}</a>
+    {{- $desc := "" }}
+    {{- with .Params.description }}
+      {{- $desc = . }}
+    {{- else }}
+      {{- $desc = .Summary | plainify | truncate 80 }}
+    {{- end }}
+    {{- if $desc }}<br><small>{{ $desc }}</small>{{ end }}
+  </li>
+  {{- end }}
+</ul>
+{{- end }}
+
