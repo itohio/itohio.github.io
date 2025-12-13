@@ -2,15 +2,40 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body, {
-        delimiters: [
-            {left: '$$', right: '$$', display: true},
-            {left: '$', right: '$', display: false},
-            {left: '\\[', right: '\\]', display: true},
-            {left: '\\(', right: '\\)', display: false}
-        ],
-        throwOnError: false
-    });"></script>
+    onload="
+        // Fix Goldmark's em/strong tag conversion in math blocks before rendering
+        // This is a workaround for Hugo < 0.132 which lacks passthrough extension
+        document.body.innerHTML = document.body.innerHTML
+            // Fix display math blocks ($$...$$)
+            .replace(/(\$\$[\s\S]*?\$\$)/g, function(match) {
+                return match.replace(/<\/?em>/g, '_')
+                           .replace(/<\/?strong>/g, '**');
+            })
+            // Fix inline math ($...$) - negative lookbehind/ahead to avoid matching $$
+            // Also skip if preceded by backslash (escaped dollar sign)
+            .replace(/(?<!\\\\)(?<!\$)\$(?!\$)([^\$\n]+?)\$(?!\$)/g, function(match, content) {
+                // Skip if content looks like plain text (no LaTeX commands or special chars)
+                if (!/[\\\\{}^_]/.test(content)) {
+                    return match; // Leave it alone, probably not math
+                }
+                return '$' + content.replace(/<\/?em>/g, '_')
+                                   .replace(/<\/?strong>/g, '**') + '$';
+            });
+        
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false},
+                {left: '\\[', right: '\\]', display: true},
+                {left: '\\(', right: '\\)', display: false}
+            ],
+            throwOnError: false,
+            trust: true,
+            strict: false,
+            // Ignore text in script, noscript, style, textarea, pre, code, option tags
+            ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option']
+        });
+    "></script>
 
 <!-- Mermaid rendering -->
 {{ if .Page.Store.Get "hasMermaid" }}

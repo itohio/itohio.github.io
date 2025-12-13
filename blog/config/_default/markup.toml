@@ -5,6 +5,10 @@
     xhtml = false
   [goldmark.extensions]
     typographer = false
+  [goldmark.parser]
+    [goldmark.parser.attribute]
+      block = true
+      title = true
   [highlight]
     codeFences = true
     guessSyntax = true
