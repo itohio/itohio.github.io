@@ -1,14 +1,20 @@
 ---
 title: "Changelog"
-date: 2022-11-12T01:01:28+02:00
+date: 2025-12-13T01:01:28+02:00
 comments: false
 showShare: false
 ---
 
-# 2023-2025
-- Exploring DML
+# 2025
+- Added various technical snippets (kinematics, statistics, crypto, network, security, Python, AI)
+- Updated chart/Mermaid/p5.js/GraphViz libraries
+- Enabled KaTeX math rendering
+- Added professional career path as CV
+
+# 2023-2024
+- Exploring DML audio experiments
 - Exploring colorimetry
-- Exploring Coil guns
+- Exploring coil guns
 
 # 2022
 - Multilanguage support

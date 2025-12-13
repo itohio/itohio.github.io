@@ -1,77 +1,118 @@
 ---
-title: "Cirriculum Vitae"
-date: 2025-11-20T01:01:17+02:00
+title: "Curriculum Vitae"
+date: 2025-12-13T01:01:17+02:00
 showShare: false
 comments: false
 ---
 
-**Blockchain Engineer | AI & Robotics Specialist | System Architect**
-
----
-
 ## Professional Summary
 
-Deep technical problem-solver with 20+ years of experience engineering solutions across blockchain, AI/ML, robotics, and embedded systems. Proven track record of inventing novel algorithms (patented decentralized DARP protocol), architecting complex distributed systems, and delivering innovative products from concept to production. I excel at tackling ambiguous, high-complexity challenges requiring lateral thinking and cross-domain expertise.
+Senior engineer specializing in production multi-agent LLM systems and distributed blockchain protocols. 3+ years architecting custom agentic frameworks with RAG, tool orchestration, and memory systems. 4+ years building Cosmos-based protocols with hands-on validator operations. Expert in Python and Go with deep experience building autonomous agents and distributed systems from POC to production.
 
-**Specialization:** Research, rapid prototyping, POC/MVP development, system architecture design and evaluation. Strong at translating ideas into working implementations and coordinating multi-team technical initiatives. Natural bridge between technical and non-technical stakeholders.
+**Recent Work:**
+- Built multi-agent LLM POC from personal project (2023), then contributed to commercial production system serving thousands of users (2025)
+- Core engineer and top-10 validator operator for Cosmos-based blockchain protocol
+- Developed specialized agents, implemented RAG with real-time blockchain data, built benchmarking infrastructure
 
-**Core competencies:** Blockchain architecture, AI/ML systems, distributed protocols, embedded systems, 3D vision algorithms, network automation, full-stack development
+**Background:** 25+ years across biometric systems R&D (face/fingerprint/iris recognition algorithms), autonomous robotics (designed and implemented bio-inspired neural network frameworks from scratch in Assembly/C/C++/C#), electronics design (128-channel parametric ultrasound generators, multi-head 3D printer controllers), network automation at scale, real-time human tracking systems, embedded systems.
 
----
+**Technical Depth:** Agentic AI from scratch in Go, hand-crafted RAG solutions, token usage optimization, distributed consensus, Byzantine fault tolerance, protocol design, low-level neural network implementation, computer vision, sensor fusion, real-time systems, hardware/software integration, signal processing, performance optimization at every level.
 
-## Technical Experience
-
-### **Blockchain Engineer** | Synternet | Oct 2020 - Present
-*Evolution: Automation Engineer → Protocol Inventor → Blockchain Architect*
-
-**Key Achievements:**
-- Invented and patented **Decentralized DARP protocol**, enabling efficient routing in distributed networks
-- Discovered novel broadcast algorithm achieving superior performance in decentralized topologies
-- Architected Synternet's Cosmos-based blockchain from ground up
-- Designed and built **BabyAI** - autonomous AI agent utilizing Synternet protocol
-- Maintaining and developing flagship AI agent with continuous feature enhancements
-- Developed and engineered Telegram Price Guessing game with blockchain real-time data and AI integrations
-- Engineered API integrations and on-chain data analysis systems
-- Professional validator management, orchestrating governance proposals and network upgrades
-- Engineered secure centralized Eth→Cosmos bridge with zero security incidents
-- Built Telegram mini-game bot integrating Web3 functionality
-- Led DevOps training on validator network operations
-
-**Technical Stack:** Go, Cosmos SDK, IBC, Ethereum, Solidity, Tendermint, ABCI, gRPC, Docker, Kubernetes, NATS
+**Differentiator:** Rapid system absorption + cross-domain pattern recognition from bare metal to distributed protocols. I understand systems at every abstraction level and identify non-obvious issues by applying patterns across domains.
 
 ---
 
-### **Data Engineer** | Genus AI | Aug 2019 - Sep 2020
+## Experience
 
-**Responsibilities:**
-- Collaborated with PM and Data Scientists on experimental AI-driven advertising products
-- Achieved 100% test coverage across codebase using TDD practices
-- Developed React components and Django backend features with GraphQL API
-- Built AWS Lambda and Fargate-based background job processing pipelines
-- Implemented Facebook Ads API integration for campaign import/creation
-- Maintained incident monitoring rotation, troubleshooting via CloudWatch logs
-- Worked with: React, Django, GraphQL, AWS (Lambda, Fargate, S3, SageMaker, CloudFormation), Ansible, GCP APIs
-- Adopted branchless development workflow using Phabricator/Arcanist (stacked diffs)
+### **Synternet — Senior Engineer**
+**OCT 2020 - DEC 2025**
 
-**Environment:** Agile/Lean, GitHub, Phabricator (sprint planning/OKRs), AWS CodeBuild (CI/CD)
+#### Agentic AI Engineering (2023-2025)
+
+**2025 Production System (Design Contributor & Agent Developer):**
+- Contributed to commercial multi-agent LLM bot serving thousands of users with Telegram and web interfaces - company's flagship product
+- Built comprehensive LLM benchmarking infrastructure and tooling for model evaluation across multiple providers
+- Developed specialized agents and contributed to custom agentic framework design in Python (built from scratch after evaluating LangChain/LlamaIndex)
+- **Primary responsibility:** real-time blockchain data integration and Telegram game integration with bot system
+- Implemented agents utilizing RAG pipeline with PostgreSQL vector database, tool-calling, and real-time blockchain data feeds
+- Contributed to prompt engineering for multi-step reasoning and event relevance scoring using 1M token context models
+- Contributed to comprehensive instrumentation analyzing p95 latencies, identifying failure causes and optimizing reasoning times
+- Participated in framework evolution toward graph execution (LangGraph-style) with event-driven agent orchestration
+
+**2023 POC (Sole Architect & Developer):**
+- Architected and built multi-agent system in Go from scratch, adapting personal mental health chatbot framework to company's blockchain data layer
+- Designed modular architecture with agents as distributed services communicating via NATS message bus using Protobuf/JSON serialization
+- Implemented vector database from scratch in SQLite with hand-coded similarity metrics (cosine, euclidean) to understand retrieval mechanics
+- Built memory systems: per-user short-term (context management with summarization) and user/global long-term (vector similarity search for semantic retrieval)
+- Integrated OpenAI API with agentic tool usage patterns and multi-agent coordination
+- Deployed for internal team exploration of semantic search and agentic capabilities - demonstrated viability of multi-agent approach for blockchain data
+
+**Technical Challenges:** Multi-agent orchestration, RAG optimization for real-time blockchain data, prompt engineering for reasoning tasks, memory system design, LLM provider reliability, event-driven agent communication, vector similarity implementation
+
+#### Protocol Engineering & Blockchain Infrastructure (2020-Present)
+
+**Protocol Development:**
+- Engineered Cosmos-based blockchain protocol from ground up (Go, Tendermint consensus, ABCI integration, state machines)
+- Designed and implemented decentralized DARP routing protocol for distributed topologies (patented)
+- Engineered high-throughput cross-chain bridges with cryptographic security guarantees
+- Developed Byzantine fault tolerance implementations and consensus algorithm optimizations
+- Integrated network layer with application layer for transaction ordering and finality
+- Built high-throughput data pipelines and real-time streaming systems using NATS
+
+**Infrastructure & Validator Operations:**
+- Operating top-10 validator with 99.9% uptime managing $70M+ staked value
+- Managed network upgrades, governance proposals, and consensus parameter changes
+- Built monitoring and incident response systems for 24/7 validator operations
+- Led DevOps training program for distributed validator network
+- Engineered secure Ethereum→Cosmos bridge with zero security incidents
+
+**API Integration & Data Layer:**
+- Developed Go SDK library to interface with the data layer, JWT management, Protobuf, JSON
+- Integrated 15+ APIs including blockchain protocols (Ethereum, Solana, Cosmos, Infura, Etherscan), market data (CoinMarketCap, CoinGecko), and communication platforms (Telegram, Slack)
+- Built Telegram mini-game bot integrating Web3 functionality with real-time blockchain data
+
+**Technical Challenges:** Byzantine fault tolerance implementation, cross-chain asset bridges, distributed state synchronization, consensus algorithm optimization, real-time data streaming at scale
+
+**Stack:** Python, Go, OpenAI API, OpenRouter, RAG, vector databases (SQLite, PostgreSQL pgvector), NATS, Protobuf, Telegram Bot API, Slack API, multi-agent systems, prompt engineering, token optimization, LLM orchestration, Cosmos SDK, Tendermint, IBC, ABCI, gRPC, Ethereum, Solidity, Docker, Kubernetes, Git, GitLab, JIRA, Confluence, Miro, Ansible
 
 ---
 
-### **Automation Engineer & Scrum Master** | Barclays | Sep 2016 - Apr 2019
+### **Genus AI — Data Engineer**
+**AUGUST 2019 - SEPTEMBER 2020**
 
-- Designed and developed network automation solutions for enterprise infrastructure
+**API Integration & Backend Development:**
+- Integrated ML inference APIs into user-facing React application with real-time prediction pipelines
+- Built Facebook Graph API integration for advertising platform with OAuth flow implementation, webhook handling, and rate limit management
+- Designed GraphQL API layer (Django/Python) connecting ML models to frontend with optimized query resolution
+- Implemented comprehensive error handling and retry logic for third-party API calls with exponential backoff
+- Achieved 100% test coverage using TDD - extensive unit and integration testing for API interactions
+- Maintained production monitoring via CloudWatch with alerting for API failures and latency issues
+
+**Technical Challenges:** ML model serving at scale, third-party API reliability, async job processing, GraphQL query optimization, serverless cold starts
+
+**Stack:** Python, Django, GraphQL, REST APIs, Facebook Graph API, AWS (Lambda, Fargate, S3, SageMaker, CloudWatch), React, OAuth 2.0, TDD, Git, Phabricator, Arcanist
+
+---
+
+### **Barclays — Automation Engineer & Scrum Master**
+**SEPTEMBER 2016 - APRIL 2019**
+
+**Integration & Automation:**
+- Designed network automation solutions integrating enterprise infrastructure APIs with Python orchestration layer
+- Built REST API integrations with ServiceNow, MySQL, and network device APIs for automated provisioning
+- Implemented async task processing with Celery and RabbitMQ for long-running automation workflows
+- Developed robust error handling and rollback mechanisms for critical infrastructure changes
+- Led code reviews focusing on API integration best practices, error handling, and OOP design patterns
 - Led Scrum ceremonies and facilitated team collaboration
-- Elevated team's Python engineering standards through OOP best practices and code review
-- Refactored legacy automation codebase, improving maintainability and adding new features
 
-**Technical Stack:** Python, network automation frameworks, Agile/Scrum
+**Stack:** Python, Django, Flask, Celery, RabbitMQ, MySQL, REST APIs, ServiceNow API, network automation, Git, JIRA, Confluence
 
 ---
 
-### **CTO** | Phantom Corp | Jun 2015 - Dec 2016
+### **CTO** | **Phantom Corp** | **Jun 2015 - Dec 2016**
 
 - Developed revolutionary multi-head 3D printer technology
-- Applied **color recognition algorithms** enabling camera-integrated color 3D printing
+- Applied color recognition algorithms enabling camera-integrated color 3D printing
 - Designed 3D printing algorithms optimizing multi-material workflows
 - Combined robotics, computer vision, and embedded systems expertise
 
@@ -79,34 +120,40 @@ Deep technical problem-solver with 20+ years of experience engineering solutions
 
 ---
 
-### **AI/Biometrics R&D Analyst** | Neurotechnology | Mar 2004 - Aug 2016
+### **Neurotechnology — AI/Biometrics R&D Analyst**
+**MARCH 2004 - AUGUST 2016**
 
-- Developed biometric SDKs and APIs for fingerprint/face recognition systems
-- Conducted AI research applying novel approaches to biometric algorithms
-- Architected product documentation and developer resources
+**AI/ML & API Development:**
+- Developed biometric recognition SDKs and APIs (fingerprint, face, iris) serving enterprise customers
+- Conducted AI research on neural network algorithms for real-time pattern recognition
+- Built bio-inspired neural networks from scratch for autonomous robot navigation (C/C++/Assembly)
+- Designed RESTful APIs and SDK interfaces for biometric system integration
+- Implemented real-time video processing pipelines with RTSP protocol integration
+- Remote iris scanning technology requiring precise hardware/software API integration
 
-**Technical Stack:** C/C++, computer vision, machine learning, SDK design
+**Stack:** C/C++, C#, Python, computer vision, machine learning, neural networks, OpenCV, API design, RTSP, Git, SVN
 
 ---
 
-### **Freelance Engineer** | Self-Employed | Dec 1998 - Mar 2013
+### **Freelance Engineer** | **Self-Employed** | **Dec 1998 - Mar 2013**
 
-Selected projects demonstrating breadth:
-- **Spectral analysis systems** for Vilnius University laboratories (FFT, signal processing)
-- **2D relaxation time calculation algorithm** for physics research (Masters/PhD work)
-- **Cryostat control software** with ultra-low frequency spectral analysis capabilities
-- **Autonomous robot** with custom AI navigation system (KTU competition)
-- **Face recognition art installation** ("Speaking Doors" project)
-- **128-channel parametric ultrasound generator** electronics design
-- **Chronograph** for ballistic velocity measurements
-- **POV display** and 16-channel stepper controller
-- Disco light system (WinAMP plugin, FFT processing, LPT interface)
+**Selected Projects:**
+- **Multi-agent Mental Health Chatbot (2022-2023):** Personal project using OpenAI API - architectural foundation adapted for Synternet's 2023 blockchain data POC
+- **Autonomous Robot Navigation:** Custom AI system for robot navigation (KTU competition participant)
+- **Spectral Analysis Systems:** FFT signal processing for Vilnius University physics research
+- **2D Relaxation Time Calculation Algorithm:** For physics research (Masters/PhD work)
+- **Cryostat Control Software:** With ultra-low frequency spectral analysis capabilities
+- **Face Recognition Art Installation:** "Speaking Doors" project with real-time recognition
+- **128-Channel Parametric Ultrasound Generator:** Electronics design for parametric audio and ultrasound levitation
+- **Chronograph:** For ballistic velocity measurements
+- **POV Display:** And 16-channel stepper controller
+- **Disco Light System:** WinAMP plugin, FFT processing, LPT interface
 
 ---
 
 ## Education
 
-**PhD Studies (Discontinued)** | Vilnius University | 2008-2014
+**Ph.D. Candidate** | Vilnius University | 2008-2014
 - Radiophysics - Left to pursue AI career
 
 **M.Sc. Telecommunication Physics & Electronics** | Vilnius University | 2006-2008
@@ -114,84 +161,3 @@ Selected projects demonstrating breadth:
 **B.Sc. Business Management** | Vilnius University | 2007-2008
 
 **B.Sc. Telecommunication Physics & Electronics** | Vilnius University | 2002-2006
-
----
-
-## Technical Skills
-
-**Primary Languages:** Go, Python
-
-**Experience in:** C/C++, C#, Java, JavaScript, Bash, Lisp, PHP, Perl
-
-**Vibe-Coding Experience:** Claude, Cursor
-
-**Blockchain & Web3:** Cosmos SDK, IBC, Tendermint, IPFS, Ethereum, Solana, Solidity, Web3, validator operations
-
-**AI/ML & LLM Integration:** OpenRouter, ChatGPT API, Claude API, MCP (Model Context Protocol), PyTorch, TensorFlow/Keras, scikit-learn, OpenCV, neural networks
-
-**Infrastructure & DevOps:** Docker, Kubernetes, NATS, AWS (Lambda, Fargate, S3, SageMaker), GCP, Ansible, CloudFormation
-
-**Backend & APIs:** gRPC, Protobuf, GraphQL, REST APIs, Django, ABCI
-
-**Frontend:** React (preferred), Angular
-
-**Databases:** PostgreSQL, MySQL, MariaDB, Neo4j
-
-**Communication Protocols:** gRPC, NATS, RTSP/RTP, WebSockets, MQTT, LibP2P
-
-**Embedded:** AVR, ARM, MSP430, DSP programming, 8051 RISC
-
-**Electronics:** PCB design (KiCAD, Eagle, PCAD), analog/digital circuits, RF circuits
-
-**Mechanical:** AutoCAD, OpenSCAD, Fusion 360, 3D printing
-
-**Tools:** Git, SVN, Visual Studio, Unix/Linux, macOS
-
-**Domain Expertise:**
-- Distributed systems & consensus protocols
-- Computer vision & image processing
-- Robotics & autonomous navigation
-- Signal processing & spectral analysis
-- Streaming & communication protocols
-- Optics & sensor systems
-- Physics simulations
-
----
-
-## Project Focus & Strengths
-
-**Ideal Engagements:**
-- Research and prototyping of novel algorithms/systems
-- POC/MVP development (idea → working implementation)
-- System architecture design and technical evaluation
-- Technical consulting for complex multi-domain projects
-- Multi-team coordination for complex technical initiatives
-
-**Strengths:**
-- Rapid translation of concepts into working prototypes
-- Cross-domain technical integration (hardware + software + algorithms)
-- High-level architectural thinking with deep low-level understanding
-- Effective technical leadership across specialized teams
-- Pattern recognition across disparate technical domains
-
-Seeking short-to-medium term engagements focused on initial design, prototyping, and architectural phases but can work on long-term single-project maintenance given enough variety and room for growth.
-
----
-
-## Languages
-
-**Lithuanian:** Native  
-**English:** Fluent (speaking/writing)  
-**Russian:** Fluent
-
----
-
-## Personality & Work Style
-
-**MBTI:** ENTP | **Socionics:** ILE | **Enneagram:** 7w5 | ADHD | High Functioning Autism
-
-Thrive on complex, ambiguous challenges requiring creative problem-solving. Dislike routine work; excel when given autonomy to explore and prototype solutions. Rapidly acquire new technical domains. Natural bridge between technical and non-technical stakeholders. Ideal for projects pushing boundaries of current capabilities.
-
----
-
-**Interests:** Ice skating, swimming, diving, biking, hiking, travelling, meditation, psychology, photography, guitar, physics, electronics, robotics, AGI, philosophy, Lindy Hop, poker

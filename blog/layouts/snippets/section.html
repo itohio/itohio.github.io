@@ -3,6 +3,7 @@
 {{- $p := .Params }}
 <div class="grid-inverse wrap content">
   <div>
+    {{- partial "breadcrumbs.html" . }}
     {{- $sections := where .Pages "Kind" "section" }}
     {{- $pages := where .Pages "Kind" "page" }}
     

@@ -1,0 +1,127 @@
+{{- if and (not .IsHome) (.Site.Params.enableBreadcrumbs | default true) -}}
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{{ .Site.BaseURL }}">
+        <svg class="breadcrumb-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        Home
+      </a>
+    </li>
+    
+    {{- $url := replace .RelPermalink ( printf "%s" .Site.LanguagePrefix) "" -}}
+    {{- $sections := split (trim $url "/") "/" -}}
+    {{- $currentPath := "" -}}
+    {{- $currentPage := . -}}
+    
+    {{- range $index, $section := $sections -}}
+      {{- $currentPath = printf "%s/%s" $currentPath $section -}}
+      {{- $page := $.Site.GetPage $currentPath -}}
+      
+      {{- if ne (add $index 1) (len $sections) -}}
+        {{- /* Not the last item */ -}}
+        <li class="breadcrumb-item">
+          {{- if $page -}}
+            <a href="{{ $page.RelPermalink }}">{{ or $page.Title (humanize $section) }}</a>
+          {{- else -}}
+            <a href="{{ $currentPath | relURL }}">{{ humanize $section }}</a>
+          {{- end -}}
+        </li>
+      {{- else -}}
+        {{- /* Last item - current page */ -}}
+        <li class="breadcrumb-item active" aria-current="page">
+          {{ $currentPage.Title }}
+        </li>
+      {{- end -}}
+    {{- end -}}
+  </ol>
+</nav>
+
+<style>
+.breadcrumb-nav {
+  padding: 0.75rem 0;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: "›";
+  padding: 0 0.5rem;
+  color: var(--text-color, #6c757d);
+  opacity: 0.6;
+}
+
+.breadcrumb-item a {
+  color: var(--link-color, #007bff);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.breadcrumb-item a:hover {
+  color: var(--link-hover-color, #0056b3);
+  text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+  color: var(--text-color, #6c757d);
+  font-weight: 500;
+}
+
+.breadcrumb-icon {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .breadcrumb-item a {
+    color: #66b3ff;
+  }
+  
+  .breadcrumb-item a:hover {
+    color: #99ccff;
+  }
+  
+  .breadcrumb-item.active {
+    color: #adb5bd;
+  }
+  
+  .breadcrumb-item + .breadcrumb-item::before {
+    color: #adb5bd;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .breadcrumb-nav {
+    font-size: 0.85rem;
+    padding: 0.5rem 0;
+  }
+  
+  .breadcrumb-item + .breadcrumb-item::before {
+    padding: 0 0.35rem;
+  }
+}
+</style>
+{{- end -}}
+
