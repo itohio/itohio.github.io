@@ -9,14 +9,13 @@
   weight = -300
 
 [[main]]
-  name = "Snippets"
-  url = "snippets/"
-  weight = -200
-
-[[main]]
   name = "Projects"
   identifier = "Projects"
   weight = -120
+[[main]]
+  parent = "Projects"
+  name = "Snippets"
+  url = "snippets/"
 [[main]]
   parent = "Projects"
   name = "ESP Reflow"
