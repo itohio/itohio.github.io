@@ -135,16 +135,23 @@ Senior engineer specializing in production multi-agent LLM systems and distribut
 
 ---
 
-### **Freelance Engineer** | **Self-Employed** | **Dec 1998 - Mar 2013**
+### **Freelance Engineer** | **Self-Employed** | **Dec 1998 - Present**
 
 **Selected Projects:**
-- **Multi-agent Mental Health Chatbot (2022-2023):** Personal project using OpenAI API - architectural foundation adapted for Synternet's 2023 blockchain data POC
-- **Autonomous Robot Navigation:** Custom AI system for robot navigation (KTU competition participant)
+- **Multi-agent Mental Health Chatbot (2022-2024):** Personal project using OpenAI API - architectural foundation adapted for Synternet's 2023 blockchain data POC
+- **Art Ticket printing:** CUSOM thermal printer integration into a larger ticket system
+- **Autonomous Robot Navigation:** Custom AI system for robot navigation (KTU competition participant) - C/C++, Python, Go
+- **Remote Controlled Reflow Station:** - Custom auto calibrating SMD Reflow controller FW and SW. ESP32.
+- **Weather Station:** - Streaming air quality parameters over MQTT: diagnosing Office Spaces, and a Museum air quality over extended periods of time
 - **Spectral Analysis Systems:** FFT signal processing for Vilnius University physics research
+- **Specrometer control and signal acquisition:** For Liquid Crystal research lab
+- **Color Science R&D:** Custom colorimeter design and calibration (multi-LED/multispectral), device integration and visualization (Python, Go), explored color space conversions, color matching algorithms, and colorimetric data analysis for experiments and art installations
+- **Wax Printing Art:** Printing head controller for Wax art installation
 - **2D Relaxation Time Calculation Algorithm:** For physics research (Masters/PhD work)
 - **Cryostat Control Software:** With ultra-low frequency spectral analysis capabilities
 - **Face Recognition Art Installation:** "Speaking Doors" project with real-time recognition
 - **128-Channel Parametric Ultrasound Generator:** Electronics design for parametric audio and ultrasound levitation
+- **Camera LUT calibration:** Custom Hardware Camera module LUT calibration firmware
 - **Chronograph:** For ballistic velocity measurements
 - **POV Display:** And 16-channel stepper controller
 - **Disco Light System:** WinAMP plugin, FFT processing, LPT interface
@@ -153,11 +160,7 @@ Senior engineer specializing in production multi-agent LLM systems and distribut
 
 ## Education
 
-**Ph.D. Candidate** | Vilnius University | 2008-2014
-- Radiophysics - Left to pursue AI career
-
-**M.Sc. Telecommunication Physics & Electronics** | Vilnius University | 2006-2008
-
-**B.Sc. Business Management** | Vilnius University | 2007-2008
-
-**B.Sc. Telecommunication Physics & Electronics** | Vilnius University | 2002-2006
+- **Ph.D. Candidate** | Vilnius University | 2008-2014
+- **M.Sc. Telecommunication Physics & Electronics** | Vilnius University | 2006-2008
+- **B.Sc. Business Management** | Vilnius University | 2007-2008
+- **B.Sc. Telecommunication Physics & Electronics** | Vilnius University | 2002-2006
