@@ -112,3 +112,5 @@ nginx/run/*
 
 .hugo_build.lock
 blog/public
+
+.tmp/
