@@ -3,7 +3,6 @@ title: "Mermaid Gantt Chart"
 date: 2024-12-12T18:20:00Z
 draft: false
 description: "Create Gantt charts for project timelines and scheduling"
-type: "snippet"
 tags: ["mermaid", "gantt", "timeline", "project", "schedule", "diagrams"]
 category: "diagrams"
 ---
@@ -35,6 +34,20 @@ gantt
     Implementation       :2024-02-01, 21d
 ```
 ````
+
+**Result:**
+
+```mermaid
+gantt
+    title Research Project Timeline
+    dateFormat YYYY-MM-DD
+    section Phase 1
+    Literature Review    :done, 2024-01-01, 14d
+    Hypothesis Formation :active, 2024-01-15, 7d
+    section Phase 2
+    Experiment Design    :2024-01-22, 10d
+    Implementation       :2024-02-01, 21d
+```
 
 ## Explanation
 

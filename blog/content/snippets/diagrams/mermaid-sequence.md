@@ -3,7 +3,6 @@ title: "Mermaid Sequence Diagram"
 date: 2024-12-12T18:10:00Z
 draft: false
 description: "Create sequence diagrams for interactions and API flows"
-type: "snippet"
 tags: ["mermaid", "sequence", "diagram", "api", "interaction", "diagrams"]
 category: "diagrams"
 ---
@@ -32,6 +31,17 @@ sequenceDiagram
     B-->>A: Hi Alice!
 ```
 ````
+
+**Result:**
+
+```mermaid
+sequenceDiagram
+    participant A as Alice
+    participant B as Bob
+    
+    A->>B: Hello Bob!
+    B-->>A: Hi Alice!
+```
 
 ## Explanation
 

@@ -3,7 +3,6 @@ title: "Mermaid Flowchart"
 date: 2024-12-12T18:00:00Z
 draft: false
 description: "Create flowcharts and decision trees with Mermaid"
-type: "snippet"
 tags: ["mermaid", "flowchart", "diagram", "visualization", "diagrams"]
 category: "diagrams"
 ---
@@ -32,6 +31,17 @@ graph TD
     D --> E
 ```
 ````
+
+**Result:**
+
+```mermaid
+graph TD
+    A[Start] --> B{Decision?}
+    B -->|Yes| C[Action 1]
+    B -->|No| D[Action 2]
+    C --> E[End]
+    D --> E
+```
 
 ## Explanation
 

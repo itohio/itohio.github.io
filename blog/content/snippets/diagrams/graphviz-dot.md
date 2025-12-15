@@ -3,7 +3,6 @@ title: "Graphviz DOT Diagrams"
 date: 2024-12-12T19:30:00Z
 draft: false
 description: "Create complex graph layouts with Graphviz DOT language"
-type: "snippet"
 tags: ["graphviz", "dot", "diagram", "graph", "network", "visualization"]
 category: "diagrams"
 ---
@@ -33,6 +32,16 @@ digraph G {
 ```
 ````
 
+**Result:**
+
+```viz-dot
+digraph G {
+    A -> B;
+    B -> C;
+    C -> A;
+}
+```
+
 ## Explanation
 
 - `digraph` - Directed graph (use `graph` for undirected)
@@ -48,7 +57,7 @@ digraph G {
 ````markdown
 ```viz-dot
 digraph Dependencies {
-    rankdir=LR;  // Left to right layout
+    rankdir=LR;
     node [shape=box, style=rounded];
     
     Main -> Parser;

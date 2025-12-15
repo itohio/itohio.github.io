@@ -3,7 +3,6 @@ title: "Architecture Diagrams (C4 Model)"
 date: 2024-12-12T19:10:00Z
 draft: false
 description: "Create system architecture diagrams using C4 model with Mermaid"
-type: "snippet"
 tags: ["mermaid", "architecture", "diagram", "c4", "system-design", "software-architecture"]
 category: "diagrams"
 ---
@@ -40,6 +39,20 @@ C4Context
     Rel(systemA, systemB, "Calls API")
 ```
 ````
+
+**Result:**
+
+```mermaid
+C4Context
+    title System Context Diagram
+    
+    Person(user, "User", "A user of the system")
+    System(systemA, "System A", "Main system")
+    System_Ext(systemB, "External System", "Third-party service")
+    
+    Rel(user, systemA, "Uses")
+    Rel(systemA, systemB, "Calls API")
+```
 
 ## Explanation
 

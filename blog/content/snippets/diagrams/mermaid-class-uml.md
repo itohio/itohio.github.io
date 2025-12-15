@@ -3,8 +3,7 @@ title: "Mermaid Class Diagrams (UML)"
 date: 2024-12-12T19:00:00Z
 draft: false
 description: "Create UML class diagrams with Mermaid"
-type: "snippet"
-tags: ["mermaid", "uml", "class-diagram", "diagram", "architecture", "oop"]
+tags: ["mermaid", "uml", "class-diagram", "diagrams", "architecture", "oop"]
 category: "diagrams"
 ---
 
@@ -75,6 +74,24 @@ classDiagram
     Animal <|-- Dog
 ```
 ````
+
+**Result:**
+
+```mermaid
+classDiagram
+    class Animal {
+        +String name
+        +int age
+        +makeSound()
+    }
+    
+    class Dog {
+        +String breed
+        +bark()
+    }
+    
+    Animal <|-- Dog
+```
 
 ## Explanation
 
