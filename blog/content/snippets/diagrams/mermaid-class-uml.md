@@ -541,8 +541,8 @@ classDiagram
     %% Abstract base class
     class PaymentProcessor {
         <<abstract>>
-        +process_payment(amount)* bool
-        +refund(transaction_id)* bool
+        +process_payment(amount) bool*
+        +refund(transaction_id) bool*
     }
     
     %% Concrete implementations (Inheritance)
@@ -635,8 +635,8 @@ classDiagram
     %% Abstract base class
     class PaymentProcessor {
         <<abstract>>
-        +process_payment(amount)* bool
-        +refund(transaction_id)* bool
+        +process_payment(amount) bool*
+        +refund(transaction_id) bool*
     }
     
     %% Concrete implementations (Inheritance)

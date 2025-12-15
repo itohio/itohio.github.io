@@ -5,6 +5,22 @@
     onload="
         // Fix Goldmark's em/strong tag conversion in math blocks before rendering
         // This is a workaround for Hugo < 0.132 which lacks passthrough extension
+        // IMPORTANT: Protect Mermaid blocks from KaTeX processing
+        // Save Mermaid blocks and replace with placeholders before DOM manipulation
+        const mermaidPlaceholders = new Map();
+        document.querySelectorAll('.mermaid, .mermaid[data-mermaid-content]').forEach((el, idx) => {
+            const placeholderId = 'mermaid-ph-' + idx;
+            const placeholder = document.createElement('div');
+            placeholder.id = placeholderId;
+            placeholder.className = 'mermaid-placeholder';
+            placeholder.style.display = 'none';
+            mermaidPlaceholders.set(placeholderId, el.outerHTML);
+            if (el.parentNode) {
+                el.parentNode.replaceChild(placeholder, el);
+            }
+        });
+        
+        // Now do KaTeX processing on the modified DOM (Mermaid blocks are protected)
         document.body.innerHTML = document.body.innerHTML
             // Fix display math blocks ($$...$$)
             .replace(/(\$\$[\s\S]*?\$\$)/g, function(match) {
@@ -22,6 +38,14 @@
                                    .replace(/<\/?strong>/g, '**') + '$';
             });
         
+        // Restore Mermaid blocks
+        mermaidPlaceholders.forEach((html, id) => {
+            const placeholder = document.getElementById(id);
+            if (placeholder && placeholder.parentNode) {
+                placeholder.outerHTML = html;
+            }
+        });
+        
         renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -32,16 +56,24 @@
             throwOnError: false,
             trust: true,
             strict: false,
-            // Ignore text in script, noscript, style, textarea, pre, code, option tags
-            ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option']
+            // Ignore text in script, noscript, style, textarea, pre, code, option, and mermaid tags
+            ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option'],
+            ignoredClasses: ['mermaid']
         });
     "></script>
 
 <!-- Mermaid rendering -->
 {{ if .Page.Store.Get "hasMermaid" }}
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.0/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.10.0/dist/mermaid.min.js"></script>
   <script>
-    mermaid.initialize({ startOnLoad: true });
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'default',
+      securityLevel: 'loose',
+      flowchart: { useMaxWidth: true },
+      classDiagram: { useMaxWidth: true },
+      logLevel: 'error'
+    });
   </script>
 {{ end }}
 
