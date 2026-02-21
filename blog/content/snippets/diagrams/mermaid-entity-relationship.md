@@ -219,3 +219,4 @@ erDiagram
 - ⚠️ **Relationships**: Cardinality symbols must match the relationship direction
 - ⚠️ **Complexity**: Large ER diagrams can become hard to read - break into modules
 
+

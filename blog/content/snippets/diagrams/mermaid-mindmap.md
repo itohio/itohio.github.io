@@ -167,3 +167,4 @@ mindmap
 - ⚠️ **Depth**: Very deep hierarchies can be hard to read
 - ⚠️ **Node Names**: Keep short for better visualization
 
+
