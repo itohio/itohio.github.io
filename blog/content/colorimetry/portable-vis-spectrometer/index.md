@@ -239,6 +239,8 @@ The 6mm coupling lens is glued using UV resin. While the resin may yellow over t
 
 I'm working on a more versatile light source box that would house White LED, RGB LED, 380nm UV, 360nm UV, and even a laser. I intended to use this enclosure for the spectrometer, but ran into issues with laser coupling. So I built just the spectrometer with a white light source for now. Ideally there should be a halogen lamp light source for a true black body spectrum...
 
+Anyway, I've exposed 5V and I2C pins to the outside so that any light accessory could be added in the future. I might even consider exposing USB host connection at some point so my CR30 could be plugged into it - software architecturally supports this.
+
 ### Prism and Camera Assembly
 
 The dispersive section uses a compact arrangement:
@@ -317,7 +319,7 @@ The prism's non-linear dispersion means careful calibration is essential. I've u
 
 Initial calibration was done with the camera connected directly to a PC using a different module (same OV9281 sensor). This allowed rapid iteration on the calibration algorithm before integrating everything into the portable unit.
 
-Another interesting possibility is using the Sun for calibration. Fraunhofer lines are remarkably stable and well-documented, making them excellent reference points. However, I'm still working out how this would interact with the sensor's non-linear sensitivity—if we calibrate at the lowest sensitivity wavelengths, that calibration won't necessarily translate to the higher sensitivity regions. It's an interesting problem to solve.
+Another interesting possibility is using the Sun for calibration. Fraunhofer lines are remarkably stable and well-documented, making them excellent reference points. However, I'm still working out how this would interact with the sensor's non-linear sensitivity—if we calibrate at the lowest sensitivity wavelengths, that calibration won't necessarily translate to the higher sensitivity regions. It's an interesting problem to solve though.
 
 ### Spectral Range
 
@@ -387,9 +389,7 @@ Getting the mechanical design right took several iterations:
 
 Each print cycle revealed new clearance issues or alignment problems. The compact space required careful tetris-like placement of components to avoid interference with the optical path.
 
-![Power delivery board integration showing USB-C PD and voltage regulation](pd.jpg)
-
-The final design uses a modular approach where individual optical sections can be adjusted or replaced without rebuilding everything.
+![Power delivery board integration showing USB-C PD and voltage regulation](pd.jpg) The final design uses a modular approach where individual optical sections can be adjusted or replaced without rebuilding everything. The compact space required careful placement of the USB-C PD board, DC-DC converter, and LED current controller to avoid interference with the optical path.
 
 ### TOSLINK: A Pragmatic Choice
 
