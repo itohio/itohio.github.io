@@ -37,7 +37,8 @@ While the [CR30 colorimeter](../reverse-engineering-cr30/) works great for surfa
 - Explore the UV and near-IR ranges beyond typical colorimeters
 
 Inspired by projects like [PySpectrometer2](https://github.com/leswright1977/PySpectrometer2) and "Little Garden Spectrometer," I set out to build something that combined the best aspects of DIY spectrometry with professional features. PySpectrometer2 in particular showed me that building a capable, portable spectrometer was achievable with modern components and proper optical design.
-Well, there are professional compact units by Ocean Optics, Thor Labs, etc... With proper SMA fiber optic terminations, assorted wavelength ranges, properly calibrated and characterized that support optical breadboards... But the lowest price for the uv-vis-nir is about a couple of thousand Euros...
+
+Of course, professional compact units exist from Ocean Optics, Thor Labs, and others—complete with proper SMA fiber optic terminations, assorted wavelength ranges, proper calibration, and optical breadboard compatibility. But even the lowest-priced UV-VIS-NIR units start around a couple thousand Euros, which puts them out of reach for hobbyists and small labs.
 
 I'm giving away all the print designs and source code. The Go software version is being developed in the [github.com/itohio/EasyRobot](https://github.com/itohio/EasyRobot) repository. However, you'll have to find your own compact prism. I got mine on AliExpress - they advertise it for gem quality inspection.
 
@@ -75,7 +76,7 @@ A diffraction grating works by interference, splitting incoming light into multi
 - **-1st order**: Negative direction dispersion (wasted)
 - **-2nd order**: Negative higher order (wasted)
 
-Also, proper spectrometers using this type of monochromator redirect and filter out these unwanted diffraction orders. Otherwise you get artifacts in your measured spectrum - this is exactly what you get in cheap Little Garen Spectrometer device that has the dvd glued directly to the lens and does not block the unwanted diffraction orders!
+Also, proper spectrometers using this type of monochromator redirect and filter out these unwanted diffraction orders. Otherwise you get artifacts in your measured spectrum—this is exactly what happens with cheap devices like the Little Garden Spectrometer that have the DVD glued directly to the lens without blocking unwanted diffraction orders.
 
 **The Critical Problem:** Only one diffraction order is captured by the camera. The rest of the light—often 70-80% of the total—is simply **lost**. This dramatically reduces signal strength, especially problematic when measuring:
 - Dim samples
@@ -226,7 +227,7 @@ This multi-stage approach maximizes coupling efficiency while maintaining a reas
 
 ![Stacked LED lenses with coupling lens assembly. Note the 3D printing filament blobs for positioning](led-assembly.jpg)
 
-The LED is a standard 3W white chip paired with a matching lens. The first lens reduces the beam angle from 120° to 15°. A second lens further focuses the spot down to approximately 4–5 mm in diameter, which is then collected by a 6mm lens with 6mm focal length, which images it onto the 1mm TOSLINK receptacle.
+The LED is a standard 3W white chip paired with a matching lens. The first lens reduces the beam angle from 120° to 15°. A second lens further focuses the spot down to approximately 4–5 mm in diameter, producing an almost collimated beam. A 6mm lens (6mm focal length) then images this onto the 1mm TOSLINK receptacle.
 
 ![Coupling lens glued to TOSLINK using UV resin. The resin may yellow over time, but should have minimal optical impact](toslink.jpg)
 
@@ -234,8 +235,9 @@ The alignment process was iterative and manual—I eyeballed the distances and u
 
 The 6mm coupling lens is glued using UV resin. While the resin may yellow over time, I positioned it such that the optical path impact should be minimal. I'll need to shine more UV through the lens to fully harden the resin.
 
+### Future Light Source Plans
 
-I'm working on a light source box that houses White LED, RGB LED, 380nm, 360nm UV, and a laser. I intended to use this enclosure for the spectrometer, but ran into issues with laser coupling. So I built just the spectrometer with a white light source for now. Ideally there should be a halogen lamp light source for a true black body spectrum...
+I'm working on a more versatile light source box that would house White LED, RGB LED, 380nm UV, 360nm UV, and even a laser. I intended to use this enclosure for the spectrometer, but ran into issues with laser coupling. So I built just the spectrometer with a white light source for now. Ideally there should be a halogen lamp light source for a true black body spectrum...
 
 ### Prism and Camera Assembly
 
@@ -294,7 +296,7 @@ I'm developing a Golang application using Fyne for the UI and OpenCV for image p
 - Measurement mode switching (reflectance/transmittance)
 
 **Current Status:**
-The software is functional for basic measurements, but I'm procrastinating on the proper build pipeline. Cross-compiling Go with OpenCV for ARM is... not my favorite activity. I might just set up a proper build environment on the Pi itself rather than fight with cross-compilation dependencies.
+The software works for basic measurements, but I've been procrastinating on setting up a proper build pipeline. Cross-compiling Go with OpenCV for ARM isn't exactly my idea of fun. At this point, I'm seriously considering just setting up the build environment directly on the Pi rather than continuing to fight with cross-compilation dependencies.
 
 **Why Golang?**
 - Fast enough for real-time processing
@@ -315,7 +317,7 @@ The prism's non-linear dispersion means careful calibration is essential. I've u
 
 Initial calibration was done with the camera connected directly to a PC using a different module (same OV9281 sensor). This allowed rapid iteration on the calibration algorithm before integrating everything into the portable unit.
 
-I'm also considering calibrating to the best-known light source—the Sun. Fraunhofer lines are rather stable. It can even be used to quantify the spectrometer, but for now I don't see how that would work since the sensor sensitivity is non-linear, so if we calibrate for lowest sensitivity - this won't matter much at higher sensitivities.
+Another interesting possibility is using the Sun for calibration. Fraunhofer lines are remarkably stable and well-documented, making them excellent reference points. However, I'm still working out how this would interact with the sensor's non-linear sensitivity—if we calibrate at the lowest sensitivity wavelengths, that calibration won't necessarily translate to the higher sensitivity regions. It's an interesting problem to solve.
 
 ### Spectral Range
 
@@ -383,9 +385,11 @@ Getting the mechanical design right took several iterations:
 - Display mounting and viewing angle
 - Access for assembly and maintenance
 
+Each print cycle revealed new clearance issues or alignment problems. The compact space required careful tetris-like placement of components to avoid interference with the optical path.
+
 ![Power delivery board integration showing USB-C PD and voltage regulation](pd.jpg)
 
-Each print cycle revealed new clearance issues or alignment problems. The final design uses a modular approach where individual optical sections can be adjusted or replaced without rebuilding everything. The compact space required careful placement of the USB-C PD board, DC-DC converter, and LED current controller to avoid interference with the optical path.
+The final design uses a modular approach where individual optical sections can be adjusted or replaced without rebuilding everything.
 
 ### TOSLINK: A Pragmatic Choice
 
