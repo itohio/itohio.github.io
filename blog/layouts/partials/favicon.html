@@ -1,0 +1,5 @@
+{{- $iconsDir := default "icons/" .Site.Params.iconsDir }}
+<link rel="icon" href="{{ absURL (printf "%sfavicon.ico" $iconsDir) }}" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ absURL (printf "%sfavicon-32x32.png" $iconsDir) }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ absURL (printf "%sfavicon-16x16.png" $iconsDir) }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ absURL (printf "%sapple-touch-icon.png" $iconsDir) }}">

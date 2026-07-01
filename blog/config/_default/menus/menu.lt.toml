@@ -1,9 +1,4 @@
 [[main]]
-  name = "ITOHI"
-  url = ""
-  weight = -1300
-
-[[main]]
   name = "Blogas"
   url = "blog/"
   weight = -300

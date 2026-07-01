@@ -5,36 +5,42 @@ showShare: false
 comments: false
 ---
 
-# What is ITOHI?
-ITOHI is an acronym for Invent This Invent That Open Hardware Inventions. This page hosts various Open Source and Open Hardware projects that I have created and wish to share with the world.
+## What is ITOHI?
 
-# Who am I
-My name is Andrius and I am a software engineer with a physics degree in telecommunication and electronics. My main passion lies in the research and development of various software as well as hardware projects. Mostly those projects stay in my closet collecting dust, however, the ITOHI project strives to change that.
+ITOHI — Invent This, Invent That, Open Hardware Inventions. A place for projects that probably shouldn't exist yet.
 
-I have decided to create all the projects as Open Source/Open Hardware so that the community could benefit from whatever I create or invent. In fact, the whole site source code is [Open Source](https://github.com/itohio/itohio.github.io) also! I am not planning to give it all for free, of course, mind you! Some of the projects will be growing towards a full-blown product for those who don't wish to solder anything from scratch or wish to save some time by purchasing modules or other electronic widgets that I'll put out for sale.
+***
 
-Until I reach the maturity of selling, you are free to support my inventing stuff by donating :)
+## Who am I?
 
-# Freelancing
-I've been having a really interesting career as a freelancer both in the hardware and software worlds. I take circuit engineering, and soldering jobs as well as development primarily using ASM, C/C++, C#, Python, Go languages for embedded platforms, or PC both Linux and Windows.
+My name is Andrius. My main strength is connecting hard technical dots to make things possible — the kind of things most people assume require a bigger team, more budget, or more time.
 
-I've been doing all kinds of projects ranging from some signal processing, and various process controllers to image processing and machine learning. When I was doing my Ph.D. I was writing various math-intensive algorithms as well as scientific apparatus controlling software that is being used even today.
+I have a physics degree in telecommunications and electronics, and I've spent the better part of two decades building at the intersection of hardware, firmware, and machine learning. The projects that interest me most live at the edge of what's technically feasible — where the answer requires knowing three unrelated fields at once.
 
-I've designed both hardware and software parts of the light spectrum analyzer that was used for liquid crystal research.
+Some examples of what that looks like in practice:
 
-I've built autonomous robots and written navigation AI for them.
+**Sand art installation** — a machine learning system that recognized when a participant started drawing pictures in sand and automatically saved clips for anyone to watch back.
 
-I've designed and built a massively parallel surveillance application.
+**Bus stop music box** — software and firmware for a public installation that lets people play music of their choosing while they wait for a bus.
 
-I've created a state-of-the-art algorithm for 3D model slicing designed for 3x independent printing heads 3D Printer during my CTO career at a 3D printer company. 
+**Visible light spectrometer** — a portable spectrometer built around a Raspberry Pi, OV9281 camera, and TOSLINK fiber optic coupling. Designed for both reflectance and transmittance measurements.
 
-Developed an OpenVRL engine - Opensource Virtual Reality Library for 3D simulations in C++ that could run using D3D as well as my software renderer and OpenGL...
+**Shahed drone detector** — a neural net trained to detect and classify Shahed drone acoustic signatures. Runs inference in the browser. Multiple detection classes, outperforms DSP-only approaches on accuracy.
 
-Developed C++ template library for training and running neural networks (from simple Perceptrons to LSTMs) on embedded platforms...
+**DARP** — a patented decentralized autonomous routing protocol developed over five years. Peer-to-peer mesh networking without central infrastructure.
 
-And many more...
+Currently prototyping a throwable WiFi CSI sensor for detecting life signs in enclosed spaces — designed to be deployed like a grenade, using the ESP32's onboard radio to detect human presence and movement without external sensors. Sub-$10 hardware, transmitting via ESP-NOW to a phone 10–20m away.
 
-Currently, I'm working as a freelancer on blockchain-related projects.
+I also build AI helper workflows for technical consultancy through [Mikonis Artisan MB](https://mikonis.lt).
 
-Anyway, if you have any kind of interesting project, I'd gladly participate - just let me know :)
-Also, feel free to support me using Github Sponsorship!
+***
+
+## How I work
+
+Projects find me more often than I find them. I work best on hard technical problems where someone needs a 0→1 builder — the person who figures out whether the thing is even possible, then builds it.
+
+I work well with independent researchers who need someone to actually construct the system, founders with unusual hardware problems, and anyone whose project keeps getting turned down by normal contractors because it's "too custom."
+
+→ [CV](/about/cv) if you need the formal version
+→ [GitHub](https://github.com/itohio) to see the work
+→ [Contact](/about/contact) if something here overlaps with what you're building

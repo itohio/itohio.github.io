@@ -9,3 +9,11 @@
   white-space: nowrap;
   border: 0;
 }
+
+/* Scale the nav wordmark by height; overrides the theme's max-width: 15rem */
+.nav_brand img.logo {
+  height: 48px;
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
