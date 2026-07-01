@@ -1,0 +1,17 @@
+# ITOHI — Andrius Mikonis
+
+> Hardware builds, AI systems, and defence tech experiments. Embedded firmware, ESP32, neural nets, WiFi CSI, open-source projects.
+
+## About
+- Author: Andrius Mikonis, software and AI consultant based in Vilnius, Lithuania
+- Company: Mikonis Artisan MB
+- Expertise: embedded systems, firmware, machine learning, defence tech prototyping, AI helpers
+
+## Key content
+- /blog/ — technical build logs and experiments
+- /esp-motion, /esp-reflow, /esp-weather — open hardware projects
+- /about/me — full background
+
+## Contact
+- https://linkedin.com/in/andriusmikonis
+- https://github.com/itohio
