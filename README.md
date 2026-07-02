@@ -14,9 +14,12 @@ In that case I need to simply run `hugo mod clean`, and then `hugo serve` again.
 
 ### Serve locally
 
+Prerequisites: **Hugo Extended 0.163.3** and **Dart Sass** (kept in sync with CI).
+
 ```sh
+scoop install hugo-extended sass
 cd blog
-go run github.com/gohugoio/hugo@v0.100.0 serve
+make serve   # or: hugo server
 ```
 
 ### Process images
