@@ -4,7 +4,6 @@ baseURL = 'https://itohi.com/'
 title = "ITOHI — Andrius Mikonis | Embedded Systems, AI & Defence Tech"
 copyright = "2022 @ ITOHI - All rights reserved"
 # canonifyurls = true
-paginate = 13
 theme = ["github.com/chipzoller/hugo-clarity"]
 disqusShortname = "www-itohi-com"
 
@@ -14,6 +13,9 @@ DefaultContentLanguage = "en"
 
 # [menus]
 # config/_default/menus/menu.xx.toml
+
+[pagination]
+pagerSize = 13
 
 [taxonomies]
 category = "categories"
