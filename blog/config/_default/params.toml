@@ -1,6 +1,11 @@
 # enable search
 enableSearch = true
 
+# Default content language, exposed to the theme's search JS so the English index
+# is fetched from the site root (/index.json) instead of /en/index.json.
+# Must match the top-level DefaultContentLanguage in config.toml.
+defaultContentLanguage = "en"
+
 # additional stylesheets loaded from the static directory (see static/css/)
 customCSS = ["css/custom.css"]
 

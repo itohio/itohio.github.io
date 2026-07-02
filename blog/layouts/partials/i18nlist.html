@@ -1,0 +1,14 @@
+{{/* Local override of theme partial: .Language.LanguageName -> .Language.Label
+     (LanguageName deprecated in Hugo v0.158.0). Keep in sync with upstream otherwise. */}}
+{{ $translationsSize := len .Translations }}
+{{ with .Translations }}
+<div class="post_i18n">
+  <h3 class="mb-0">{{ T "translations" }}:</h3>
+  <nav class="tags_nav">
+    {{ range $index, $_ := . }}
+      <a href="{{ .Permalink }}" class="post_tag button button_translucent">{{ replace (printf "%#v" .Language.Label) "\"" "" }}</a> 
+      <!-- {{ if lt $index (sub $translationsSize 1)}} |{{ end }} -->
+    {{ end }}
+    </nav>
+</div>
+{{ end }}
