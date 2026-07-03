@@ -112,5 +112,7 @@ nginx/run/*
 
 .hugo_build.lock
 blog/public
+# Generated Sass/asset cache — always rebuilt by Hugo/CI; committing it caused stale SRI hashes.
+blog/resources/
 
 .tmp/

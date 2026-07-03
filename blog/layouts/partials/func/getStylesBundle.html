@@ -1,0 +1,10 @@
+<!-- styles definition -->
+{{/* Local override: source maps disabled so the fingerprinted CSS stays deterministic and
+     its SRI hash matches the served file (a source-map comment appended post-fingerprint was
+     the cause of the dev-server "unstyled page" SRI mismatch). Transpiler is left at the
+     theme default (LibSass); switch to "dartsass" once upstream ships Dart-Sass-clean .sass. */}}
+{{ $options := (dict "targetPath" "css/styles.css" "outputStyle" "compressed" "enableSourceMap" false) }}
+{{ $mainSassFile := "sass/main.sass" }}
+{{ $styles := resources.Get $mainSassFile | resources.ExecuteAsTemplate $mainSassFile . | css.Sass $options | resources.Fingerprint "sha512" }}
+
+{{ return $styles }}

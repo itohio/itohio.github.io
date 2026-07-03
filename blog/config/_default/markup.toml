@@ -5,6 +5,11 @@
     xhtml = false
   [goldmark.extensions]
     typographer = false
+    [goldmark.extensions.passthrough]
+      enable = true
+      [goldmark.extensions.passthrough.delimiters]
+        block = [['$$', '$$'], ['\[', '\]']]
+        inline = [['$', '$'], ['\(', '\)']]
   [goldmark.parser]
     [goldmark.parser.attribute]
       block = true

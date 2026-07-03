@@ -1,53 +1,12 @@
 {{- partial "schema.html" . }}
 
 <!-- KaTeX for Math Rendering -->
+{{/* Math delimiters survive Markdown intact via Goldmark passthrough (config markup.toml),
+     so KaTeX renders the raw source directly — no DOM em/strong fixup needed. */}}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/contrib/auto-render.min.js"
     onload="
-        // Fix Goldmark's em/strong tag conversion in math blocks before rendering
-        // This is a workaround for Hugo < 0.132 which lacks passthrough extension
-        // IMPORTANT: Protect Mermaid blocks from KaTeX processing
-        // Save Mermaid blocks and replace with placeholders before DOM manipulation
-        const mermaidPlaceholders = new Map();
-        document.querySelectorAll('.mermaid, .mermaid[data-mermaid-content]').forEach((el, idx) => {
-            const placeholderId = 'mermaid-ph-' + idx;
-            const placeholder = document.createElement('div');
-            placeholder.id = placeholderId;
-            placeholder.className = 'mermaid-placeholder';
-            placeholder.style.display = 'none';
-            mermaidPlaceholders.set(placeholderId, el.outerHTML);
-            if (el.parentNode) {
-                el.parentNode.replaceChild(placeholder, el);
-            }
-        });
-        
-        // Now do KaTeX processing on the modified DOM (Mermaid blocks are protected)
-        document.body.innerHTML = document.body.innerHTML
-            // Fix display math blocks ($$...$$)
-            .replace(/(\$\$[\s\S]*?\$\$)/g, function(match) {
-                return match.replace(/<\/?em>/g, '_')
-                           .replace(/<\/?strong>/g, '**');
-            })
-            // Fix inline math ($...$) - negative lookbehind/ahead to avoid matching $$
-            // Also skip if preceded by backslash (escaped dollar sign)
-            .replace(/(?<!\\\\)(?<!\$)\$(?!\$)([^\$\n]+?)\$(?!\$)/g, function(match, content) {
-                // Skip if content looks like plain text (no LaTeX commands or special chars)
-                if (!/[\\\\{}^_]/.test(content)) {
-                    return match; // Leave it alone, probably not math
-                }
-                return '$' + content.replace(/<\/?em>/g, '_')
-                                   .replace(/<\/?strong>/g, '**') + '$';
-            });
-        
-        // Restore Mermaid blocks
-        mermaidPlaceholders.forEach((html, id) => {
-            const placeholder = document.getElementById(id);
-            if (placeholder && placeholder.parentNode) {
-                placeholder.outerHTML = html;
-            }
-        });
-        
         renderMathInElement(document.body, {
             delimiters: [
                 {left: '$$', right: '$$', display: true},
@@ -58,7 +17,6 @@
             throwOnError: false,
             trust: true,
             strict: false,
-            // Ignore text in script, noscript, style, textarea, pre, code, option, and mermaid tags
             ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option'],
             ignoredClasses: ['mermaid']
         });

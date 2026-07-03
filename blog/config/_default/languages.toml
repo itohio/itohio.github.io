@@ -1,10 +1,10 @@
 
 [en]
   title = "ITOHI — Andrius Mikonis | Embedded Systems, AI & Defence Tech"
-  LanguageName = "English"
+  label = "English"
   weight = 1
 
 [lt]
   title = "ITOHI"
-  LanguageName = "Lietuviškai"
+  label = "Lietuviškai"
   weight = 2
