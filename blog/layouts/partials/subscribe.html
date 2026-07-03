@@ -1,0 +1,20 @@
+{{- /* Email-subscription form (Buttondown). Single source of truth: rendered by
+       the footer and by the {{< subscribe >}} shortcode. Labels are i18n-driven.
+       No id/for on the field so the form stays valid even when it appears twice
+       on a page (e.g. footer + an in-content shortcode). */ -}}
+<section class="subscribe wrap">
+  <h3 class="subscribe_title">{{ T "subscribe_heading" }}</h3>
+  <form action="https://buttondown.com/api/emails/embed-subscribe/mikonis"
+        method="post"
+        class="subscribe_form embeddable-buttondown-form">
+    <label class="subscribe_field">
+      <span class="sr-only">{{ T "subscribe_email_label" }}</span>
+      <input class="subscribe_input" type="email" name="email" required
+             placeholder="{{ T "subscribe_email_placeholder" }}" />
+    </label>
+    <input class="subscribe_submit" type="submit" value="{{ T "subscribe_button" }}" />
+  </form>
+  <p class="subscribe_powered">
+    <a href="https://buttondown.com/refer/mikonis" target="_blank" rel="noopener">Powered by Buttondown.</a>
+  </p>
+</section>

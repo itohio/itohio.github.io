@@ -1,0 +1,11 @@
+[subscribe_heading]
+other = "Get new posts by email"
+
+[subscribe_email_label]
+other = "Email address"
+
+[subscribe_email_placeholder]
+other = "you@example.com"
+
+[subscribe_button]
+other = "Subscribe"
