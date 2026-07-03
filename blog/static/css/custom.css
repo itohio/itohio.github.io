@@ -66,6 +66,9 @@
 /* Subscribe modal (native <dialog>). Centering is forced here because the theme's
    margin reset overrides the UA-centered dialog. Solid white card reads well over
    the dimmed backdrop in both light and dark modes. */
+.subscribe_modal:not([open]) {
+  display: none;
+}
 .subscribe_modal {
   position: fixed;
   inset: 0;
