@@ -9,3 +9,6 @@ other = "jus@pavyzdys.lt"
 
 [subscribe_button]
 other = "Prenumeruoti"
+
+[close]
+other = "Uždaryti"

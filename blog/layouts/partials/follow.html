@@ -1,0 +1,30 @@
+{{- /* Local override: adds an email button among the follow icons that opens the
+       subscribe modal (see partials/subscribe-modal.html). Keep the rest in sync
+       with upstream. */ -}}
+{{- $base := absURL "" }}
+{{- $items := hugo.Data.social }}
+{{- $social := .Site.Menus.social }}
+{{- with $social }}
+  {{- $items = . }}
+{{- end }}
+<div class='follow'>
+  {{- range $items }}
+  {{- $url := .URL }}
+  {{- $label := lower .Name }}
+  {{- if eq $social nil }}
+    {{ $url = .url }}
+    {{ $label = lower .item }}
+  {{- end }}
+  {{- if and (eq (hasPrefix $url $base) false) (eq (hasPrefix $url "http") false) }}
+    {{ $url = absLangURL $url }}
+  {{- end }}
+  <a href="{{ $url }}">
+    {{ partial "sprite" (dict "icon" $label) }}
+  </a>
+  {{- end }}
+  <a href="#subscribe" class="follow_subscribe" data-subscribe-open
+     aria-label="{{ T "subscribe_heading" }}" title="{{ T "subscribe_heading" }}">
+    {{ partial "sprite" (dict "icon" "mail") }}
+  </a>
+  {{- partialCached "mode" . }}
+</div>

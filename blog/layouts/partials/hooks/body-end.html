@@ -1,0 +1,32 @@
+{{- /* Local override of the theme's (empty) body-end hook: render the subscribe
+       modal once per page and wire the open/close behaviour. */ -}}
+{{ partial "subscribe-modal.html" . }}
+<script>
+  (function () {
+    var dialog = document.getElementById("subscribe-dialog");
+    if (!dialog) return;
+
+    function open(event) {
+      if (event) event.preventDefault();
+      if (typeof dialog.showModal === "function") dialog.showModal();
+      else dialog.setAttribute("open", "");
+      var field = dialog.querySelector("input[type=email]");
+      if (field) field.focus();
+    }
+    function close() {
+      if (typeof dialog.close === "function") dialog.close();
+      else dialog.removeAttribute("open");
+    }
+
+    document.querySelectorAll("[data-subscribe-open]").forEach(function (trigger) {
+      trigger.addEventListener("click", open);
+    });
+    dialog.querySelectorAll("[data-subscribe-close]").forEach(function (button) {
+      button.addEventListener("click", close);
+    });
+    // Close when the backdrop (dialog padding area) is clicked.
+    dialog.addEventListener("click", function (event) {
+      if (event.target === dialog) close();
+    });
+  })();
+</script>

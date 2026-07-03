@@ -9,3 +9,6 @@ other = "you@example.com"
 
 [subscribe_button]
 other = "Subscribe"
+
+[close]
+other = "Close"
