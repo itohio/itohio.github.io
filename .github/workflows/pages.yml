@@ -1,11 +1,6 @@
 name: Build and Deploy to GitHub Pages
 
 on:
-  workflow_run:
-    workflows: ["Run Tests"]
-    branches: [main]
-    types: 
-      - completed
   push:
     branches:
       - main
@@ -36,11 +31,6 @@ defaults:
 
 jobs:
   build:
-    # Fixed: Handle case where workflow_run doesn't exist for push/workflow_dispatch
-    if: |
-      github.event_name == 'workflow_dispatch' || 
-      github.event_name == 'push' || 
-      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-22.04
     env:
       HUGO_VERSION: 0.163.3
