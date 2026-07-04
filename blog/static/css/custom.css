@@ -17,3 +17,99 @@
   max-width: none;
   margin: 0;
 }
+
+/* Email-subscription form (shared by the modal and the {{< subscribe >}} shortcode) */
+.subscribe {
+  text-align: center;
+  padding: 0.5rem 0.25rem;
+}
+.subscribe_title {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+.subscribe_form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+.subscribe_field {
+  margin: 0;
+}
+.subscribe_input {
+  padding: 0.55rem 0.75rem;
+  min-width: 16rem;
+  max-width: 100%;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  border-radius: 6px;
+  font: inherit;
+}
+.subscribe_submit {
+  padding: 0.55rem 1.1rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--theme, #0077b8);
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+.subscribe_submit:hover {
+  filter: brightness(1.08);
+}
+.subscribe_powered {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Subscribe modal (native <dialog>). Centering is forced here because the theme's
+   margin reset overrides the UA-centered dialog. Solid white card reads well over
+   the dimmed backdrop in both light and dark modes. */
+.subscribe_modal:not([open]) {
+  display: none;
+}
+.subscribe_modal {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(28rem, calc(100vw - 2rem));
+  height: max-content;
+  max-height: calc(100vh - 2rem);
+  padding: 1.75rem 1.5rem 1.25rem;
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  color: #1a1a1a;
+  background: #ffffff;
+}
+.subscribe_modal::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+.subscribe_close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.6rem;
+  border: 0;
+  background: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+}
+.subscribe_close:hover {
+  opacity: 1;
+}
+
+/* Email trigger in the follow-icons row inherits .follow a styling; only the
+   sidebar trigger needs icon+label spacing. */
+.subscribe_trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.subscribe_trigger .icon {
+  width: 1em;
+  height: 1em;
+}

@@ -53,9 +53,9 @@
   weight = 1
   url = "https://github.com/itohio"
 [[social]]
-  name = "twitter"
+  name = "x"
   weight = 2
-  url = "https://twitter.com/andriusmikonis"
+  url = "https://x.com/andriusmikonis"
 [[social]]
   name = "facebook"
   weight = 2
@@ -68,10 +68,10 @@
   name = "instagram"
   weight = 3
   url = "https://www.instagram.com/nopperabo_"
-# [[social]]
-#   name = "rss"
-#   weight = 4
-#   url = "index.xml"
+[[social]]
+  name = "rss"
+  weight = 4
+  url = "index.xml"
 
 # other supported social links
 # name = "youtube"

@@ -1,0 +1,6 @@
+{{- /* Subscribe modal: a native <dialog> wrapping the reusable subscribe form.
+       Opened by any [data-subscribe-open] trigger (follow icon, sidebar button). */ -}}
+<dialog id="subscribe-dialog" class="subscribe_modal" aria-label="{{ T "subscribe_heading" }}">
+  <button type="button" class="subscribe_close" data-subscribe-close aria-label="{{ T "close" }}">&times;</button>
+  {{ partial "subscribe.html" . }}
+</dialog>
