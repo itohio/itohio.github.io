@@ -1,7 +1,7 @@
 # set `baseurl` to your root domain
 # if you set it to "/" share icons won't work properly on production
 baseURL = 'https://itohi.com/'
-title = "ITOHI — Andrius Mikonis | Embedded Systems, AI & Defence Tech"
+title = "ITOHI — Open-Source Hardware, Embedded Systems & DIY Builds"
 copyright = "2022 @ ITOHI - All rights reserved"
 # canonifyurls = true
 theme = ["github.com/chipzoller/hugo-clarity"]
