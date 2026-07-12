@@ -12,10 +12,10 @@ customCSS = ["css/custom.css"]
 # socials
 twitter = "@andriusmikonis"
 largeTwitterCard = false # set to true if you want to show a large twitter card image. The default is a small twitter card image
-introDescription = "Invent This Invent That Open Hardware"
+introDescription = "Open-source hardware builds, embedded firmware, and DIY science instruments"
 introURL = "about/me" # set the url for the 'read more' button below the introDescription, or set to false to not show the button
-description = "Hardware builds, AI helpers, and defence tech experiments by Andrius Mikonis — embedded firmware, neural nets, ESP32, and open-source projects from Vilnius." # Set your site's meta tag (SEO) description here. Alternatively set this description in your home page content file e.g. content/_index.md. Whatever is set in the latter will take precedence.
-keywords = ["hardware", "pcb", "circuit", "arduino", "golang", "go", "tinygo", "embedded", "sigma dsp", "adau1701", "specroscopy", "inventions", "research", "sensors", "repair", "development", "engineering"] # Set your site's meta tag (SEO) keywords here. Alternatively set these in your home page content file e.g. content/_index.md. Whatever is set in the latter will take precedence.
+description = "Open-source hardware projects by Andrius Mikonis — DIY spectrometers, colorimeters, ESP32 firmware, robotics, and embedded systems builds from Vilnius." # Set your site's meta tag (SEO) description here. Alternatively set this description in your home page content file e.g. content/_index.md. Whatever is set in the latter will take precedence.
+keywords = ["open source hardware", "embedded systems", "DIY spectrometer", "colorimeter", "ESP32", "Raspberry Pi", "arduino", "golang", "tinygo", "color science", "spectroscopy", "fiber optics", "PCB design", "robotics", "electronics", "engineering", "golang", "go", "repair", "sensors"] # Set your site's meta tag (SEO) keywords here. Alternatively set these in your home page content file e.g. content/_index.md. Whatever is set in the latter will take precedence.
 
 # showShare = false # Uncomment to not show share buttons on each post. Also available in each post's front matter.
 

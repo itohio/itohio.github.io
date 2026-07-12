@@ -1,7 +1,7 @@
 ---
 title: "Building a Portable Visible Light Spectrometer with Raspberry Pi and Fiber Optics"
 date: 2026-02-21T19:48:00+02:00
-description: "Designing and building a compact, portable visible light spectrometer using a prism, monochrome camera, and fiber optic coupling for spectral measurements"
+description: "Build a portable DIY visible light spectrometer with Raspberry Pi Zero 2W, OV9281 monochrome camera, and TOSLINK fiber optic coupling. Full source code, 3D print files, and calibration guide included."
 thumbnail: "front.jpg"
 author: admin
 categories:
@@ -27,7 +27,7 @@ After successfully reverse engineering the CR30 colorimeter, I found myself want
 
 ![The portable spectrometer - compact and self-contained with 3.5" touch display](front.jpg)
 
-## The Motivation
+## Why Build a DIY Visible Light Spectrometer?
 
 While the [CR30 colorimeter](../reverse-engineering-cr30/) works great for surface measurements, it has limitations. I wanted a device that could:
 - Measure both reflectance, transmittance, and fluorescence spectra
@@ -42,7 +42,7 @@ Of course, professional compact units exist from Ocean Optics, Thor Labs, and ot
 
 I'm giving away all the print designs and source code. The Go software version is being developed in the [github.com/itohio/EasyRobot](https://github.com/itohio/EasyRobot) repository. However, you'll have to find your own compact prism. I got mine on AliExpress - they advertise it for gem quality inspection.
 
-## Design Philosophy: Prism vs. Diffraction Grating
+## Prism vs. Diffraction Grating: Choosing the Right Optic
 
 Most DIY spectrometers use diffraction gratings—often repurposed DVDs. While these work, they have limitations. I chose to use a jeweler's gem inspection prism instead, which offers several advantages:
 
@@ -134,7 +134,7 @@ With fiber optic coupling and potentially long light paths, maximizing throughpu
 
 The prism design's superior light collection makes the difference between useful measurements and unusably noisy data.
 
-## Hardware Architecture
+## Spectrometer Hardware Architecture: Raspberry Pi Zero 2W + OV9281
 
 The heart of the system consists of carefully selected components that balance performance, size, and power consumption:
 
@@ -308,7 +308,7 @@ The software works for basic measurements, but I've been procrastinating on sett
 - Good OpenCV bindings via GoCV
 - I've already invested in porting most of my CV and ML libraries to Go in my EasyRobot mega-library, so I just want to continue on the Go path :)
 
-## Calibration and Performance
+## Spectrometer Calibration and Wavelength Performance
 
 ### Wavelength Calibration
 
@@ -350,7 +350,7 @@ Early measurements show promising results:
 
 The non-linear prism dispersion is visible in the data but correctable through proper calibration curves. Once calibrated, this should provide accurate spectral measurements across the full range.
 
-## Comparison with Commercial Devices
+## DIY vs. Commercial Spectrometer: How Does It Compare?
 
 How does this compare to commercial spectrometers?
 
@@ -376,7 +376,7 @@ For hobby, education, and many practical applications, this represents excellent
 - LED/light source analysis
 - Educational demonstrations
 
-## Construction Challenges
+## Building the Spectrometer: Real Construction Challenges
 
 ### The 3D Printing Iteration Cycle
 
@@ -409,7 +409,7 @@ USB-C PD negotiation is wonderful when it works but can be finicky:
 
 Once properly configured, the PD board handles everything automatically, but getting there involved some debugging with a USB power analyzer and revealed incompatible power banks.
 
-## Future Improvements
+## Next Steps: Future Spectrometer Improvements
 
 ### Short Term
 - Complete wavelength calibration across full range
@@ -487,7 +487,7 @@ What makes this project particularly satisfying is the combination of discipline
 
 Each aspect presented unique challenges and learning opportunities. The fact that it actually works and produces sensible spectra is deeply gratifying.
 
-## Conclusion
+## Conclusion: Open-Source Portable Spectrometer Built from Scratch
 
 Building a portable spectrometer is an achievable project that provides powerful measurement capabilities. The combination of modern components (Raspberry Pi, monochrome camera modules, USB-C PD), clever optical design (prism dispersion, fiber coupling), and 3D printing makes it possible to create a device that would have been prohibitively expensive just a few years ago.
 
@@ -503,7 +503,7 @@ Now, if only I could stop procrastinating on that ARM build environment...
 
 *This project is ongoing. I'll update this post as I complete the calibration, finish the software, and gather more measurement data. If you're building something similar or have questions about the design choices, feel free to reach out.*
 
-## Technical Specifications
+## Spectrometer Technical Specifications
 
 **Optical System:**
 - Dispersive element: Jeweler's gem inspection prism
