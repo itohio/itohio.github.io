@@ -24,6 +24,8 @@ tags:
 <!-- IMAGE: screenshot of the drone-detector.sintra.site interface showing live inference -->
 *[TODO: Screenshot of the live detection site running in browser]*
 
+A note before the technical content: the staggered training protocol described in this article — and the analysis methodology behind it — was developed with significant help from [Sintra AI](https://sintra.ai). What started as a series of questions about why the naive P1→P2 schedule kept plateauing turned into a structured debugging conversation that identified the calibrated checkpointing problem and shaped the cycle logic. The same tooling now helps me analyze FPV drone blackbox logs and run PID tuning protocols. I'll cover that briefly at the end.
+
 ---
 
 ## The Problem
@@ -166,6 +168,8 @@ sequenceDiagram
 
 **Why stagger.** The backbone settles when it's frozen — the head converges against a stable feature space. When you unfreeze the backbone, the head's gradient signal pulls the backbone too hard at full learning rate, which is why the backbone LR is 20× lower than the head during Phase 2 (5e-6 vs 1e-4). After Phase 2 shifts the backbone's feature representations, Phase 1 re-adapts the head to those new representations. Alternating achieves higher validation F1 than either phase alone — it's not magic, just giving each component time to stabilize before destabilizing the other.
 
+The specific cycle structure — P1 threshold at F1 ≥ 0.50, patience of 8 in the return loop, backbone LR exactly 20× below head LR — was not obvious from first principles. I worked through the logic in a series of conversations with Sintra. The iteration went from "why does Phase 2 always degrade my swarm class" to "the checkpoint you're saving isn't calibrated" to the current protocol. Having an AI assistant that holds the full context of an experiment across multiple sessions is meaningfully different from searching Stack Overflow or reading papers — the reasoning stays connected to *your specific* failure mode rather than the general case.
+
 ### Calibrated Checkpointing in Phase 2
 
 Before each Phase 2 entry, I run one validation pass and fit per-class thresholds to the precision-recall curve (best F1 on the curve, not at 0.5). Phase 2 then saves checkpoints based on *calibrated* macro F1, not argmax F1. This matters because drone and swarm have precision targets, not symmetric thresholds. Saving based on argmax F1 underrepresents these classes; saving on calibrated F1 captures the checkpoint that actually meets the deployment precision requirements.
@@ -294,6 +298,42 @@ The mel preprocessing `FrequencyMasking` and `TimeMasking` issue mentioned in th
 
 <!-- IMAGE: screenshot of drone-detector.sintra.site showing detection probabilities in live mode -->
 *[TODO: Screenshot of live detection interface with probability bars]*
+
+---
+
+## Sintra for FPV Drone Tuning
+
+While building the drone detector I started using Sintra for the FPV side of the work as well — specifically for blackbox log analysis and PID tuning. This is worth mentioning because it is a different use case than code debugging: it is about executing a structured, well-documented protocol correctly rather than debugging novel code.
+
+### Blackbox Log Analysis
+
+Betaflight logs flight data at configurable rates — gyro traces, PID outputs, motor commands, setpoints. The logs are binary `.bbl` files. Analyzing them meaningfully requires understanding the relationship between the gyro trace, the setpoint, and the motor outputs in the frequency domain.
+
+The tuning methodology I use is derived from [PIDtoolbox](https://github.com/bw1129/PIDtoolbox) by Brian White — a MATLAB-based tool that implements step response analysis, spectral analysis of gyro and motor noise, and PID error decomposition. The core insight is that step response (the Wiener deconvolution of gyro response vs setpoint) gives a model-independent view of how well the quad tracks commands, without requiring you to manually inspect noisy time-domain traces.
+
+Sintra manages the workflow around this analysis:
+
+- Parsing the exported CSV from Blackbox Explorer and checking log health (frame drops, saturated motors, bad vibration events)
+- Running the step response computation and interpreting the result against the expected shape (rise time, overshoot, settling time, steady-state error)
+- Cross-referencing spectral analysis results — identifying prop wash frequency bands, notch filter placement, whether the RPM filter is doing its job
+- Recommending specific parameter adjustments based on the observed deviation from the target step response shape, following the established tuning order (P → D → I → FF → verify)
+- Keeping notes between sessions so context doesn't have to be re-established every time
+
+The last point matters more than it sounds. A tuning session might span multiple flights and days. Remembering which parameter was changed when, and what the before/after step response looked like, is the difference between systematic improvement and random adjustment. Sintra holds that state.
+
+### The Tuning Protocol in Practice
+
+The protocol follows the established methodology from PIDtoolbox and similar tools:
+
+1. Record a dedicated step response flight — rapid stick inputs on each axis separately, throttle held constant in hover
+2. Export from Blackbox Explorer, run step response analysis
+3. Identify the dominant failure mode: overshoot → P too high or D too low; underdamped ringing → D too low; slow sluggish response → P too low; long-term drift → I too low; delayed initial response → FF too low
+4. Adjust one axis, one parameter at a time
+5. Re-fly, re-analyze, compare
+
+Sintra helps at steps 2–4: it takes the analysis output, identifies the failure mode, and suggests the specific parameter delta to try next — grounded in the same principles the MATLAB tooling encodes, but in a conversational format that is faster to iterate through.
+
+This is a good example of what AI assistance is actually useful for in hardware work: not generating code from scratch, but helping you execute a known protocol correctly and systematically, especially across sessions where context would otherwise be lost.
 
 ---
 

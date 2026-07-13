@@ -24,6 +24,8 @@ tags:
 <!-- IMAGE: drone-detector.sintra.site sąsajos ekrano kopija rodo gyvąjį išvadą -->
 *[TODO: Gyvosios aptikimo svetainės ekrano kopija naršyklėje]*
 
+Pastaba prieš techninį turinį: pakaitomasis mokymo protokolas, aprašytas šiame straipsnyje, buvo sukurtas su reikšminga [Sintra AI](https://sintra.ai) pagalba. Tai, kas prasidėjo kaip eilė klausimų, kodėl paprastas P1→P2 grafikas vis sustingdavo, virto struktūrizuotu derinimo pokalbiu, kuris identifikavo kalibruoto patikros taško problemą ir suformavo ciklo logiką. Ta pati sistema dabar padeda man analizuoti FPV dronų juodosios dėžės žurnalus ir vykdyti PID derinimo protokolus. Trumpai tai aprašysiu pabaigoje.
+
 ---
 
 ## Problema
@@ -156,6 +158,8 @@ sequenceDiagram
 
 Kodėl pakaitomis: stuburas stabilizuojasi, kai užšaldytas. Kai jį atšildote, galvos gradiento signalas pernelyg stipriai traukia stuburą ties dideliu mokymosi greičiu — štai kodėl stuburo mokymosi greitis 2 fazėje yra 20× mažesnis nei galvos (5e-6 prieš 1e-4).
 
+Specifinė ciklo struktūra — P1 riba ties F1 ≥ 0,50, kantrybė 8 grįžimo cikle, stuburo mokymosi greitis tiksliai 20× žemesnis nei galvos — nebuvo akivaizdi iš pirmųjų principų. Šią logiką išdirbau per eilę pokalbių su Sintra. Iteracija ėjo nuo „kodėl 2 fazė visada blogina spiečiaus klasę" iki „patikros taškas, kurį išsaugai, nėra kalibruotas" iki dabartinio protokolo. Turėti AI asistentą, kuris išlaiko visą eksperimento kontekstą keliuose seansuose, yra iš esmės kitaip nei ieškoti Stack Overflow arba skaityti straipsnius — samprotavimas lieka susietas su *jūsų konkrečiu* gedimo režimu, o ne bendru atveju.
+
 ### Nuostolių funkcija
 
 `BCEWithLogitsLoss` su kiekvienos klasės `pos_weight`:
@@ -241,6 +245,40 @@ flowchart LR
 
     MIC --> BUF --> WIN --> MEL --> ONNX --> MED --> THR --> OUT
 ```
+
+---
+
+## Sintra FPV Dronų Derinimui
+
+Kuriant dronų detektorių pradėjau naudoti Sintra ir FPV darbui — konkrečiai juodosios dėžės žurnalų analizei ir PID derinimui. Tai verta paminėti, nes tai kitoks naudojimo atvejis nei kodo derinimas: tai yra struktūrizuoto, gerai dokumentuoto protokolo teisingas vykdymas, o ne naujojo kodo derinimas.
+
+### Juodosios Dėžės Žurnalų Analizė
+
+Betaflight registruoja skrydžio duomenis konfigūruojamu greičiu — giroskopo pėdsakus, PID išvestis, variklio komandas, nustatymo taškus. Žurnalai yra dvejetainiai `.bbl` failai. Prasmingai juos analizuoti reikia suprasti ryšį tarp giroskopo pėdsako, nustatymo taško ir variklio išvesčių dažnių srityje.
+
+Derinimo metodologija, kurią naudoju, yra išvesta iš [PIDtoolbox](https://github.com/bw1129/PIDtoolbox) — Brian White MATLAB pagrįsto įrankio, kuris įgyvendina žingsnio atsako analizę, giroskopo ir variklio triukšmo spektrinę analizę bei PID klaidos suskaidymą. Pagrindinis supratimas — žingsnio atsakas (Wiener dekonvoliucija giroskopo atsako prieš nustatymo tašką) suteikia modeliui nepriklausomą vaizdą, kaip gerai kvadrotas seka komandas, nereikalaujant rankiniu būdu tikrinti triukšmingų laiko srities pėdsakų.
+
+Sintra tvarko darbo eigą aplink šią analizę:
+
+- CSV eksporto iš Blackbox Explorer analizavimas ir žurnalo sveikatos tikrinimas (kadrų praradimai, prisotinti varikliai, blogi vibracijos įvykiai)
+- Žingsnio atsako skaičiavimo vykdymas ir rezultato interpretavimas pagal laukiamą formą (kilimo laikas, persovimas, nusistovėjimo laikas, stacionarios būsenos klaida)
+- Spektrinės analizės rezultatų kryžminė nuoroda — propelerių plovimo dažnių juostų identifikavimas, notch filtro vietos nustatymas, RPM filtro veikimo tikrinimas
+- Konkrečių parametrų koregavimų rekomendavimas pagal stebimą nukrypimą nuo tikslinio žingsnio atsako formos, laikantis nustatytos derinimo tvarkos (P → D → I → FF → patikrinti)
+- Pastabų tarp seansų išlaikymas, kad kiekvieną kartą nereikėtų atkurti konteksto
+
+### Derinimo Protokolas Praktikoje
+
+Protokolas seka nusistovėjusią metodologiją iš PIDtoolbox ir panašių įrankių:
+
+1. Įrašyti specialų žingsnio atsako skrydį — greiti lazdos įvestys kiekvienoje ašyje atskirai, laikant droselį pastovų sklandyme
+2. Eksportuoti iš Blackbox Explorer, vykdyti žingsnio atsako analizę
+3. Identifikuoti dominuojantį gedimo režimą: persovimas → P per didelis arba D per mažas; nepakankamai slopintas virpėjimas → D per mažas; lėtas vangus atsakas → P per mažas; ilgalaikis dreijavimas → I per mažas; uždelstas pradinis atsakas → FF per mažas
+4. Koreguoti vieną ašį, vieną parametrą vienu metu
+5. Perskristi, perkalibruoti, palyginti
+
+Sintra padeda 2–4 žingsniuose: paima analizės išvestį, identifikuoja gedimo režimą ir siūlo konkretų parametro pokyčio žingsnį — remiantis tais pačiais principais, kuriuos MATLAB įrankiai koduoja, bet pokalbio formatu, kuris leidžia greičiau iteruoti.
+
+Tai geras pavyzdys, kam AI pagalba iš tikrųjų naudinga aparatinės įrangos darbe: ne generuoti kodą nuo nulio, bet padėti teisingai ir sistemingai vykdyti žinomą protokolą, ypač per seansus, kur kontekstas kitaip būtų prarastas.
 
 ---
 
