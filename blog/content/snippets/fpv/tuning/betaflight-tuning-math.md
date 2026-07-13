@@ -297,11 +297,11 @@ This gives you the best of both worlds: reduced D noise and heat during cruise, 
 
 **CLI commands:**
 ```
-set roll_d_min = 20    # D value at rest
-set roll_d_max = 30    # D value at max stick velocity (same as old D slider position)
+set d_min_roll = 20    # base D (applied at rest)
+set d_roll = 30        # D_max — the peak D reached at high stick velocity
 ```
 
-Set `d_max = 0` (and d_min = your D value) to disable d_min/d_max and use a fixed D — required for clean tuning data flights.
+Set `d_min_roll` equal to `d_roll` (both = your D value) to disable the dynamic D range and fly with a fixed D — required for clean tuning data flights.
 
 ---
 

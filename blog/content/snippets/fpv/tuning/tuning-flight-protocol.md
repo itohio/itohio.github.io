@@ -46,7 +46,7 @@ get blackbox_sample_rate  # should be 1/1 (full rate) or 1/2
 
 # Debug mode — choose based on your goal:
 # For spectral/chirp analysis:
-set debug_mode = FFT_FREQ   # BF 4.5+ (replaced GYRO_SCALED)
+set debug_mode = FFT_FREQ   # logs the detected noise-peak frequencies
 # For CHIRP autotune:
 set debug_mode = CHIRP
 

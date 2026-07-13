@@ -50,7 +50,7 @@ Presets are a starting point. After applying:
 3. **Reduce feedforward** if the quad feels twitchy on slow pans:
    ```
    set feedforward_transition = 100
-   set ff_interpolate_sp = AVERAGED_4
+   set feedforward_averaging = 4_POINT
    ```
 4. **Tune rates to 333 or 433** — cinematic flying rarely needs more than 400 °/s max roll.
 5. **Enable I-term relax** if you see bounce-back after rolls:

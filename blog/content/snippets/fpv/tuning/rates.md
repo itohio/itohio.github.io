@@ -6,19 +6,21 @@ category: "fpv"
 tags: ["fpv", "betaflight", "rates", "tuning", "freestyle"]
 ---
 
-Rates control how fast the drone rotates in response to stick input. Higher rates = faster rotation = more aggressive feel. Three numbers describe a rate profile in shorthand: **RC Rate · Super Rate · Expo** (or equivalent in other rate styles).
+Rates control how fast the drone rotates in response to stick input. Higher rates = faster rotation = more aggressive feel. A rate profile is shaped by three parameters — **RC Rate**, **Super Rate**, and **Expo** — plus the choice of rate *system* (Betaflight, Actual, etc.).
 
 ---
 
 ## Common Shorthand Profiles
 
-| Profile   | Feel             | Use case                              |
-|-----------|------------------|---------------------------------------|
-| **733**   | Fast & snappy    | Freestyle, flips, experienced pilots  |
-| **633**   | Medium-fast      | Freestyle / racing crossover          |
-| **533**   | Moderate         | Cruising, cinematic, learning tricks  |
+The `533 / 633 / 733` shorthand names a profile by its **maximum rotation rate in °/s** — `733` peaks near 730 °/s, `533` near 530 °/s:
 
-The three digits map to **RC Rate · Super Rate · Expo** in Betaflight's default *Betaflight* rate style.
+| Profile   | Max rate  | Feel             | Use case                              |
+|-----------|-----------|------------------|---------------------------------------|
+| **733**   | ~733 °/s  | Punchy           | Freestyle, flips, confident pilots    |
+| **633**   | ~633 °/s  | Balanced         | General freestyle / cruising          |
+| **533**   | ~533 °/s  | Mellow           | Learning acro, racing lines, cinematic |
+
+All three use a fixed **Super Rate 0.70** with RC Rate stepped up (0.80 / 0.95 / 1.10). For the exact values in both rate systems, with copy-paste CLI and graphs, see [Rate Presets](../rate-presets/).
 
 ---
 
@@ -40,16 +42,16 @@ For the default Betaflight rate style:
 maxRate = (RC Rate × 200) × (1 / (1 - Super Rate))
 ```
 
-Example — profile **733** (RC Rate 0.7, SR 0.33, Expo 0.3):
+Example — profile **733** (RC Rate 1.1, Super Rate 0.7):
 ```
-maxRate = (0.7 × 200) × (1 / (1 - 0.33))
-        = 140 × 1.49
-        ≈ 209 °/s
+maxRate = (1.1 × 200) × (1 / (1 - 0.7))
+        = 220 × 3.33
+        ≈ 733 °/s
 ```
 
-> **Expo does not change the maximum.** Expo only softens the curve between center and full stick; at full deflection the output returns to the same `maxRate`. To go faster you raise RC Rate or Super Rate, not Expo.
+This is why the shorthand number *is* the max rate: with Super Rate fixed at 0.70 the denominator is 0.30, so `maxRate = 666.7 × RC Rate`.
 
-> These `RC · SR · Expo` shorthand profiles use a modest Super Rate (0.33), so their max rates are gentle (~150–210 °/s). Punchy freestyle and racing tunes run Super Rate 0.5–0.75 for 600–900 °/s — see [Rate Modes](../rate-modes/). Use the Rates Preview tab in Betaflight Configurator to see the real curve for any values.
+> **Expo does not change the maximum.** Expo only softens the curve between center and full stick; at full deflection the output returns to the same `maxRate`. To go faster you raise RC Rate or Super Rate, not Expo. Use the Rates Preview tab in Betaflight Configurator to see the real curve for any values.
 
 ---
 
@@ -70,9 +72,9 @@ Betaflight supports multiple rate styles — each uses the same three sliders bu
 
 ## Practical Tips
 
-- Start with **533** when learning; the center softness (Expo 0.3) keeps hover precise.
-- Move to **633** or **733** when you want to throw the quad into snappy flips without full-deflection slow-down.
-- Expo above 0.5 feels "laggy" at center for experienced pilots — keep it ≤ 0.35 for freestyle.
+- Start with **533** when learning; the lower max rate keeps rotations slow and controllable.
+- Move to **633** or **733** when you want faster flips and a livelier center.
+- Add a little **Expo** (0.10–0.20) if the center feels twitchy — it softens fine control without changing the max rate. Above ~0.5 it starts to feel "laggy" at center.
 - Rates are per-axis. Most pilots copy the same profile across Roll, Pitch, Yaw — but yaw is often set slightly lower for cleaner spins.
 
 ---
@@ -83,20 +85,20 @@ Betaflight supports multiple rate styles — each uses the same three sliders bu
 # View current rates
 rates
 
-# Set Betaflight style rates on Roll axis
-set roll_rc_rate = 70
-set roll_super_rate = 33
-set roll_expo = 30
+# Set a 733 profile (legacy Betaflight style) on Roll
+set roll_rc_rate = 110
+set roll_srate = 70
+set roll_expo = 0
 
 # Copy same values to Pitch
-set pitch_rc_rate = 70
-set pitch_super_rate = 33
-set pitch_expo = 30
+set pitch_rc_rate = 110
+set pitch_srate = 70
+set pitch_expo = 0
 
-# Lower yaw slightly
-set yaw_rc_rate = 60
-set yaw_super_rate = 30
-set yaw_expo = 25
+# Lower yaw slightly for cleaner spins
+set yaw_rc_rate = 95
+set yaw_srate = 70
+set yaw_expo = 0
 
 save
 ```

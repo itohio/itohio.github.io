@@ -79,7 +79,7 @@ set blackbox_sample_rate = 1/1       # full rate — needed for spectral analysi
 set blackbox_mode = NORMAL           # always logging when armed
 
 # Debug mode — critical for spectral view in Blackbox Explorer:
-set debug_mode = FFT_FREQ            # replaced gyro_scale in BF 4.5+
+set debug_mode = FFT_FREQ            # logs detected noise-peak frequencies for the spectral view
 
 save
 ```

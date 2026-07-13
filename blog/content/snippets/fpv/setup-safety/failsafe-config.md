@@ -51,17 +51,17 @@ Configurator → **Failsafe** tab:
 
 ```
 # Stage 1
-set failsafe_delay = 4         # 4 × 0.1s = 400ms guard time before Stage 1
-set failsafe_off_delay = 10    # 10 × 0.1s = 1s before Stage 2
+set failsafe_delay = 4         # 4 × 0.1s = 400ms guard time before Stage 2 triggers
+set failsafe_off_delay = 10    # 10 × 0.1s = 1s of landing before motors cut (Stage 2 duration)
 
 # Stage 2 procedure
-set failsafe_procedure = GPS-RESCUE  # or DROP or LAND
+set failsafe_procedure = GPS-RESCUE  # or DROP or AUTO-LAND
 
-# Throttle value during LAND procedure (0–2000)
+# Throttle held during the AUTO-LAND procedure (0–2000); for GPS-RESCUE set to hover
 set failsafe_throttle = 1300   # slightly below hover
 
-# Minimum throttle during landing approach
-set failsafe_throttle_low_delay = 100  # 10s at low throttle before disarm
+# If throttle was already low this long before failsafe, just disarm instead of landing
+set failsafe_throttle_low_delay = 100  # 100 × 0.1s = 10s
 ```
 
 ---

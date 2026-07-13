@@ -22,7 +22,7 @@ Moving a gimbal stick from center to full deflection does not produce a linear i
     "datasets": [
       {
         "label": "Stability Zone (0–20%)",
-        "data": [220, 220, 220, null, null, null, null, null, null, null, null],
+        "data": [760, 760, 760, null, null, null, null, null, null, null, null],
         "backgroundColor": "rgba(34, 197, 94, 0.13)",
         "borderColor": "transparent",
         "borderWidth": 0,
@@ -32,7 +32,7 @@ Moving a gimbal stick from center to full deflection does not produce a linear i
       },
       {
         "label": "Normal Flying (20–70%)",
-        "data": [null, null, 220, 220, 220, 220, 220, 220, null, null, null],
+        "data": [null, null, 760, 760, 760, 760, 760, 760, null, null, null],
         "backgroundColor": "rgba(59, 130, 246, 0.10)",
         "borderColor": "transparent",
         "borderWidth": 0,
@@ -42,7 +42,7 @@ Moving a gimbal stick from center to full deflection does not produce a linear i
       },
       {
         "label": "Tricks & Flicks (70–100%)",
-        "data": [null, null, null, null, null, null, null, 220, 220, 220, 220],
+        "data": [null, null, null, null, null, null, null, 760, 760, 760, 760],
         "backgroundColor": "rgba(249, 115, 22, 0.13)",
         "borderColor": "transparent",
         "borderWidth": 0,
@@ -51,8 +51,8 @@ Moving a gimbal stick from center to full deflection does not produce a linear i
         "order": 10
       },
       {
-        "label": "533 — Cinematic / Learning",
-        "data": [0, 7.3, 15.2, 24.2, 34.3, 46.1, 60.1, 76.6, 96.4, 120.3, 149.3],
+        "label": "533 — Mellow / Learning (max 533°/s)",
+        "data": [0, 17.2, 37.2, 60.8, 88.9, 123.1, 165.5, 219.6, 290.9, 389.2, 533.3],
         "borderColor": "rgba(34, 197, 94, 1)",
         "backgroundColor": "transparent",
         "borderWidth": 2.5,
@@ -62,8 +62,8 @@ Moving a gimbal stick from center to full deflection does not produce a linear i
         "order": 1
       },
       {
-        "label": "633 — All-round Freestyle",
-        "data": [0, 8.7, 18.3, 29.0, 41.2, 55.4, 72.1, 91.9, 115.7, 144.4, 179.1],
+        "label": "633 — All-round Freestyle (max 633°/s)",
+        "data": [0, 20.4, 44.2, 72.2, 105.6, 146.2, 196.6, 260.8, 345.5, 462.2, 633.3],
         "borderColor": "rgba(59, 130, 246, 1)",
         "backgroundColor": "transparent",
         "borderWidth": 2.5,
@@ -73,8 +73,8 @@ Moving a gimbal stick from center to full deflection does not produce a linear i
         "order": 1
       },
       {
-        "label": "733 — Aggressive Freestyle",
-        "data": [0, 10.2, 21.3, 33.8, 48.1, 64.6, 84.1, 107.2, 135.0, 168.5, 209.0],
+        "label": "733 — Punchy Freestyle (max 733°/s)",
+        "data": [0, 23.7, 51.2, 83.5, 122.2, 169.2, 227.6, 302.0, 400.0, 535.1, 733.3],
         "borderColor": "rgba(249, 115, 22, 1)",
         "backgroundColor": "transparent",
         "borderWidth": 2.5,
@@ -91,7 +91,7 @@ Moving a gimbal stick from center to full deflection does not produce a linear i
     "plugins": {
       "title": {
         "display": true,
-        "text": "Rotation Rate vs Stick Position — Betaflight Style (RC Rate · SR 0.33 · Expo 0.3)"
+        "text": "Rotation Rate vs Stick Position — 533 / 633 / 733 (Super Rate 0.70, Expo 0)"
       },
       "legend": { "position": "bottom" }
     },
@@ -101,7 +101,7 @@ Moving a gimbal stick from center to full deflection does not produce a linear i
       },
       "y": {
         "beginAtZero": true,
-        "max": 220,
+        "max": 760,
         "title": { "display": true, "text": "Rotation rate (°/s)" }
       }
     }
@@ -115,9 +115,9 @@ Moving a gimbal stick from center to full deflection does not produce a linear i
 
 ### Zone 1 — Stability (0–20% stick, green band)
 
-The very beginning of stick travel is where the expo does its heaviest work. With Expo = 0.3, the response curve bends toward the x-axis in this region, making the stick feel soft and forgiving.
+The very beginning of stick travel is the flattest part of the curve. Super Rate 0.70 saves the steep response for the stick edges, so the center stays gentle and forgiving (adding a little Expo flattens it further still).
 
-At 5% stick deflection on a 533 profile, the rotation rate is only **3.6 °/s** — less than **0.7 °/s per 1% of stick movement**. On a 733 profile it's still just **1.0 °/s per 1%** in this zone. The math means small unintentional stick movements cause almost no rotation: wobble from hand tremor, wind buffeting the quad back to the sticks, or an arm not fully relaxed — all absorbed here.
+At 5% stick deflection on a 533 profile, the rotation rate is only **8.3 °/s** — about **1.6 °/s per 1% of stick movement**. On a 733 profile it's **2.2 °/s per 1%** in this zone. Either way, small unintentional stick movements cause little rotation: hand tremor, wind buffeting the quad back to the sticks, or an arm not fully relaxed — mostly absorbed here.
 
 **This zone is your hover zone.** A quad hovering in place sits somewhere in this range. The lower the sensitivity here, the easier it is to hold a stable position or make slow, cinematic pans. Beginners benefit most — every training flight is spent in this zone.
 
@@ -125,17 +125,17 @@ At 5% stick deflection on a 533 profile, the rotation rate is only **3.6 °/s** 
 
 The middle section of the curve is where you spend most of your flight time. This region should feel **roughly linear** — consistent response to stick input so the quad goes where you point it without surprises.
 
-The expo curve's contribution here is minimal. At 50% stick on 533, the rate is 46 °/s; at 50% on 733, it's 65 °/s. The difference between profiles becomes more noticeable here — 533 feels gentle and smooth, 733 feels punchy and alive.
+At 50% stick on 533 the rate is 123 °/s; at 50% on 733 it's 169 °/s. The difference between profiles becomes more noticeable here — 533 feels gentle and smooth, 733 feels punchy and alive.
 
-**Why "roughly linear" matters:** if the middle section has too much curvature (very high expo), transitions from hover into medium-speed flight feel jerky — the stick suddenly becomes much more sensitive as you push out of the center zone. A good tune has the transition seamless enough that you don't notice it. Expo 0.3 achieves this; Expo 0.5 or higher starts to create a noticeable "dead zone → suddenly alive" feel.
+**Why "roughly linear" matters:** if the middle section has too much curvature, transitions from hover into medium-speed flight feel jerky — the stick suddenly becomes much more sensitive as you push out of the center zone. A good tune keeps the transition seamless enough that you don't notice it. A modest amount of Expo (0.10–0.20) helps; Expo above ~0.5 starts to create a noticeable "dead center → suddenly alive" feel.
 
 ### Zone 3 — Tricks & Flicks (70–100% stick, orange band)
 
-Full stick deflection is where Super Rate kicks in hardest. The curve steepens noticeably — on 733, the last 5% of stick travel (95%→100%) adds **4.2 °/s per 1%** compared to **1.0 °/s per 1%** at the center.
+Full stick deflection is where Super Rate kicks in hardest. The curve steepens noticeably — on 733, the last 5% of stick travel (95%→100%) adds **~22 °/s per 1%** compared to **~2.2 °/s per 1%** at the center — roughly a 10× swing in sensitivity from center to edge.
 
 This zone provides the "snap" for split-S maneuvers, power loops, and flips. You don't spend much time here during a flight — these are momentary full-deflection inputs. Having the rate high in this zone means tricks are snappy and fast without the entire stick feeling aggressive.
 
-**Practical implication:** raising Super Rate makes tricks faster and snappier but does not affect hover precision (the expo still controls center sensitivity independently). This is why a skilled pilot can run aggressive rates (SR 0.33–0.5) while still landing smoothly — precision lives in Zone 1, speed lives in Zone 3.
+**Practical implication:** Super Rate concentrates the extra speed at the edges, so a high max rate does not have to mean a twitchy center. This is why a skilled pilot can run 733 (or higher) while still landing smoothly — precision lives in Zone 1, speed lives in Zone 3.
 
 ---
 
@@ -143,11 +143,11 @@ This zone provides the "snap" for split-S maneuvers, power loops, and flips. You
 
 | Profile | Center sensitivity (°/s per 1% stick) | Full deflection sensitivity |
 |---------|---------------------------------------|-----------------------------|
-| 533     | 0.72 °/s / 1%                         | 3.0 °/s / 1%                |
-| 633     | 0.86 °/s / 1%                         | 3.6 °/s / 1%                |
-| 733     | 1.00 °/s / 1%                         | 4.2 °/s / 1%                |
+| 533     | 1.6 °/s / 1%                          | 15.9 °/s / 1%               |
+| 633     | 1.9 °/s / 1%                          | 18.9 °/s / 1%               |
+| 733     | 2.2 °/s / 1%                          | 21.9 °/s / 1%               |
 
-A 733 pilot at center stick is only 39% more sensitive than a 533 pilot. At full deflection they're 40% faster. The expo curve **preserves relative precision** across profiles.
+A 733 pilot's center stick is only ~38% more sensitive than a 533 pilot's, and full deflection is ~38% faster. Because only RC Rate changes, the whole curve scales together — the center-to-edge *ratio* (~10×) is identical across all three profiles.
 
 ---
 
@@ -308,12 +308,12 @@ This gives you a per-flight average. After 3–5 flights, you'll have a stable e
 
 | Setting         | What to set it to                          |
 |-----------------|--------------------------------------------|
-| Expo            | 0.3 for freestyle; 0.4–0.5 for cinematic   |
-| RC Rate         | 0.5–0.7 depending on desired max speed     |
-| Super Rate      | 0.3–0.4 for most use; 0.5+ for racers      |
+| RC Rate         | 0.80–1.10 for the 533–733 family (sets the max rate) |
+| Super Rate      | 0.70 for the 533/633/733 family; higher = harder edge |
+| Expo            | 0 by default; add 0.10–0.20 to soften the center |
 | Throttle Expo   | 0.3 for most builds                        |
 | Throttle Mid    | Measured hover point (method above) ≈ 0.45–0.55 |
 
-Tune expo and rates first in a simulator where crashes have no cost. Then move to the field and use OSD/blackbox to dial in throttle mid.
+Tune rates and expo first in a simulator where crashes have no cost. Then move to the field and use OSD/blackbox to dial in throttle mid.
 
-See also: [Rates shorthand (733, 633, 533)](../rates/) for a compact reference on profile values.
+See also: [Rate Presets (733 / 633 / 533)](../rate-presets/) for the exact values and copy-paste CLI in both rate systems.

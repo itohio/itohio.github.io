@@ -104,17 +104,32 @@ Leave it **off** by default — as long as the ESC's current rating suits the bu
 
 ---
 
-## Recommended starting point (5" quad)
+## Recommended starting points by class
 
-| Setting                | Value                          |
+These protections are the same on every build, from a 65 mm whoop to a 5":
+
+| Always                 | Value                          |
 |------------------------|--------------------------------|
-| Demag Compensation     | Default (raise to High on 6S / desync) |
-| Rampup / Startup Power | Default                        |
-| Low RPM Power Protect  | On (or On Adaptive)            |
 | Temperature Protection | Enabled (~140–150 °C)          |
 | Current Protection     | Off                            |
-| Low Voltage Protection | Off                            |
+| Low Voltage Protection | Off (the FC handles vbat)      |
 | Stall Protection       | Off                            |
+| Brake on Stop          | Off                            |
+
+What actually scales with prop size is **demag** and **startup**: smaller, lower-voltage builds pull little current and rarely desync, so they need less demag protection; startup/rampup only needs attention when a motor won't break away cleanly.
+
+| Prop size (example) | Typical pack | Demag compensation            | Startup / Rampup                        | Low RPM Power Protect |
+|---------------------|--------------|-------------------------------|-----------------------------------------|-----------------------|
+| 35 mm (Air65)       | 1S           | Default — won't need High     | Default; raise a little if motors stall on arm | On             |
+| 45 mm (Meteor65)    | 1S           | Default — won't need High     | Default; raise a little if motors stall on arm | On             |
+| 1.6"                | 1S–2S        | Default                       | Default                                 | On                    |
+| 2"                  | 2S–3S        | Default                       | Default                                 | On                    |
+| 2.2"                | 3S–4S        | Default                       | Default                                 | On                    |
+| 2.5"                | 4S           | Default                       | Default                                 | On                    |
+| 3"                  | 4S–6S        | Default; High if desync       | Default                                 | On                    |
+| 5"                  | 4S–6S        | Default; High on 6S or desync | Default                                 | On (or Adaptive)      |
+
+> Whoop and micro ESCs often run **BLHeli_S**, which exposes fewer knobs (demag Off/Low/High and a startup-power slider, no current limit). The guidance is the same — leave the defaults, and only raise demag if you get cutouts.
 
 Change one thing at a time and confirm with a **full-throttle punch session**, then check motor temps on landing. Most desync fixes are: raise demag, lower rampup, and confirm timing isn't set too aggressively.
 

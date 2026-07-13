@@ -24,14 +24,13 @@ GPS Rescue is Betaflight's return-to-home failsafe. When triggered (link loss, l
 set gps_provider = UBLOX       # or NMEA for generic modules
 set gps_baudrate = 115200      # match GPS module baud rate
 
-set gps_rescue_angle = 30      # max tilt angle during rescue (degrees)
-set gps_rescue_initial_climb = 15  # climb height above arm point (m)
-set gps_rescue_altitude = 30   # target cruise altitude during rescue (m)
-set gps_rescue_return_alt = 30 # altitude for return flight
-set gps_rescue_speed = 300     # return speed (cm/s = 3 m/s)
-set gps_rescue_descent_dist = 20 # meters from home to start descending
-set gps_rescue_landing_alt = 5  # altitude to switch to landing mode
-set gps_rescue_disarm_threshold = 15  # crash detection on landing
+set gps_rescue_max_angle = 30       # max tilt angle during rescue (degrees)
+set gps_rescue_initial_climb = 15   # climb above arm point before heading home (m)
+set gps_rescue_return_alt = 30      # cruise altitude for the return flight (m)
+set gps_rescue_ground_speed = 750   # return speed (cm/s ≈ 27 km/h)
+set gps_rescue_descent_dist = 20    # meters from home where descent begins
+set gps_rescue_descend_rate = 150   # descent speed approaching home (cm/s)
+set gps_rescue_disarm_threshold = 15  # impact detection for auto-disarm on landing
 
 save
 ```

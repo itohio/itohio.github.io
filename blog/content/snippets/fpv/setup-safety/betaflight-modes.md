@@ -92,8 +92,8 @@ Air Mode keeps the PID loop active when the throttle is at zero. Without it, the
 
 ```
 # Enable permanently (recommended for acro flying)
-set airmode_activate_throttle = 1000
 feature AIRMODE
+set airmode_start_throttle_percent = 25   # throttle % where airmode fully engages
 save
 
 # Or assign to a switch in Modes tab → AIR MODE

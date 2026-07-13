@@ -17,11 +17,11 @@ Betaflight supports four rate mode formulas. They all do the same job — map st
 | **Betaflight** (legacy) | `BETAFLIGHT` | RC Rate, Super Rate, Expo | Default; most community presets use this |
 | **Actual** | `ACTUAL` | Center Sensitivity, Max Rate, Expo | Direct control over specific feel metrics |
 | **KISS** | `KISS` | Rate | Single-knob simplicity |
-| **Quickrates** | `QUICKRATES` | Max Rate | Closest to linear; cleanest data flights |
+| **Quickrates** | `QUICK` | Max Rate | Closest to linear; cleanest data flights |
 
 **Switch modes via CLI:**
 ```
-set rates_type = ACTUAL    # or BETAFLIGHT, KISS, QUICKRATES
+set rates_type = ACTUAL    # or BETAFLIGHT, RACEFLIGHT, KISS, QUICK
 save
 ```
 
@@ -39,7 +39,7 @@ stick = |rcCommand|       // 0 to 1
 
 // Expo pre-shaping (reduces center sensitivity):
 if expo > 0:
-    stick = stick × (expo × stick² + (1 − expo))
+    stick = stick × (expo × |stick|³ + (1 − expo))
 
 // Rate with super rate denominator (hockey-stick at extremes):
 output = sign(rcCommand) × stick × rcRate × 200 / (1 − superRate × stick)
