@@ -9,20 +9,39 @@
   weight = -120
 [[main]]
   parent = "Projects"
-  name = "Snippets"
-  url = "snippets/"
+  name = "FPV"
+  url = "fpv"
+  weight = 1
+[[main]]
+  parent = "Projects"
+  name = "Colorimetry"
+  url = "colorimetry"
+  weight = 2
+[[main]]
+  parent = "Projects"
+  name = "Acoustics"
+  url = "acoustics"
+  weight = 3
 [[main]]
   parent = "Projects"
   name = "ESP Reflow"
   url = "esp-reflow"
+  weight = 4
 [[main]]
   parent = "Projects"
   name = "ESP Weather"
   url = "esp-weather"
+  weight = 5
 [[main]]
   parent = "Projects"
   name = "ESP Motion"
   url = "esp-motion"
+  weight = 6
+[[main]]
+  parent = "Projects"
+  name = "Snippets"
+  url = "snippets/"
+  weight = 100
 
 [[main]]
   name = "About"
