@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "dshot", "rpm-filter", "bidirectional", "noise", "filtering"]
 ---
 
-DSHOT is a digital ESC protocol. When used bidirectionally, it feeds motor RPM back to the flight controller, enabling the RPM filter — the single biggest improvement to motor noise rejection in modern Betaflight tunes.
+DSHOT is a digital ESC protocol. When used bidirectionally, it feeds motor RPM back to the flight controller, enabling the RPM filter — the single biggest improvement to motor noise rejection in modern Betaflight tunes. For the byte-level view of how the frames and eRPM telemetry are encoded on the wire, see [DSHOT on the Wire](../dshot-protocol/).
 
 ---
 
