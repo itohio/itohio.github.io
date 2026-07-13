@@ -14,9 +14,9 @@ The Betaflight CLI is the only source of truth for a complete build configuratio
 
 ```mermaid
 flowchart LR
-    DUMP[dump] -->|All settings\nincluding defaults| LARGE[Large file\nHard to read\nContains noise]
-    DIFF[diff all] -->|Only non-default\nsettings| SMALL[Small file\nEasy to review\nOnly what matters]
-    DIFF2[diff] -->|Non-defaults for\ncurrent profile only| PROFILE[Profile-specific\nMisses OSD and other global settings]
+    DUMP[dump] -->|All settings<br/>including defaults| LARGE[Large file<br/>Hard to read<br/>Contains noise]
+    DIFF[diff all] -->|Only non-default<br/>settings| SMALL[Small file<br/>Easy to review<br/>Only what matters]
+    DIFF2[diff] -->|Non-defaults for<br/>current profile only| PROFILE[Profile-specific<br/>Misses OSD and other global settings]
 ```
 
 | Command    | What it saves              | Best for                               |
@@ -33,13 +33,13 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A([Open Betaflight\nConfigurator]) --> B[Connect FC via USB]
+    A([Open Betaflight<br/>Configurator]) --> B[Connect FC via USB]
     B --> C[Click CLI tab]
-    C --> D["Type: diff all\nPress Enter"]
+    C --> D["Type: diff all<br/>Press Enter"]
     D --> E[Wait for output to finish]
-    E --> F["Click 'Save to File'\nor select all + copy"]
-    F --> G[Name the file:\nbuild-name_date_purpose.txt]
-    G --> H[Store in build folder\nor git repo]
+    E --> F["Click 'Save to File'<br/>or select all + copy"]
+    F --> G[Name the file:<br/>build-name_date_purpose.txt]
+    G --> H[Store in build folder<br/>or git repo]
 ```
 
 ### In CLI:
@@ -85,11 +85,11 @@ Use this pattern to try a new tune without fear of losing what worked:
 
 ```mermaid
 flowchart TD
-    A[Backup current config\ndiff all → save file] --> B[Make PID changes\nin Configurator or CLI]
+    A[Backup current config<br/>diff all → save file] --> B[Make PID changes<br/>in Configurator or CLI]
     B --> C[Fly and test]
     C --> D{Better or worse?}
-    D -->|Better| E[Save new baseline\ndiff all → new file]
-    D -->|Worse| F["Paste old diff all\n→ save → power cycle\nInstant rollback"]
+    D -->|Better| E[Save new baseline<br/>diff all → new file]
+    D -->|Worse| F["Paste old diff all<br/>→ save → power cycle<br/>Instant rollback"]
     F --> B
 ```
 

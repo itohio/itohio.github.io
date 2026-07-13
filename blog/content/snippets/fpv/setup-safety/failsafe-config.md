@@ -16,15 +16,15 @@ Betaflight uses a two-stage system:
 
 ```mermaid
 flowchart TD
-    A([RC signal\nlost]) --> B{Stage 1\nguard time}
-    B -->|Signal returns\nbefore timer| C([Resume normal\nflight])
-    B -->|Timer expires\ndefault 300ms| D[Stage 1\nHold last valid RC values]
-    D --> E{Stage 2\nguard time}
+    A([RC signal<br/>lost]) --> B{Stage 1<br/>guard time}
+    B -->|Signal returns<br/>before timer| C([Resume normal<br/>flight])
+    B -->|Timer expires<br/>default 300ms| D[Stage 1<br/>Hold last valid RC values]
+    D --> E{Stage 2<br/>guard time}
     E -->|Signal returns| C
-    E -->|Timer expires\ndefault 1s| F{Stage 2\nprocedure?}
-    F -->|DROP| G([Cut all motors\nquad falls])
-    F -->|LAND| H([Reduce throttle slowly\nattempt controlled descent])
-    F -->|GPS RESCUE| I([Climb, turn to home\nfly back, land])
+    E -->|Timer expires<br/>default 1s| F{Stage 2<br/>procedure?}
+    F -->|DROP| G([Cut all motors<br/>quad falls])
+    F -->|LAND| H([Reduce throttle slowly<br/>attempt controlled descent])
+    F -->|GPS RESCUE| I([Climb, turn to home<br/>fly back, land])
 ```
 
 **Stage 1** absorbs momentary glitches. During Stage 1 the FC holds the last known stick positions — the quad keeps flying as it was. This buys time for the link to recover.

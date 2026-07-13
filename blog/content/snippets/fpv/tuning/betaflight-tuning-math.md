@@ -14,12 +14,12 @@ What happens inside Betaflight when you move a slider. The formulas here are der
 
 ```mermaid
 flowchart LR
-    RC[RC setpoint\n°/s] --> ERR
-    GYRO[Gyro measurement\n°/s] --> ERR
+    RC[RC setpoint<br/>°/s] --> ERR
+    GYRO[Gyro measurement<br/>°/s] --> ERR
     ERR([error = setpoint − gyro]) --> P[P term]
     ERR --> I[I term]
-    GYRO --> D[D term\nderivative of gyro]
-    RC --> FF[FF\nderivative of setpoint]
+    GYRO --> D[D term<br/>derivative of gyro]
+    RC --> FF[FF<br/>derivative of setpoint]
     P & I & D & FF --> SUM([sum → motor mix → ESC])
 ```
 
@@ -219,7 +219,7 @@ tpa_factor = 1 − tpa_rate × max(0, (throttle − breakpoint) / (1 − breakpo
 P_effective = P × tpa_factor
 ```
 
-`set tpa_rate = 50` → 50% reduction at full throttle (default). `set tpa_breakpoint = 1650` → attenuation begins at 65% throttle.
+`set tpa_rate = 50` → 50% reduction at full throttle. `set tpa_breakpoint = 1650` → attenuation begins at 65% throttle. (These are illustrative values; actual defaults vary by Betaflight version.)
 
 ```chart
 {
@@ -307,12 +307,15 @@ Set `d_max = 0` (and d_min = your D value) to disable d_min/d_max and use a fixe
 
 ## RPM Filter
 
-The RPM filter places a dynamic notch at each motor's electrical RPM harmonics:
+The RPM filter places a dynamic notch at each motor's rotational frequency and its harmonics:
 
 ```
-fundamental_hz = motor_eRPM / 60
-notch_n        = fundamental_hz × n    (n = 1, 2, 3 — harmonics)
+motor_rpm      = motor_eRPM / (poles / 2)   # eRPM telemetry → mechanical RPM
+fundamental_hz = motor_rpm / 60
+notch_n        = fundamental_hz × n         # n = 1, 2, 3 — harmonics
 ```
+
+(The `eRPM` reported over bidirectional DSHOT is *electrical* RPM; dividing by the pole-pair count gives the mechanical rotation frequency the notches track.)
 
 The filter tracks in real time using eRPM telemetry from bidirectional DSHOT. This removes motor noise that would otherwise bleed through into the D term and appear as oscillation.
 

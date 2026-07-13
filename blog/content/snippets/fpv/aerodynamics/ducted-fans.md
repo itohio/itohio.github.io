@@ -203,9 +203,9 @@ The duct inlet is designed with a rounded leading edge (the **lip**). This accel
 
 ```mermaid
 flowchart LR
-    A[Ambient air] -->|approaches duct lip| B[Lip accelerates\ninflow — Bernoulli]
-    B --> C[Rotor disk\nhigh pressure differential]
-    C --> D[Collimated exit\nhigh velocity jet]
+    A[Ambient air] -->|approaches duct lip| B[Lip accelerates<br/>inflow — Bernoulli]
+    B --> C[Rotor disk<br/>high pressure differential]
+    C --> D[Collimated exit<br/>high velocity jet]
     D --> E[Thrust]
     style B fill:#1a3a1a,stroke:#4a8a4a
     style D fill:#1a3a1a,stroke:#4a8a4a
@@ -278,9 +278,9 @@ However the same duct geometry that helps at hover creates a flight characterist
 flowchart LR
     DG[Ducted whoop] --> H1[More efficient hover]
     DG --> H2[Slower top speed]
-    DG --> H3[Less tip vortex turbulence\nin clean air]
-    DG --> H4[Duct edge turbulence\nat high AoA / fast forward]
-    H4 --> H5[Buffeting at high speed\nif duct inlet stalls]
+    DG --> H3[Less tip vortex turbulence<br/>in clean air]
+    DG --> H4[Duct edge turbulence<br/>at high AoA / fast forward]
+    H4 --> H5[Buffeting at high speed<br/>if duct inlet stalls]
 ```
 
 **Duct inlet stall** occurs when the craft flies forward fast enough that the duct leading edge sees a high angle of attack — the lip no longer smoothly accelerates inflow and instead generates separation. This is typically felt as a sudden reduction in climb authority during fast forward flight transitions.
@@ -296,5 +296,5 @@ Blade tips flex slightly under load. As props age and develop micro-cracks, tip 
 ## Related
 
 - [Propwash](../propwash/)
-- [Preflight Checklist](../preflight-checklist/)
-- [INAV vs Betaflight](../inav-vs-betaflight/)
+- [Preflight Checklist](../../setup-safety/preflight-checklist/)
+- [INAV vs Betaflight](../../reference/inav-vs-betaflight/)

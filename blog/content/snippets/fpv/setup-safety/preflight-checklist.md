@@ -34,12 +34,12 @@ This is the single most common wiring mistake that causes an immediate flip on f
 
 ```mermaid
 flowchart TD
-    A[Betaflight\nMotor tab] --> B[Enable motor test\nWARNING: remove props first]
-    B --> C[Spin each motor\nindividually at ~10%]
+    A[Betaflight<br/>Motor tab] --> B[Enable motor test<br/>WARNING: remove props first]
+    B --> C[Spin each motor<br/>individually at ~10%]
     C --> D{Direction correct?}
     D -->|Yes for all 4| E[Re-attach props]
-    D -->|Wrong for any| F[CLI: reverse direction]
-    F --> G["set motor_1_direction = REVERSED\n(or 2/3/4 as needed)\nsave"]
+    D -->|Wrong for any| F[Reverse that motor]
+    F --> G["Motors tab: tick Reverse<br/>on the wrong motor<br/>props off"]
     G --> C
 ```
 
@@ -101,15 +101,15 @@ If you don't have USB access, watch the motors and OSD. Most arming flags show o
 
 ```mermaid
 flowchart TD
-    CRASH([Crash]) --> DISARM[Disarm immediately\nbefore walking to quad]
+    CRASH([Crash]) --> DISARM[Disarm immediately<br/>before walking to quad]
     DISARM --> INSPECT[Visual inspection]
     INSPECT --> PROPS{Props broken?}
     PROPS -->|Yes| REPLACE[Replace before next flight]
-    PROPS -->|No| MOTORS{Motors spin freely?\nNo grinding?}
-    MOTORS -->|No| MOTOR_CHECK[Check for bent shaft\nor debris in bell]
+    PROPS -->|No| MOTORS{Motors spin freely?<br/>No grinding?}
+    MOTORS -->|No| MOTOR_CHECK[Check for bent shaft<br/>or debris in bell]
     MOTORS -->|Yes| FRAME{Frame cracks?}
-    FRAME -->|Yes| FRAME_FIX[Do not fly\nuntil repaired]
-    FRAME -->|No| ARM_CHECK[Check motor screws\nand rerun checklist]
+    FRAME -->|Yes| FRAME_FIX[Do not fly<br/>until repaired]
+    FRAME -->|No| ARM_CHECK[Check motor screws<br/>and rerun checklist]
 ```
 
 A crash that felt minor at high throttle can bend a motor shaft invisibly. Spin each motor by hand and feel for rough bearing or wobble before flying again.

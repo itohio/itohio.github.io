@@ -14,7 +14,7 @@ Betaflight modes are conditions assigned to AUX channel ranges. When a switch po
 
 ```mermaid
 mindmap
-  root((Betaflight\nModes))
+  root((Betaflight<br/>Modes))
     ARM
       Required before any motor spins
       Always on a dedicated switch
@@ -73,11 +73,11 @@ Assign channels in the radio's mixer: SA → CH5 (AUX1), SB → CH6 (AUX2), etc.
 
 ```mermaid
 flowchart LR
-    A([Stick at center]) -->|Acro| B[Zero rotation rate\nQuad holds last angle]
-    A -->|Angle| C[Zero tilt\nQuad levels itself]
+    A([Stick at center]) -->|Acro| B[Zero rotation rate<br/>Quad holds last angle]
+    A -->|Angle| C[Zero tilt<br/>Quad levels itself]
 
-    D([Stick deflected]) -->|Acro| E[Constant rotation\nat set rate]
-    D -->|Angle| F[Tilts to angle\nproportional to stick\nmax ~45–55°]
+    D([Stick deflected]) -->|Acro| E[Constant rotation<br/>at set rate]
+    D -->|Angle| F[Tilts to angle<br/>proportional to stick<br/>max ~45–55°]
 ```
 
 **Acro (rate mode)** is the default and the "correct" mode for any freestyle or outdoor flying. It gives full control authority — you can fly inverted, do flips, and hold any attitude. The quad does exactly what the sticks say.

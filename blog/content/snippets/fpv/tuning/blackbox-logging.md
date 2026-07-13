@@ -14,11 +14,11 @@ Blackbox records every sensor reading, RC input, PID output, and motor command a
 
 ```mermaid
 flowchart LR
-    A([Gyro\n8 kHz]) --> B[Betaflight\nPID loop]
-    B --> C[Blackbox\nlogger]
-    C -->|Compressed| D[(Flash chip\nor SD card)]
-    D -->|USB| E[Betaflight\nBlackbox Explorer]
-    E --> F([Gyro trace\nFFT / Step response\nMotor outputs])
+    A([Gyro<br/>8 kHz]) --> B[Betaflight<br/>PID loop]
+    B --> C[Blackbox<br/>logger]
+    C -->|Compressed| D[(Flash chip<br/>or SD card)]
+    D -->|USB| E[Betaflight<br/>Blackbox Explorer]
+    E --> F([Gyro trace<br/>FFT / Step response<br/>Motor outputs])
 ```
 
 The logger samples at your configured log rate (typically 1–4 kHz) and writes compressed frames to either onboard flash or a microSD card slot on the FC.
@@ -30,22 +30,22 @@ The logger samples at your configured log rate (typically 1–4 kHz) and writes 
 Configurator → **Blackbox** tab:
 
 ```
-set blackbox_device = SPIFLASH   # or SDCARD
-set blackbox_rate_denom = 2      # log every 2nd PID loop (4 kHz at 8 kHz loop)
-set blackbox_mode = NORMAL       # log when armed
+set blackbox_device = SPIFLASH     # or SDCARD
+set blackbox_sample_rate = 1/2     # log every 2nd PID loop (4 kHz at 8 kHz loop)
+set blackbox_mode = NORMAL         # log when armed
 save
 ```
 
-`blackbox_rate_denom`: higher value = lower log rate = longer recording before flash fills.
+`blackbox_sample_rate`: a smaller fraction (`1/4`, `1/8`) = lower log rate = longer recording before flash fills.
 
-| Loop rate | rate_denom | Effective log rate | ~Minutes on 16MB flash |
-|-----------|------------|-------------------|------------------------|
-| 8 kHz     | 1          | 8 kHz             | ~4 min                 |
-| 8 kHz     | 2          | 4 kHz             | ~8 min                 |
-| 8 kHz     | 4          | 2 kHz             | ~16 min                |
-| 8 kHz     | 8          | 1 kHz             | ~32 min                |
+| Loop rate | sample_rate | Effective log rate | ~Minutes on 16MB flash |
+|-----------|-------------|-------------------|------------------------|
+| 8 kHz     | 1/1         | 8 kHz             | ~4 min                 |
+| 8 kHz     | 1/2         | 4 kHz             | ~8 min                 |
+| 8 kHz     | 1/4         | 2 kHz             | ~16 min                |
+| 8 kHz     | 1/8         | 1 kHz             | ~32 min                |
 
-**For tuning: use 4 kHz (denom = 2).** For long sessions where you only want crash data: 1 kHz (denom = 8).
+**For tuning: use 4 kHz (`1/2`).** For long sessions where you only want crash data: 1 kHz (`1/8`).
 
 ---
 

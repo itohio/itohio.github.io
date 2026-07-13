@@ -46,17 +46,23 @@ Tip Speed = (π × 0.127 × 20,000) / 60
 
 ---
 
-## Motor Load Index (Thrust-to-Power Efficiency)
+## Motor Load Index (Thrust-to-Weight)
 
-A useful sanity-check: at hover throttle (~50%), the motor should produce ~250–350 g of thrust per motor for a ~500–700 g all-up-weight (AUW) 5" quad.
+A useful sanity-check at hover: each motor carries a quarter of the all-up weight.
 
 **Hover thrust per motor:**
 ```
-Hover thrust = AUW / 4        (for a quad)
-Required thrust-to-weight per motor = AUW / 4 / motor_weight
+Hover thrust per motor = AUW / 4        (for a quad)
 ```
 
-A **thrust-to-weight ratio (TWR)** of 4:1 (total thrust: AUW) at 50% throttle is typical for freestyle. Cinematic: 3:1 is fine. Racing: 6:1+.
+For a ~500–700 g 5" quad that is ~125–175 g per motor, which usually lands around 40–50% throttle on a healthy build.
+
+**Thrust-to-weight ratio (TWR)** compares *total full-throttle* thrust to AUW:
+```
+TWR = (4 × max thrust per motor) / AUW
+```
+
+A TWR of 4:1 is typical for freestyle, 3:1 is fine for cinematic, and racing wants 6:1+. A 4:1 quad lifts its own weight using only a quarter of its available thrust — the rest is headroom for punch-outs.
 
 ---
 
@@ -95,16 +101,17 @@ Pitch is the theoretical distance a prop advances per revolution. Higher pitch =
 
 ## Worked Example — 5" Freestyle 4S
 
-- Frame: 5", battery: 4S (16.8 V max)
-- Target hover RPM ≈ 16,000–18,000 RPM (50% throttle)
-- Max RPM ≈ 24,000–28,000 RPM (full throttle)
+- Frame: 5" (0.127 m), battery: 4S (16.8 V full charge)
+- Target full-throttle *loaded* RPM ≈ 24,000–28,000 RPM
 
+Work backwards from the loaded max RPM to KV (loaded ≈ 75% of no-load `KV × Voltage`):
 ```
-KV = 17,000 ÷ (16.8 × 0.75) = 17,000 ÷ 12.6 ≈ 1,350 KV
+KV = Max loaded RPM ÷ (Voltage × 0.75)
+KV = 26,000 ÷ (16.8 × 0.75) = 26,000 ÷ 12.6 ≈ 2,060 KV
 ```
-→ But 1,350 KV × 16.8 V = 22,680 RPM, which maps to 150 m/s tip speed on 5" prop. Good.
+→ Tip speed at that loaded max: `π × 0.127 × 26,000 / 60 ≈ 173 m/s`. That is above the 150 m/s efficient ceiling — normal for freestyle, which trades some efficiency for punch (racing runs higher still).
 
-In practice, **2306–2450 KV** motors are the established sweet spot for 5" on 4S because manufacturers tune stator mass and winding inductance for this application.
+In practice, **2000–2450 KV** motors are the established sweet spot for 5" on 4S, matching the quick-reference table above. (A designation like "2306" is the *stator size* — 23 mm × 6 mm — not a KV value.)
 
 ---
 

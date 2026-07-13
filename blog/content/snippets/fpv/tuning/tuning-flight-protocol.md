@@ -25,10 +25,10 @@ Step response analysis (computing how quickly and cleanly the quad follows a com
 
 ```mermaid
 flowchart LR
-    A[Clean single-axis\nstep input] --> B[Useful step response\nfor analysis]
-    C[Mixed multi-axis input\nor wind disturbance] --> D[Contaminated trace —\nanalysis unreliable]
-    E[Constant throttle\nsteady altitude] --> B
-    F[Throttle changing\nduring maneuver] --> D
+    A[Clean single-axis<br/>step input] --> B[Useful step response<br/>for analysis]
+    C[Mixed multi-axis input<br/>or wind disturbance] --> D[Contaminated trace —<br/>analysis unreliable]
+    E[Constant throttle<br/>steady altitude] --> B
+    F[Throttle changing<br/>during maneuver] --> D
 ```
 
 ---
@@ -82,14 +82,14 @@ Without erasing, you'll have multiple runs in one file, making segment identific
 
 ```mermaid
 flowchart TD
-    A([Take off\nclimb to 8–12 m AGL]) --> B
-    B([Phase 1\nThrottle ramps]) --> C
-    C([Phase 2\nSteady hover baseline]) --> D
-    D([Phase 3\nRoll axis inputs]) --> E
-    E([Phase 4\nPitch axis inputs]) --> F
-    F([Phase 5\nYaw axis inputs]) --> G
-    G([Phase 6\nSingle-axis flips]) --> H
-    H([Disarm cleanly\ndo not fly around after])
+    A([Take off<br/>climb to 8–12 m AGL]) --> B
+    B([Phase 1<br/>Throttle ramps]) --> C
+    C([Phase 2<br/>Steady hover baseline]) --> D
+    D([Phase 3<br/>Roll axis inputs]) --> E
+    E([Phase 4<br/>Pitch axis inputs]) --> F
+    F([Phase 5<br/>Yaw axis inputs]) --> G
+    G([Phase 6<br/>Single-axis flips]) --> H
+    H([Disarm cleanly<br/>do not fly around after])
 
     style A fill:#1a2a1a,stroke:#4a8a4a
     style H fill:#1a2a1a,stroke:#4a8a4a
@@ -296,4 +296,4 @@ See [Wobble-Test PID Protocol](../pid-tuning-wobble-test/) for the full manual a
 - [Wobble-Test PID Protocol](../pid-tuning-wobble-test/) — the full manual tuning workflow using this data
 - [BBL-Based PID Tuning Protocol](../bbl-pid-tuning-protocol/) — step response analysis methodology
 - [Betaflight Tuning Math](../betaflight-tuning-math/) — the math behind what these graphs measure
-- [Propwash](../propwash/) — why Phase 6 data exposes propwash behaviour
+- [Propwash](../../aerodynamics/propwash/) — why Phase 6 data exposes propwash behaviour

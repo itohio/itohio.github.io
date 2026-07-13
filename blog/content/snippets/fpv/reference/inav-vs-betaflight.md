@@ -14,11 +14,11 @@ Betaflight and INAV are both open-source FC firmware. They share some code histo
 
 ```mermaid
 flowchart LR
-    BF[Betaflight] -->|Optimised for| M1[Manual acro flying\nLow latency PID loop\nFreestyle & racing]
-    BF -->|GPS added as| M2[Emergency recovery only\nGPS Rescue = last resort]
+    BF[Betaflight] -->|Optimised for| M1[Manual acro flying<br/>Low latency PID loop<br/>Freestyle & racing]
+    BF -->|GPS added as| M2[Emergency recovery only<br/>GPS Rescue = last resort]
     
-    INAV[INAV] -->|Optimised for| N1[Navigation-first\nAutonomous missions\nPosition hold, waypoints, RTH]
-    INAV -->|Manual flying| N2[Supported but PID loop\nnot as tuned as BF]
+    INAV[INAV] -->|Optimised for| N1[Navigation-first<br/>Autonomous missions<br/>Position hold, waypoints, RTH]
+    INAV -->|Manual flying| N2[Supported but PID loop<br/>not as tuned as BF]
 ```
 
 Betaflight treats GPS as a safety feature. INAV treats GPS as the primary use case.
@@ -71,10 +71,10 @@ The Pavo20 is a whoop with GPS. On Betaflight, GPS Rescue on a whoop-class quad 
 
 ```mermaid
 flowchart TD
-    P1[Small frame size\n<250g AUW] -->|Low inertia| C1[GPS Rescue corrections\novershoot and oscillate]
-    P2[Whoop ducted props\nHigher drag] -->|Slower response\nto GPS commands| C2[Rescue turns are sluggish\nnot crisp]
-    P3[Short antenna\nInternal GPS module] -->|Slower fix\nWeaker signal| C3[Poor position accuracy\nin GPS Rescue mode]
-    P4[BF GPS Rescue\nnot tuned for micro quads] -->|Default gains\ntoo aggressive for small builds| C4[Oscillation or crash\non rescue activation]
+    P1[Small frame size<br/><250g AUW] -->|Low inertia| C1[GPS Rescue corrections<br/>overshoot and oscillate]
+    P2[Whoop ducted props<br/>Higher drag] -->|Slower response<br/>to GPS commands| C2[Rescue turns are sluggish<br/>not crisp]
+    P3[Short antenna<br/>Internal GPS module] -->|Slower fix<br/>Weaker signal| C3[Poor position accuracy<br/>in GPS Rescue mode]
+    P4[BF GPS Rescue<br/>not tuned for micro quads] -->|Default gains<br/>too aggressive for small builds| C4[Oscillation or crash<br/>on rescue activation]
 ```
 
 INAV's navigation stack is designed to handle these situations better because it uses a proper position controller (rather than a rough emergency mode), and its RTH sequence includes deceleration and braking. INAV also has better barometer integration for altitude hold on builds without GPS altitude lock.
@@ -136,13 +136,13 @@ The VTX interference issue is particularly common on micro builds: 5.8 GHz video
 
 ```mermaid
 flowchart TD
-    Q1{Primary goal?} -->|Fly fast / smooth\nacro / racing / freestyle| BF[Use Betaflight]
-    Q1 -->|Autonomous\nnavigation / missions| INAV[Use INAV]
-    Q1 -->|GPS safety net only\nstill flying manually| Q2{Build size?}
-    Q2 -->|5" or larger| BF
-    Q2 -->|Sub-250g micro| Q3{GPS Rescue\nactually important?}
-    Q3 -->|Nice to have| BF[Betaflight BF GPS Rescue\nworks well enough]
-    Q3 -->|Critical for safe recovery| INAV[INAV RTH is more reliable\non small GPS builds]
+    Q1{Primary goal?} -->|Fly fast / smooth<br/>acro / racing / freestyle| BF[Use Betaflight]
+    Q1 -->|Autonomous<br/>navigation / missions| INAV[Use INAV]
+    Q1 -->|GPS safety net only<br/>still flying manually| Q2{Build size?}
+    Q2 -->|5 inch or larger| BF
+    Q2 -->|Sub-250g micro| Q3{GPS Rescue<br/>actually important?}
+    Q3 -->|Nice to have| BF[Betaflight BF GPS Rescue<br/>works well enough]
+    Q3 -->|Critical for safe recovery| INAV[INAV RTH is more reliable<br/>on small GPS builds]
 ```
 
 For most freestyle and racing builds: **Betaflight**.  

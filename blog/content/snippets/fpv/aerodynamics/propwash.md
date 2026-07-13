@@ -136,15 +136,15 @@ During normal forward flight the quad is flying into clean air. When it pitches 
 
 ```mermaid
 flowchart TD
-    A[Quad dives\ndescends fast] --> B[Downwash column\nmoves relative to craft]
-    B --> C[Craft levels out\nor climbs through own wake]
-    C --> D[Props ingest turbulent\nnon-uniform inflow]
-    D --> E[Asymmetric thrust\nper-prop, per-blade]
-    E --> F[Rapid attitude disturbance\nbefore FC can correct]
+    A[Quad dives<br/>descends fast] --> B[Downwash column<br/>moves relative to craft]
+    B --> C[Craft levels out<br/>or climbs through own wake]
+    C --> D[Props ingest turbulent<br/>non-uniform inflow]
+    D --> E[Asymmetric thrust<br/>per-prop, per-blade]
+    E --> F[Rapid attitude disturbance<br/>before FC can correct]
     F --> G{PIDs respond}
     G -->|D term too low| H[Oscillation — slow to damp]
-    G -->|D term well-tuned| I[Quick correction\nclean recovery]
-    G -->|D term too high| J[Motor noise amplified\noverheating risk]
+    G -->|D term well-tuned| I[Quick correction<br/>clean recovery]
+    G -->|D term too high| J[Motor noise amplified<br/>overheating risk]
 ```
 
 The disturbance is primarily felt as a pitch/roll wobble on exit from dives and during throttle-down recovery. It is **not** a PID instability — it is an external aerodynamic input that the PID loop has to reject. Tuning helps, but it cannot eliminate the physics.
@@ -330,6 +330,6 @@ Close to the ground (within ~1 prop diameter altitude), the downwash cannot full
 
 ## Related
 
-- [PID Basics](../pid-basics/)
-- [BBL-Based PID Tuning Protocol](../bbl-pid-tuning-protocol/)
-- [Blackbox Logging](../blackbox-logging/)
+- [PID Basics](../../tuning/pid-basics/)
+- [BBL-Based PID Tuning Protocol](../../tuning/bbl-pid-tuning-protocol/)
+- [Blackbox Logging](../../tuning/blackbox-logging/)

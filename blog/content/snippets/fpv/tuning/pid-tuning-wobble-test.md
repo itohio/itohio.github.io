@@ -20,18 +20,18 @@ The wobble test gives you a controlled, repeatable input: a fast full-deflection
 
 ```mermaid
 flowchart TD
-    A([Phase 0\nMechanical prep]) --> B
-    B([Phase 1\nBetaflight setup]) --> C
-    C([Phase 2\nBaseline hover log\n+ spectral analysis]) --> D
-    D([Phase 3\nRPM filter setup]) --> E
-    E([Phase 4\nPID pre-configuration\nzero FF · zero d_max · low I]) --> F
-    F([Phase 5\nPD balance sweep\n0.6 → 1.4]) --> G
-    G([Phase 6\nPitch / roll balance]) --> H
-    H([Phase 7\nMaster multiplier sweep\nFRESH BATTERY]) --> I
-    I([Phase 8\nI term]) --> J
-    J([Phase 9\nFeedforward]) --> K
-    K([Phase 10\nD-max ← optional]) --> L
-    L([Phase 11\nVerification flight])
+    A([Phase 0<br/>Mechanical prep]) --> B
+    B([Phase 1<br/>Betaflight setup]) --> C
+    C([Phase 2<br/>Baseline hover log<br/>+ spectral analysis]) --> D
+    D([Phase 3<br/>RPM filter setup]) --> E
+    E([Phase 4<br/>PID pre-configuration<br/>zero FF · zero d_max · low I]) --> F
+    F([Phase 5<br/>PD balance sweep<br/>0.6 → 1.4]) --> G
+    G([Phase 6<br/>Pitch / roll balance]) --> H
+    H([Phase 7<br/>Master multiplier sweep<br/>FRESH BATTERY]) --> I
+    I([Phase 8<br/>I term]) --> J
+    J([Phase 9<br/>Feedforward]) --> K
+    K([Phase 10<br/>D-max ← optional]) --> L
+    L([Phase 11<br/>Verification flight])
 
     style A fill:#1a2a3a,stroke:#4a7aaa
     style H fill:#2a1a1a,stroke:#aa4a4a
@@ -166,10 +166,10 @@ After setting the RPM filter, re-hover and re-check the spectral view:
 
 ```mermaid
 flowchart TD
-    A{Noise floor above\n500 Hz band?} -->|Below −40 dB| B[Consider disabling gyro LP1\nset gyro_lpf1_type = NONE]
-    A -->|−30 to −40 dB| C[Keep LP1 at default PT1\nleave cutoff unchanged]
-    A -->|Above −30 dB| D[Keep LP1, lower LP2 cutoff\n100–120 Hz from 150 Hz default]
-    D --> E[Re-log hover and re-check\nbefore continuing]
+    A{Noise floor above<br/>500 Hz band?} -->|Below −40 dB| B[Consider disabling gyro LP1<br/>set gyro_lpf1_type = NONE]
+    A -->|−30 to −40 dB| C[Keep LP1 at default PT1<br/>leave cutoff unchanged]
+    A -->|Above −30 dB| D[Keep LP1, lower LP2 cutoff<br/>100–120 Hz from 150 Hz default]
+    D --> E[Re-log hover and re-check<br/>before continuing]
 ```
 
 > **Do not lower filters aggressively to compensate for mechanical noise.** More filtering = more phase delay = effectively lower PIDs + more latency. Fix the mechanical source first.
@@ -205,7 +205,8 @@ Set I to a **minimum value** — just enough to prevent the quad from drifting:
 
 ```
 # In CLI (BF 4.4+ slider maps to these raw values approximately):
-set iterm_relax_type = RP         # roll + pitch
+set iterm_relax = RP              # axes: roll + pitch (use RPY to include yaw)
+set iterm_relax_type = SETPOINT   # SETPOINT or GYRO
 set iterm_relax_cutoff = 15       # for 5"; see size table below
 save
 ```
@@ -366,10 +367,10 @@ A well-balanced quad should have pitch latency within **5 ms** of roll latency. 
 ```mermaid
 flowchart TD
     A{Pitch latency vs Roll} -->|Within 5 ms| B[Accept — proceed to Phase 7]
-    A -->|Pitch slower by 5–15 ms| C[Boost Pitch Tracking slider\n+0.1 increments until matched]
-    A -->|Pitch slower by >15 ms| D[Boost both Pitch Tracking\nand Pitch Damping +0.1 each\nRe-run wobble test]
-    A -->|Pitch much faster than roll| E[Check motor directions\nand frame geometry\n— unusual]
-    C & D --> F[Re-fly wobble test\non pitch axis only]
+    A -->|Pitch slower by 5–15 ms| C[Boost Pitch Tracking slider<br/>+0.1 increments until matched]
+    A -->|Pitch slower by >15 ms| D[Boost both Pitch Tracking<br/>and Pitch Damping +0.1 each<br/>Re-run wobble test]
+    A -->|Pitch much faster than roll| E[Check motor directions<br/>and frame geometry<br/>— unusual]
+    C & D --> F[Re-fly wobble test<br/>on pitch axis only]
     F --> A
 ```
 
@@ -461,13 +462,13 @@ Between each run: hover 2 minutes, land, **immediately check motor temperatures*
 
 ```mermaid
 flowchart TD
-    A[Run new MM value] --> B{Motor temperature\nafter 2 min hover?}
-    B -->|< 50°C cool| C{Step response\nlatency still dropping?}
-    B -->|50–60°C warm| D[This is the limit\nback off 0.1 and lock here]
-    B -->|> 60°C hot| E[Too high — back off 0.2\nand check D-term slider]
-    C -->|Yes, >2 ms improvement| F[Advance MM by +0.2\nnext run]
-    C -->|<2 ms improvement| G[Diminishing returns\nthis is your MM]
-    D & G --> H[Lock Master Multiplier\nproceed to Phase 8]
+    A[Run new MM value] --> B{Motor temperature<br/>after 2 min hover?}
+    B -->|< 50°C cool| C{Step response<br/>latency still dropping?}
+    B -->|50–60°C warm| D[This is the limit<br/>back off 0.1 and lock here]
+    B -->|> 60°C hot| E[Too high — back off 0.2<br/>and check D-term slider]
+    C -->|Yes, >2 ms improvement| F[Advance MM by +0.2<br/>next run]
+    C -->|<2 ms improvement| G[Diminishing returns<br/>this is your MM]
+    D & G --> H[Lock Master Multiplier<br/>proceed to Phase 8]
 ```
 
 > **2" Ripper note:** The MM gain will typically plateau much sooner on a 2". Motor heat on a lightweight build is more visible (small motors with less thermal mass). Stop as soon as motors are warm, even if the step response shows room to improve — 2" motors overheat fast under excess D noise.
@@ -654,5 +655,5 @@ No PID Toolbox. No MATLAB. No Patreon subscription required.
 
 - [BBL-Based PID Tuning Protocol](../bbl-pid-tuning-protocol/) — the PIDtoolbox-native version with Wiener deconvolution details
 - [Betaflight Tuning Math](../betaflight-tuning-math/) — P/I/D/FF formulas, iterm_relax math, RPM filter math
-- [FPV Terminology](../fpv-terminology/) — quick reference for all the abbreviations in this protocol
-- [Propwash](../propwash/) — why D term matters for dive recovery
+- [FPV Terminology](../../reference/fpv-terminology/) — quick reference for all the abbreviations in this protocol
+- [Propwash](../../aerodynamics/propwash/) — why D term matters for dive recovery

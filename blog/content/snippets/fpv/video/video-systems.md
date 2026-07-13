@@ -15,7 +15,7 @@ Choosing a video system determines image quality, latency, range, and cost. Ther
 **How it works:** Camera outputs composite video; VTX (video transmitter) broadcasts it on 5.8 GHz. Receiver decodes the analog RF directly.
 
 **Pros:**
-- Lowest latency (< 2 ms typical)
+- Lowest latency (sub-ms RF link; ~3–7 ms glass-to-glass)
 - Tolerates interference gracefully — image degrades gradually before link loss ("snow" before drop)
 - Cheapest components
 - Widest frequency and channel selection
@@ -40,7 +40,7 @@ Choosing a video system determines image quality, latency, range, and cost. Ther
 - Excellent range at 700 mW
 
 **Cons:**
-- Higher latency (~22–28 ms vs analog's < 2 ms — imperceptible to most)
+- Higher latency (~22–28 ms vs analog's ~3–7 ms glass-to-glass — imperceptible to most)
 - Expensive ecosystem lock-in
 - Heavier air unit
 - Link degrades differently than analog — "digital wall": sharp cutoff instead of gradual snow
@@ -85,7 +85,7 @@ Choosing a video system determines image quality, latency, range, and cost. Ther
 
 | System         | Latency     | Image quality | Range    | Price     | Lock-in   |
 |----------------|-------------|---------------|----------|-----------|-----------|
-| Analog         | < 2 ms      | Low           | Long     | Low       | None      |
+| Analog         | ~3–7 ms     | Low           | Long     | Low       | None      |
 | DJI O3         | 22–28 ms    | Excellent     | Very long| High      | High      |
 | Walksnail Avatar| 15–25 ms   | Good          | Long     | Medium    | Medium    |
 | HDZero         | 8–10 ms     | Good          | Medium   | Medium    | Low       |

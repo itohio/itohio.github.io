@@ -17,16 +17,11 @@ A collection of "first 10 minutes of a new build" failures and how to diagnose t
 **Cause:** One motor spinning the wrong direction. Motors come as CW and CCW variants; some have reversed bullet connectors. If you swap any two of the three motor wires, the motor reverses.
 
 **Fix:**  
-With DSHOT protocol, reverse direction in Betaflight without rewiring:
-```
-# In Motors tab — with props OFF, run motor direction test
-# Or in CLI:
-set motor_direction = REVERSED   # reverses ALL motors
+With DSHOT, reverse spin direction without rewiring (direction is stored in the ESC, not a Betaflight `set` variable):
 
-# For individual motor reversal (BF 4.2+):
-set motor_1_direction = REVERSED
-save
-```
+- **Betaflight Motors tab** (props OFF): tick the *Reverse* checkbox for the offending motor. Betaflight sends a DShot command that writes the new direction to that ESC.
+- Or in the **BLHeli_32 / AM32 configurator**: set Motor Direction (Normal / Reversed) on the affected ESC.
+
 Or physically swap any two of the three phase wires on the offending motor.
 
 ---
@@ -39,13 +34,7 @@ Or physically swap any two of the three phase wires on the offending motor.
 
 **Diagnose:** In Betaflight Motors tab (props OFF), spin each motor and confirm rotation against the [Betaflight motor layout diagram](https://betaflight.com/docs/wiki/guides/current/Motor-Spin-Directions) for your frame.
 
-**Fix in CLI:**
-```
-# Reverse all motors at once
-set motor_direction = REVERSED
-save
-```
-If only some are wrong, use `set motor_n_direction = REVERSED` per motor.
+**Fix:** In the **Motors tab** (props OFF), tick *Reverse* on all four motors, or set them Reversed in the BLHeli_32 / AM32 configurator. If only some are wrong, reverse just those.
 
 ---
 
@@ -69,7 +58,7 @@ Always spin motors with props OFF first and verify direction visually before ins
 
 **Fix options:**
 1. Lower RPM filtering demand — enable RPM filter (bidirectional DSHOT)
-2. Increase ESC PWM frequency: 48 kHz or 96 kHz (see [ESC kHz](../esc-khz/))
+2. Increase ESC PWM frequency: 48 kHz or 96 kHz (see [ESC kHz](../../motors-esc/esc-khz/))
 3. Reduce motor timing if using advance timing
 4. Check motor bearings — worn bearings cause irregular back-EMF
 5. Reduce D-term if oscillation is forcing rapid motor reversals

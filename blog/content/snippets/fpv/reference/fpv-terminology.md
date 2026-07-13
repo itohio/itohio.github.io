@@ -38,8 +38,8 @@ A single-page reference for the acronyms and terms that fill every FPV forum pos
 
 | Term | Meaning |
 |------|---------|
-| **KV** | Motor velocity constant: RPM per volt with no load. 2400KV on 4S → ~35,000 RPM max. Lower KV = more torque, larger props. |
-| **Stator size** | The motor's rotor diameter × height in mm. "2306" = 23 mm diameter, 6 mm stator height. Larger stator = more power. |
+| **KV** | Motor velocity constant: RPM per volt with no load. 2400 KV on 4S → ~40,000 RPM no-load at 16.8 V. Lower KV = more torque, larger props. |
+| **Stator size** | The motor's stator diameter × height in mm. "2306" = 23 mm diameter, 6 mm stator height. Larger stator = more power. |
 | **Pole count** | Number of magnet poles; affects RPM vs electrical frequency. 12N14P = 12 stator teeth, 14 magnet poles. |
 | **eRPM** | Electrical RPM = mechanical RPM × (poles / 2). Used by RPM filter and DSHOT telemetry. |
 | **Prop notation** | e.g., **5148**: first two digits = diameter in tenths of an inch (5.1"), next two = pitch in tenths (4.8"). |
@@ -49,7 +49,7 @@ A single-page reference for the acronyms and terms that fill every FPV forum pos
 | **T-mount** | Prop attachment with a central bolt. Used on 5" and larger. |
 | **Press-fit** | Prop slides directly onto motor shaft — common on whoops. Check fit torque before every session. |
 | **AUW** | All-up weight. Total flying mass including battery. TWR = thrust / AUW. |
-| **TWR** | Thrust-to-weight ratio. 4:1 minimum for comfortable freestyle; 7:1+ for racing/maximum agility. |
+| **TWR** | Thrust-to-weight ratio (total full-throttle thrust ÷ AUW). ~4:1 for comfortable freestyle; 6:1+ for racing/maximum agility. |
 
 ---
 
@@ -84,7 +84,7 @@ A single-page reference for the acronyms and terms that fill every FPV forum pos
 | **SNR** | Signal-to-Noise Ratio. How far the signal is above the noise floor in dB. Negative SNR is still usable in ELRS. |
 | **Packet rate** | ELRS update rate: 50 Hz, 150 Hz, 250 Hz, 500 Hz. Higher = lower latency, shorter range. |
 | **Telemetry** | Downlink data from quad to radio: battery voltage, GPS position, RSSI, LQ, flight mode. |
-| **Failsafe** | Behavior when RC link is lost: Drop (motors off immediately), Land (controlled descent), Hold (maintain position — needs GPS). |
+| **Failsafe** | Behavior when RC link is lost. Betaflight Stage 2 procedures: Drop (motors off immediately), Land (controlled descent), GPS Rescue (return to home — needs GPS). Separately, a *receiver's* "Hold" mode keeps outputting the last stick values (dangerous — the FC never sees the loss). |
 | **BVLOS** | Beyond Visual Line of Sight. Requires special authorization in almost all regulatory frameworks. |
 
 ---
@@ -98,9 +98,9 @@ A single-page reference for the acronyms and terms that fill every FPV forum pos
 | **Acro mode** | Pure rate control — FC only corrects gyro drift, stick = rotation rate. Default FPV flying mode. |
 | **Horizon / Angle** | Self-leveling modes. FC uses accelerometer to maintain a level attitude. Useful for beginners only. |
 | **Arming** | State where motors are enabled. Most setups require: RC link good, no arming flags, arm switch. |
-| **PID** | Proportional-Integral-Derivative. The control loop at the core of Betaflight. See [PID Basics](../pid-basics/). |
-| **Rates** | How stick deflection maps to rotation speed (°/s). Four styles: Betaflight, Actual, KISS, Quickrates. See [Rate Modes](../rate-modes/). |
-| **Blackbox** | Flight data recorder built into Betaflight. Logs gyro, setpoint, motors, PIDs at up to 4 kHz. See [Blackbox Logging](../blackbox-logging/). |
+| **PID** | Proportional-Integral-Derivative. The control loop at the core of Betaflight. See [PID Basics](../../tuning/pid-basics/). |
+| **Rates** | How stick deflection maps to rotation speed (°/s). Four styles: Betaflight, Actual, KISS, Quickrates. See [Rate Modes](../../tuning/rate-modes/). |
+| **Blackbox** | Flight data recorder built into Betaflight. Logs gyro, setpoint, motors, PIDs at up to 4 kHz. See [Blackbox Logging](../../tuning/blackbox-logging/). |
 | **CLI** | Command Line Interface. Text terminal in Betaflight Configurator for direct parameter access. `diff all` to backup. |
 | **RPM filter** | Dynamic notch filters locked to motor electrical RPM via DSHOT telemetry. Requires bidirectional DSHOT. |
 | **Dynamic notch** | Auto-adapting notch filter that tracks dominant noise frequencies in the gyro signal. |
@@ -140,9 +140,9 @@ A single-page reference for the acronyms and terms that fill every FPV forum pos
 | Term | Meaning |
 |------|---------|
 | **Downwash** | Column of accelerated air pushed downward by the rotor. Extends several prop diameters below the craft. |
-| **Propwash** | Turbulence experienced when the craft descends into its own downwash. Causes the characteristic oscillation on dive exits. See [Propwash](../propwash/). |
+| **Propwash** | Turbulence experienced when the craft descends into its own downwash. Causes the characteristic oscillation on dive exits. See [Propwash](../../aerodynamics/propwash/). |
 | **Ground effect** | Increased lift efficiency when flying within ~1 prop diameter of the ground. Downwash can't fully develop; spreads radially. |
-| **Tip vortex** | Pressure leak at the blade tip. Reduces effective disk area. Ducted fans eliminate this — see [Ducted Fans](../ducted-fans/). |
+| **Tip vortex** | Pressure leak at the blade tip. Reduces effective disk area. Ducted fans eliminate this — see [Ducted Fans](../../aerodynamics/ducted-fans/). |
 | **AoA** | Angle of Attack. The angle between the prop blade chord line and the oncoming airflow. Related to thrust and stall. |
 | **Blade pitch** | Angle of the prop blade relative to the plane of rotation. Higher pitch = more pitch per revolution, more load. |
 | **Thrust curve** | Relationship between motor throttle command and actual thrust output. Not linear — thrust scales roughly with RPM². |

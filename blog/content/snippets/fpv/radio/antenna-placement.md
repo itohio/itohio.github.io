@@ -18,9 +18,9 @@ Omnidirectional antennas (dipoles, linear, RHCP/LHCP) have a radiation pattern s
 flowchart LR
     subgraph "Side view — dipole pattern"
         direction TB
-        T([Antenna tip\n← NULL]) 
-        M([Maximum gain\n→ 360° around equator])
-        B([Antenna base\n← NULL])
+        T([Antenna tip<br/>← NULL]) 
+        M([Maximum gain<br/>→ 360° around equator])
+        B([Antenna base<br/>← NULL])
     end
 ```
 
@@ -84,11 +84,11 @@ The VTX antenna transmits the video signal. The same null problem applies — if
 
 ```mermaid
 flowchart TD
-    M1[❌ RX antenna zip-tied flat\nto bottom of frame] -->|Carbon shadow\nblocks signal| F1[Poor rearward range]
-    M2[❌ Antenna tip pointing\ndirectly at TX] -->|Null zone\nfull null at 0°| F2[Unexpected drops\nat close range]
-    M3[❌ VTX antenna touching\ncarbon arm] -->|Detuning + SWR\nincreases ESC noise| F3[Short range\nVTX runs hot]
-    M4[❌ Both diversity antennas\nparallel to each other] -->|No coverage\nimprovement] --> F4[Same null\non both antennas]
-    M5[❌ LHCP on quad\nRHCP on goggles] -->|Cross-polarization\nloss ~20 dB| F5[Very short range\ncannot compensate with power]
+    M1[❌ RX antenna zip-tied flat<br/>to bottom of frame] -->|Carbon shadow<br/>blocks signal| F1[Poor rearward range]
+    M2[❌ Antenna tip pointing<br/>directly at TX] -->|Null zone<br/>full null at 0°| F2[Unexpected drops<br/>at close range]
+    M3[❌ VTX antenna touching<br/>carbon arm] -->|Detuning + SWR<br/>increases ESC noise| F3[Short range<br/>VTX runs hot]
+    M4[❌ Both diversity antennas<br/>parallel to each other] -->|No coverage<br/>improvement| F4[Same null<br/>on both antennas]
+    M5[❌ LHCP on quad<br/>RHCP on goggles] -->|Cross-polarization<br/>loss ~20 dB| F5[Very short range<br/>cannot compensate with power]
 ```
 
 ---

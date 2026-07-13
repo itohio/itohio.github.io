@@ -120,4 +120,4 @@ set stats_total_flights = ON
 save
 ```
 
-See also: [Rate Profiles & Persistent Stats](../rate-profiles-persistent-stats/) for the interaction between rate profile switching and stat persistence.
+See also: [Rate Profiles & Persistent Stats](../../tuning/rate-profiles-persistent-stats/) for the interaction between rate profile switching and stat persistence.

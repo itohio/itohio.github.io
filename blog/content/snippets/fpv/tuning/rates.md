@@ -44,10 +44,12 @@ Example — profile **733** (RC Rate 0.7, SR 0.33, Expo 0.3):
 ```
 maxRate = (0.7 × 200) × (1 / (1 - 0.33))
         = 140 × 1.49
-        ≈ 209 °/s ... but full-stick with expo lands near 600 °/s
+        ≈ 209 °/s
 ```
 
-> Betaflight's actual calculation includes expo shaping; the formula is an approximation. Use the Rates Preview tab in Betaflight Configurator to see the real curve.
+> **Expo does not change the maximum.** Expo only softens the curve between center and full stick; at full deflection the output returns to the same `maxRate`. To go faster you raise RC Rate or Super Rate, not Expo.
+
+> These `RC · SR · Expo` shorthand profiles use a modest Super Rate (0.33), so their max rates are gentle (~150–210 °/s). Punchy freestyle and racing tunes run Super Rate 0.5–0.75 for 600–900 °/s — see [Rate Modes](../rate-modes/). Use the Rates Preview tab in Betaflight Configurator to see the real curve for any values.
 
 ---
 

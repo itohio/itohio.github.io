@@ -14,17 +14,17 @@ A structured, blackbox-driven PID tuning protocol based on step response analysi
 
 ```mermaid
 flowchart TD
-    A([Baseline diff all\nbackup]) --> B[Record step response\ntest flight]
-    B --> C[Export BBL to CSV\nBlackbox Explorer]
-    C --> D[Run step response\nanalysis]
-    D --> E{Identify dominant\nfailure mode}
+    A([Baseline diff all<br/>backup]) --> B[Record step response<br/>test flight]
+    B --> C[Export BBL to CSV<br/>Blackbox Explorer]
+    C --> D[Run step response<br/>analysis]
+    D --> E{Identify dominant<br/>failure mode}
     E -->|Overshoot| F[Reduce P or increase D]
     E -->|Ringing after step| G[Increase D or reduce P]
     E -->|Slow / sluggish| H[Increase P]
     E -->|Long-term drift| I[Increase I]
     E -->|Delayed initial attack| J[Increase FF]
     E -->|Motor noise / heat| K[Tighten filters first]
-    F & G & H & I & J --> L[Apply one change\none axis at a time]
+    F & G & H & I & J --> L[Apply one change<br/>one axis at a time]
     L --> B
     K --> B
 ```
@@ -42,7 +42,7 @@ diff all
 # e.g.: build-name_2026-07-13_pre-tune.txt
 ```
 
-See [CLI Backup and Restore](../cli-backup-restore/) for the full workflow.
+See [CLI Backup and Restore](../../setup-safety/cli-backup-restore/) for the full workflow.
 
 ---
 
@@ -100,8 +100,8 @@ The step response is computed via Wiener deconvolution of the gyro response agai
 
 ```mermaid
 flowchart LR
-    SET[Setpoint\n(RC command)] -->|Wiener deconvolution| SR[Step Response\ncurve]
-    GYR[Gyro\n(actual rate)] --> SR
+    SET["Setpoint<br/>(RC command)"] -->|Wiener deconvolution| SR[Step Response<br/>curve]
+    GYR["Gyro<br/>(actual rate)"] --> SR
     SR --> SHAPE{Shape analysis}
     SHAPE --> OS[Overshoot peak]
     SHAPE --> RT[Rise time]
@@ -212,11 +212,11 @@ Before any PID adjustment, run spectral analysis on gyro and motor traces. Look 
 
 ```mermaid
 flowchart LR
-    SPEC[Spectral plot\nof gyro] --> A{Sharp peak\nfixed frequency?}
-    A -->|Yes| B[Mechanical — tighten screws\nbalance props\ncheck motor]
-    A -->|No| C{Peak tracks\nthrottle?}
-    C -->|Yes| D[Motor noise — verify\nRPM filter is active]
-    C -->|No — broad hump| E[Prop wash —\nD term / filtering issue]
+    SPEC[Spectral plot<br/>of gyro] --> A{Sharp peak<br/>fixed frequency?}
+    A -->|Yes| B[Mechanical — tighten screws<br/>balance props<br/>check motor]
+    A -->|No| C{Peak tracks<br/>throttle?}
+    C -->|Yes| D[Motor noise — verify<br/>RPM filter is active]
+    C -->|No — broad hump| E[Prop wash —<br/>D term / filtering issue]
 ```
 
 Only proceed to PID adjustment once the noise floor is clean or understood.
@@ -229,11 +229,11 @@ Follow this order. Do not skip to I or FF before P and D are stable.
 
 ```mermaid
 flowchart TD
-    P1[Set P: find the edge of oscillation\nthen reduce 15–20%] --> D1
-    D1[Set D: increase until overshoot\nis damped without adding noise] --> I1
-    I1[Set I: increase until\nsteady-state error disappears\nwatch for low-frequency wobble] --> FF1
-    FF1[Set FF: tune for\ninitial stick response feel\ncheck for FF spikes on fast inputs] --> VERIFY
-    VERIFY[Re-fly step response test\nConfirm all axes stable\nCheck motor temps] --> DONE([Commit config\ndiff all → save])
+    P1[Set P: find the edge of oscillation<br/>then reduce 15–20%] --> D1
+    D1[Set D: increase until overshoot<br/>is damped without adding noise] --> I1
+    I1[Set I: increase until<br/>steady-state error disappears<br/>watch for low-frequency wobble] --> FF1
+    FF1[Set FF: tune for<br/>initial stick response feel<br/>check for FF spikes on fast inputs] --> VERIFY
+    VERIFY[Re-fly step response test<br/>Confirm all axes stable<br/>Check motor temps] --> DONE([Commit config<br/>diff all → save])
 ```
 
 **Axis order**: Roll first (most sensitive), then Pitch, then Yaw. Roll and Pitch can often share PID values on symmetrical frames — verify after setting both.
@@ -257,4 +257,4 @@ Motors should be checked in the same order (M1–M4) every time. If one motor ru
 - **PIDtoolbox** (Brian White): [github.com/bw1129/PIDtoolbox](https://github.com/bw1129/PIDtoolbox) — the MATLAB implementation of step response analysis and spectral tooling this protocol is derived from. Runs in MATLAB or GNU Octave.
 - **Betaflight Blackbox Explorer**: [github.com/betaflight/blackbox-log-viewer](https://github.com/betaflight/blackbox-log-viewer)
 - **Rylo** — AI-assisted BBL analysis: share your `.bbl` log and get step response, spectral diagnosis, and PID recommendations without MATLAB. → [app.sintra.ai/community/helpers/rylo](https://app.sintra.ai/community/helpers/rylo)
-- Related snippets: [Blackbox Logging](../blackbox-logging/), [PID Basics](../pid-basics/), [CLI Backup and Restore](../cli-backup-restore/), [Tuning Flight Protocol](../tuning-flight-protocol/), [Wobble-Test PID Protocol](../pid-tuning-wobble-test/)
+- Related snippets: [Blackbox Logging](../blackbox-logging/), [PID Basics](../pid-basics/), [CLI Backup and Restore](../../setup-safety/cli-backup-restore/), [Tuning Flight Protocol](../tuning-flight-protocol/), [Wobble-Test PID Protocol](../pid-tuning-wobble-test/)

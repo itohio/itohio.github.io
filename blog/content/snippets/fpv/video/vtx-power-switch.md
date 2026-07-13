@@ -42,32 +42,27 @@ For a 3-position switch cycling through 25 / 200 / 600 mW:
 
 ---
 
-## Radiomaster Pocket — Lever / Wheel CLI Example
+## Radiomaster Pocket — Lever / Wheel Example
 
 The Radiomaster Pocket has a scrolling wheel (S1) that outputs a smooth 1000–2000 µs range on an AUX channel — ideal for VTX power.
 
-Map wheel to **AUX3** in the transmitter's mixer, then in Betaflight CLI:
+First confirm the VTX power table in the CLI (these are real commands):
 
 ```
-# Confirm VTX table is set
 vtxtable powervalues 25 100 200 400 600
 vtxtable powerlabels 25 100 200 400 600
-
-# Map AUX3 (channel 7 internally, 0-indexed as 6) to VTX power
-# Betaflight uses 'vtx' resource; power is driven via the mode system
-# Example using a 3-band split across the wheel travel:
-
-# LOW band   (1000-1333): pit mode / 25 mW
-auxn mode VTX_PIT_MODE range 0 900 1333
-
-# MID band   (1334-1666): 200 mW  (power index 2)
-# HIGH band  (1667-2000): 600 mW  (power index 4)
-
-# Save
 save
 ```
 
-For a smooth wheel or a lever, split the 1000–2000 µs range into equal thirds (or halves for two levels). The "POWER LEVEL" mode conditions in the Modes tab handle the stepping — you don't need to set exact midpoints, just non-overlapping ranges.
+Map the wheel to **AUX3** in the transmitter's mixer, then assign the ranges in Configurator → **Modes** tab (not via raw CLI — mode ranges are edited in the GUI or with the numeric `aux` command). Split the 1000–2000 µs wheel travel into non-overlapping bands:
+
+| Wheel band | µs range | Assign |
+|-----------|----------|--------|
+| LOW | 1000–1333 | `VTX PIT MODE` |
+| MID | 1334–1666 | `VTX POWER LEVEL 2` (200 mW) |
+| HIGH | 1667–2000 | `VTX POWER LEVEL 4` (600 mW) |
+
+The `VTX POWER LEVEL n` mode conditions handle the stepping — you don't need exact midpoints, just non-overlapping ranges.
 
 ---
 
@@ -87,4 +82,4 @@ After setup, check in the OSD or Betaflight Configurator → Video Transmitter t
 
 - **SmartAudio v2.1+** is required for reliable power switching in flight. Earlier versions may need a save/reboot cycle.
 - Some VTX units require a reboot to apply power changes — test before relying on it in the field.
-- IRC Tramp protocol is also fully supported; configure via `vtx_type = TRAMP` in CLI.
+- IRC Tramp is also fully supported; select it as the VTX peripheral in Configurator → **Ports** tab (VTX (Tramp)) on the UART wired to the VTX, rather than any `set` variable.

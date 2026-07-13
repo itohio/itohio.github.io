@@ -16,13 +16,13 @@ When a motor changes speed rapidly, it generates back-EMF — a voltage spike th
 
 ```mermaid
 flowchart LR
-    B([Battery]) -->|Long\nwires| ESC([ESC])
+    B([Battery]) -->|Long<br/>wires| ESC([ESC])
     ESC -->|Back-EMF spike| B
-    ESC -->|Spike| OtherESC([Other ESCs\non same rail])
+    ESC -->|Spike| OtherESC([Other ESCs<br/>on same rail])
     ESC -->|Via 5V BEC| FC([Flight Controller])
     ESC -->|Via video power| VTX([VTX / Camera])
 
-    CAP([Capacitor\nacross battery leads]) -->|Absorbs spike\nbefore it propagates| B
+    CAP([Capacitor<br/>across battery leads]) -->|Absorbs spike<br/>before it propagates| B
 ```
 
 Wire inductance (even a few centimetres of lead) resists instantaneous current changes. A capacitor in parallel with the battery pads provides a local energy reservoir that absorbs the spike before it travels the length of the power wires.
@@ -49,9 +49,9 @@ Wire inductance (even a few centimetres of lead) resists instantaneous current c
 
 ```mermaid
 flowchart TD
-    A[Battery pads\non ESC stack] -->|Mount as close\nas physically possible| CAP([Capacitor])
-    CAP -->|Both leads soldered\ndirectly to battery +/−| A
-    CAP -->|NOT mounted\nremotely via long wires| WRONG([❌ Long wires\nreduce effectiveness])
+    A[Battery pads<br/>on ESC stack] -->|Mount as close<br/>as physically possible| CAP([Capacitor])
+    CAP -->|Both leads soldered<br/>directly to battery +/−| A
+    CAP -->|NOT mounted<br/>remotely via long wires| WRONG([❌ Long wires<br/>reduce effectiveness])
 ```
 
 1. **Solder directly to the ESC battery pads.** The shorter the leads, the better. Even 5 cm of extra wire reduces effectiveness.

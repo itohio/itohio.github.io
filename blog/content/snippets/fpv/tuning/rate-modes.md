@@ -39,7 +39,7 @@ stick = |rcCommand|       // 0 to 1
 
 // Expo pre-shaping (reduces center sensitivity):
 if expo > 0:
-    stick = stick × (expo × stick² + stick × (1 − expo))
+    stick = stick × (expo × stick² + (1 − expo))
 
 // Rate with super rate denominator (hockey-stick at extremes):
 output = sign(rcCommand) × stick × rcRate × 200 / (1 − superRate × stick)
@@ -130,7 +130,7 @@ Typical settings matched for roughly comparable feel:
     "labels": ["0","0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1.0"],
     "datasets": [
       {
-        "label": "Betaflight (rcRate=1.0, SR=0.70) — max 800°/s",
+        "label": "Betaflight (rcRate=1.2, SR=0.70) — max 800°/s",
         "data": [0,26,56,91,133,185,248,329,436,584,800],
         "borderColor": "rgba(239,68,68,1)",
         "backgroundColor": "transparent",
@@ -255,5 +255,5 @@ These are starting points — adjust to taste. The configurator Rate graph updat
 - [Betaflight Tuning Math](../betaflight-tuning-math/) — what happens to rates inside the PID loop
 - [Wobble-Test PID Protocol](../pid-tuning-wobble-test/) — tuning workflow that references these rate settings
 - [Tuning Flight Protocol](../tuning-flight-protocol/) — why Quickrates or FF=0 matters for clean BBL data
-- [FPV Terminology](../fpv-terminology/) — glossary including Acro mode, rates, PID
+- [FPV Terminology](../../reference/fpv-terminology/) — glossary including Acro mode, rates, PID
 - **Rylo** — rate setup help and PID tuning guidance → [app.sintra.ai/community/helpers/rylo](https://app.sintra.ai/community/helpers/rylo)

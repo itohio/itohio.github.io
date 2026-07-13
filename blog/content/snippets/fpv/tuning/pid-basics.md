@@ -14,17 +14,17 @@ A PID controller is the core of what makes a flight controller work. Understandi
 
 ```mermaid
 flowchart LR
-    P([Pilot stick\nsetpoint]) --> E{Error\ncalculation}
-    G([Gyro\nactual rate]) --> E
+    P([Pilot stick<br/>setpoint]) --> E{Error<br/>calculation}
+    G([Gyro<br/>actual rate]) --> E
     E --> PT[P term]
     E --> IT[I term]
     E --> DT[D term]
-    FF([Stick input\ndirect]) --> FFT[Feedforward]
+    FF([Stick input<br/>direct]) --> FFT[Feedforward]
     PT --> S[Σ Sum]
     IT --> S
     DT --> S
     FFT --> S
-    S --> M([Motor\ncommand])
+    S --> M([Motor<br/>command])
     M --> Q([Quad])
     Q --> G
 ```
@@ -150,11 +150,11 @@ Always tune in this order — earlier terms affect the behavior of later ones:
 
 ```mermaid
 flowchart TD
-    A[1. Set safe starting PIDs\nfrom a preset] --> B[2. Tune P\nRaise until oscillation, back off 20%]
-    B --> C[3. Tune D\nRaise until propwash disappears or motors get hot]
-    C --> D[4. Tune I\nLow by default; raise if drifting in wind]
-    D --> E[5. Tune FF\nRaise until tracking feels instant without overshoot]
-    E --> F[6. Verify with blackbox\nCheck step response and motor traces]
+    A[1. Set safe starting PIDs<br/>from a preset] --> B[2. Tune P<br/>Raise until oscillation, back off 20%]
+    B --> C[3. Tune D<br/>Raise until propwash disappears or motors get hot]
+    C --> D[4. Tune I<br/>Low by default; raise if drifting in wind]
+    D --> E[5. Tune FF<br/>Raise until tracking feels instant without overshoot]
+    E --> F[6. Verify with blackbox<br/>Check step response and motor traces]
 ```
 
 **Never start tuning with I or FF.** P and D have to be stable first or the I windup and FF overshoot will confuse every measurement.

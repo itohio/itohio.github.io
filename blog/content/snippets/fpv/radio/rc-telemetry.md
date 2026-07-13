@@ -18,9 +18,9 @@ flowchart LR
     RX -->|Telemetry| TX
 
     subgraph "What telemetry reports"
-        RSSI["RSSI (dBm)\nRaw signal strength\nat the receiver antenna"]
-        LQ["LQ (%)\nPacket success rate\nover last 100 packets"]
-        SNR["SNR (dB)\nSignal vs noise floor\nhow much margin exists"]
+        RSSI["RSSI (dBm)<br/>Raw signal strength<br/>at the receiver antenna"]
+        LQ["LQ (%)<br/>Packet success rate<br/>over last 100 packets"]
+        SNR["SNR (dB)<br/>Signal vs noise floor<br/>how much margin exists"]
     end
 ```
 
