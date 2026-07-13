@@ -12,179 +12,168 @@ A duct (shroud) around a propeller changes how air enters and exits the disk —
 
 ## What a Duct Does to Airflow
 
-Without a duct, blade tip vortices form at the prop tip: the pressure differential between top and bottom of the blade leaks radially outward at the tip, rolling into a vortex that reduces effective disk area and wastes energy. The duct eliminates this — it keeps the air path axial, recovers the tip loss, and also acts as a venturi: slightly accelerating inflow at the duct lip.
+The prop spins in the horizontal plane and pulls air down through the disk. On an open prop the pressure difference between the top and bottom of each blade leaks around the **tip**, rolling into a trailing vortex that spins off the edge — it shrinks the effective disk, wastes energy, and makes noise. A duct with tight tip clearance blocks that leak: the flow stays axial, the tip loss is recovered, and the rounded inlet lip accelerates inflow like a venturi.
 
 ```p5js
 const p = sketch;
-    var W=560,H=380;
-    var particles=[], vortexParticles=[];
-    var NUM=70, VNUM=40;
+// Two rotors seen from the side (edge-on horizontal disk). Left = open prop:
+// air leaks around the tips into trailing vortices. Right = ducted: the wall
+// blocks the leak, flow stays collimated. Blades sweep the disk in perspective.
+const W = 560, H = 380;
+const xL = 140, xR = 420, diskY = 92, R = 60, eh = 9;
+let flow = [], vort = [];
+let bladeA = 0;
 
-    function makeOpen(p,init){
-      var side=p.random()<0.5?-1:1;
-      var r=p.random(4,65);
-      return {
-        x:140+side*r, y:init?p.random(30,H-60):70+p.random(-8,8),
-        vy:p.random(1.2,2.5), vx:side*p.random(0,0.3),
-        age:init?p.random(0,100):0, maxAge:p.random(80,150),
-        type:'open'
-      };
+function axial(open, init) {
+  const cx = open ? xL : xR;
+  return { open, x: cx + p.random(-R * 0.9, R * 0.9),
+           y: init ? p.random(15, H - 60) : p.random(12, 40),
+           vx: 0, vy: p.random(1.4, 2.3), age: 0, life: p.random(130, 210) };
+}
+function vortex(side, init) {
+  return { side, a: p.random(p.TWO_PI), age: init ? p.random(0, 60) : 0, life: p.random(70, 120) };
+}
+
+p.setup = function () {
+  p.createCanvas(W, H);
+  p.textFont('monospace');
+  for (let i = 0; i < 80; i++) { flow.push(axial(true, true)); flow.push(axial(false, true)); }
+  for (let i = 0; i < 26; i++) { vort.push(vortex(-1, true)); vort.push(vortex(1, true)); }
+};
+
+p.draw = function () {
+  p.background(17, 17, 17, 60);
+  bladeA += 0.16;
+
+  disk(xL, 1);
+  duct();
+  disk(xR, -1);
+
+  for (let i = flow.length - 1; i >= 0; i--) {
+    const f = flow[i];
+    const cx = f.open ? xL : xR;
+    const below = f.y > diskY;
+    if (f.open) {
+      if (below) f.vx += (f.x - cx) * 0.0016;      // tip loss spreads the wake
+      f.y += f.vy + (below ? 0.6 : 0);
+      p.fill(80, 160, 255, 170 * (1 - f.age / f.life));
+    } else {
+      if (f.y < diskY + 150) f.vx *= 0.8; else f.vx += (f.x - cx) * 0.0006;
+      f.y += f.vy + (below ? 1.0 : 0);             // faster, collimated exit
+      p.fill(80, 220, 130, 170 * (1 - f.age / f.life));
     }
+    f.x += f.vx; f.age++;
+    p.noStroke(); p.ellipse(f.x, f.y, 3.4, 3.4);
+    if (f.age > f.life || f.y > H - 18) flow[i] = axial(f.open, false);
+  }
 
-    function makeVortex(p,init){
-      var side=p.random()<0.5?-1:1;
-      return {
-        x:140+side*p.random(60,85), y:init?p.random(70,200):85+p.random(-5,5),
-        vx:side*p.random(0.8,2.0), vy:p.random(-0.5,0.5),
-        age:init?p.random(0,50):0, maxAge:p.random(30,70), type:'vortex'
-      };
+  // open-prop tip vortices: rolling cores shed off each tip, trailing downstream
+  for (let i = vort.length - 1; i >= 0; i--) {
+    const v = vort[i];
+    v.a += 0.26; v.age++;
+    const cx = xL + v.side * R + v.side * (3 + v.age * 0.16);
+    const cy = diskY + v.age * 1.5;
+    const ro = 5 + v.age * 0.06;
+    const px = cx + Math.cos(v.a) * ro * v.side;
+    const py = cy + Math.sin(v.a) * ro * 0.7;
+    p.noStroke(); p.fill(255, 85, 80, 190 * (1 - v.age / v.life));
+    p.ellipse(px, py, 3.6, 3.6);
+    if (v.age > v.life || py > H - 22) vort[i] = vortex(v.side, false);
+  }
+
+  p.stroke(255, 90, 80, 150); p.strokeWeight(1.5);   // radial tip leak
+  for (const s of [-1, 1]) {
+    const ax = xL + s * (R + 3);
+    p.line(ax, diskY, ax + s * 15, diskY - 3);
+    p.line(ax + s * 15, diskY - 3, ax + s * 10, diskY - 7);
+    p.line(ax + s * 15, diskY - 3, ax + s * 10, diskY + 1);
+  }
+
+  overlay();
+};
+
+function disk(cx, dir) {
+  p.noFill(); p.stroke(100, 170, 255, 50); p.strokeWeight(1);
+  p.ellipse(cx, diskY, R * 2, eh * 2);
+  p.stroke(120, 190, 255); p.strokeWeight(3);
+  const bx = Math.cos(bladeA * dir) * R, by = Math.sin(bladeA * dir) * eh;
+  p.line(cx - bx, diskY - by, cx + bx, diskY + by);
+  p.strokeWeight(2); p.stroke(120, 190, 255, 150);
+  const b2 = bladeA * dir + p.PI / 2;
+  p.line(cx - Math.cos(b2) * R * 0.55, diskY - Math.sin(b2) * eh * 0.55,
+         cx + Math.cos(b2) * R * 0.55, diskY + Math.sin(b2) * eh * 0.55);
+  p.noStroke(); p.fill(90, 90, 100); p.ellipse(cx, diskY, 12, 8);
+}
+
+function duct() {
+  const drad = R + 6, top = diskY - 22, ductH = 130;
+  p.stroke(150, 165, 185); p.strokeWeight(4); p.noFill();
+  for (const s of [-1, 1]) {
+    p.beginShape();
+    p.vertex(xR + s * (drad + 4), top);
+    p.vertex(xR + s * drad, top + 22);
+    p.vertex(xR + s * drad, top + ductH);
+    p.vertex(xR + s * (drad + 5), top + ductH + 16);
+    p.endShape();
+  }
+  p.stroke(150, 235, 160, 160); p.strokeWeight(1.6);
+  for (const s of [-1, 1]) {
+    const ax = xR + s * (drad - 6);
+    for (let ay = top - 34; ay <= top - 6; ay += 14) {
+      p.line(ax, ay, ax, ay + 9);
+      p.line(ax, ay + 11, ax - 3, ay + 6);
+      p.line(ax, ay + 11, ax + 3, ay + 6);
     }
+  }
+}
 
-    function makeDucted(p,init){
-      var r=p.random(4,58);
-      var side=p.random()<0.5?-1:1;
-      return {
-        x:420+side*r, y:init?p.random(20,H-60):50+p.random(-5,5),
-        vy:p.random(1.8,3.2), vx:side*p.random(0,0.1),
-        age:init?p.random(0,100):0, maxAge:p.random(80,160),
-        type:'ducted'
-      };
-    }
-
-    p.setup=function(){
-      p.createCanvas(W,H);
-      p.textFont('monospace');
-      for(var i=0;i<NUM;i++){
-        particles.push(makeOpen(p,true));
-        particles.push(makeDucted(p,true));
-      }
-      for(var i=0;i<VNUM;i++) vortexParticles.push(makeVortex(p,true));
-    };
-
-    p.draw=function(){
-      p.background(17,17,17,55);
-
-      // --- LEFT: Open prop ---
-      // Prop disk zone
-      p.stroke(100,180,255,40); p.strokeWeight(1); p.noFill();
-      p.ellipse(140,85,140,16);
-      // Prop
-      p.stroke(100,180,255); p.strokeWeight(3);
-      var t=p.frameCount*0.12;
-      p.push(); p.translate(140,85); p.rotate(t); p.line(-62,0,62,0); p.pop();
-
-      // Tip vortex spirals (static illustration)
-      p.noFill(); p.strokeWeight(1.5);
-      for(var s=0;s<2;s++){
-        var sx=s===0?202:78;
-        var sy=85;
-        p.stroke(255,80,80,120);
-        p.beginShape();
-        for(var a=0;a<p.TWO_PI*2;a+=0.15){
-          var rx=(s===0?1:-1)*a*7;
-          var ry=a*12;
-          p.curveVertex(sx+rx*0.5, sy+ry);
-        }
-        p.endShape();
-      }
-
-      // Open flow particles
-      for(var i=particles.length-1;i>=0;i--){
-        var pt=particles[i];
-        if(pt.type!=='open') continue;
-        var spread=(pt.y-85)/H*0.8;
-        pt.vx+=(pt.x<140?-1:1)*spread*0.02;
-        pt.x+=pt.vx; pt.y+=pt.vy; pt.age++;
-        var frac=pt.age/pt.maxAge;
-        p.noStroke(); p.fill(80,160,255,180*(1-frac));
-        p.ellipse(pt.x,pt.y,3.5,3.5);
-        if(pt.age>pt.maxAge||pt.y>H-20) particles[i]=makeOpen(p,false);
-      }
-
-      // Tip vortex particles
-      for(var i=vortexParticles.length-1;i>=0;i--){
-        var vp=vortexParticles[i];
-        vp.x+=vp.vx; vp.y+=vp.vy+(vp.age*0.01); vp.age++;
-        var frac2=vp.age/vp.maxAge;
-        p.noStroke(); p.fill(255,80,80,200*(1-frac2));
-        p.ellipse(vp.x,vp.y,4,4);
-        if(vp.age>vp.maxAge) vortexParticles[i]=makeVortex(p,false);
-      }
-
-      // Left label
-      p.fill(200); p.noStroke(); p.textSize(12); p.textAlign(p.CENTER);
-      p.text("Open prop", 140, H-8);
-      p.fill(255,80,80); p.textSize(10);
-      p.text("tip vortex loss", 140, H-24);
-
-      // --- DIVIDER ---
-      p.stroke(50); p.strokeWeight(1);
-      p.line(W/2,20,W/2,H-20);
-
-      // --- RIGHT: Ducted ---
-      var dcx=420, dcy=70, drad=68, ductH=110;
-      // Duct walls
-      p.stroke(140,160,180); p.strokeWeight(4); p.noFill();
-      // Left wall
-      p.beginShape();
-      p.vertex(dcx-drad-4, dcy-20);
-      p.vertex(dcx-drad, dcy);
-      p.vertex(dcx-drad, dcy+ductH);
-      p.vertex(dcx-drad-4, dcy+ductH+16);
-      p.endShape();
-      // Right wall
-      p.beginShape();
-      p.vertex(dcx+drad+4, dcy-20);
-      p.vertex(dcx+drad, dcy);
-      p.vertex(dcx+drad, dcy+ductH);
-      p.vertex(dcx+drad+4, dcy+ductH+16);
-      p.endShape();
-
-      // Duct lip highlight
-      p.stroke(180,220,255,80); p.strokeWeight(8);
-      p.line(dcx-drad,dcy,dcx+drad,dcy);
-
-      // Prop inside duct
-      p.stroke(100,180,255); p.strokeWeight(3);
-      p.push(); p.translate(dcx,dcy+15); p.rotate(-t*1.1);
-      p.line(-62,0,62,0); p.pop();
-
-      // Ducted flow particles — more collimated, faster
-      for(var i=particles.length-1;i>=0;i--){
-        var pt=particles[i];
-        if(pt.type!=='ducted') continue;
-        // Force alignment inside duct
-        if(pt.y<dcy+ductH){
-          pt.vx*=0.88;
-        } else {
-          // Exit: slight spread
-          pt.vx+=(pt.x<dcx?-1:1)*0.06;
-        }
-        pt.x+=pt.vx; pt.y+=pt.vy; pt.age++;
-        var frac=pt.age/pt.maxAge;
-        p.noStroke(); p.fill(80,220,120,180*(1-frac));
-        p.ellipse(pt.x,pt.y,3.5,3.5);
-        if(pt.age>pt.maxAge||pt.y>H-20) particles[i]=makeDucted(p,false);
-      }
-
-      // Inflow acceleration arrows at lip
-      p.stroke(180,255,180,100); p.strokeWeight(1.5); p.fill(180,255,180,120);
-      for(var side2=-1;side2<=1;side2+=2){
-        var ax=dcx+side2*(drad-20);
-        for(var ay=dcy-45;ay<=dcy-5;ay+=18){
-          p.line(ax,ay,ax,ay+12);
-          p.triangle(ax,ay+16,ax-4,ay+9,ax+4,ay+9);
-        }
-      }
-
-      p.fill(200); p.noStroke(); p.textSize(12); p.textAlign(p.CENTER);
-      p.text("Ducted (shroud)", dcx, H-8);
-      p.fill(80,220,120); p.textSize(10);
-      p.text("collimated exit, no tip vortex", dcx, H-24);
-    };
+function overlay() {
+  p.stroke(50); p.strokeWeight(1); p.line(W / 2, 18, W / 2, H - 18);
+  p.noStroke(); p.textAlign(p.CENTER);
+  p.fill(210); p.textSize(12);
+  p.text("Open prop", xL, H - 8);
+  p.text("Ducted (shroud)", xR, H - 8);
+  p.fill(255, 90, 80); p.textSize(10); p.text("tip vortex + radial leak", xL, H - 24);
+  p.fill(90, 220, 130); p.text("collimated, no tip vortex", xR, H - 24);
+}
 ```
 
-**Left (open):** tip vortex leakage (red) escapes radially at the blade tips — wasted energy. Flow spreads. **Right (ducted):** duct wall prevents tip escape, flow stays axial, exit velocity is higher for the same power.
+**Left (open):** air leaks around the blade tips and rolls into trailing vortices (red) that spin off downstream — wasted energy, and the wake spreads. **Right (ducted):** the wall stops the tip leak, so the flow stays axial and exits as a faster, collimated jet for the same power.
+
+---
+
+## A Duct Is Not a Prop Guard
+
+It is tempting to assume any ring around a prop is a duct. It is not. A **prop guard** is an open hoop whose only job is to stop the blades hitting things: it sits well clear of the tips, has no shaped inlet, and is not a continuous wall — so aerodynamically it does nothing useful. It cannot recover the tip vortex or accelerate inflow. It just sits in the wake adding drag and weight.
+
+A **duct** earns its name through three things a guard lacks: a rounded **inlet lip**, a **continuous wall**, and a *deliberately tight* **tip clearance**. Those are what turn a bumper into an aerodynamic surface — killing the tip leak and accelerating inflow. Slacken the tolerance and a duct degrades right back into an expensive prop guard: the gap leaks, the tip vortex reforms, and the efficiency gain evaporates (see the gap chart below).
+
+| | Prop guard | Duct |
+|---|-----------|------|
+| Tip clearance | large, uncontrolled | tight (aim <5% chord) |
+| Inlet lip | none | rounded / shaped |
+| Wall | open hoop | continuous shroud |
+| Aerodynamic effect | none — pure drag | tip-loss recovery + venturi inflow |
+| Purpose | crash protection | protection **and** efficiency |
+
+Both a guard and a duct add drag compared with a bare open prop — that is the compromise. You trade top-end speed and a little weight for either crash protection (guard) or hover efficiency plus protection (duct).
+
+---
+
+## Ducted Props Are Not Open Props
+
+Blade sections at different radii move at wildly different speeds — the tip travels far faster than the root (`V = Ω·r`), so the outer blade does most of the work *and* sheds the strongest vortex. An open prop has to **unload its tip** — taper the chord and wash out the pitch near the end — to keep that vortex, and its losses and noise, under control.
+
+Inside a duct the tip vortex is suppressed, which flips the design constraint: a ducted prop can carry a **broader, more loaded tip** because it no longer pays the vortex penalty for it. That extra tip area is *working* area, so it pushes efficiency up even further. The whole blade profile — chord distribution, pitch, tip shape — is genuinely different from an open prop, tuned to the shroud. Dropping an open prop into a duct captures only part of the gain; a duct-matched prop captures the rest.
+
+```mermaid
+flowchart LR
+    T[Blade tip: fastest section<br/>V grows with radius] --> O[Open prop<br/>must unload the tip<br/>to tame the vortex]
+    T --> D[Ducted prop<br/>vortex suppressed by wall<br/>can load a broad tip]
+    D --> E[More working tip area<br/>higher hover efficiency]
+    style D fill:#1a3a1a,stroke:#4a8a4a
+    style E fill:#1a3a1a,stroke:#4a8a4a
+```
 
 ---
 
@@ -287,5 +276,6 @@ Blade tips flex slightly under load. As props age and develop micro-cracks, tip 
 ## Related
 
 - [Propwash](../propwash/)
+- [KV & Prop Matching](../../motors-esc/kv-prop-matcher/)
 - [Preflight Checklist](../../setup-safety/preflight-checklist/)
 - [INAV vs Betaflight](../../reference/inav-vs-betaflight/)
