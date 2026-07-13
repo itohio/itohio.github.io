@@ -14,6 +14,15 @@ DSHOT is the digital FC-to-ESC protocol. Every PID loop the flight controller se
 
 DSHOT is **not** a UART. Each bit occupies a fixed slot; whether it is a `1` or a `0` is decided by *how long the line stays high* inside that slot. A `1` holds high for twice as long as a `0`.
 
+```wave
+{ signal: [
+  { name: "signal", wave: "1..010..1..01..0" },
+  { name: "bit",    wave: "2...2...2...2...", data: ["1", "0", "1", "1"] }
+],
+  head: { text: "One slot per bit — a long high is 1, a short high is 0" }
+}
+```
+
 Because every bit slot is the same width, a frame is always exactly `16 × bit_period`, regardless of throttle — and the receiver can clock each bit off a single rising-then-falling edge.
 
 | Protocol | Bitrate     | T1H (µs) | T0H (µs) | Bit (µs) | Frame (µs) |
@@ -29,12 +38,14 @@ Because every bit slot is the same width, a frame is always exactly `16 × bit_p
 
 ## Frame structure
 
-Every frame is 16 bits, sent MSB first:
+Every frame is 16 bits, sent MSB first (leftmost bit first on the wire):
 
-```
- S S S S S S S S S S S  T  C C C C
- └──────── 11 ────────┘  │  └─ 4 ─┘
-        throttle      telemetry  CRC
+```wave
+{ reg: [
+  { bits: 4,  name: "CRC" },
+  { bits: 1,  name: "T" },
+  { bits: 11, name: "throttle" }
+] }
 ```
 
 - **11-bit throttle** — 2048 values. `0` = disarmed, `1–47` = special commands, `48–2047` = the 2000 usable throttle steps.
@@ -106,7 +117,16 @@ Running a faster DSHOT than your loop needs buys nothing on its own.
 
 Bidirectional (a.k.a. *inverted*) DSHOT is what feeds the RPM filter. Two things change versus plain DSHOT:
 
-1. **The line is inverted** — idle high, pulses low (`1` = low, `0` = high). This is the ESC's cue to reply with eRPM. Requires DSHOT300 or faster.
+1. **The line is inverted** — idle high, pulses low (`1` = long low, `0` = short low). This is the ESC's cue to reply with eRPM. Requires DSHOT300 or faster.
+
+```wave
+{ signal: [
+  { name: "signal", wave: "0..101..0..10..1" },
+  { name: "bit",    wave: "2...2...2...2...", data: ["1", "0", "1", "1"] }
+],
+  head: { text: "Bidirectional = same encoding, inverted level (idle high)" }
+}
+```
 2. **The CRC is inverted** — same math, complemented before masking:
 
 ```
@@ -131,10 +151,12 @@ sequenceDiagram
 
 The reply is again 16 bits, but laid out differently:
 
-```
- e e e  m m m m m m m m m  C C C C
- └─ 3 ┘ └────── 9 ───────┘ └─ 4 ─┘
- shift      period base      CRC
+```wave
+{ reg: [
+  { bits: 4, name: "CRC" },
+  { bits: 9, name: "period base" },
+  { bits: 3, name: "shift" }
+] }
 ```
 
 The 12-bit payload is a tiny floating-point number: the 9-bit **period base** left-shifted by the 3-bit **exponent** gives the motor's *electrical* commutation period in microseconds. The CRC here uses the **un-inverted** formula and is sent un-inverted.

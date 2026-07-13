@@ -12,7 +12,17 @@ ESC PWM frequency controls how often the ESC updates the power delivered to the 
 
 ## What PWM Frequency Does
 
-The ESC uses PWM to modulate the voltage applied to each motor phase. The frequency determines how many times per second this switching happens.
+The ESC uses PWM to modulate the voltage applied to each motor phase. The frequency determines how many times per second this switching happens. At the *same* duty cycle (same average power), a higher frequency packs more switching cycles into the same window — finer control, but more switching events per second:
+
+```wave
+{ signal: [
+  { name: "24 kHz", wave: "1...0...1...0..." },
+  { name: "48 kHz", wave: "1.0.1.0.1.0.1.0." },
+  { name: "96 kHz", wave: "1010101010101010" }
+],
+  head: { text: "Same ~50% duty, higher frequency = more cycles per unit time" }
+}
+```
 
 - **24 kHz** — coarser switching, less switching loss, lower ESC temperature
 - **48 kHz** — balanced; default on most modern ESCs; smooth control, moderate heat
