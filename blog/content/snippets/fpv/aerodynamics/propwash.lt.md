@@ -14,14 +14,8 @@ Propwash — tai turbulencija, per kurią multiroteris skrenda, kai leidžiasi �
 
 Kiekvienas besisukantis propas greitina orą žemyn per slėgio skirtumą — aukštas slėgis virš disko, žemas apačioje. Tas susidaręs pagreitinto oro stulpas ir vadinamas **downwash**. Kabant vietoje (hover) šis stulpas nusidriekia kelis propo skersmenis žemiau drono ir palaipsniui išsisklaido.
 
-<div style="display:flex;justify-content:center;margin:2rem 0;">
-<canvas id="downwash-canvas" width="520" height="360" style="border-radius:8px;background:#111;display:block;"></canvas>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
-<script>
-(function(){
-  // Hover / downwash visualization
-  var sketch = function(p){
+```p5js
+const p = sketch;
     var particles = [];
     var W = 520, H = 360;
     var propY = 70, propHalf = 90;
@@ -122,11 +116,7 @@ Kiekvienas besisukantis propas greitina orą žemyn per slėgio skirtumą — au
       p.fill(180); p.noStroke(); p.textSize(11); p.textAlign(p.CENTER);
       p.text("Downwash column (hover)", W/2, H - 10);
     };
-  };
-  new p5(sketch, document.getElementById('downwash-canvas').parentElement).canvas = document.getElementById('downwash-canvas');
-  // p5 auto-creates canvas; let's target it properly
-})();
-</script>
+```
 
 ---
 
@@ -153,12 +143,8 @@ Trikdis daugiausia jaučiamas kaip pitch/roll svyravimas išeinant iš nardymo i
 
 ## Oro srauto geometrija — gyvai
 
-<div style="display:flex;justify-content:center;margin:2rem 0;">
-<canvas id="propwash-canvas" width="520" height="400" style="border-radius:8px;background:#111;display:block;"></canvas>
-</div>
-<script>
-(function(){
-  var sketch2 = function(p){
+```p5js
+const p = sketch;
     var W=520, H=400;
     var particles=[], groundParticles=[];
     var NUM=90, GNUM=50;
@@ -298,11 +284,7 @@ Trikdis daugiausia jaučiamas kaip pitch/roll svyravimas išeinant iš nardymo i
       p.fill(80); p.textSize(10);
       p.text("blue = laminar  |  orange = turbulent", W/2, H+8-2);
     };
-  };
-  new p5(sketch2, 'propwash-canvas-host');
-})();
-</script>
-<div id="propwash-canvas-host" style="display:none"></div>
+```
 
 **Oranžinė = turbulentiškas įtekantis oras.** Atsigaunant dronas leidžiasi į tą suplaikytą stulpą, kurį ką tik nustūmė žemyn. Kiekvienas mentelės ašmuo per diską susiduria su kintančiu atakos kampu, ir dėl to susidaro asimetrinė trauka.
 

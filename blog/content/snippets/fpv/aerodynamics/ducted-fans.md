@@ -14,13 +14,8 @@ A duct (shroud) around a propeller changes how air enters and exits the disk —
 
 Without a duct, blade tip vortices form at the prop tip: the pressure differential between top and bottom of the blade leaks radially outward at the tip, rolling into a vortex that reduces effective disk area and wastes energy. The duct eliminates this — it keeps the air path axial, recovers the tip loss, and also acts as a venturi: slightly accelerating inflow at the duct lip.
 
-<div style="display:flex;justify-content:center;margin:2rem 0;">
-<canvas id="duct-compare-canvas" width="560" height="380" style="border-radius:8px;background:#111;display:block;"></canvas>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js" onerror="void(0)"></script>
-<script>
-(function(){
-  var sk = function(p){
+```p5js
+const p = sketch;
     var W=560,H=380;
     var particles=[], vortexParticles=[];
     var NUM=70, VNUM=40;
@@ -187,11 +182,7 @@ Without a duct, blade tip vortices form at the prop tip: the pressure differenti
       p.fill(80,220,120); p.textSize(10);
       p.text("collimated exit, no tip vortex", dcx, H-24);
     };
-  };
-  new p5(sk, 'duct-compare-host');
-})();
-</script>
-<div id="duct-compare-host" style="display:none"></div>
+```
 
 **Left (open):** tip vortex leakage (red) escapes radially at the blade tips — wasted energy. Flow spreads. **Right (ducted):** duct wall prevents tip escape, flow stays axial, exit velocity is higher for the same power.
 

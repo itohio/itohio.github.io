@@ -14,13 +14,8 @@ Duct'as (gaubtas) aplink propelerį pakeičia, kaip oras įteka ir išteka pro d
 
 Be duct'o mentelės gale susidaro blade tip vortex'ai: slėgio skirtumas tarp mentelės viršaus ir apačios prasiveržia radialiai gale, susisukdamas į sūkurį, kuris sumažina efektyvų disko plotą ir švaisto energiją. Duct'as tai panaikina — jis palaiko ašinį oro kelią, atgauna galo nuostolį ir dar veikia kaip venturi: šiek tiek pagreitina įtekantį orą ties duct'o lūpa.
 
-<div style="display:flex;justify-content:center;margin:2rem 0;">
-<canvas id="duct-compare-canvas" width="560" height="380" style="border-radius:8px;background:#111;display:block;"></canvas>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js" onerror="void(0)"></script>
-<script>
-(function(){
-  var sk = function(p){
+```p5js
+const p = sketch;
     var W=560,H=380;
     var particles=[], vortexParticles=[];
     var NUM=70, VNUM=40;
@@ -187,11 +182,7 @@ Be duct'o mentelės gale susidaro blade tip vortex'ai: slėgio skirtumas tarp me
       p.fill(80,220,120); p.textSize(10);
       p.text("collimated exit, no tip vortex", dcx, H-24);
     };
-  };
-  new p5(sk, 'duct-compare-host');
-})();
-</script>
-<div id="duct-compare-host" style="display:none"></div>
+```
 
 **Kairė (open):** tip vortex nuotėkis (raudona) pabėga radialiai ties mentelių galais — švaistoma energija. Srautas išsisklaido. **Dešinė (ducted):** duct'o sienelė neleidžia orui pabėgti ties galu, srautas lieka ašinis, o ištekėjimo greitis prie tos pačios galios yra didesnis.
 

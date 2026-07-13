@@ -14,14 +14,8 @@ Propwash is the turbulence a multirotor flies through when it descends into its 
 
 Each spinning prop accelerates air downward through a pressure differential — high pressure above the disk, low below. The resulting column of accelerated air is called **downwash**. In a hover, this column extends several prop diameters below the craft and disperses gradually.
 
-<div style="display:flex;justify-content:center;margin:2rem 0;">
-<canvas id="downwash-canvas" width="520" height="360" style="border-radius:8px;background:#111;display:block;"></canvas>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
-<script>
-(function(){
-  // Hover / downwash visualization
-  var sketch = function(p){
+```p5js
+const p = sketch;
     var particles = [];
     var W = 520, H = 360;
     var propY = 70, propHalf = 90;
@@ -122,11 +116,7 @@ Each spinning prop accelerates air downward through a pressure differential — 
       p.fill(180); p.noStroke(); p.textSize(11); p.textAlign(p.CENTER);
       p.text("Downwash column (hover)", W/2, H - 10);
     };
-  };
-  new p5(sketch, document.getElementById('downwash-canvas').parentElement).canvas = document.getElementById('downwash-canvas');
-  // p5 auto-creates canvas; let's target it properly
-})();
-</script>
+```
 
 ---
 
@@ -153,12 +143,8 @@ The disturbance is primarily felt as a pitch/roll wobble on exit from dives and 
 
 ## The Airflow Geometry — Live
 
-<div style="display:flex;justify-content:center;margin:2rem 0;">
-<canvas id="propwash-canvas" width="520" height="400" style="border-radius:8px;background:#111;display:block;"></canvas>
-</div>
-<script>
-(function(){
-  var sketch2 = function(p){
+```p5js
+const p = sketch;
     var W=520, H=400;
     var particles=[], groundParticles=[];
     var NUM=90, GNUM=50;
@@ -298,11 +284,7 @@ The disturbance is primarily felt as a pitch/roll wobble on exit from dives and 
       p.fill(80); p.textSize(10);
       p.text("blue = laminar  |  orange = turbulent", W/2, H+8-2);
     };
-  };
-  new p5(sketch2, 'propwash-canvas-host');
-})();
-</script>
-<div id="propwash-canvas-host" style="display:none"></div>
+```
 
 **Orange = turbulent inflow.** During recovery the quad descends into the disturbed column it just pushed downward. Each blade encounters varying angle of attack across the disk, producing asymmetric thrust.
 
