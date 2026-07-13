@@ -1,298 +1,246 @@
 ---
-title: "Propwash — What It Is and Why It Happens"
+title: "Propwash — Reversed Inflow, Blade Stall, and Dynamic Idle"
 date: 2026-07-13
 draft: false
 category: "fpv"
-tags: ["fpv", "aerodynamics", "propwash", "pid", "tuning", "airflow", "motors"]
+tags: ["fpv", "aerodynamics", "propwash", "stall", "angle-of-attack", "dynamic-idle", "vortex-ring", "pid", "tuning"]
 ---
 
-Propwash is the turbulence a multirotor flies through when it descends into its own rotor downwash. It is the dominant cause of the characteristic oscillation felt during punch-outs, split-S exits, and any recovery from a dive. Understanding the airflow geometry makes the tuning response obvious.
+Propwash is the turbulence a multirotor flies through when it descends into its own rotor wake. The prop spins in the horizontal plane and normally pulls clean air down through the disk; when the craft drops fast enough, that air is forced back *up* through the disk, the blade's angle of attack spikes past its stall angle over part of the disk, and thrust becomes non-linear and noisy. That is the wobble you feel on dive exits and throttle chops. Tuning rejects it; **dynamic idle** and prop choice change how deep the stall gets.
 
 ---
 
-## What Is Rotor Downwash?
+## The airflow through one prop
 
-Each spinning prop accelerates air downward through a pressure differential — high pressure above the disk, low below. The resulting column of accelerated air is called **downwash**. In a hover, this column extends several prop diameters below the craft and disperses gradually.
+The prop rotates in the horizontal (XZ) plane about a vertical axis; the craft moves vertically (XY). One prop is enough to see what matters — watch the air through the disk as it climbs, hovers, and descends:
 
 ```p5js
 const p = sketch;
-    var particles = [];
-    var W = 520, H = 360;
-    var propY = 70, propHalf = 90;
-    var NUM = 80;
+// Side view of ONE prop. The disk spins in the horizontal (XZ) plane,
+// seen edge-on as an ellipse; the craft moves vertically (XY). We watch
+// air go through the disk while it climbs, hovers, and descends.
+let W = 560, H = 420;
+let cx = W / 2;
+let diskR = 150, ellH = 26;
+let baseY = H * 0.5, diskY = baseY, bladeA = 0;
+let particles = [];
+let phase = 0, timer = 0;
+const dur = [220, 200, 260];
+const name = ["CLIMB - extra air pulled down through the disk",
+              "HOVER - steady downwash column",
+              "DESCEND - craft drops into its own wake: backflow"];
+const wThru = [3.2, 2.0, -1.4];   // net flow through disk, + = down
+const craftV = [-0.7, 0, 0.7];
+const theta = 22;                 // blade pitch angle at 0.7R (deg)
 
-    p.setup = function(){
-      p.createCanvas(W, H);
-      for(var i=0;i<NUM;i++){
-        particles.push(newParticle(p));
-      }
-    };
+function mkP(init) {
+  const descending = wThru[phase] < 0;
+  return { x: cx + p.random(-diskR, diskR),
+           y: init ? p.random(0, H) : (descending ? H + 6 : -6),
+           turb: 0 };
+}
 
-    function newParticle(p){
-      var side = p.random()<0.5 ? -1 : 1;
-      var r = p.random(8, propHalf);
-      return {
-        x: W/2 + side * r,
-        y: propY + p.random(-20, 20),
-        vy: p.random(0.8, 2.2),
-        vx: side * p.random(0.0, 0.5),
-        life: p.random(0.3, 1.0),
-        age: 0,
-        maxAge: p.random(80, 160)
-      };
+p.setup = function () {
+  p.createCanvas(W, H);
+  p.textFont('monospace');
+  for (let i = 0; i < 150; i++) particles.push(mkP(true));
+};
+
+p.draw = function () {
+  p.background(17, 17, 17, 70);
+  timer++;
+  if (timer > dur[phase]) { timer = 0; phase = (phase + 1) % 3; }
+  bladeA += 0.35;
+
+  diskY = p.constrain(diskY + craftV[phase], baseY - 70, baseY + 70);
+  if (phase === 1) diskY = p.lerp(diskY, baseY, 0.02);
+
+  const w = wThru[phase];
+  const descending = w < 0;
+
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const pt = particles[i];
+    const above = pt.y < diskY;
+    if (!descending) {
+      pt.y += above ? w * 0.9 : w * 1.7;        // down, slipstream speeds up below
+    } else {
+      pt.y += w * 1.5;                          // up: backflow
+      pt.turb = p.lerp(pt.turb, p.random(-1.4, 1.4), 0.12);
+      pt.x += pt.turb + (p.abs(pt.y - diskY) < 45 ? (pt.x < cx ? -1 : 1) : 0);
     }
+    const near = p.abs(pt.y - diskY) < 50;
+    if (descending && near) p.stroke(255, 120, 40, 200);
+    else { const g = p.map(p.abs(w), 0, 3.2, 150, 220); p.stroke(70, g, 255, 170); }
+    p.strokeWeight(descending && near ? 3 : 2);
+    p.point(pt.x, pt.y);
+    if (pt.y < -8 || pt.y > H + 8 || pt.x < cx - diskR - 30 || pt.x > cx + diskR + 30)
+      particles[i] = mkP(false);
+  }
 
-    p.draw = function(){
-      p.background(17, 17, 17, 60);
+  arrow(cx - diskR - 26, diskY - 74, descending ? -28 : 30, descending);
+  arrow(cx - diskR - 26, diskY + 46, descending ? -28 : 30, descending);
 
-      // Quad body
-      p.fill(50, 50, 60);
-      p.noStroke();
-      p.rectMode(p.CENTER);
-      p.rect(W/2, propY - 18, 60, 14, 4);
-      // Arms
-      p.stroke(60,60,70); p.strokeWeight(6);
-      p.line(W/2 - 55, propY - 14, W/2 - 105, propY - 40);
-      p.line(W/2 + 55, propY - 14, W/2 + 105, propY - 40);
-      p.line(W/2 - 55, propY - 22, W/2 - 105, propY + 2);
-      p.line(W/2 + 55, propY - 22, W/2 + 105, propY + 2);
-      // Motors
-      p.noStroke();
-      p.fill(80,80,90);
-      p.ellipse(W/2 - 105, propY - 40, 18, 18);
-      p.ellipse(W/2 + 105, propY - 40, 18, 18);
-      p.ellipse(W/2 - 105, propY + 2, 18, 18);
-      p.ellipse(W/2 + 105, propY + 2, 18, 18);
-      // Props
-      p.stroke(100,180,255); p.strokeWeight(3); p.noFill();
-      var t = p.frameCount * 0.12;
-      for(var m=0;m<4;m++){
-        var mx = [W/2-105, W/2+105, W/2-105, W/2+105][m];
-        var my = [propY-40, propY-40, propY+2, propY+2][m];
-        var dir = [1,-1,-1,1][m];
-        p.push();
-        p.translate(mx, my);
-        p.rotate(t * dir);
-        p.line(-22, 0, 22, 0);
-        p.pop();
-      }
+  p.noFill(); p.stroke(120, 140, 160, 130); p.strokeWeight(2);
+  p.ellipse(cx, diskY, diskR * 2, ellH);
+  p.stroke(150, 200, 255); p.strokeWeight(4);
+  const bx = Math.cos(bladeA) * diskR, by = Math.sin(bladeA) * (ellH / 2);
+  p.line(cx - bx, diskY - by, cx + bx, diskY + by);
+  p.noStroke(); p.fill(90, 90, 100); p.ellipse(cx, diskY, 16, 10);
 
-      // Downwash column boundary (faint)
-      p.stroke(80,140,255,25); p.strokeWeight(1); p.noFill();
-      p.beginShape();
-      p.vertex(W/2 - propHalf, propY);
-      p.vertex(W/2 - propHalf * 0.55, H - 30);
-      p.endShape();
-      p.beginShape();
-      p.vertex(W/2 + propHalf, propY);
-      p.vertex(W/2 + propHalf * 0.55, H - 30);
-      p.endShape();
+  gauge(w);
 
-      // Particles
-      for(var i=particles.length-1;i>=0;i--){
-        var pt = particles[i];
-        pt.x += pt.vx;
-        pt.y += pt.vy;
-        pt.age++;
+  p.noStroke();
+  p.fill(descending ? p.color(255, 150, 60) : p.color(120, 200, 255));
+  p.textSize(13); p.textAlign(p.CENTER);
+  p.text(name[phase], cx, H - 14);
+};
 
-        // Expand outward as they fall (spreading wake)
-        var spread = (pt.y - propY) / H * 0.6;
-        pt.vx += (pt.x < W/2 ? -1 : 1) * spread * 0.02;
+function arrow(x, y, len, red) {
+  p.stroke(red ? p.color(255, 120, 40) : p.color(90, 180, 255));
+  p.strokeWeight(2);
+  p.line(x, y, x, y + len);
+  const d = len > 0 ? 1 : -1;
+  p.line(x, y + len, x - 4, y + len - 4 * d);
+  p.line(x, y + len, x + 4, y + len - 4 * d);
+}
 
-        var frac = pt.age / pt.maxAge;
-        var alpha = 200 * (1 - frac);
-        var speed = p.sqrt(pt.vx*pt.vx + pt.vy*pt.vy);
-        var g = p.map(speed, 0.8, 2.2, 80, 220);
-        p.noStroke();
-        p.fill(60, g, 255, alpha);
-        p.ellipse(pt.x, pt.y, 4, 4);
-
-        if(pt.age > pt.maxAge || pt.y > H) {
-          particles[i] = newParticle(p);
-        }
-      }
-
-      // Label
-      p.fill(180); p.noStroke(); p.textSize(11); p.textAlign(p.CENTER);
-      p.text("Downwash column (hover)", W/2, H - 10);
-    };
+function gauge(w) {
+  const gx = 82, gy = 78, s = 48;
+  const Vt = 30, axial = w * 1.8;
+  const phi = p.degrees(Math.atan2(axial, Vt));
+  const aoa = theta - phi;
+  const stalled = aoa > 14;
+  p.push(); p.translate(gx, gy);
+  p.rotate(p.radians(-theta));
+  p.noStroke(); p.fill(stalled ? p.color(255, 90, 60) : p.color(185, 205, 225));
+  p.ellipse(0, 0, s, s * 0.26);
+  p.rotate(p.radians(theta));
+  p.stroke(stalled ? p.color(255, 120, 40) : p.color(120, 220, 255));
+  p.strokeWeight(2);
+  const wx = Math.cos(p.radians(phi)) * s, wy = Math.sin(p.radians(phi)) * s;
+  p.line(wx * 0.2, wy * 0.2, -wx, -wy);
+  p.pop();
+  p.noStroke(); p.textAlign(p.LEFT); p.textSize(11);
+  p.fill(stalled ? p.color(255, 110, 80) : p.color(160, 200, 160));
+  p.text("blade AoA " + p.nf(aoa, 0, 0) + "\u00B0" + (stalled ? "  STALL" : ""), gx - 44, gy + 44);
+}
 ```
+
+- **Climb:** the craft moving up adds to the downward inflow. The blade meets air at a low angle of attack — unloaded and clean, but it needs more RPM to make thrust.
+- **Hover:** a steady induced-velocity column. The blade already sits close to its best angle — near the top of its lift curve.
+- **Descend:** once the descent rate beats the induced velocity, air is pushed **up** through the disk. The prop chews through its own turbulent wake (a vortex-ring-like recirculation), inflow reverses, and the blade angle of attack jumps.
 
 ---
 
-## How Propwash Oscillation Happens
+## Why reversed inflow stalls the blade
 
-During normal forward flight the quad is flying into clean air. When it pitches level after a dive — or punches up into a descent — it flies back into the disturbed air column it just came through. Each prop then ingests turbulent, non-uniform inflow instead of smooth laminar air.
+A propeller blade is a rotating wing. Its **effective angle of attack** is the geometric pitch angle minus the inflow angle:
+
+\[ \alpha = \theta_{pitch} - \varphi, \qquad \varphi = \arctan\left(\frac{V_{axial}}{V_{tangential}}\right) \]
+
+`V_tangential` is the blade's own rotational speed (`Ω·r`); `V_axial` is the air speed through the disk. In a climb, `V_axial` is large and positive, so `φ` is large and `α` stays small. When descent reverses the axial flow, `V_axial` goes **negative**, `φ` flips sign, and `α = θ − φ` shoots up past the stall angle (~12–15°). Past that angle the flow separates from the blade, lift collapses and turns to drag, and thrust becomes noisy and non-linear — exactly the disturbance the PID loop then has to fight.
 
 ```mermaid
 flowchart TD
-    A[Quad dives<br/>descends fast] --> B[Downwash column<br/>moves relative to craft]
-    B --> C[Craft levels out<br/>or climbs through own wake]
-    C --> D[Props ingest turbulent<br/>non-uniform inflow]
-    D --> E[Asymmetric thrust<br/>per-prop, per-blade]
-    E --> F[Rapid attitude disturbance<br/>before FC can correct]
-    F --> G{PIDs respond}
-    G -->|D term too low| H[Oscillation — slow to damp]
-    G -->|D term well-tuned| I[Quick correction<br/>clean recovery]
-    G -->|D term too high| J[Motor noise amplified<br/>overheating risk]
+    A[Craft descends<br/>faster than induced velocity] --> B[Axial inflow reverses<br/>air pushed up through disk]
+    B --> C[Inflow angle flips sign<br/>blade AoA spikes]
+    C --> D{AoA past stall angle?}
+    D -->|Yes, at low RPM| E[Local blade stall<br/>lift to drag, noisy thrust]
+    D -->|No, enough RPM| F[Attached flow<br/>authority retained]
+    E --> G[Propwash oscillation<br/>PID must reject it]
 ```
-
-The disturbance is primarily felt as a pitch/roll wobble on exit from dives and during throttle-down recovery. It is **not** a PID instability — it is an external aerodynamic input that the PID loop has to reject. Tuning helps, but it cannot eliminate the physics.
 
 ---
 
-## The Airflow Geometry — Live
+## The stall region vs RPM
 
-```p5js
-const p = sketch;
-    var W=520, H=400;
-    var particles=[], groundParticles=[];
-    var NUM=90, GNUM=50;
-    var quadY=60, propHalf=88;
-    var time=0;
-    // Phase: 0=hover, 1=diving, 2=recovering
-    var phase=0, phaseTimer=0;
-    var phaseDuration=[200,120,200];
-    var phaseLabel=["Hovering — clean downwash","Diving — quad outruns its wake","Recovery — flying into own turbulence ⚡"];
-    var quadVY=0, quadActualY=quadY;
+Because both the tangential speed and the induced velocity rise with RPM, more RPM pulls the effective angle of attack back down toward the hover baseline. This is a blade-element estimate at the 0.7R station of a 5" prop (4.5" pitch, θ ≈ 22°), swept across RPM for several vertical speeds:
 
-    p.setup=function(){
-      p.createCanvas(W,H);
-      p.textFont('monospace');
-      for(var i=0;i<NUM;i++) particles.push(makeP(p,true));
-      for(var i=0;i<GNUM;i++) groundParticles.push(makeGP(p,true));
-    };
-
-    function makeP(p,init){
-      var side=p.random()<0.5?-1:1;
-      var r=p.random(5,propHalf-5);
-      return {
-        x:W/2+side*r,
-        y:(init?p.random(quadY,H-60):quadActualY+p.random(-10,10)),
-        vy:p.random(1.0,2.8)+(phase===1?2.5:0),
-        vx:side*p.random(0,0.4),
-        age:init?p.random(0,120):0,
-        maxAge:p.random(90,180),
-        turb:0
-      };
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": ["3k","5k","7k","9k","11k","13k","15k","17k","19k"],
+    "datasets": [
+      {
+        "label": "Descend 7 m/s",
+        "data": [42.7, 32.0, 27.2, 24.5, 22.7, 21.5, 20.6, 20.0, 19.4],
+        "borderColor": "rgba(239,68,68,1)", "backgroundColor": "transparent",
+        "borderWidth": 2.5, "tension": 0.3, "pointRadius": 3
+      },
+      {
+        "label": "Descend 4 m/s",
+        "data": [31.2, 24.7, 21.9, 20.4, 19.4, 18.7, 18.2, 17.8, 17.5],
+        "borderColor": "rgba(249,115,22,1)", "backgroundColor": "transparent",
+        "borderWidth": 2.5, "tension": 0.3, "pointRadius": 3
+      },
+      {
+        "label": "Hover",
+        "data": [14.9, 14.9, 14.9, 14.9, 14.9, 14.9, 14.9, 14.9, 14.9],
+        "borderColor": "rgba(148,163,184,1)", "backgroundColor": "transparent",
+        "borderWidth": 2, "borderDash": [4,4], "tension": 0, "pointRadius": 0
+      },
+      {
+        "label": "Climb 3 m/s",
+        "data": [3.3, 7.8, 9.8, 10.9, 11.7, 12.2, 12.5, 12.8, 13.0],
+        "borderColor": "rgba(34,197,94,1)", "backgroundColor": "transparent",
+        "borderWidth": 2.5, "tension": 0.3, "pointRadius": 3
+      },
+      {
+        "label": "Stall onset (~14 deg)",
+        "data": [14, 14, 14, 14, 14, 14, 14, 14, 14],
+        "borderColor": "rgba(0,0,0,0.55)", "backgroundColor": "transparent",
+        "borderWidth": 1.5, "borderDash": [8,4], "tension": 0, "pointRadius": 0
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "interaction": { "mode": "index", "intersect": false },
+    "plugins": {
+      "title": { "display": true, "text": "Blade angle of attack at 0.7R vs RPM (5\" / 4.5\" pitch)" },
+      "legend": { "position": "bottom" }
+    },
+    "scales": {
+      "x": { "title": { "display": true, "text": "Motor RPM" } },
+      "y": { "beginAtZero": true, "title": { "display": true, "text": "Effective angle of attack (deg)" } }
     }
-
-    function makeGP(p,init){
-      return {
-        x:W/2+p.random(-propHalf*0.7,propHalf*0.7),
-        y:H-40+p.random(-8,8),
-        vx:p.random(-1.2,1.2),
-        vy:p.random(-1.5,-0.3),
-        age:init?p.random(0,60):0,
-        maxAge:p.random(40,90)
-      };
-    }
-
-    p.draw=function(){
-      p.background(17,17,17,55);
-      time++;
-      phaseTimer++;
-
-      // Phase advance
-      if(phaseTimer>phaseDuration[phase]){
-        phaseTimer=0;
-        phase=(phase+1)%3;
-      }
-
-      // Quad motion
-      if(phase===1){ quadVY=p.lerp(quadVY,4,0.08); }
-      else if(phase===2){ quadVY=p.lerp(quadVY,-2,0.06); }
-      else { quadVY=p.lerp(quadVY,0,0.06); }
-      quadActualY=p.constrain(quadActualY+quadVY,quadY,H*0.55);
-
-      // Ground
-      p.stroke(60,60,60); p.strokeWeight(1);
-      p.line(30,H-30,W-30,H-30);
-
-      // Downwash wake trail (turbulence zone during recovery)
-      if(phase===2){
-        var turbAlpha=p.map(phaseTimer,0,40,0,60);
-        p.noStroke(); p.fill(255,120,0,turbAlpha);
-        p.ellipse(W/2, H*0.3+20, propHalf*1.5, H*0.4);
-      }
-
-      // Ground bounce particles
-      for(var i=groundParticles.length-1;i>=0;i--){
-        var gp=groundParticles[i];
-        gp.x+=gp.vx; gp.y+=gp.vy; gp.age++;
-        var f2=gp.age/gp.maxAge;
-        p.noStroke(); p.fill(80,180,255,150*(1-f2));
-        p.ellipse(gp.x,gp.y,3,3);
-        if(gp.age>gp.maxAge) groundParticles[i]=makeGP(p,false);
-      }
-
-      // Flow particles
-      for(var i=particles.length-1;i>=0;i--){
-        var pt=particles[i];
-        // Turbulence injection during recovery
-        if(phase===2 && pt.y > H*0.25 && pt.y < H*0.65){
-          pt.turb=p.lerp(pt.turb, p.random(-1.2,1.2), 0.15);
-        } else {
-          pt.turb=p.lerp(pt.turb,0,0.1);
-        }
-        pt.vx+=pt.turb*0.04;
-        var spread=(pt.y-quadActualY)/H*0.5;
-        pt.vx+=(pt.x<W/2?-1:1)*spread*0.015;
-        pt.x+=pt.vx; pt.y+=pt.vy+(phase===1?2:0);
-        pt.age++;
-
-        var frac=pt.age/pt.maxAge;
-        var alpha=200*(1-frac);
-        var turbMag=p.abs(pt.turb);
-        var r2=p.map(turbMag,0,1.2,60,255);
-        var g2=p.map(turbMag,0,1.2,200,100);
-        var b2=p.map(turbMag,0,1.2,255,60);
-        p.noStroke(); p.fill(r2,g2,b2,alpha);
-        p.ellipse(pt.x,pt.y,4,4);
-        if(pt.age>pt.maxAge||pt.y>H-28) particles[i]=makeP(p,false);
-      }
-
-      // Draw quad
-      var qy=quadActualY;
-      p.fill(50,50,60); p.noStroke();
-      p.rectMode(p.CENTER);
-      p.rect(W/2,qy-18,60,14,4);
-      p.stroke(60,60,70); p.strokeWeight(6);
-      p.line(W/2-55,qy-14,W/2-105,qy-42);
-      p.line(W/2+55,qy-14,W/2+105,qy-42);
-      p.line(W/2-55,qy-22,W/2-105,qy-2);
-      p.line(W/2+55,qy-22,W/2+105,qy-2);
-      p.noStroke(); p.fill(80,80,90);
-      p.ellipse(W/2-105,qy-42,18,18);
-      p.ellipse(W/2+105,qy-42,18,18);
-      p.ellipse(W/2-105,qy-2,18,18);
-      p.ellipse(W/2+105,qy-2,18,18);
-      p.stroke(100,180,255); p.strokeWeight(3); p.noFill();
-      var t2=time*0.14;
-      var dirs=[1,-1,-1,1];
-      var mxs=[W/2-105,W/2+105,W/2-105,W/2+105];
-      var mys=[qy-42,qy-42,qy-2,qy-2];
-      for(var m=0;m<4;m++){
-        p.push(); p.translate(mxs[m],mys[m]); p.rotate(t2*dirs[m]);
-        p.line(-22,0,22,0); p.pop();
-      }
-
-      // Phase label
-      var col=phase===2?p.color(255,140,40):p.color(120,200,255);
-      p.fill(col); p.noStroke(); p.textSize(12); p.textAlign(p.CENTER);
-      p.text(phaseLabel[phase], W/2, H-8);
-      p.fill(80); p.textSize(10);
-      p.text("blue = laminar  |  orange = turbulent", W/2, H+8-2);
-    };
+  }
+}
 ```
 
-**Orange = turbulent inflow.** During recovery the quad descends into the disturbed column it just pushed downward. Each blade encounters varying angle of attack across the disk, producing asymmetric thrust.
+Read it like this:
+
+- **Hover already rides the stall knee** (~15°). Props run near the top of their lift curve — that's why propwash exists at all.
+- **Descending spikes the angle of attack**, and it is worst at **low RPM** — a 7 m/s descent at 3,000 RPM sits at ~43°, deep in the stall.
+- **Adding RPM walks every descent curve back down** toward the hover baseline. It never goes below hover, but getting off the far-left cliff is the whole game.
 
 ---
 
-## Why Ground Effect Adds to It
+## Why dynamic idle helps
 
-Close to the ground (within ~1 prop diameter altitude), the downwash cannot fully develop — it spreads radially outward along the surface and wraps back up, re-entering the rotor disk from outside. This **ground recirculation** reduces effective thrust and adds another turbulent input. Combined with prop wash during low-altitude descents, this is why slow hover-in-ground-effect landings can feel mushy.
+Without dynamic idle, the ESC holds a fixed minimum throttle (default ~5.5%), and during a throttle chop or a hard correction a motor can drop to the far-left, low-RPM part of that chart — the deep-stall zone — right when you need authority. It stalls or partially desyncs, and the wobble gets worse.
+
+**Dynamic idle** uses bidirectional DShot RPM telemetry to hold the *slowest* motor above a set minimum RPM, even when the mixer commands zero drive. It keeps every blade loaded and out of the low-RPM stall cliff, so corrections stay crisp.
+
+```
+# Requires bidirectional DShot (RPM telemetry) enabled first
+set dyn_idle_min_rpm = 35        # units of 100 rpm -> 3500 rpm; 30-40 typical for 5"
+set transient_throttle_limit = 0 # must be 0 with dynamic idle
+save
+```
+
+- Value is in **hundreds of RPM**: `35` = 3,500 RPM. Range 0–200; any non-zero value enables it.
+- Start around **30–40 for 5"**; go higher for light 3"–4" props, lower for high-pitch or bigger props.
+- Too low → motors can still stall/desync at the end of fast flips (a wobble). Too high → floaty throttle and warmer motors.
+
+---
+
+## Prop stall vs prop pitch
+
+Stall depends on the *geometric* pitch angle `θ`, and higher-pitch props carry a higher `θ` at every station. For the same reversed inflow, a higher-pitch prop reaches the stall angle sooner and stalls harder — it bites more air per turn but is less tolerant of the disturbed inflow in a descent. Lower-pitch props are more stall-resistant (and quieter in propwash) but make less thrust per RPM, so they lean on higher RPM instead.
+
+This is the same pitch angle that sets thrust and tip speed — see the animated explanation in [KV & Prop Matching](../../motors-esc/kv-prop-matcher/).
 
 ---
 
@@ -301,17 +249,18 @@ Close to the ground (within ~1 prop diameter altitude), the downwash cannot full
 | Symptom | Tuning fix | Limit |
 |---------|-----------|-------|
 | Mild oscillation on dive exit, damps in 1–2 cycles | Increase D (Roll/Pitch) 5–10% | Fully fixable |
-| Wobble on every throttle-down | Increase D, verify RPM filter | Largely fixable |
+| Wobble on every throttle-down | Increase D, verify RPM filter, enable dynamic idle | Largely fixable |
 | Violent oscillation on aggressive split-S | D + reduce P slightly, check filtering | Partially — extreme moves always have propwash |
-| Oscillation hot motors | D is too high — back off | Don't chase propwash with excessive D |
+| Oscillation with hot motors | D is too high — back off | Don't chase propwash with excessive D |
 | Still wobbling after D is at thermal limit | Accept it — aerodynamics win | Not a tuning problem |
 
-**The goal is not to eliminate propwash — it is to reject it quickly without overheating motors.** An aggressive freestyle quad will always have some propwash. A well-tuned one damps it within one to two oscillation cycles.
+**The goal is not to eliminate propwash — it is to reject it quickly without overheating motors.** An aggressive freestyle quad will always have some propwash; a well-tuned one (with dynamic idle keeping the blades loaded) damps it within one to two oscillation cycles.
 
 ---
 
 ## Related
 
+- [KV & Prop Matching](../../motors-esc/kv-prop-matcher/) — prop pitch, tip speed, and the pitch animation
 - [PID Basics](../../tuning/pid-basics/)
 - [BBL-Based PID Tuning Protocol](../../tuning/bbl-pid-tuning-protocol/)
 - [Blackbox Logging](../../tuning/blackbox-logging/)

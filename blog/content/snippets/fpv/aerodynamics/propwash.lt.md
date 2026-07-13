@@ -1,317 +1,266 @@
 ---
-title: "Propwash — kas tai ir kodėl atsiranda"
+title: "Propwash — apsivertęs srautas, mentės stall'as ir dynamic idle"
 date: 2026-07-13
 draft: false
 category: "fpv"
-tags: ["fpv", "aerodynamics", "propwash", "pid", "tuning", "airflow", "motors"]
+tags: ["fpv", "aerodynamics", "propwash", "stall", "angle-of-attack", "dynamic-idle", "vortex-ring", "pid", "tuning"]
 ---
 
-Propwash — tai turbulencija, per kurią multiroteris skrenda, kai leidžiasi į savo paties rotoriaus nuosrautį (downwash). Tai pagrindinė priežastis to būdingo virpėjimo, kurį jauti darant punch-out'us, split-S išėjimus ir bet kokį atsigavimą iš nardymo. Kai supranti oro srauto geometriją, tuning'o logika tampa akivaizdi. (Man tai suprasti kainavo gerą krūvą sudaužytų propų.)
+Propwash — tai turbulencija, per kurią multiroteris skrenda leisdamasis į savo paties propelerio pėdsaką (wake). Propeleris sukasi horizontalioje plokštumoje ir normaliai traukia švarų orą žemyn pro diską; kai dronas leidžiasi pakankamai greitai, tas oras stumiamas atgal *aukštyn* pro diską, mentės atakos kampas (angle of attack) dalyje disko šoktelėja virš stall kampo, o trauka tampa netiesinė ir triukšminga. Būtent tą wobble'ą jauti išeidamas iš dive'o ar staigiai numetęs gazą. Tuning'as jį slopina; **dynamic idle** ir propelerio pasirinkimas keičia, kaip giliai nueina stall'as. (Pirmą kartą pajutęs propwash maniau, kad prastai suderinau PID. Iš dalies — taip, bet dalis jo tiesiog fizika.)
 
 ---
 
-## Kas yra rotoriaus downwash?
+## Oro srautas pro vieną propelerį
 
-Kiekvienas besisukantis propas greitina orą žemyn per slėgio skirtumą — aukštas slėgis virš disko, žemas apačioje. Tas susidaręs pagreitinto oro stulpas ir vadinamas **downwash**. Kabant vietoje (hover) šis stulpas nusidriekia kelis propo skersmenis žemiau drono ir palaipsniui išsisklaido.
+Propeleris sukasi horizontalioje (XZ) plokštumoje apie vertikalią ašį; dronas juda vertikaliai (XY). Vieno propelerio pakanka pamatyti tai, kas svarbu — stebėk orą pro diską, kai dronas kyla, kybo ir leidžiasi:
 
 ```p5js
 const p = sketch;
-    var particles = [];
-    var W = 520, H = 360;
-    var propY = 70, propHalf = 90;
-    var NUM = 80;
+// Side view of ONE prop. The disk spins in the horizontal (XZ) plane,
+// seen edge-on as an ellipse; the craft moves vertically (XY). We watch
+// air go through the disk while it climbs, hovers, and descends.
+let W = 560, H = 420;
+let cx = W / 2;
+let diskR = 150, ellH = 26;
+let baseY = H * 0.5, diskY = baseY, bladeA = 0;
+let particles = [];
+let phase = 0, timer = 0;
+const dur = [220, 200, 260];
+const name = ["CLIMB - extra air pulled down through the disk",
+              "HOVER - steady downwash column",
+              "DESCEND - craft drops into its own wake: backflow"];
+const wThru = [3.2, 2.0, -1.4];   // net flow through disk, + = down
+const craftV = [-0.7, 0, 0.7];
+const theta = 22;                 // blade pitch angle at 0.7R (deg)
 
-    p.setup = function(){
-      p.createCanvas(W, H);
-      for(var i=0;i<NUM;i++){
-        particles.push(newParticle(p));
-      }
-    };
+function mkP(init) {
+  const descending = wThru[phase] < 0;
+  return { x: cx + p.random(-diskR, diskR),
+           y: init ? p.random(0, H) : (descending ? H + 6 : -6),
+           turb: 0 };
+}
 
-    function newParticle(p){
-      var side = p.random()<0.5 ? -1 : 1;
-      var r = p.random(8, propHalf);
-      return {
-        x: W/2 + side * r,
-        y: propY + p.random(-20, 20),
-        vy: p.random(0.8, 2.2),
-        vx: side * p.random(0.0, 0.5),
-        life: p.random(0.3, 1.0),
-        age: 0,
-        maxAge: p.random(80, 160)
-      };
+p.setup = function () {
+  p.createCanvas(W, H);
+  p.textFont('monospace');
+  for (let i = 0; i < 150; i++) particles.push(mkP(true));
+};
+
+p.draw = function () {
+  p.background(17, 17, 17, 70);
+  timer++;
+  if (timer > dur[phase]) { timer = 0; phase = (phase + 1) % 3; }
+  bladeA += 0.35;
+
+  diskY = p.constrain(diskY + craftV[phase], baseY - 70, baseY + 70);
+  if (phase === 1) diskY = p.lerp(diskY, baseY, 0.02);
+
+  const w = wThru[phase];
+  const descending = w < 0;
+
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const pt = particles[i];
+    const above = pt.y < diskY;
+    if (!descending) {
+      pt.y += above ? w * 0.9 : w * 1.7;        // down, slipstream speeds up below
+    } else {
+      pt.y += w * 1.5;                          // up: backflow
+      pt.turb = p.lerp(pt.turb, p.random(-1.4, 1.4), 0.12);
+      pt.x += pt.turb + (p.abs(pt.y - diskY) < 45 ? (pt.x < cx ? -1 : 1) : 0);
     }
+    const near = p.abs(pt.y - diskY) < 50;
+    if (descending && near) p.stroke(255, 120, 40, 200);
+    else { const g = p.map(p.abs(w), 0, 3.2, 150, 220); p.stroke(70, g, 255, 170); }
+    p.strokeWeight(descending && near ? 3 : 2);
+    p.point(pt.x, pt.y);
+    if (pt.y < -8 || pt.y > H + 8 || pt.x < cx - diskR - 30 || pt.x > cx + diskR + 30)
+      particles[i] = mkP(false);
+  }
 
-    p.draw = function(){
-      p.background(17, 17, 17, 60);
+  arrow(cx - diskR - 26, diskY - 74, descending ? -28 : 30, descending);
+  arrow(cx - diskR - 26, diskY + 46, descending ? -28 : 30, descending);
 
-      // Quad body
-      p.fill(50, 50, 60);
-      p.noStroke();
-      p.rectMode(p.CENTER);
-      p.rect(W/2, propY - 18, 60, 14, 4);
-      // Arms
-      p.stroke(60,60,70); p.strokeWeight(6);
-      p.line(W/2 - 55, propY - 14, W/2 - 105, propY - 40);
-      p.line(W/2 + 55, propY - 14, W/2 + 105, propY - 40);
-      p.line(W/2 - 55, propY - 22, W/2 - 105, propY + 2);
-      p.line(W/2 + 55, propY - 22, W/2 + 105, propY + 2);
-      // Motors
-      p.noStroke();
-      p.fill(80,80,90);
-      p.ellipse(W/2 - 105, propY - 40, 18, 18);
-      p.ellipse(W/2 + 105, propY - 40, 18, 18);
-      p.ellipse(W/2 - 105, propY + 2, 18, 18);
-      p.ellipse(W/2 + 105, propY + 2, 18, 18);
-      // Props
-      p.stroke(100,180,255); p.strokeWeight(3); p.noFill();
-      var t = p.frameCount * 0.12;
-      for(var m=0;m<4;m++){
-        var mx = [W/2-105, W/2+105, W/2-105, W/2+105][m];
-        var my = [propY-40, propY-40, propY+2, propY+2][m];
-        var dir = [1,-1,-1,1][m];
-        p.push();
-        p.translate(mx, my);
-        p.rotate(t * dir);
-        p.line(-22, 0, 22, 0);
-        p.pop();
-      }
+  p.noFill(); p.stroke(120, 140, 160, 130); p.strokeWeight(2);
+  p.ellipse(cx, diskY, diskR * 2, ellH);
+  p.stroke(150, 200, 255); p.strokeWeight(4);
+  const bx = Math.cos(bladeA) * diskR, by = Math.sin(bladeA) * (ellH / 2);
+  p.line(cx - bx, diskY - by, cx + bx, diskY + by);
+  p.noStroke(); p.fill(90, 90, 100); p.ellipse(cx, diskY, 16, 10);
 
-      // Downwash column boundary (faint)
-      p.stroke(80,140,255,25); p.strokeWeight(1); p.noFill();
-      p.beginShape();
-      p.vertex(W/2 - propHalf, propY);
-      p.vertex(W/2 - propHalf * 0.55, H - 30);
-      p.endShape();
-      p.beginShape();
-      p.vertex(W/2 + propHalf, propY);
-      p.vertex(W/2 + propHalf * 0.55, H - 30);
-      p.endShape();
+  gauge(w);
 
-      // Particles
-      for(var i=particles.length-1;i>=0;i--){
-        var pt = particles[i];
-        pt.x += pt.vx;
-        pt.y += pt.vy;
-        pt.age++;
+  p.noStroke();
+  p.fill(descending ? p.color(255, 150, 60) : p.color(120, 200, 255));
+  p.textSize(13); p.textAlign(p.CENTER);
+  p.text(name[phase], cx, H - 14);
+};
 
-        // Expand outward as they fall (spreading wake)
-        var spread = (pt.y - propY) / H * 0.6;
-        pt.vx += (pt.x < W/2 ? -1 : 1) * spread * 0.02;
+function arrow(x, y, len, red) {
+  p.stroke(red ? p.color(255, 120, 40) : p.color(90, 180, 255));
+  p.strokeWeight(2);
+  p.line(x, y, x, y + len);
+  const d = len > 0 ? 1 : -1;
+  p.line(x, y + len, x - 4, y + len - 4 * d);
+  p.line(x, y + len, x + 4, y + len - 4 * d);
+}
 
-        var frac = pt.age / pt.maxAge;
-        var alpha = 200 * (1 - frac);
-        var speed = p.sqrt(pt.vx*pt.vx + pt.vy*pt.vy);
-        var g = p.map(speed, 0.8, 2.2, 80, 220);
-        p.noStroke();
-        p.fill(60, g, 255, alpha);
-        p.ellipse(pt.x, pt.y, 4, 4);
-
-        if(pt.age > pt.maxAge || pt.y > H) {
-          particles[i] = newParticle(p);
-        }
-      }
-
-      // Label
-      p.fill(180); p.noStroke(); p.textSize(11); p.textAlign(p.CENTER);
-      p.text("Downwash column (hover)", W/2, H - 10);
-    };
+function gauge(w) {
+  const gx = 82, gy = 78, s = 48;
+  const Vt = 30, axial = w * 1.8;
+  const phi = p.degrees(Math.atan2(axial, Vt));
+  const aoa = theta - phi;
+  const stalled = aoa > 14;
+  p.push(); p.translate(gx, gy);
+  p.rotate(p.radians(-theta));
+  p.noStroke(); p.fill(stalled ? p.color(255, 90, 60) : p.color(185, 205, 225));
+  p.ellipse(0, 0, s, s * 0.26);
+  p.rotate(p.radians(theta));
+  p.stroke(stalled ? p.color(255, 120, 40) : p.color(120, 220, 255));
+  p.strokeWeight(2);
+  const wx = Math.cos(p.radians(phi)) * s, wy = Math.sin(p.radians(phi)) * s;
+  p.line(wx * 0.2, wy * 0.2, -wx, -wy);
+  p.pop();
+  p.noStroke(); p.textAlign(p.LEFT); p.textSize(11);
+  p.fill(stalled ? p.color(255, 110, 80) : p.color(160, 200, 160));
+  p.text("blade AoA " + p.nf(aoa, 0, 0) + "\u00B0" + (stalled ? "  STALL" : ""), gx - 44, gy + 44);
+}
 ```
+
+- **Kylant:** dronas, judėdamas aukštyn, prideda prie žemyn krypstančio srauto. Mentė sutinka orą mažu atakos kampu — nepakrauta ir švari, bet traukai reikia daugiau RPM.
+- **Kybant:** pastovus induced-velocity stulpas. Mentė jau sėdi arti optimalaus kampo — netoli savo lift kreivės viršūnės.
+- **Leidžiantis:** kai leidimosi greitis viršija induced velocity, oras stumiamas **aukštyn** pro diską. Propeleris kramto savo paties turbulentišką pėdsaką (vortex-ring tipo recirkuliacija), srautas apsiverčia, ir mentės atakos kampas šokteli.
 
 ---
 
-## Kaip atsiranda propwash virpėjimas
+## Kodėl apsivertęs srautas užstalina mentę
 
-Normaliai skrendant į priekį dronas skrenda per švarų orą. Kai jis po nardymo išsilygina — arba staigiai kyla į leidimąsi — jis grįžta atgal į tą suplaikytą oro stulpą, per kurį ką tik praskrido. Tada kiekvienas propas siurbia turbulentišką, netolygų įtekantį orą vietoj sklandaus laminarinio.
+Propelerio mentė — tai besisukantis sparnas. Jos **efektyvus atakos kampas** yra geometrinis pitch kampas minus srauto kampas:
+
+\[ \alpha = \theta_{pitch} - \varphi, \qquad \varphi = \arctan\left(\frac{V_{axial}}{V_{tangential}}\right) \]
+
+`V_tangential` — tai pačios mentės sukimosi greitis (`Ω·r`); `V_axial` — oro greitis pro diską. Kylant `V_axial` didelis ir teigiamas, tad `φ` didelis, o `α` lieka mažas. Kai leidimasis apverčia ašinį srautą, `V_axial` tampa **neigiamas**, `φ` keičia ženklą, ir `α = θ − φ` šoka virš stall kampo (~12–15°). Už to kampo srautas atsiskiria nuo mentės, keltis virsta pasipriešinimu, o trauka tampa triukšminga ir netiesinė — kaip tik tas trikdis, kurį paskui turi atmesti PID.
 
 ```mermaid
 flowchart TD
-    A[Quad dives<br/>descends fast] --> B[Downwash column<br/>moves relative to craft]
-    B --> C[Craft levels out<br/>or climbs through own wake]
-    C --> D[Props ingest turbulent<br/>non-uniform inflow]
-    D --> E[Asymmetric thrust<br/>per-prop, per-blade]
-    E --> F[Rapid attitude disturbance<br/>before FC can correct]
-    F --> G{PIDs respond}
-    G -->|D term too low| H[Oscillation — slow to damp]
-    G -->|D term well-tuned| I[Quick correction<br/>clean recovery]
-    G -->|D term too high| J[Motor noise amplified<br/>overheating risk]
+    A[Craft descends<br/>faster than induced velocity] --> B[Axial inflow reverses<br/>air pushed up through disk]
+    B --> C[Inflow angle flips sign<br/>blade AoA spikes]
+    C --> D{AoA past stall angle?}
+    D -->|Yes, at low RPM| E[Local blade stall<br/>lift to drag, noisy thrust]
+    D -->|No, enough RPM| F[Attached flow<br/>authority retained]
+    E --> G[Propwash oscillation<br/>PID must reject it]
 ```
-
-Trikdis daugiausia jaučiamas kaip pitch/roll svyravimas išeinant iš nardymo ir atsigaunant po throttle numetimo. Tai **nėra** PID nestabilumas — tai išorinis aerodinaminis poveikis, kurį PID kilpa turi atmesti. Tuning'as padeda, bet fizikos jis panaikinti negali.
 
 ---
 
-## Oro srauto geometrija — gyvai
+## Stall zona prieš RPM
 
-```p5js
-const p = sketch;
-    var W=520, H=400;
-    var particles=[], groundParticles=[];
-    var NUM=90, GNUM=50;
-    var quadY=60, propHalf=88;
-    var time=0;
-    // Phase: 0=hover, 1=diving, 2=recovering
-    var phase=0, phaseTimer=0;
-    var phaseDuration=[200,120,200];
-    var phaseLabel=["Hovering — clean downwash","Diving — quad outruns its wake","Recovery — flying into own turbulence ⚡"];
-    var quadVY=0, quadActualY=quadY;
+Kadangi ir tangentinis greitis, ir induced velocity auga su RPM, daugiau RPM tempia efektyvų atakos kampą atgal link hover bazės. Tai blade-element įvertinimas 0.7R taške 5" propeleriui (4.5" pitch, θ ≈ 22°), perbėgant per RPM esant skirtingiems vertikaliems greičiams:
 
-    p.setup=function(){
-      p.createCanvas(W,H);
-      p.textFont('monospace');
-      for(var i=0;i<NUM;i++) particles.push(makeP(p,true));
-      for(var i=0;i<GNUM;i++) groundParticles.push(makeGP(p,true));
-    };
-
-    function makeP(p,init){
-      var side=p.random()<0.5?-1:1;
-      var r=p.random(5,propHalf-5);
-      return {
-        x:W/2+side*r,
-        y:(init?p.random(quadY,H-60):quadActualY+p.random(-10,10)),
-        vy:p.random(1.0,2.8)+(phase===1?2.5:0),
-        vx:side*p.random(0,0.4),
-        age:init?p.random(0,120):0,
-        maxAge:p.random(90,180),
-        turb:0
-      };
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": ["3k","5k","7k","9k","11k","13k","15k","17k","19k"],
+    "datasets": [
+      {
+        "label": "Descend 7 m/s",
+        "data": [42.7, 32.0, 27.2, 24.5, 22.7, 21.5, 20.6, 20.0, 19.4],
+        "borderColor": "rgba(239,68,68,1)", "backgroundColor": "transparent",
+        "borderWidth": 2.5, "tension": 0.3, "pointRadius": 3
+      },
+      {
+        "label": "Descend 4 m/s",
+        "data": [31.2, 24.7, 21.9, 20.4, 19.4, 18.7, 18.2, 17.8, 17.5],
+        "borderColor": "rgba(249,115,22,1)", "backgroundColor": "transparent",
+        "borderWidth": 2.5, "tension": 0.3, "pointRadius": 3
+      },
+      {
+        "label": "Hover",
+        "data": [14.9, 14.9, 14.9, 14.9, 14.9, 14.9, 14.9, 14.9, 14.9],
+        "borderColor": "rgba(148,163,184,1)", "backgroundColor": "transparent",
+        "borderWidth": 2, "borderDash": [4,4], "tension": 0, "pointRadius": 0
+      },
+      {
+        "label": "Climb 3 m/s",
+        "data": [3.3, 7.8, 9.8, 10.9, 11.7, 12.2, 12.5, 12.8, 13.0],
+        "borderColor": "rgba(34,197,94,1)", "backgroundColor": "transparent",
+        "borderWidth": 2.5, "tension": 0.3, "pointRadius": 3
+      },
+      {
+        "label": "Stall onset (~14 deg)",
+        "data": [14, 14, 14, 14, 14, 14, 14, 14, 14],
+        "borderColor": "rgba(0,0,0,0.55)", "backgroundColor": "transparent",
+        "borderWidth": 1.5, "borderDash": [8,4], "tension": 0, "pointRadius": 0
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "interaction": { "mode": "index", "intersect": false },
+    "plugins": {
+      "title": { "display": true, "text": "Blade angle of attack at 0.7R vs RPM (5\" / 4.5\" pitch)" },
+      "legend": { "position": "bottom" }
+    },
+    "scales": {
+      "x": { "title": { "display": true, "text": "Motor RPM" } },
+      "y": { "beginAtZero": true, "title": { "display": true, "text": "Effective angle of attack (deg)" } }
     }
-
-    function makeGP(p,init){
-      return {
-        x:W/2+p.random(-propHalf*0.7,propHalf*0.7),
-        y:H-40+p.random(-8,8),
-        vx:p.random(-1.2,1.2),
-        vy:p.random(-1.5,-0.3),
-        age:init?p.random(0,60):0,
-        maxAge:p.random(40,90)
-      };
-    }
-
-    p.draw=function(){
-      p.background(17,17,17,55);
-      time++;
-      phaseTimer++;
-
-      // Phase advance
-      if(phaseTimer>phaseDuration[phase]){
-        phaseTimer=0;
-        phase=(phase+1)%3;
-      }
-
-      // Quad motion
-      if(phase===1){ quadVY=p.lerp(quadVY,4,0.08); }
-      else if(phase===2){ quadVY=p.lerp(quadVY,-2,0.06); }
-      else { quadVY=p.lerp(quadVY,0,0.06); }
-      quadActualY=p.constrain(quadActualY+quadVY,quadY,H*0.55);
-
-      // Ground
-      p.stroke(60,60,60); p.strokeWeight(1);
-      p.line(30,H-30,W-30,H-30);
-
-      // Downwash wake trail (turbulence zone during recovery)
-      if(phase===2){
-        var turbAlpha=p.map(phaseTimer,0,40,0,60);
-        p.noStroke(); p.fill(255,120,0,turbAlpha);
-        p.ellipse(W/2, H*0.3+20, propHalf*1.5, H*0.4);
-      }
-
-      // Ground bounce particles
-      for(var i=groundParticles.length-1;i>=0;i--){
-        var gp=groundParticles[i];
-        gp.x+=gp.vx; gp.y+=gp.vy; gp.age++;
-        var f2=gp.age/gp.maxAge;
-        p.noStroke(); p.fill(80,180,255,150*(1-f2));
-        p.ellipse(gp.x,gp.y,3,3);
-        if(gp.age>gp.maxAge) groundParticles[i]=makeGP(p,false);
-      }
-
-      // Flow particles
-      for(var i=particles.length-1;i>=0;i--){
-        var pt=particles[i];
-        // Turbulence injection during recovery
-        if(phase===2 && pt.y > H*0.25 && pt.y < H*0.65){
-          pt.turb=p.lerp(pt.turb, p.random(-1.2,1.2), 0.15);
-        } else {
-          pt.turb=p.lerp(pt.turb,0,0.1);
-        }
-        pt.vx+=pt.turb*0.04;
-        var spread=(pt.y-quadActualY)/H*0.5;
-        pt.vx+=(pt.x<W/2?-1:1)*spread*0.015;
-        pt.x+=pt.vx; pt.y+=pt.vy+(phase===1?2:0);
-        pt.age++;
-
-        var frac=pt.age/pt.maxAge;
-        var alpha=200*(1-frac);
-        var turbMag=p.abs(pt.turb);
-        var r2=p.map(turbMag,0,1.2,60,255);
-        var g2=p.map(turbMag,0,1.2,200,100);
-        var b2=p.map(turbMag,0,1.2,255,60);
-        p.noStroke(); p.fill(r2,g2,b2,alpha);
-        p.ellipse(pt.x,pt.y,4,4);
-        if(pt.age>pt.maxAge||pt.y>H-28) particles[i]=makeP(p,false);
-      }
-
-      // Draw quad
-      var qy=quadActualY;
-      p.fill(50,50,60); p.noStroke();
-      p.rectMode(p.CENTER);
-      p.rect(W/2,qy-18,60,14,4);
-      p.stroke(60,60,70); p.strokeWeight(6);
-      p.line(W/2-55,qy-14,W/2-105,qy-42);
-      p.line(W/2+55,qy-14,W/2+105,qy-42);
-      p.line(W/2-55,qy-22,W/2-105,qy-2);
-      p.line(W/2+55,qy-22,W/2+105,qy-2);
-      p.noStroke(); p.fill(80,80,90);
-      p.ellipse(W/2-105,qy-42,18,18);
-      p.ellipse(W/2+105,qy-42,18,18);
-      p.ellipse(W/2-105,qy-2,18,18);
-      p.ellipse(W/2+105,qy-2,18,18);
-      p.stroke(100,180,255); p.strokeWeight(3); p.noFill();
-      var t2=time*0.14;
-      var dirs=[1,-1,-1,1];
-      var mxs=[W/2-105,W/2+105,W/2-105,W/2+105];
-      var mys=[qy-42,qy-42,qy-2,qy-2];
-      for(var m=0;m<4;m++){
-        p.push(); p.translate(mxs[m],mys[m]); p.rotate(t2*dirs[m]);
-        p.line(-22,0,22,0); p.pop();
-      }
-
-      // Phase label
-      var col=phase===2?p.color(255,140,40):p.color(120,200,255);
-      p.fill(col); p.noStroke(); p.textSize(12); p.textAlign(p.CENTER);
-      p.text(phaseLabel[phase], W/2, H-8);
-      p.fill(80); p.textSize(10);
-      p.text("blue = laminar  |  orange = turbulent", W/2, H+8-2);
-    };
+  }
+}
 ```
 
-**Oranžinė = turbulentiškas įtekantis oras.** Atsigaunant dronas leidžiasi į tą suplaikytą stulpą, kurį ką tik nustūmė žemyn. Kiekvienas mentelės ašmuo per diską susiduria su kintančiu atakos kampu, ir dėl to susidaro asimetrinė trauka.
+Skaityk taip:
+
+- **Hover jau balansuoja ant stall briaunos** (~15°). Propeleriai sukasi netoli savo lift kreivės viršūnės — todėl propwash apskritai egzistuoja.
+- **Leidimasis šauna atakos kampą aukštyn**, ir blogiausia — prie **žemo RPM**: 7 m/s leidimasis prie 3000 RPM sėdi ties ~43°, giliai stall'e.
+- **Pridėjus RPM kiekviena leidimosi kreivė grįžta žemyn** link hover bazės. Žemiau hover ji nenukrenta, bet nulipti nuo tos kairės briaunos — čia ir visas žaidimas.
 
 ---
 
-## Kodėl ground effect dar prisideda
+## Kodėl dynamic idle padeda
 
-Arti žemės (maždaug iki 1 propo skersmens aukštyje) downwash negali pilnai išsivystyti — jis sklinda radialiai išilgai paviršiaus ir apsisukęs kyla atgal, vėl įtekdamas į rotoriaus diską iš išorės. Ši **grunto recirkuliacija** sumažina efektyvią trauką ir prideda dar vieną turbulentišką poveikį. Kartu su propwash'u žemai leidžiantis, būtent dėl to lėti nusileidimai kabant ground effect'e gali jaustis „vatiniai“.
+Be dynamic idle ESC laiko fiksuotą minimalų gazą (default ~5.5%), ir per gazo numetimą ar staigų korekcijos judesį motoras gali nukristi į tą kairę, žemo RPM grafiko dalį — gilaus stall'o zoną — kaip tik tada, kai reikia valdymo. Jis užstalina arba dalinai desinchronizuojasi, ir wobble tik pablogėja.
+
+**Dynamic idle** naudoja dvikryptį DShot RPM telemetriją, kad lėčiausią motorą laikytų virš nustatyto minimalaus RPM net tada, kai mikseris komanduoja nulinį gazą. Taip kiekviena mentė lieka pakrauta ir toliau nuo žemo RPM stall briaunos, o korekcijos išlieka aštrios.
+
+```
+# Requires bidirectional DShot (RPM telemetry) enabled first
+set dyn_idle_min_rpm = 35        # units of 100 rpm -> 3500 rpm; 30-40 typical for 5"
+set transient_throttle_limit = 0 # must be 0 with dynamic idle
+save
+```
+
+- Reikšmė — **šimtais RPM**: `35` = 3500 RPM. Diapazonas 0–200; bet kokia ne nulinė reikšmė įjungia.
+- Pradėk nuo **30–40 su 5"**; daugiau lengviems 3"–4" propams, mažiau aukšto pitch ar didesniems propams.
+- Per žemai → motorai vis tiek gali užstalinti/desinchronizuoti greitų flip'ų pabaigoje (wobble). Per aukštai → plaukiojantis gazas ir karštesni motorai.
+
+---
+
+## Propelerio stall'as prieš pitch
+
+Stall priklauso nuo *geometrinio* pitch kampo `θ`, o didesnio pitch propeleriai turi didesnį `θ` kiekviename taške. Esant tam pačiam apsivertusiam srautui, didesnio pitch propeleris pasiekia stall kampą greičiau ir stalina stipriau — jis kanda daugiau oro per apsisukimą, bet blogiau toleruoja sutrikdytą srautą leidžiantis. Mažesnio pitch propeleriai atsparesni stall'ui (ir tylesni propwash'e), bet gamina mažiau traukos per RPM, tad remiasi didesniu RPM.
+
+Tai tas pats pitch kampas, kuris nustato trauką ir tip speed — žr. animuotą paaiškinimą [KV ir propelerių derinime](../../motors-esc/kv-prop-matcher/).
 
 ---
 
 ## Ką tuning'as gali ir ko negali ištaisyti
 
 | Simptomas | Tuning sprendimas | Riba |
-|---------|-----------|-------|
-| Lengvas virpėjimas išeinant iš nardymo, nutyla per 1–2 ciklus | Padidink D (Roll/Pitch) 5–10% | Pilnai ištaisoma |
-| Svyravimas kiekvieną kartą numetus throttle | Padidink D, patikrink RPM filter | Iš esmės ištaisoma |
-| Smarkus virpėjimas darant agresyvų split-S | D + truputį sumažink P, patikrink filtravimą | Iš dalies — ekstremalūs manevrai visada turi propwash |
-| Virpėjimas ir karšti motorai | D per aukštas — sumažink | Nesivaikyk propwash'o su per dideliu D |
-| Vis dar svyruoja, kai D jau ties šiluminiu limitu | Susitaikyk — aerodinamika laimi | Tai ne tuning'o problema |
+|-----------|-------------------|------|
+| Lengvas svyravimas išeinant iš dive, nurimsta per 1–2 ciklus | Padidink D (Roll/Pitch) 5–10% | Visiškai ištaisoma |
+| Wobble kaskart numetus gazą | Padidink D, patikrink RPM filtrą, įjunk dynamic idle | Iš esmės ištaisoma |
+| Smarkus svyravimas per agresyvų split-S | D + šiek tiek sumažink P, patikrink filtravimą | Iš dalies — ekstremalūs judesiai visada turi propwash |
+| Svyravimas su karštais motorais | D per aukštas — atleisk | Nesivyk propwash pertekliniu D |
+| Vis dar svyruoja, kai D jau ties šiluminiu limitu | Susitaik — aerodinamika laimi | Tai ne tuning'o problema |
 
-**Tikslas nėra panaikinti propwash — tikslas jį greitai atmesti neperkaitinant motorų.** Agresyvus freestyle dronas visada turės šiek tiek propwash'o. Gerai sutune'intas jį nutildo per vieną ar du svyravimo ciklus.
+**Tikslas — ne pašalinti propwash, o greitai jį atmesti neperkaitinant motorų.** Agresyvus freestyle dronas visada turės šiek tiek propwash; gerai suderintas (su dynamic idle, laikančiu mentes pakrautas) jį nuslopina per vieną–du svyravimo ciklus.
 
 ---
 
 ## Susiję
 
-- [PID Basics](../../tuning/pid-basics/)
-- [BBL-Based PID Tuning Protocol](../../tuning/bbl-pid-tuning-protocol/)
-- [Blackbox Logging](../../tuning/blackbox-logging/)
+- [KV ir propelerių derinimas](../../motors-esc/kv-prop-matcher/) — propelerio pitch, tip speed ir pitch animacija
+- [PID pagrindai](../../tuning/pid-basics/)
+- [BBL pagrįstas PID tuning protokolas](../../tuning/bbl-pid-tuning-protocol/)
+- [Blackbox logging](../../tuning/blackbox-logging/)
