@@ -21,8 +21,7 @@ tags:
 
 *Live demo: [drone-detector.sintra.site](https://drone-detector.sintra.site)*
 
-<!-- IMAGE: screenshot of the drone-detector.sintra.site interface showing live inference -->
-*[TODO: Screenshot of the live detection site running in browser]*
+![Drone Audio Detector — live inference in browser, IDLE state. FP32 model, 10 classes, per-class calibrated thresholds. RMS −40.6 dB / Peak −18.2 dB from office ambient. Spectrogram shows dual ARGMAX/SOFTMAX output.](/images/drone-detector-ui-idle.png)
 
 A note before the technical content: the staggered training protocol described in this article — and the analysis methodology behind it — was developed with significant help from [Sintra AI](https://sintra.ai). What started as a series of questions about why the naive P1→P2 schedule kept plateauing turned into a structured debugging conversation that identified the calibrated checkpointing problem and shaped the cycle logic. The same tooling now helps me analyze FPV drone blackbox logs and run PID tuning protocols. I'll cover that briefly at the end.
 
@@ -296,8 +295,7 @@ The ring buffer is 15 seconds; each extraction gives a 10-second window with 1-s
 
 The mel preprocessing `FrequencyMasking` and `TimeMasking` issue mentioned in the architecture section is present in the inference path too. Zero the mask parameters before exporting and before running inference. Do not rely on `model.eval()` to disable them.
 
-<!-- IMAGE: screenshot of drone-detector.sintra.site showing detection probabilities in live mode -->
-*[TODO: Screenshot of live detection interface with probability bars]*
+![Drone Audio Detector UI — per-class probability bars (idle 96%, plane 24%, quad 9% on office ambient). ARGMAX sigmoid left, SOFTMAX relative right. 177ms total inference [FP32].](/images/drone-detector-ui-idle.png)
 
 ---
 

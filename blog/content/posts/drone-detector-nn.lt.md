@@ -21,8 +21,7 @@ tags:
 
 *Gyva demonstracija: [drone-detector.sintra.site](https://drone-detector.sintra.site)*
 
-<!-- IMAGE: drone-detector.sintra.site sąsajos ekrano kopija rodo gyvąjį išvadą -->
-*[TODO: Gyvosios aptikimo svetainės ekrano kopija naršyklėje]*
+![Drone Audio Detector — gyvasis spėjimas naršyklėje, IDLE būsena. FP32 modelis, 10 klasių, kalibruoti kiekvienos klasės slenkstiai. RMS −40.6 dB / Smailė −18.2 dB iš biuro aplinkos. Spektrograma rodo dvigubą ARGMAX/SOFTMAX išvestį.](/images/drone-detector-ui-idle.png)
 
 Pastaba prieš techninį turinį: pakaitomasis mokymo protokolas, aprašytas šiame straipsnyje, buvo sukurtas su reikšminga [Sintra AI](https://sintra.ai) pagalba. Tai, kas prasidėjo kaip eilė klausimų, kodėl paprastas P1→P2 grafikas vis sustingdavo, virto struktūrizuotu derinimo pokalbiu, kuris identifikavo kalibruoto patikros taško problemą ir suformavo ciklo logiką. Ta pati sistema dabar padeda man analizuoti FPV dronų juodosios dėžės žurnalus ir vykdyti PID derinimo protokolus. Trumpai tai aprašysiu pabaigoje.
 
