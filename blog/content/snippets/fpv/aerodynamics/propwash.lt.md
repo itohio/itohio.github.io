@@ -6,7 +6,11 @@ category: "fpv"
 tags: ["fpv", "aerodynamics", "propwash", "stall", "angle-of-attack", "dynamic-idle", "vortex-ring", "pid", "tuning"]
 ---
 
-Propwash — tai turbulencija, per kurią multiroteris skrenda leisdamasis į savo paties propelerio pėdsaką (wake). Propeleris sukasi horizontalioje plokštumoje ir normaliai traukia švarų orą žemyn pro diską; kai dronas leidžiasi pakankamai greitai, tas oras stumiamas atgal *aukštyn* pro diską, mentės atakos kampas (angle of attack) dalyje disko šoktelėja virš stall kampo, o trauka tampa netiesinė ir triukšminga. Būtent tą wobble'ą jauti išeidamas iš dive'o ar staigiai numetęs gazą. Tuning'as jį slopina; **dynamic idle** ir propelerio pasirinkimas keičia, kaip giliai nueina stall'as. (Pirmą kartą pajutęs propwash maniau, kad prastai suderinau PID. Iš dalies — taip, bet dalis jo tiesiog fizika.)
+Propeleris — tai besisukantis sparnas, ir kaip bet kuris sparnas jis gamina švarią trauką tik tada, kai oras įteka į jį iš priekio — rotoriui tai reiškia orą iš viršaus, einantį žemyn pro diską. Duok jam švaraus oro — jis skrenda; nustok duoti — jis **užstalina**, lygiai kaip sparnas, patemptas į per didelį atakos kampą.
+
+Štai ir visas propwash. Kai numeti gazą arba išeini iš dive'o, dronas toliau leidžiasi, o motorai lėtėja — tad dronas krenta į tą patį oro stulpą, kurį ką tik nustūmė žemyn. Srautas apsiverčia ir grįžta *aukštyn* pro diską, mentės atakos kampas peršoka stall kampą, srautas atsiskiria, ir trauka tampa nelygi bei triukšminga. Tas wobble, kurį jauti — tai PID kilpa, besigrumianti su ta nelygia trauka.
+
+Vienintelė svirtis, kurią turi — **RPM**: užstalinusi mentė vėl prilimpa, kai tik sukasi pakankamai greitai, kad jos pačios downwash įveiktų aukštyn kylantį orą. Būtent tą ir daro **dynamic idle** — jis tiesiog neleidžia motorams įkristi į žemo RPM stall zoną. (Pirmą kartą pajutęs propwash maniau, kad prastai suderinau PID. Iš dalies — taip, bet dalis jo tiesiog fizika.)
 
 ---
 
@@ -152,45 +156,45 @@ flowchart TD
 
 ---
 
-## Stall zona prieš RPM
+## Efektyvumas ir stall zona prieš RPM
 
-Kadangi ir tangentinis greitis, ir induced velocity auga su RPM, daugiau RPM tempia efektyvų atakos kampą atgal link hover bazės. Tai blade-element įvertinimas 0.7R taške 5" propeleriui (4.5" pitch, θ ≈ 22°), perbėgant per RPM esant skirtingiems vertikaliems greičiams:
+Perkelk tai į traukos efektyvumą per visą RPM diapazoną. Prie beveik nulinio RPM mentė negamina beveik nieko (nėra dinaminio slėgio); kylant apsukoms ji lipa link savo geriausio — *nebent* yra užstalinusi. Kai diskas apsivertusiame sraute, mentė lieka užstalinusi tol, kol RPM tampa pakankamas, kad jos induced velocity (kuris auga su RPM) įveiktų aukštyn kylantį orą. Žemiau to slenksčio esi **stall zonoje**; virš jo srautas prilimpa ir efektyvumas grįžta:
 
 ```chart
 {
   "type": "line",
   "data": {
-    "labels": ["3k","5k","7k","9k","11k","13k","15k","17k","19k"],
+    "labels": ["1k","2k","3k","4k","5k","7k","9k","12k","15k","19k"],
     "datasets": [
       {
-        "label": "Descend 7 m/s",
-        "data": [42.7, 32.0, 27.2, 24.5, 22.7, 21.5, 20.6, 20.0, 19.4],
-        "borderColor": "rgba(239,68,68,1)", "backgroundColor": "transparent",
-        "borderWidth": 2.5, "tension": 0.3, "pointRadius": 3
+        "label": "Below dynamic idle floor (stall / desync zone)",
+        "data": [96, 96, 96, null, null, null, null, null, null, null],
+        "borderColor": "transparent", "backgroundColor": "rgba(239,68,68,0.10)",
+        "fill": "origin", "pointRadius": 0, "tension": 0
       },
       {
-        "label": "Descend 4 m/s",
-        "data": [31.2, 24.7, 21.9, 20.4, 19.4, 18.7, 18.2, 17.8, 17.5],
-        "borderColor": "rgba(249,115,22,1)", "backgroundColor": "transparent",
-        "borderWidth": 2.5, "tension": 0.3, "pointRadius": 3
+        "label": "Climb (up)",
+        "data": [5, 18, 36, 55, 71, 91, 98, 100, 100, 100],
+        "borderColor": "rgba(34,197,94,1)", "backgroundColor": "transparent",
+        "borderWidth": 2.5, "tension": 0.35, "pointRadius": 2
       },
       {
         "label": "Hover",
-        "data": [14.9, 14.9, 14.9, 14.9, 14.9, 14.9, 14.9, 14.9, 14.9],
+        "data": [3, 13, 29, 47, 62, 82, 88, 90, 90, 90],
         "borderColor": "rgba(148,163,184,1)", "backgroundColor": "transparent",
-        "borderWidth": 2, "borderDash": [4,4], "tension": 0, "pointRadius": 0
+        "borderWidth": 2, "borderDash": [5,4], "tension": 0.35, "pointRadius": 0
       },
       {
-        "label": "Climb 3 m/s",
-        "data": [3.3, 7.8, 9.8, 10.9, 11.7, 12.2, 12.5, 12.8, 13.0],
-        "borderColor": "rgba(34,197,94,1)", "backgroundColor": "transparent",
-        "borderWidth": 2.5, "tension": 0.3, "pointRadius": 3
+        "label": "Descend 3 m/s",
+        "data": [0, 2, 6, 16, 32, 68, 86, 91, 92, 92],
+        "borderColor": "rgba(249,115,22,1)", "backgroundColor": "transparent",
+        "borderWidth": 2.5, "tension": 0.35, "pointRadius": 2
       },
       {
-        "label": "Stall onset (~14 deg)",
-        "data": [14, 14, 14, 14, 14, 14, 14, 14, 14],
-        "borderColor": "rgba(0,0,0,0.55)", "backgroundColor": "transparent",
-        "borderWidth": 1.5, "borderDash": [8,4], "tension": 0, "pointRadius": 0
+        "label": "Descend 6 m/s",
+        "data": [0, 0, 0, 1, 1, 8, 29, 75, 90, 92],
+        "borderColor": "rgba(239,68,68,1)", "backgroundColor": "transparent",
+        "borderWidth": 2.5, "tension": 0.35, "pointRadius": 2
       }
     ]
   },
@@ -198,12 +202,12 @@ Kadangi ir tangentinis greitis, ir induced velocity auga su RPM, daugiau RPM tem
     "responsive": true,
     "interaction": { "mode": "index", "intersect": false },
     "plugins": {
-      "title": { "display": true, "text": "Blade angle of attack at 0.7R vs RPM (5\" / 4.5\" pitch)" },
+      "title": { "display": true, "text": "Prop efficiency vs RPM - the stall region shifts right the faster you descend" },
       "legend": { "position": "bottom" }
     },
     "scales": {
       "x": { "title": { "display": true, "text": "Motor RPM" } },
-      "y": { "beginAtZero": true, "title": { "display": true, "text": "Effective angle of attack (deg)" } }
+      "y": { "beginAtZero": true, "max": 105, "title": { "display": true, "text": "Relative thrust efficiency (%)" } }
     }
   }
 }
@@ -211,17 +215,18 @@ Kadangi ir tangentinis greitis, ir induced velocity auga su RPM, daugiau RPM tem
 
 Skaityk taip:
 
-- **Hover jau balansuoja ant stall briaunos** (~15°). Propeleriai sukasi netoli savo lift kreivės viršūnės — todėl propwash apskritai egzistuoja.
-- **Leidimasis šauna atakos kampą aukštyn**, ir blogiausia — prie **žemo RPM**: 7 m/s leidimasis prie 3000 RPM sėdi ties ~43°, giliai stall'e.
-- **Pridėjus RPM kiekviena leidimosi kreivė grįžta žemyn** link hover bazės. Žemiau hover ji nenukrenta, bet nulipti nuo tos kairės briaunos — čia ir visas žaidimas.
+- **Kylant / aukštyn:** švarus oras varomas į diską, tad jis niekada neužstalina. Efektyvumas tiesiog auga su RPM.
+- **Hover:** truputį žemiau ir plokščiau — kybantis propeleris jau sėdi arti savo stall kampo, todėl propwash apskritai ir egzistuoja.
+- **Leidžiantis:** dabar prie žemo RPM atsiranda **stall zona**, kur efektyvumas sugriūva. 3 m/s nusileidimas užstalinęs žemiau ~5000 RPM; 6 m/s nusileidimas lieka užstalinęs iki pat ~10000 RPM. **Kuo greičiau leidiesi, tuo toliau į dešinę pasislenka stall zona.**
+- Tad pavojingas atvejis akivaizdus: **leidimasis su mažu gazu** įstumia tave giliai į stall zoną — tai ir yra propwash. Sprendimas — **neleisti RPM ten sėdėti.**
 
 ---
 
 ## Kodėl dynamic idle padeda
 
-Be dynamic idle ESC laiko fiksuotą minimalų gazą (default ~5.5%), ir per gazo numetimą ar staigų korekcijos judesį motoras gali nukristi į tą kairę, žemo RPM grafiko dalį — gilaus stall'o zoną — kaip tik tada, kai reikia valdymo. Jis užstalina arba dalinai desinchronizuojasi, ir wobble tik pablogėja.
+Pažiūrėk į užtamsintą zoną kairėje grafiko pusėje. Be dynamic idle ESC laiko tik *fiksuotą* minimalų gazą (default ~5.5%), tad per gazo numetimą ar staigią korekciją motoras gali įkristi tiesiai į ją — gilaus stall'o / mažo valdymo zoną — kaip tik tada, kai reikia jėgos. Jis užstalina arba dalinai desinchronizuojasi, ir wobble tik pablogėja.
 
-**Dynamic idle** naudoja dvikryptį DShot RPM telemetriją, kad lėčiausią motorą laikytų virš nustatyto minimalaus RPM net tada, kai mikseris komanduoja nulinį gazą. Taip kiekviena mentė lieka pakrauta ir toliau nuo žemo RPM stall briaunos, o korekcijos išlieka aštrios.
+**Dynamic idle** naudoja dvikryptį DShot RPM telemetriją, kad lėčiausią motorą laikytų virš nustatyto minimalaus RPM net kai mikseris komanduoja nulinį gazą. Jis prikala tavo idle prie dešinio tos užtamsintos zonos krašto, laikydamas kiekvieną mentę pakrautą ir reaguojančią. Jis sutvarko kasdienius atvejus — gazo numetimus ir švelnius nusileidimus; greitas, agresyvus dive nustumia stall zoną toliau į dešinę, nei bet koks idle gali pavyti — todėl kieti dive'ai visada turi šiek tiek propwash.
 
 ```
 # Requires bidirectional DShot (RPM telemetry) enabled first
