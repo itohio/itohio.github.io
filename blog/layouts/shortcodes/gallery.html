@@ -4,7 +4,9 @@
   Auto-discovers every image resource of the current page and renders a CSS grid
   with lazy-loaded thumbnails that link to their full-size version. Authors order
   images by prefixing filenames (e.g. 01-, 02-) and add captions via the page's
-  front matter `resources:` block.
+  front matter `resources:` block. When a photo carries Exif metadata, its
+  shooting settings (focal length, aperture, shutter, ISO) surface on hover and
+  as a native tooltip.
 
   Usage: {{< gallery >}}
 */ -}}
@@ -19,6 +21,7 @@
   }
   .itohi-gallery figure {
     margin: 0;
+    position: relative;
   }
   .itohi-gallery a {
     display: block;
@@ -29,6 +32,25 @@
     object-fit: cover;
     border-radius: 6px;
     display: block;
+  }
+  .itohi-gallery__exif {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.6rem 0.6rem 0.4rem;
+    font-size: 0.72rem;
+    line-height: 1.2;
+    color: #fff;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.78));
+    border-radius: 0 0 6px 6px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+  .itohi-gallery a:hover .itohi-gallery__exif,
+  .itohi-gallery a:focus .itohi-gallery__exif {
+    opacity: 1;
   }
   .itohi-gallery figcaption {
     margin-top: 0.4rem;
@@ -49,9 +71,23 @@
 </style>
 <div class="itohi-gallery">
   {{- range . }}
+  {{- $exif := slice }}
+  {{- /* Rational Exif values (aperture, focal length) need .Float64 for clean formatting. */}}
+  {{- if reflect.IsImageResourceWithMeta . }}
+  {{- with .Meta.Exif }}
+  {{- with .FocalLength }}{{ $exif = $exif | append (printf "%gmm" .Float64) }}{{ end }}
+  {{- with .FNumber }}{{ $exif = $exif | append (printf "ƒ/%.1f" .Float64) }}{{ end }}
+  {{- with .ExposureTime }}{{ $exif = $exif | append (printf "%vs" .) }}{{ end }}
+  {{- with (or .ISO .ISOSpeedRatings) }}{{ $exif = $exif | append (printf "ISO %v" .) }}{{ end }}
+  {{- end }}
+  {{- end }}
+  {{- $settings := delimit $exif "  ·  " }}
   <figure>
-    <a href="{{ .RelPermalink }}" target="_blank" rel="noopener noreferrer">
+    <a href="{{ .RelPermalink }}" target="_blank" rel="noopener noreferrer"{{ with $settings }} title="{{ . }}"{{ end }}>
       <img src="{{ .RelPermalink }}" alt="{{ .Title }}" loading="lazy">
+      {{- with $settings }}
+      <span class="itohi-gallery__exif">{{ . }}</span>
+      {{- end }}
     </a>
     {{- /* .Title defaults to the resource path, so a caption is only rendered when explicitly set in front matter. */}}
     {{- if ne .Title .Name }}
