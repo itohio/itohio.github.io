@@ -158,41 +158,35 @@ flowchart TD
 
 ## Efficiency and the stall region vs RPM
 
-Turn that into thrust efficiency across the RPM range. A blade makes almost nothing near zero RPM (barely any dynamic pressure), climbs to its best as it spins up — *unless* it is stalled. When the disk is in reversed inflow, the blade stays stalled until the RPM is high enough that its induced velocity (which rises with RPM) beats the air coming up at it. Below that crossover you are in the **stall region**; above it the flow re-attaches and efficiency snaps back:
+Turn that into thrust efficiency across the RPM range. Two things shape every curve. First, a prop makes almost nothing near zero RPM and **peaks** at a moderate RPM — then efficiency **falls off** again at high RPM as the blade tips approach the speed of sound (this is the tip-speed limit). Second, in reversed inflow the blade stays **stalled** until RPM is high enough for its induced velocity to beat the air rising into it — and that stall-exit RPM is different for every mode:
 
 ```chart
 {
   "type": "line",
   "data": {
-    "labels": ["1k","2k","3k","4k","5k","7k","9k","12k","15k","19k"],
+    "labels": ["1k","2k","3k","4k","5k","7k","9k","12k","15k","18k","21k","24k","28k"],
     "datasets": [
       {
-        "label": "Below dynamic idle floor (stall / desync zone)",
-        "data": [96, 96, 96, null, null, null, null, null, null, null],
-        "borderColor": "transparent", "backgroundColor": "rgba(239,68,68,0.10)",
+        "label": "Propwash-prone band (hover OK, descending stalls)",
+        "data": [null, null, null, 108, 108, 108, null, null, null, null, null, null, null],
+        "borderColor": "transparent", "backgroundColor": "rgba(249,115,22,0.13)",
         "fill": "origin", "pointRadius": 0, "tension": 0
       },
       {
         "label": "Climb (up)",
-        "data": [5, 18, 36, 55, 71, 91, 98, 100, 100, 100],
+        "data": [6, 22, 43, 64, 80, 96, 100, 99, 95, 87, 75, 61, 41],
         "borderColor": "rgba(34,197,94,1)", "backgroundColor": "transparent",
         "borderWidth": 2.5, "tension": 0.35, "pointRadius": 2
       },
       {
         "label": "Hover",
-        "data": [3, 13, 29, 47, 62, 82, 88, 90, 90, 90],
+        "data": [4, 16, 35, 55, 70, 86, 90, 89, 86, 79, 68, 55, 37],
         "borderColor": "rgba(148,163,184,1)", "backgroundColor": "transparent",
         "borderWidth": 2, "borderDash": [5,4], "tension": 0.35, "pointRadius": 0
       },
       {
-        "label": "Descend 3 m/s",
-        "data": [0, 2, 6, 16, 32, 68, 86, 91, 92, 92],
-        "borderColor": "rgba(249,115,22,1)", "backgroundColor": "transparent",
-        "borderWidth": 2.5, "tension": 0.35, "pointRadius": 2
-      },
-      {
-        "label": "Descend 6 m/s",
-        "data": [0, 0, 0, 1, 1, 8, 29, 75, 90, 92],
+        "label": "Descend 3 m/s (down)",
+        "data": [0, 2, 7, 19, 37, 72, 88, 91, 87, 80, 69, 56, 38],
         "borderColor": "rgba(239,68,68,1)", "backgroundColor": "transparent",
         "borderWidth": 2.5, "tension": 0.35, "pointRadius": 2
       }
@@ -202,12 +196,12 @@ Turn that into thrust efficiency across the RPM range. A blade makes almost noth
     "responsive": true,
     "interaction": { "mode": "index", "intersect": false },
     "plugins": {
-      "title": { "display": true, "text": "Prop efficiency vs RPM - the stall region shifts right the faster you descend" },
+      "title": { "display": true, "text": "Prop efficiency vs RPM - peaks then falls; the shaded band is propwash-prone" },
       "legend": { "position": "bottom" }
     },
     "scales": {
       "x": { "title": { "display": true, "text": "Motor RPM" } },
-      "y": { "beginAtZero": true, "max": 105, "title": { "display": true, "text": "Relative thrust efficiency (%)" } }
+      "y": { "beginAtZero": true, "max": 110, "title": { "display": true, "text": "Relative thrust efficiency (%)" } }
     }
   }
 }
@@ -215,18 +209,19 @@ Turn that into thrust efficiency across the RPM range. A blade makes almost noth
 
 Read it like this:
 
-- **Climbing / going up:** clean air is rammed into the disk, so it never stalls. Efficiency just rises with RPM.
-- **Hover:** a touch lower and it plateaus — a hovering prop already sits close to its stall angle, which is why propwash exists at all.
-- **Descending:** there is now a **stall region** at low RPM where efficiency collapses. A 3 m/s sink is stalled below ~5,000 RPM; a 6 m/s sink stays stalled all the way to ~10,000 RPM. **The faster you descend, the further right the stall region moves.**
-- So the danger case is the obvious one: **descending on low throttle** parks you deep in the stall region — that is propwash. The fix is to **not let the RPM sit down there.**
+- **Every mode peaks and then falls.** Best efficiency is a band around 9–13k RPM; spinning faster (an over-KV'd prop) just burns energy and heats motors on the far side of the peak — the tip-speed penalty.
+- **Climb and hover leave the stall region early** (~4,000 RPM) — they have clean or near-clean inflow.
+- **Descending leaves it late** (~7,000 RPM for a 3 m/s sink), and the stall-exit moves further right the faster you drop.
+- **The shaded band is the whole problem.** Between the hover stall-exit and the descend stall-exit, *hovering there is perfectly fine* — but the instant you start sinking you fall onto the stalled descend curve. That gap is where propwash lives.
+- So dynamic idle's job is to keep the motors' minimum RPM to the **right** of that band for the descents you actually fly.
 
 ---
 
 ## Why dynamic idle helps
 
-Look at the shaded zone on the left of the chart. Without dynamic idle the ESC only holds a *fixed* minimum throttle (default ~5.5%), so during a throttle chop or a hard correction a motor can fall right into it — the deep-stall / low-authority region — exactly when you need bite. It stalls or partially desyncs, and the wobble gets worse.
+Look at the shaded band in the chart. Without dynamic idle the ESC only holds a *fixed* minimum throttle (default ~5.5%), so during a throttle chop or a hard correction a motor can sag into that band — or below it — exactly when you need bite. There it stalls or partially desyncs, and the wobble gets worse.
 
-**Dynamic idle** uses bidirectional DShot RPM telemetry to hold the *slowest* motor above a set minimum RPM, even when the mixer commands zero drive. It nails your idle to the right edge of that shaded zone, keeping every blade loaded and responsive. It fixes the everyday cases — throttle chops and gentle sinks; a fast, aggressive dive shoves the stall region further right than any idle setting can chase, which is why hard dives always carry some propwash.
+**Dynamic idle** uses bidirectional DShot RPM telemetry to hold the *slowest* motor above a set minimum RPM, even when the mixer commands zero drive. Set it to sit at (or past) the **right edge** of that band and a sink no longer drops the blades into stall. It fixes the everyday cases — throttle chops and gentle sinks; a fast, aggressive dive shoves the band's right edge further right than any sane idle can chase, which is why hard dives always carry some propwash.
 
 ```
 # Requires bidirectional DShot (RPM telemetry) enabled first
