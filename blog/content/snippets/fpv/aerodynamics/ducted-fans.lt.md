@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "aerodynamics", "duct", "whoops", "tinywhoop", "airflow", "efficiency", "blade-tip-vortex"]
 ---
 
-Duct'as (gaubtas) aplink propelerį pakeičia, kaip oras įteka ir išteka pro diską — ir stipriai pakeičia efektyvumą, traukos/dydžio santykį bei valdymą. Tiny whoop'ai (Mobula, BetaFPV Meteor, Pavo20) duct'us naudoja pirmiausia propams apsaugoti, bet aerodinaminiai efektai yra realūs ir lemia, kaip šie rėmai skrenda, palyginus su analogiškais open-prop dizainais. (Ilgai maniau, kad duct'as — vien apsauga nuo sienų. Klydau.)
+Duct'as (gaubtas) aplink propelerį pakeičia, kaip oras įteka ir išteka pro diską — ir stipriai pakeičia efektyvumą, traukos/dydžio santykį bei valdymą. Tiny whoop'ai (Mobula, BetaFPV Meteor — 1S, 65–75 mm) ir didesni ducted cinewhoop'ai (BetaFPV 2.2" Pavo20, 3S) duct'us naudoja pirmiausia propams apsaugoti, bet aerodinaminiai efektai yra realūs ir lemia, kaip šie rėmai skrenda, palyginus su analogiškais open-prop dizainais. (Ilgai maniau, kad duct'as — vien apsauga nuo sienų. Klydau.)
 
 ---
 
@@ -259,9 +259,9 @@ Hover'e gautas efektyvumo pranašumas apsiverčia skrendant greitai į priekį �
 
 ---
 
-## Ką tai reiškia tiny whoop'ams
+## Ką tai reiškia ducted whoop'ams
 
-Pavo20 Pro II ir panašūs ducted whoop'ai skrenda tokiame režime, kur hover efektyvumas svarbus — skrydis patalpose, proximity, lėta kinematografija. Duct'as taip pat laiko propus atokiau nuo kliūčių, o tai ir yra pagrindinis dizaino veiksnys prie <100g.
+Pavo20 Pro II ir panašūs 2.2" ducted cinewhoop'ai skrenda tokiame režime, kur hover efektyvumas svarbus — skrydis patalpose, proximity, lėta kinematografija. Duct'as taip pat laiko propus atokiau nuo kliūčių, o tai ir yra pagrindinis dizaino veiksnys šioje ~70–110 g klasėje.
 
 Tačiau ta pati duct'o geometrija, kuri padeda hover'e, sukuria skirtingą skrydžio pojūtį, palyginus su open-prop dronais:
 

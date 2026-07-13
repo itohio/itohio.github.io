@@ -65,24 +65,26 @@ Betaflight GPS Rescue is functional and has improved significantly through 4.3/4
 
 ---
 
-## The Pavo20 GPS Problem
+## Adding GPS to a Pavo20
 
-The Pavo20 is a whoop with GPS. On Betaflight, GPS Rescue on a whoop-class quad has several challenges:
+The Pavo20 (Pro / Pro II) is a **2.2" ducted digital cinewhoop** — 3S power (LAVA 1104 7200 KV motors on Gemfan 2218 tri-blades), a DJI O3/O4/O4 Pro or Walksnail HD air unit, and **no GPS from the factory**. There is no analog, no 1S, no built-in navigation. Pilots who want GPS Rescue bolt on a micro GPS module (and usually a buzzer) themselves — and that retrofit is where the trouble starts:
 
 ```mermaid
 flowchart TD
-    P1[Small frame size<br/><250g AUW] -->|Low inertia| C1[GPS Rescue corrections<br/>overshoot and oscillate]
-    P2[Whoop ducted props<br/>Higher drag] -->|Slower response<br/>to GPS commands| C2[Rescue turns are sluggish<br/>not crisp]
-    P3[Short antenna<br/>Internal GPS module] -->|Slower fix<br/>Weaker signal| C3[Poor position accuracy<br/>in GPS Rescue mode]
-    P4[BF GPS Rescue<br/>not tuned for micro quads] -->|Default gains<br/>too aggressive for small builds| C4[Oscillation or crash<br/>on rescue activation]
+    P1[Small ducted frame<br/>~70-110 g AUW] -->|Low inertia| C1[GPS Rescue corrections<br/>overshoot and oscillate]
+    P2[Ducted props<br/>high static thrust, high drag] -->|Sluggish response<br/>to nav commands| C2[Rescue turns are soft,<br/>not crisp]
+    P3[Tiny add-on GPS module<br/>short antenna, tight bay] -->|Slow fix<br/>weak signal| C3[Poor position accuracy]
+    P4[ESC BEC harmonics<br/>on the 5V rail] -->|Noise couples into<br/>the GPS module| C4[Fix drops out<br/>under throttle]
 ```
 
-INAV's navigation stack is designed to handle these situations better because it uses a proper position controller (rather than a rough emergency mode), and its RTH sequence includes deceleration and braking. INAV also has better barometer integration for altitude hold on builds without GPS altitude lock.
+The one people miss is **P4**: the AIO's BEC switches at a frequency whose harmonics land right on the GPS module's supply rail and leak into its RF front-end, so the fix degrades exactly when you spool the motors up. (I'm chasing this noise on my own Pavo20 — there'll be a separate write-up on hunting it down and killing it.)
+
+INAV's navigation stack handles the *flight* side of a rescue better because it uses a proper position controller (rather than a rough emergency mode), and its RTH sequence includes deceleration and braking. INAV also has better barometer integration for altitude hold on builds without a solid GPS altitude lock — but note that none of this fixes a noisy GPS fix; that's a hardware problem (see below).
 
 **Migrating a Pavo20 to INAV:**
-- INAV supports most common FCs (check INAV FC hardware list for compatibility)
-- The Pavo20's default FC must support INAV — verify against the [INAV target list](https://github.com/iNavFlight/inav/blob/master/docs/Boards.md)
+- The Pavo20's F4 2-3S AIO must have an INAV target — verify against the [INAV target list](https://github.com/iNavFlight/inav/blob/master/docs/Boards.md)
 - Expect to re-tune PIDs from scratch — INAV defaults are tuned for heavier GPS builds
+- Sort out the GPS power noise *first*; INAV can't navigate on a fix that vanishes under throttle
 
 ---
 
@@ -122,13 +124,13 @@ Regardless of firmware, GPS performance on small builds suffers from:
 }
 ```
 
-The VTX interference issue is particularly common on micro builds: 5.8 GHz video transmission can desensitise GPS modules that share the same PCB. On the Pavo20, the VTX and GPS share close proximity — this is a known hardware constraint that no firmware can fully solve.
+On a compact build the dominant problem is **power-rail noise**, not just the antenna environment. The AIO's ESC BEC (the switching regulator that makes 5V) throws off harmonics that couple straight into an add-on GPS module sharing that rail — so the fix weakens or drops the instant you throttle up. The 5.8 GHz digital air unit sitting centimetres away piles RF desense on top. Neither is something firmware can fix — both are hardware problems.
 
 **Hardware mitigations:**
-- Keep GPS antenna as far from VTX antenna as physically possible
+- Power the GPS from a clean/filtered 5V source, not straight off the noisy ESC BEC rail — an LC filter or a small separate low-noise regulator makes the biggest difference
+- Keep the GPS antenna as far from the air-unit antenna as the frame allows
 - Use a shielded GPS module (metal can lid over the module)
-- Switch VTX to lower power (25mW or 0mW) when checking GPS fix on the ground
-- Wait for GPS fix with VTX off, then power up for flight
+- Confirm the fix on the bench *at throttle*, not just at idle — the noise only shows up under load
 
 ---
 

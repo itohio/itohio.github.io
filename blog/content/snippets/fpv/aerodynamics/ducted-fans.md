@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "aerodynamics", "duct", "whoops", "tinywhoop", "airflow", "efficiency", "blade-tip-vortex"]
 ---
 
-A duct (shroud) around a propeller changes how air enters and exits the disk — and significantly changes efficiency, thrust-to-size ratio, and handling. Tiny whoops (Mobula, BetaFPV Meteor, Pavo20) use ducts primarily for prop protection, but the aerodynamic effects are real and shape how these frames fly vs equivalent open-prop designs.
+A duct (shroud) around a propeller changes how air enters and exits the disk — and significantly changes efficiency, thrust-to-size ratio, and handling. Tiny whoops (Mobula, BetaFPV Meteor — 1S, 65–75 mm) and larger ducted cinewhoops (BetaFPV's 2.2" Pavo20, 3S) use ducts primarily for prop protection, but the aerodynamic effects are real and shape how these frames fly vs equivalent open-prop designs.
 
 ---
 
@@ -259,9 +259,9 @@ The efficiency gain at hover reverses in fast forward flight — the duct become
 
 ---
 
-## What This Means for Tiny Whoops
+## What This Means for Ducted Whoops
 
-The Pavo20 Pro II and similar ducted whoops fly in a regime where hover efficiency matters — indoor flight, close-proximity, slow cinematics. The duct also keeps props away from obstacles, which is the primary design driver at <100g.
+The Pavo20 Pro II and similar 2.2" ducted cinewhoops fly in a regime where hover efficiency matters — indoor flight, close-proximity, slow cinematics. The duct also keeps props away from obstacles, which is the primary design driver in this ~70–110 g class.
 
 However the same duct geometry that helps at hover creates a flight characteristic difference from open-prop quads:
 

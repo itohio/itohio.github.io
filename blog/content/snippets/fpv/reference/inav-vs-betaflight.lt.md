@@ -65,24 +65,26 @@ Betaflight GPS Rescue veikia ir per 4.3/4.4 versijas ženkliai pagerėjo — bet
 
 ---
 
-## Pavo20 GPS problema
+## GPS pridėjimas prie Pavo20
 
-Pavo20 — tai whoop'as su GPS. Betaflight'e GPS Rescue whoop klasės drone susiduria su keliais iššūkiais:
+Pavo20 (Pro / Pro II) — tai **2.2" ducted skaitmeninis cinewhoop'as**: 3S maitinimas (LAVA 1104 7200 KV motorai ant Gemfan 2218 tri-blade propų), DJI O3/O4/O4 Pro arba Walksnail HD air unit, ir **jokio GPS iš gamyklos**. Jokio analogo, jokio 1S, jokios integruotos navigacijos. Kas nori GPS Rescue — patys prisukа micro GPS modulį (ir dažniausiai buzzerį). Būtent nuo to prasideda vargas:
 
 ```mermaid
 flowchart TD
-    P1[Small frame size<br/><250g AUW] -->|Low inertia| C1[GPS Rescue corrections<br/>overshoot and oscillate]
-    P2[Whoop ducted props<br/>Higher drag] -->|Slower response<br/>to GPS commands| C2[Rescue turns are sluggish<br/>not crisp]
-    P3[Short antenna<br/>Internal GPS module] -->|Slower fix<br/>Weaker signal| C3[Poor position accuracy<br/>in GPS Rescue mode]
-    P4[BF GPS Rescue<br/>not tuned for micro quads] -->|Default gains<br/>too aggressive for small builds| C4[Oscillation or crash<br/>on rescue activation]
+    P1[Small ducted frame<br/>~70-110 g AUW] -->|Low inertia| C1[GPS Rescue corrections<br/>overshoot and oscillate]
+    P2[Ducted props<br/>high static thrust, high drag] -->|Sluggish response<br/>to nav commands| C2[Rescue turns are soft,<br/>not crisp]
+    P3[Tiny add-on GPS module<br/>short antenna, tight bay] -->|Slow fix<br/>weak signal| C3[Poor position accuracy]
+    P4[ESC BEC harmonics<br/>on the 5V rail] -->|Noise couples into<br/>the GPS module| C4[Fix drops out<br/>under throttle]
 ```
 
-INAV navigacijos „stackas“ tokias situacijas tvarko geriau, nes naudoja tikrą pozicijos kontrolerį (o ne grubų avarinį režimą), o jo RTH seka apima lėtėjimą ir stabdymą. INAV taip pat turi geresnę barometro integraciją aukščiui laikyti dronuose be GPS aukščio fiksacijos.
+Ta, kurią visi praleidžia — **P4**: AIO BEC'as perjunginėja tokiu dažniu, kurio harmonikos pataiko tiesiai į GPS modulio maitinimo liniją ir prasiskverbia į jo RF įėjimą, tad fix'as sugenda kaip tik tada, kai užsuki motorus. (Pats gaudau šitą triukšmą savo Pavo20 — bus atskiras rašinys, kaip jį susekti ir užmušti.)
+
+INAV navigacijos „stackas“ patį *skrydį* per rescue tvarko geriau, nes naudoja tikrą pozicijos kontrolerį (o ne grubų avarinį režimą), o jo RTH seka apima lėtėjimą ir stabdymą. INAV taip pat turi geresnę barometro integraciją aukščiui laikyti dronuose be tvirtos GPS aukščio fiksacijos — bet nei viena iš šitų funkcijų neišgydys triukšmingo GPS fix'o; tai aparatūros problema (žr. žemiau).
 
 **Pavo20 migravimas į INAV:**
-- INAV palaiko daugumą populiarių FC (patikrink INAV aparatūros sąrašą dėl suderinamumo)
-- Pavo20 numatytasis FC turi palaikyti INAV — patikrink [INAV target sąraše](https://github.com/iNavFlight/inav/blob/master/docs/Boards.md)
+- Pavo20 F4 2-3S AIO turi turėti INAV target'ą — patikrink [INAV target sąraše](https://github.com/iNavFlight/inav/blob/master/docs/Boards.md)
 - Tikėkis, kad PID reikės derinti iš naujo — INAV numatytieji nustatymai suderinti sunkesniems GPS dronams
+- Pirmiausia sutvarkyk GPS maitinimo triukšmą — INAV nenavigatuos ant fix'o, kuris dingsta užsukus motorus
 
 ---
 
@@ -122,13 +124,13 @@ Nepriklausomai nuo firmware, GPS veikimas mažuose dronuose kenčia dėl:
 }
 ```
 
-VTX trukdžių problema ypač dažna micro dronuose: 5,8 GHz vaizdo perdavimas gali „apkurtinti“ GPS modulius, esančius ant tos pačios PCB. Pavo20 atveju VTX ir GPS yra visai šalia — tai žinomas aparatūros apribojimas, kurio joks firmware pilnai neišspręs.
+Kompaktiškame builde pagrindinė problema — **maitinimo linijos triukšmas**, ne vien antenos aplinka. AIO ESC BEC'as (perjungiamasis reguliatorius, gaminantis 5V) meta harmonikas, kurios prasiskverbia tiesiai į tą pačią liniją dalinantį GPS modulį — tad fix'as silpsta arba dingsta vos užsukus motorus. O centimetrus greta stovintis 5,8 GHz skaitmeninis air unit'as dar prideda RF desense. Nei vieno iš jų firmware neišspręs — abu aparatūros problemos.
 
 **Aparatūriniai sprendimai:**
-- Laikyk GPS anteną kuo toliau nuo VTX antenos, kiek fiziškai įmanoma
+- Maitink GPS iš švarios/filtruotos 5V linijos, o ne tiesiai iš triukšmingo ESC BEC — LC filtras arba atskiras mažo triukšmo reguliatorius duoda didžiausią efektą
+- Laikyk GPS anteną kuo toliau nuo air unit'o antenos, kiek rėmas leidžia
 - Naudok ekranuotą GPS modulį (metalinis „dangtelis“ virš modulio)
-- Prieš tikrindamas GPS fix ant žemės, perjunk VTX į mažesnę galią (25 mW ar 0 mW)
-- Palauk GPS fix su išjungtu VTX, tada įjunk jį skrydžiui
+- Tikrink fix'ą ant stalo *užsukęs motorus*, ne tik tuščiąja eiga — triukšmas išlenda tik po apkrova
 
 ---
 
