@@ -9,6 +9,10 @@
   weight = -120
 [[main]]
   parent = "Projects"
+  name = "Snippet'ai"
+  url = "snippets/"
+[[main]]
+  parent = "Projects"
   name = "ESP Reflow"
   url = "esp-reflow"
 [[main]]
