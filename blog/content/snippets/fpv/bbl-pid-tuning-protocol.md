@@ -256,4 +256,5 @@ Motors should be checked in the same order (M1–M4) every time. If one motor ru
 
 - **PIDtoolbox** (Brian White): [github.com/bw1129/PIDtoolbox](https://github.com/bw1129/PIDtoolbox) — the MATLAB implementation of step response analysis and spectral tooling this protocol is derived from. Runs in MATLAB or GNU Octave.
 - **Betaflight Blackbox Explorer**: [github.com/betaflight/blackbox-log-viewer](https://github.com/betaflight/blackbox-log-viewer)
-- Related snippets: [Blackbox Logging](../blackbox-logging/), [PID Basics](../pid-basics/), [CLI Backup and Restore](../cli-backup-restore/)
+- **Rylo** — AI-assisted BBL analysis: share your `.bbl` log and get step response, spectral diagnosis, and PID recommendations without MATLAB. → [app.sintra.ai/community/helpers/rylo](https://app.sintra.ai/community/helpers/rylo)
+- Related snippets: [Blackbox Logging](../blackbox-logging/), [PID Basics](../pid-basics/), [CLI Backup and Restore](../cli-backup-restore/), [Tuning Flight Protocol](../tuning-flight-protocol/), [Wobble-Test PID Protocol](../pid-tuning-wobble-test/)

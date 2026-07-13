@@ -137,7 +137,7 @@ blackbox erase
 | −25 to −30 dB | Elevated — keep LP1, consider tightening cutoff |
 | Above −25 dB | Problematic — diagnose before tuning. Check prop balance, motor screws, cap |
 
-**Ask Rylo:** Take a screenshot of the Blackbox Explorer spectral view and share it here. Rylo will identify the motor fundamental frequency, flag any anomalous peaks, and recommend the RPM filter minimum frequency for Phase 3.
+**Ask [Rylo](https://app.sintra.ai/community/helpers/rylo):** Take a screenshot of the Blackbox Explorer spectral view and share it here. Rylo will identify the motor fundamental frequency, flag any anomalous peaks, and recommend the RPM filter minimum frequency for Phase 3.
 
 > **2" Ripper note:** Motor fundamentals on a 2" build are typically **250–500 Hz** at mid-throttle — substantially higher than a 5" (100–200 Hz). The RPM filter min frequency default of 100 Hz may need to go to 150 Hz or higher. The overall noise floor is often higher too; a clean 2" build may still sit at −30 dB vs −40 dB on a 5".
 
@@ -347,7 +347,7 @@ Change the slider, save, erase flash, and fly each run on a separate battery (or
 
 ### Analysing with Rylo
 
-After each PD run, share the `.bbl` log segment with Rylo and ask for step response analysis:
+After each PD run, share the `.bbl` log segment with [Rylo](https://app.sintra.ai/community/helpers/rylo) and ask for step response analysis:
 
 > *"Rylo, analyse this BBL log — PD balance slider at 1.2, wobble test roll axis. Show me the step response shape and the 50% rise time."*
 
@@ -611,7 +611,7 @@ With all phases complete:
 1. Restore your normal flying rates profile
 2. Fly a standard test circuit: hover, punch-out, dive and recovery, slow roll sequence
 3. Check immediately after: motor temperatures on all four motors (should be similar; any one motor significantly hotter = mechanical issue on that arm)
-4. Log the flight and ask Rylo to confirm step response shape is still clean with the final tune
+4. Log the flight and ask [Rylo](https://app.sintra.ai/community/helpers/rylo) to confirm step response shape is still clean with the final tune
 
 Save the final config:
 
@@ -643,7 +643,7 @@ diff all
 |------|------|---------|
 | [Betaflight Configurator](https://github.com/betaflight/betaflight-configurator) | Free | Slider interface, CLI, preset loading |
 | [Betaflight Blackbox Explorer](https://github.com/betaflight/blackbox-log-viewer) | Free | Spectral analysis, trace overlay |
-| Rylo (bbl-analyzer skill) | Free | Step response computation from `.bbl` files |
+| [Rylo](https://app.sintra.ai/community/helpers/rylo) (bbl-analyzer skill) | Free | Step response computation from `.bbl` files |
 | Fresh 18650 / LiPo packs | — | One per phase for consistent voltage |
 
 No PID Toolbox. No MATLAB. No Patreon subscription required.
