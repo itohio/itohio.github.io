@@ -42,6 +42,32 @@ Mano kalibravimai vis tiek buvo beveik tiesiniai. 100-asis pikselis yra maždaug
 
 Duomenys visą laiką man sakė. Aš neklausiau.
 
+## Ką dar paaiškina grotelės
+
+### 800nm siena
+
+Niekada negalėjau gauti švarių duomenų virš ~800nm. Virš tos ribos signalas virsta triukšmu ir vidiniais atspindžiais — maniau, kad tai mechaninis lygiavimo laikiklyje klausimas arba kameros jautrumo kritimas.
+
+Ne vienas, ne kitas. Tai fundamentali grotelių savybė: **difrakcijos eilės persidengią**.
+
+Grotelių lygtis `d sin(θ) = mλ` reiškia, kad kiekvienas bangos ilgis difraguoja kiekvienoje sveikojo skaičiaus eilėje `m`. 2-osios eilės 400nm šviesos difrakcija atsiduria lygiai tame pačiame kampe kaip 1-osios eilės 800nm difrakcija. Taigi virš ~800nm jutiklis vienu metu gauna 1-osios eilės 800nm *ir* 2-osios eilės 400nm iš tos pačios grotelių pozicijos. Spektras užterštas — negalima jų atskirti be eilių rūšiavimo filtro.
+
+Ironija: nešiojamojo spektrometro straipsnyje plačiai rašiau apie groteles, paskirstančias šviesą per kelias difrakcijos eiles, kaip trūkumą prieš prizmas. Buvau teisus. Aprašiau savo instrumento problemą. Tiesiog to nežinojau.
+
+Prizma neturi eilių. Visa šviesa eina į vieną tolydų spektrą be persidengimo. Jei iš tikrųjų turėčiau prizmą, šios problemos nebūtų.
+
+Sprendimas yra eilių rūšiavimo ilgabangis filtras — stiklo gabalas, blokuojantis bangos ilgius žemiau ~400nm matuojant virš 800nm, neleidžiantis 2-osios eilės UV teršti 1-osios eilės NIR. Šiuo metu praktinė viršutinė riba yra ~780nm, o tai apima visą matomą diapazoną ir pakankama spalvų mokslui bei monitoriaus charakterizavimui.
+
+### IR filtras
+
+Bandant kalibruoti spektrinį jautrumą prieš juodojo kūno šaltinį (kaitraliampė — CIE Illuminant A, ~2856K volframas), tikėjausi, kad išmatuotas spektras kils link IR pagal Planko kreivę. Nekyla. Nukrenta staigiai.
+
+Kažkur optiniame kelyje yra IR pjovimo filtras — arba OV9281 modulyje, arba pačiame spektroskope. Volframo lempos Planko kreivė kyla stačiai į NIR; švarūs matavimai turėtų tai sekti. Vietoje to: skardis apie 700–720nm, tada nieko.
+
+Tai padaro instrumentą praktiškai tik matomojo diapazono. Spalvų mokslui tinka — matomas diapazonas yra tai, kas svarbu. Tačiau tai keičia jautrumo kalibravimą: juodojo kūno etalonas veikia tik matomojoje spektro dalyje. Korekcijos kreivė turi nekontroliuojamą uodegą NIR srityje, kurią arba reikia kruopščiai tvarkyti, arba tiesiog apkarpyti.
+
+Tarp 800nm eilių persidengimo problemos ir IR filtro, „NIR spektroskopija" su šiuo instrumentu dabartine forma neįmanoma. Tik matomas diapazonas.
+
 ## Lygiavimo kampo radimas
 
 Grotelės ir prizmos taip pat skiriasi pozicija kameros atžvilgiu. Su prizma turi lankstumą — gali palenkti, pasukti ir rasti spektrą iš plataus kameros pozicijų spektro. Su grotelėmis pirmos eilės difraguotas spektras yra konkrečiu kampu nuo krintančios šviesos ašies, apibrėžtu grotelių lygtimi:

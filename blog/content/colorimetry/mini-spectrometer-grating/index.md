@@ -42,6 +42,32 @@ My calibrations kept coming out nearly linear. Pixel 100 is roughly as far from 
 
 The data was telling me the whole time. I wasn't listening.
 
+## What else the grating explains
+
+### The 800nm wall
+
+I could never get clean data past about 800nm. Past that point the signal turns into noise and internal reflections — I assumed it was a mechanical alignment issue with the holder, or maybe the camera sensitivity dropping off.
+
+It's neither. It's a fundamental property of gratings: **diffraction orders overlap**.
+
+The grating equation `d sin(θ) = mλ` means every wavelength diffracts at every integer order `m`. The 2nd-order diffraction of 400nm light lands at exactly the same angle as the 1st-order diffraction of 800nm. So above ~800nm, the sensor simultaneously receives 1st-order 800nm *and* 2nd-order 400nm from the same grating position. The spectrum is contaminated — you can't separate them without an order-sorting filter.
+
+The irony: in the portable spectrometer article I wrote at length about gratings distributing light across multiple diffraction orders as a disadvantage versus prisms. I was right. I was describing my own instrument's problem. I just didn't know it.
+
+A prism has no orders. All the light goes into one continuous spectrum with no overlap. If I actually had a prism, this wouldn't be an issue.
+
+The fix is an order-sorting longpass filter — a piece of glass that blocks wavelengths below ~400nm when measuring above 800nm, preventing 2nd-order UV from polluting 1st-order NIR. For now the practical upper limit is ~780nm, which covers the full visible range and is sufficient for color science and monitor characterization.
+
+### The IR filter
+
+While trying to calibrate spectral sensitivity against a black body source (an incandescent lamp — CIE Illuminant A, ~2856K tungsten), I expected the measured spectrum to rise toward IR as per the Planck curve. It doesn't. It cuts off sharply.
+
+There's an IR cut filter somewhere in the optical path — either in the OV9281 module or inside the spectroscope itself. The Planck curve for a tungsten lamp rises steeply into NIR; a clean measurement should track that. Instead: cliff edge around 700–720nm, then nothing.
+
+This makes the instrument visible-only in practice. Fine for color science — the visible range is what matters. But it changes the sensitivity calibration: the black body reference only works for the visible portion of the spectrum. The correction curve has an unconstrained tail in NIR that either has to be handled carefully or simply cropped.
+
+Between the 800nm order-overlap problem and the IR filter, "NIR spectroscopy" is off the table with this instrument in its current form. Visible-only it is.
+
 ## Finding the alignment angle
 
 Gratings and prisms also differ in how they're positioned relative to the camera. With a prism you have flexibility — you can tilt and rotate and find the spectrum from a range of camera positions. With a grating, the first-order diffracted spectrum sits at a specific angle off the incident light axis, determined by the grating equation:
