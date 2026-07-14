@@ -92,6 +92,8 @@ Dėžė yra standartinė ABS projektinė dėžutė su tinkintais juodo porolono 
 
 Porolono išpjovos svarbios: viskas lieka vietoje uždengus dangtį. Kiuvetę galima keisti neiš­lygiuojant optinių angų — tai ir yra standartizuotos laikiklio geometrijos esmė.
 
+Verta paminėti vieną saugos detalę: lazeris aktyvuojamas jutikliniu mygtuku ant dėžės išorės, tačiau aktyvavimo grandinė valdoma mechaniniu blokuotės jungikliu dėžės viduje, kuris užsidaro tik tvirtai uždengus dangtį. Palieti mygtuką atidaru dangčiu — nieko nevyksta. Blokuotė yra grynai mechaninė, jokios programinės įrangos. Tai atrodo per daug kruopštu — kol nebuvo atsitikimas su UV lazeriu ir akimi.
+
 TOSLINK perjungiklis įvesties pusėje leidžia perjungti tarp matavimo režimų neatidarant dėžės:
 
 - **Perdavimas**: UV šaltinis vienoje pusėje, surinkimas priešingoje, tiesioginis perdavimas per mėginį

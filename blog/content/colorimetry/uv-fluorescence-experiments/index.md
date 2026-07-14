@@ -92,6 +92,8 @@ The enclosure is a standard ABS project box with custom-cut black foam padding t
 
 The foam cutouts matter: everything stays in position when the lid goes on. The cuvette can be swapped without realigning the fiber ports, which is the whole point of a standardized holder geometry.
 
+One safety detail worth noting: the laser is activated via a touch button on the outside, but the activation circuit is gated by a mechanical interlock switch inside the box that only closes when the lid is firmly shut. Touch the button with the lid open — nothing happens. The interlock is purely mechanical, no firmware involved. It's the kind of thing that seems over-engineered until you've pointed a UV laser at your own retina by accident.
+
 A TOSLINK switcher on the input side allows switching between measurement modes without opening the box:
 
 - **Transmission**: UV source on one side, collection on the opposite side, direct transmission through the sample
