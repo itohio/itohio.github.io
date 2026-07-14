@@ -77,6 +77,8 @@ Po [Dronefix.lt](https://dronumokykla.lt/) nesustojau ties vienu kvadrotu. Vien�
 ![Pavo20 Pro II su ekranuotu GPS kabeliu ir žemų dažnių filtru ant VCC](fleet-pavo20-gps.jpg)
 *Pavo20 Pro II su ekranuotu GPS kabeliu ir VCC žemų dažnių filtru. GPS triukšmo problema vis dar neišspręsta.*
 
+Visi dronai naudoja tuos pačius rates: Actual, center 10, max 730, expo 0.4–0.5. Tie patys simuliatoriuje. Mažesnis centro jautrumas suteikia daugiau rezoliucijos stabiliame skrydžio regione — 533 ar 633 max atrodė per lėtai.
+
 Dabartinis sąrašas, maždaug tokia tvarka, kokia viskas vyko:
 
 **Air65 II** — pirktas kaip Air65 freestyle, mano treniruoklis. Dabar veikia su BetaFPV Matrix 1S 5IN1 II po to, kai originalus valdiklis gavo ELRS lusto litavimo defektą — rxloss klaidos, kurios pasirodydavo tik po to, kai plokštė įšildavo. Pakeitė FC ir šiuo metu derina iš naujo.

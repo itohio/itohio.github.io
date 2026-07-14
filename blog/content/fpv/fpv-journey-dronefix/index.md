@@ -77,6 +77,8 @@ After [Dronefix.lt](https://dronumokykla.lt/) I did not stop at one quad. I boug
 ![Pavo20 Pro II with shielded GPS cable and low-pass filter on VCC](fleet-pavo20-gps.jpg)
 *Pavo20 Pro II with shielded GPS cable and VCC low-pass filter. GPS noise is still a problem.*
 
+All builds run the same rates: Actual, center 10, max 730, expo 0.4–0.5. Same in the sim. The lower center sensitivity gives more resolution in the stable flying region — 533 or 633 max felt too slow.
+
 The current roster, more or less in the order it happened:
 
 **Air65 II** — bought as an Air65 freestyle, my trainer. Now running the BetaFPV Matrix 1S 5IN1 II after the original board developed an ELRS solder joint fault — rxloss errors that only showed up after the board warmed up. Replaced the FC and currently tuning from scratch.
