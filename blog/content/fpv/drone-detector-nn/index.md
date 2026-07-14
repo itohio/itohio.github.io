@@ -67,7 +67,7 @@ This section matters most for anyone trying to replicate. The dataset comes from
 | DREGON / SPCup19 (Inria) | quad (ego-noise) | On-board recordings; multi-channel → mono |
 | Zenodo 15190811 | quad (outdoor) | 14 real drone models; selected 3–4 to keep size manageable |
 
-I recorded the drone clips myself in a field. Getting enough variation — different distances, different aspect angles, different background conditions — took multiple sessions. The acoustic diversity in those recordings determines how well the model generalizes to real deployments.
+The user-recording pool is a mix of two approaches. Some clips were captured directly in the field using a laptop microphone and phone microphone via a Jupyter notebook. For classes where source material was too sparse — Shahed, motorcycle, lawnmower, background noise — I played audio from conflict zone footage and other sources over speakers and re-recorded the result under different conditions: varying noise levels, room acoustics, overlaid ambient sounds. This re-recording approach added acoustic variation to classes that would otherwise have had only a handful of distinct source clips. Some office ambient recordings rounded out the idle class.
 
 ### AudioSet Download Failures
 

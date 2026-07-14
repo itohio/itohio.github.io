@@ -67,7 +67,7 @@ Nustatyta užduotis: 10 klasių vienos etiketės klasifikatorius, veikiantis rea
 | DREGON / SPCup19 (Inria) | kvadrotas (savojo triukšmo) | Laivo įrašai; kelių kanalų → mono |
 | Zenodo 15190811 | kvadrotas (lauke) | 14 realių dronų modelių; pasirinkti 3–4 dydžiui valdyti |
 
-Drono įrašus padariau pats lauke. Gauti pakankamai įvairovės — skirtingų atstumų, skirtingų kampų, skirtingų fono sąlygų — prireikė kelių seansų. Akustinė tų įrašų įvairovė lemia, kaip gerai modelis apibendrina realiam diegimui.
+Vartotojo įrašų rinkinys yra dviejų metodų derinys. Dalis įrašų buvo tiesiogiai fiksuota lauke naudojant nešiojamojo kompiuterio mikrofoną ir telefono mikrofoną per „Jupyter" užrašinę. Klasėms, kurių šaltinės medžiagos buvo per mažai — Shahed, motociklas, vejapjovė, foninis triukšmas — garsus iš konflikto zonų ir kitų šaltinių leidžiau per garsiakalbius ir iš naujo įrašinėjau skirtingomis sąlygomis: skirtingais triukšmo lygiais, kambario akustika, persidengiančiais aplinkos garsais. Šis pakartotino įrašymo metodas pridėjo akustinę įvairovę klasėms, kurios priešingu atveju turėtų tik kelias skirtingas šaltines klipes. Kai kurie biuro aplinkos įrašai papildė laukimo klasę.
 
 ### AudioSet atsisiuntimo nesėkmės
 
