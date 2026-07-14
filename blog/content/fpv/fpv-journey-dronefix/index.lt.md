@@ -3,6 +3,7 @@ title: "FPV: kaip viskas prasidėjo"
 date: 2026-07-13
 description: "Kelerius metus priešinausi FPV. Tada užsiregistravau į Dronefix.lt mokymo programą, skridau simuliatoriuje, sulydžiau pirmąją konstrukciją ir visiškai pakeičiau projektų prioritetus. Spektrometras gali palaukti."
 toc: false
+thumbnail: "dronefix-academy-hall.jpg"
 categories:
   - FPV
   - Asmeninis
@@ -31,7 +32,7 @@ Tada užsiregistravau į [Dronefix.lt](https://dronumokykla.lt/) mokymo program�
 
 ## [Dronefix.lt](https://dronumokykla.lt/)
 
-Dronefix.lt vykdo struktūrizuotus FPV pilotų mokymus Lietuvoje. Ne „štai dronas, eik sudaužyk jį" — tikra programa: simuliatoriaus valandos, taisyklių ir oro erdvės teorija, praktika su realiais dronais, pirmųjų pirkimų gairės.
+[Dronefix.lt](https://dronumokykla.lt/) vykdo struktūrizuotus FPV pilotų mokymus Lietuvoje. Ne „štai dronas, eik sudaužyk jį" — tikra programa: simuliatoriaus valandos, taisyklių ir oro erdvės teorija, praktika su realiais dronais, pirmųjų pirkimų gairės.
 
 ![Dronefix.lt akademijos salė — darbo stalai, kvadrotų rėmai sukrauti ant centrinės lentos, lietuvos vėliava](dronefix-academy-hall.jpg)
 *Dronefix.lt erdvė — pramoninis sandėlis, paruošti darbo stalai, akademijos rėmai sukrauti viduryje.*
@@ -62,16 +63,16 @@ Ką programa padarė, ko nebūčiau galėjęs padaryti vienas:
 
 ## Flotas
 
-Po Dronefix.lt nesustojau ties vienu kvadrotu. Vieną nusipirkau, kad išmokčiau skristi, o tada pradėjau kaupti variklius, rėmus ir skrydžio valdiklius bei konstruoti likusius.
+Po [Dronefix.lt](https://dronumokykla.lt/) nesustojau ties vienu kvadrotu. Vieną nusipirkau, kad išmokčiau skristi, o tada pradėjau kaupti variklius, rėmus ir skrydžio valdiklius bei konstruoti likusius.
 
-![Kelioninis rinkinys: Air65 II su Ratel Baby Nano kamera (viršuje) ir Meteor75 konvertuotas į DJI O4 Lite (apačioje), dėkle](fleet-whoops-case.jpg)
-*Kelioninis rinkinys. Air65 II su Ratel Baby Nano kamera (viršuje), Meteor75 O4 Lite konversija (apačioje). Abu 1S.*
+![Kelioninis rinkinys: Meteor75 O4 Lite (viršuje) ir Air65 II su Ratel Baby Nano (apačioje), dėkle](fleet-whoops-case.jpg)
+*Kelioninis rinkinys. Meteor75 O4 Lite konversija (viršuje), Air65 II su Ratel Baby Nano (apačioje). Analoginis Air65 naudoja LHCP anteną — geresnei signalo penetracijai pro kliūtis.*
 
-![Skaitmeninis 2" O4 Lite riperis (kairėje) ir analoginis 2S riperis (dešinėje)](fleet-2inch-rippers.jpg)
-*Du 2 colių riperiai — skaitmeninis O4 Lite kairėje, analoginis 2S dešinėje.*
+![Analoginis 2S riperis (kairėje) ir skaitmeninis O4 Lite riperis (dešinėje)](fleet-2inch-rippers.jpg)
+*Du 2 colių riperiai — analoginis 2S kairėje, skaitmeninis O4 Lite dešinėje.*
 
-![Eksperimentinė 2,5 colio tolimojo skrydžio platforma — šiuo metu 1S, konvertuojama į 2S/3S](fleet-lr-experimental.jpg)
-*Eksperimentinė tolimojo skrydžio platforma. Šiuo metu 1S — tas eksperimentas nepasisekė, planuojama konversija į 2S/3S.*
+![2,5 colio tolimojo skrydžio eksperimentinis — antras bandymas, sunkus rėmas, šiuo metu 1S](fleet-lr-experimental.jpg)
+*2,5 colio LR eksperimentinis, antras bandymas. Šiuo metu sunkesnis rėmas. Kol kas 1S; planuojama konversija į 2S/3S.*
 
 ![Pavo20 Pro II su ekranuotu GPS kabeliu ir žemų dažnių filtru ant VCC](fleet-pavo20-gps.jpg)
 *Pavo20 Pro II su ekranuotu GPS kabeliu ir VCC žemų dažnių filtru. GPS triukšmo problema vis dar neišspręsta.*
@@ -80,15 +81,15 @@ Dabartinis sąrašas, maždaug tokia tvarka, kokia viskas vyko:
 
 **Air65 (freestyle)** — pirktas, ne statytas. Mano treniruoklis ir tas, ant kurio išmokau skristi, kol dar nepasitikėjau savimi su lituokliu ir dalių krūva.
 
-**Mano pirmas tolimojo skrydžio eksperimentinis rėmas** — sunkus, ambicingas ir dingęs per pirmąjį skrydį. Pameciau jį tiesiogine prasme trys metrai į šoną nuo tos vietos, kur sėdėjau. Dėl inercijos ir per mažos traukos negalėjau jo sugrąžinti, kliudžiau medį, ir jis tiesiog dingo. Ieškojau tris dienas — tiesiogine prasme tris dienas. Peržiūrėjau paskutines milisekundes prieš nutrūkstant vaizdui akiniuose ir peržiūrėjau 360 įrašą bandydamas nustatyti, kur jis nukrito po to, kai atsitrenkė į šaką. Nieko. Jis vis dar kažkur ten.
+**Pirmas tolimojo skrydžio bandymas** — 3 colių toothpick rėmas su Meteor75 analoginėmis viduriais persodintomis į jį. Lengvas, minimalus, dingo per pirmąjį skrydį. Pameciau jį tiesiogine prasme trys metrai į šoną nuo tos vietos, kur sėdėjau. Dėl inercijos ir per mažos traukos negalėjau jo sugrąžinti, kliudžiau medį, ir jis tiesiog dingo. Ieškojau tris dienas — tiesiogine prasme tris dienas. Peržiūrėjau paskutines milisekundes prieš nutrūkstant vaizdui, peržiūrėjau 360 įrašą bandydamas nustatyti, kur nukrito po atsitrenkimo į šaką. Nieko. Vis dar kažkur ten.
 
 **Du 2 colių riperiai (analoginis ir skaitmeninis)** — tie, kurie pateisina pavadinimą. 2 colių tiesiog plėšia: geros šešios minutės su 2S 580mAh bateriją. Kas keista, nuo tada, kai pradėjau skraidyti šiuos, simuliatoriuje beveik nebemoku skristi — simuliatorius jaučiasi keistai ir nepatogiai, net su identiškais rate'ais, net Air65 Liftoff'e. Tiesiog ne tas pats.
 
-**2,5 colio tolimojo skrydžio eksperimentinė platforma** — kitas žingsnis nuotolio ir ištvermės link.
+**2,5 colio tolimojo skrydžio eksperimentinė platforma** — antras bandymas, sunkesnis rėmas. Kol kas 1S; planuojama konversija į 2S arba 3S. Eksperimentas tęsiamas.
 
 **Pavo20 Pro II** — 2,5 colio GPS burbulinis, pagrindinis GPS konfigūracijų testavimo įrankis ir [atskiro straipsnio apie GPS sunkumus](../pavo20-gps-struggles/) tema. Ne gabiausias mano turimas kvadrotas, bet jis mane labiausiai išmokė apie RF trikdžius ir ESC triukšmą.
 
-**4 colių sulankstomas „BabyApe" tolimojo skrydžio dronas** — vis dar ant stalo, galbūt mano kelioninis dronas. Ar jis pelnys tą vaidmenį, visiškai priklauso nuo to, ar jo skrydžio valdiklis tvarkosi su GPS geriau nei Pavo20 — Pavo20 GPS trikdymo problema yra kartelė, kurią jis turi peršokti.
+**4 colių sulankstomas BabyApe (FoldApe4 stilius)** — užsakytas, dar neatvyko. Rėmas suprojektuotas O3 moduliui, tačiau planuoju jį perflashinti ir naudoti su O4 — turėtų būti suderinama. Ar taps kelioniniu dronu, priklausys nuo to, ar jo skrydžio valdiklis tvarkysis su GPS geriau nei Pavo20.
 
 Kiekviena konstrukcija išmokė ko nors specifinio — variklio krypties gedimų, ESC protokolo nesuderinamumų, blackbox analizės, PID derinimo. Hobis yra tikrai edukacinis būdu, kuris jaučiasi labiau praktiškas nei dauguma programinės įrangos darbų.
 

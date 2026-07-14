@@ -3,6 +3,7 @@ title: "FPV: how it all began"
 date: 2026-07-13
 description: "I resisted FPV for years. Then I signed up for the Dronefix.lt training programme, flew the simulator, soldered my first build, and completely rearranged my project priorities. The spectrometer can wait."
 toc: false
+thumbnail: "dronefix-academy-hall.jpg"
 categories:
   - FPV
   - Personal
@@ -31,7 +32,7 @@ And then I signed up for the [Dronefix.lt](https://dronumokykla.lt/) training pr
 
 ## [Dronefix.lt](https://dronumokykla.lt/)
 
-Dronefix.lt runs structured FPV pilot training in Lithuania. Not "here's a drone, go crash it" — an actual programme: simulator hours, theory on regulations and airspace, hands-on with real builds, guidance on first purchases.
+[Dronefix.lt](https://dronumokykla.lt/) runs structured FPV pilot training in Lithuania. Not "here's a drone, go crash it" — an actual programme: simulator hours, theory on regulations and airspace, hands-on with real builds, guidance on first purchases.
 
 ![Dronefix.lt academy hall — workbenches, drone frames stacked on a central table, Lithuanian flag](dronefix-academy-hall.jpg)
 *The Dronefix.lt venue — industrial hall, workbenches set out, a stack of academy frames on the centre table.*
@@ -62,16 +63,16 @@ What the programme did that I couldn't have done alone:
 
 ## The Fleet
 
-After Dronefix.lt I did not stop at one quad. I bought one to learn on, then started hoarding motors, frames and flight controllers and building the rest.
+After [Dronefix.lt](https://dronumokykla.lt/) I did not stop at one quad. I bought one to learn on, then started hoarding motors, frames and flight controllers and building the rest.
 
-![Travel kit: Air65 II with Ratel Baby Nano camera (top) and Meteor75 converted to DJI O4 Lite (bottom), in carry case](fleet-whoops-case.jpg)
-*Travel kit. Air65 II with Ratel Baby Nano camera (top), Meteor75 O4 Lite conversion (bottom). Both 1S.*
+![Travel kit: Meteor75 O4 Lite (top) and Air65 II with Ratel Baby Nano (bottom), in carry case](fleet-whoops-case.jpg)
+*Travel kit. Meteor75 O4 Lite conversion (top), Air65 II with Ratel Baby Nano (bottom). The analog Air65 runs an LHCP antenna for better signal penetration through obstacles.*
 
-![Digital 2" O4 Lite ripper (left) and analog 2S ripper (right)](fleet-2inch-rippers.jpg)
-*The two 2" rippers — digital O4 Lite build on the left, analog 2S build on the right.*
+![Analog 2S ripper (left) and digital O4 Lite ripper (right)](fleet-2inch-rippers.jpg)
+*The two 2" rippers — analog 2S build on the left, digital O4 Lite build on the right.*
 
-![Experimental 2.5" long-range platform — currently 1S, being converted to 2S/3S](fleet-lr-experimental.jpg)
-*The experimental long-range platform. Currently 1S — that experiment failed, conversion to 2S/3S planned.*
+![2.5" long-range experimental — second attempt, heavy frame, currently 1S](fleet-lr-experimental.jpg)
+*The 2.5" LR experimental, second attempt. Heavy frame this time. Running 1S for now; 2S/3S conversion planned.*
 
 ![Pavo20 Pro II with shielded GPS cable and low-pass filter on VCC](fleet-pavo20-gps.jpg)
 *Pavo20 Pro II with shielded GPS cable and VCC low-pass filter. GPS noise is still a problem.*
@@ -80,15 +81,15 @@ The current roster, more or less in the order it happened:
 
 **Air65 (freestyle)** — bought, not built. My trainer, and the one I learned on before I trusted myself with a soldering iron and a parts pile.
 
-**My first long-range experimental frame** — heavy, ambitious, and gone on its maiden flight. I lost it literally three meters to the side of where I was sitting. Between the inertia and not enough thrust I couldn't pull it back, clipped a tree, and it simply vanished. I searched for three days — literally three days. I studied the last few milliseconds before the feed cut out in my goggles and went through the 360 recording trying to work out where it fell after it hit a branch. Nothing. It's still out there.
+**First long-range attempt** — a 3" toothpick frame running the Meteor75's analog guts transplanted into it. Light, minimal, gone on its maiden flight. I lost it literally three meters to the side of where I was sitting. Between the inertia and not enough thrust I couldn't pull it back, clipped a tree, and it simply vanished. I searched for three days — literally three days. Studied the last few milliseconds before the feed cut out, went through the 360 recording trying to work out where it fell after hitting the branch. Nothing. It's still out there somewhere.
 
 **Two 2" rippers (analog and digital)** — the ones that earn the name. The 2" absolutely rips: a solid six minutes on a 2S 580mAh pack. Oddly, ever since I started flying these I can barely fly in the simulator anymore — the sim feels weird and awkward, even with identical rates, even the Air65 in Liftoff. It's just not the same.
 
-**A 2.5" long-range experimental platform** — the next step up in range and endurance.
+**A 2.5" long-range experimental platform** — second attempt, heavier frame. Still running 1S for now; the plan is to convert to 2S or 3S. That experiment is ongoing.
 
 **Pavo20 Pro II** — 2.5" GPS whoop, my main tool for testing GPS configurations and the subject of a [separate article about GPS struggles](../pavo20-gps-struggles/). Not the most capable quad I own, but it taught me the most about RF interference and ESC noise.
 
-**A 4" foldable "BabyApe" long-range build** — still on the bench, possibly my travel drone. Whether it earns that role depends entirely on whether its flight controller handles GPS better than the Pavo20 does — the Pavo20's GPS jamming problem is the bar it has to clear.
+**A 4" foldable BabyApe (FoldApe4 style)** — on order, not yet arrived. The frame is designed around an O3 air unit, but I plan to flash it and run O4 — should be compatible. Whether it earns the role of travel drone depends on whether its flight controller handles GPS better than the Pavo20 does.
 
 Each build taught something specific — motor direction failures, ESC protocol mismatches, blackbox analysis, PID tuning. The hobby is genuinely educational in a way that feels more hands-on than most software work.
 
