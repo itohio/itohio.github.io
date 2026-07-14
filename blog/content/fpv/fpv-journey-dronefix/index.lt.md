@@ -79,7 +79,7 @@ Po [Dronefix.lt](https://dronumokykla.lt/) nesustojau ties vienu kvadrotu. Vien�
 
 Dabartinis sąrašas, maždaug tokia tvarka, kokia viskas vyko:
 
-**Air65 (freestyle)** — pirktas, ne statytas. Mano treniruoklis ir tas, ant kurio išmokau skristi, kol dar nepasitikėjau savimi su lituokliu ir dalių krūva.
+**Air65 II** — pirktas kaip Air65 freestyle, mano treniruoklis. Dabar veikia su BetaFPV Matrix 1S 5IN1 II po to, kai originalus valdiklis gavo ELRS lusto litavimo defektą — rxloss klaidos, kurios pasirodydavo tik po to, kai plokštė įšildavo. Pakeitė FC ir šiuo metu derina iš naujo.
 
 **Pirmas tolimojo skrydžio bandymas** — 3 colių toothpick rėmas su Meteor75 analoginėmis viduriais persodintomis į jį. Lengvas, minimalus, dingo per pirmąjį skrydį. Pameciau jį tiesiogine prasme trys metrai į šoną nuo tos vietos, kur sėdėjau. Dėl inercijos ir per mažos traukos negalėjau jo sugrąžinti, kliudžiau medį, ir jis tiesiog dingo. Ieškojau tris dienas — tiesiogine prasme tris dienas. Peržiūrėjau paskutines milisekundes prieš nutrūkstant vaizdui, peržiūrėjau 360 įrašą bandydamas nustatyti, kur nukrito po atsitrenkimo į šaką. Nieko. Vis dar kažkur ten.
 

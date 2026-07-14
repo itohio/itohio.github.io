@@ -79,7 +79,7 @@ After [Dronefix.lt](https://dronumokykla.lt/) I did not stop at one quad. I boug
 
 The current roster, more or less in the order it happened:
 
-**Air65 (freestyle)** — bought, not built. My trainer, and the one I learned on before I trusted myself with a soldering iron and a parts pile.
+**Air65 II** — bought as an Air65 freestyle, my trainer. Now running the BetaFPV Matrix 1S 5IN1 II after the original board developed an ELRS solder joint fault — rxloss errors that only showed up after the board warmed up. Replaced the FC and currently tuning from scratch.
 
 **First long-range attempt** — a 3" toothpick frame running the Meteor75's analog guts transplanted into it. Light, minimal, gone on its maiden flight. I lost it literally three meters to the side of where I was sitting. Between the inertia and not enough thrust I couldn't pull it back, clipped a tree, and it simply vanished. I searched for three days — literally three days. Studied the last few milliseconds before the feed cut out, went through the 360 recording trying to work out where it fell after hitting the branch. Nothing. It's still out there somewhere.
 
