@@ -1,7 +1,7 @@
 ---
 title: "Glowing Things: First UV Fluorescence Experiments"
 date: 2025-11-09T18:00:00+02:00
-description: "Building a fiber-coupled UV fluorescence setup — and why TOSLINK, despite its convenience, can never be the light carrier for fluorescence spectroscopy"
+description: "Building a fiber-coupled UV fluorescence setup — TOSLINK fluoresces, attenuates NIR, and fails at 785nm Raman. Three reasons it had to go."
 thumbnail: "vitamin-b-cuvette.jpg"
 author: admin
 categories:
@@ -36,7 +36,9 @@ This is a fundamental material property, not a brand issue. All PMMA fiber will 
 
 TOSLINK is out as a UV excitation carrier. It works fine for visible-range transmission spectroscopy where the source wavelength is above ~450nm, but for anything involving UV excitation and visible emission collection, it contaminates the measurement.
 
-The replacement — properly, at least — is silica (quartz) fiber, which doesn't fluoresce in the UV. That's a separate project. For now I could still use TOSLINK for the collection side, as long as UV light never enters it.
+There's a subtler version of the same problem. Even with a UV-cut longpass filter on the collection port, if there's a UV laser inside an enclosed box illuminating a sample directly, UV scatters off every surface — including the fiber body. The filter blocks UV from entering the fiber end, but the fiber jacket picks up excitation photons through the cladding. The PMMA re-emits across the visible. The filter doesn't help with that.
+
+The only real fix is silica fiber, which doesn't have this problem. That's where this ends up — but not yet.
 
 ## What actually glows
 
@@ -80,11 +82,13 @@ A small brass column in the center holds the cuvette. Standard 10mm × 45mm quar
 
 ## The box
 
-All of the above needs to happen in the dark. UV fluorescence experiments with ambient light leaking in are useless — the scattered UV and visible room light overwhelm the weak emission signal.
+UV fluorescence experiments need the dark for the obvious reason — ambient light swamps the weak emission signal. But the box also exists for a second reason: the excitation sources aren't LEDs.
+
+The setup uses two lasers: a UV laser for fluorescence excitation, and a 785nm NIR diode for Raman experiments. Both are direct-beam sources pointed at the sample, which means they need to be enclosed. The foam-lined box provides the dark environment, keeps the laser inside it, and makes the whole thing repeatable — same alignment every measurement.
 
 ![Interior of the UV fluorescence measurement box — foam-lined project enclosure with UV LED, cuvette holder assembly, and fiber cables](uv-box-interior.jpg)
 
-The enclosure is a standard ABS project box with custom-cut black foam padding that holds the cuvette holder assembly rigidly in place. The UV LED is mounted and wired inside — yellow and orange wires for the LED drive, red for a separate indicator or reference sensor. Fiber cables exit through the box sides via TOSLINK connectors in the box walls.
+The enclosure is a standard ABS project box with custom-cut black foam padding that holds the cuvette holder assembly rigidly in place. Inside: the UV laser and NIR laser mounts, the cuvette holder positioned at the convergence point, and wiring for the laser drivers. Fiber cables exit through the box sides via TOSLINK connectors in the box walls.
 
 The foam cutouts matter: everything stays in position when the lid goes on. The cuvette can be swapped without realigning the fiber ports, which is the whole point of a standardized holder geometry.
 
@@ -100,13 +104,25 @@ The switcher is a simple mechanical fiber switch — TOSLINK connectors on a rot
 
 The output of the collection fiber goes to the jewel spectroscope + OV9281 camera described in the previous posts. With PySpectrometer3 running in measurement mode, a fluorescence spectrum from the riboflavin solution takes about 10 seconds: set up the sample, switch to fluorescence mode, trigger acquisition, get a wavelength-calibrated emission spectrum.
 
-The TOSLINK limitation still applies to the collection side in a narrow sense: if UV somehow backscatters into the collection fiber, the PMMA would re-emit in the visible, adding a flat background. The longpass UV-cut filter on the collection port prevents this. With the filter in place, only wavelengths above ~400nm reach the fiber, so PMMA fluorescence from the collection fiber (which would require UV excitation) can't occur.
+The UV fluorescence side works, with caveats. The TOSLINK cladding pickup problem described above means the measurement has a PMMA fluorescence background whenever the UV laser is on inside the box. Manageable for bright emitters like riboflavin; a real problem for weak fluorophores or mineral samples where the emission might be comparable in intensity to the fiber background.
 
-The setup isn't publishing-quality — the cuvette holder geometry isn't optimized for solid angle, the UV LED spectrum isn't calibrated, and the sensitivity correction assumes visible illumination rather than UV. But it's functional enough to identify which samples fluoresce, characterize emission color and rough peak position, and distinguish overlapping emission bands in mixtures.
+### The 785nm problem
+
+The 785nm NIR laser was supposed to enable Raman spectroscopy. Raman scattering is inelastic — the backscattered light is Stokes-shifted to longer wavelengths. At 785nm excitation, Raman peaks for typical organic compounds land at roughly 800–950nm.
+
+Two things killed this immediately.
+
+First: the IR cut filter. As described in [the previous post](../mini-spectrometer-grating/), there's an IR cut filter somewhere in the optical chain — cliff edge around 700–720nm, then nothing. The entire Raman spectrum at 785nm excitation sits beyond that cutoff. The spectrometer simply cannot see it.
+
+Second: TOSLINK itself doesn't transmit NIR. PMMA has an intrinsic absorption edge — C-H overtone vibrations create strong absorption bands above ~700nm. I measured several cable lengths and found significant, length-dependent attenuation above 800nm. The longer the cable, the worse it gets. Even if the IR filter weren't there, any 785nm-excited Raman photons would be progressively swallowed by the collection fiber before reaching the spectrometer.
+
+Both problems point at the same root cause: PMMA has the wrong transmission window for anything above ~700nm. It's not a design flaw in TOSLINK — TOSLINK is specified for 660nm links, and it does that well. The problem is trying to push it into NIR spectroscopy, where it was never intended to go.
+
+The setup isn't publishing-quality for UV fluorescence either — the cuvette holder geometry isn't optimized for solid angle, the laser spectrum isn't calibrated, and the sensitivity correction assumes visible illumination. But it's functional enough to identify which samples fluoresce, characterize emission color and rough peak position, and distinguish overlapping emission bands in mixtures.
 
 ## What's next
 
-This first version works but it's cramped and hard to reconfigure. A second modular version is in progress — separate excitation, sample, and collection blocks that can be rearranged without reprinting the whole holder.
+This first version works but it's cramped and hard to reconfigure. The TOSLINK limitations — fluorescence under UV, NIR attenuation above 700nm — make it unsuitable for the next experiments. A second modular version is in progress using silica fiber, which solves both problems at the cost of much tighter alignment tolerances.
 
 And there's a different kind of coupling problem that showed up while working on the fiber alignment question. A 200µm multimode fiber, an old microscope, a 532nm laser, and a crude 3D-printed backscattering coupler:
 

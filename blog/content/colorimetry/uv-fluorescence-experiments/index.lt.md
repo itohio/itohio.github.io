@@ -1,7 +1,7 @@
 ---
 title: "Šviečiantys daiktai: pirmieji UV fluorescencijos eksperimentai"
 date: 2025-11-09T18:00:00+02:00
-description: "Pluošto sujungto UV fluorescencijos stendo kūrimas — ir kodėl TOSLINK, nepaisant patogumo, niekada negali būti šviesos nešėjas fluorescencijos spektroskopijoje"
+description: "Pluošto sujungto UV fluorescencijos stendo kūrimas — TOSLINK fluorescuoja, silpnina NIR ir nepavyko su 785nm Ramanu. Trys priežastys, kodėl reikėjo pereiti"
 thumbnail: "vitamin-b-cuvette.jpg"
 author: admin
 categories:
@@ -36,7 +36,9 @@ Tai fundamentali medžiagos savybė, ne gamintojo klausimas. Visi PMMA pluoštai
 
 TOSLINK netinka UV žadinimo nešėjui. Jis puikiai veikia matomojo diapazono perdavimo spektroskopijoje, kai šaltinio bangos ilgis yra aukščiau ~450nm, tačiau bet kam, kas apima UV žadinimą ir matomos šviesos emisijos surinkimą, jis teršia matavimą.
 
-Pakeitimas — tinkamai, bent jau — yra silicio (kvarcas) pluoštas, kuris UV diapazone nefluorescuoja. Tai atskiras projektas. Kol kas surinkimo pusėje TOSLINK dar galiu naudoti, kol UV šviesa į jį nepatenka.
+Yra subtilesnė tos pačios problemos versija. Net su UV pjovimo ilgabangiu filtru surinkimo angoje, jei UV lazeris švietė tiesiogiai į mėginį uždaroje dėžėje, UV sklaidosi nuo kiekvieno paviršiaus — įskaitant paties pluošto korpusą. Filtras blokuoja UV patekimą per pluošto galą, tačiau pluošto apvalkalas sugeria žadinimo fotonus per apvalkalą. PMMA reemituoja per visą matomą diapazoną. Filtras su tuo nepadeda.
+
+Vienintelis tikras sprendimas yra silicio pluoštas, kuriam ši problema negalioja. Taip šis kelias ir baigiasi — bet dar ne dabar.
 
 ## Kas iš tikrųjų šviečia
 
@@ -80,11 +82,13 @@ Mažas žalvarinis stulpelis centre laiko kiuvetę. Standartinės 10mm × 45mm k
 
 ## Dėžė
 
-Visa tai turi vykti tamsoje. UV fluorescencijos eksperimentai su aplinkos šviesos nutekėjimu yra beverčiai — išsklaidytas UV ir matoma patalpos šviesa užgožia silpną emisijos signalą.
+UV fluorescencijos eksperimentams reikia tamsos dėl akivaizdžios priežasties — aplinkos šviesa užgožia silpną emisijos signalą. Tačiau dėžė egzistuoja ir dėl antros priežasties: žadinimo šaltiniai nėra LED.
+
+Sąranka naudoja du lazerius: UV lazerį fluorescencijos žadinimui ir 785nm NIR diodą Raman eksperimentams. Abu yra tiesioginiai šaltiniai, nukreipti į mėginį, todėl reikia uždaros dėžės. Porolono išklota dėžė suteikia tamsią aplinką, saugo nuo lazerio spindulio išsiveržimo ir padaro visą sąranką atkartojama — tas pats lygiavimas kiekviename matavime.
 
 ![UV fluorescencijos matavimo dėžės vidus — porolono išklota projektinė dėžutė su UV LED, kiuvetės laikiklio mazgu ir optiniais kabeliais](uv-box-interior.jpg)
 
-Dėžė yra standartinė ABS projektinė dėžutė su tinkintais juodo porolono įdėklais, tvirtai laikančiais kiuvetės laikiklio mazgą. UV LED sumontuotas ir sujungtas viduje — geltonos ir oranžinės vielos LED valdymui, raudona atskira indikatoriui arba etaloniniam jutikliui. Optiniai kabeliai išeina per dėžės šonus per TOSLINK jungtis dėžės sienose.
+Dėžė yra standartinė ABS projektinė dėžutė su tinkintais juodo porolono įdėklais, tvirtai laikančiais kiuvetės laikiklio mazgą. Viduje: UV ir NIR lazerių laikikliai, kiuvetės laikiklis sąveikos taške ir lazerių valdiklių vielos. Optiniai kabeliai išeina per dėžės šonus per TOSLINK jungtis dėžės sienose.
 
 Porolono išpjovos svarbios: viskas lieka vietoje uždengus dangtį. Kiuvetę galima keisti neiš­lygiuojant optinių angų — tai ir yra standartizuotos laikiklio geometrijos esmė.
 
@@ -100,13 +104,25 @@ Perjungiklis yra paprastas mechaninis pluošto jungiklis — TOSLINK jungtys ant
 
 Surinkimo pluošto išvestis eina į brangakmenių spektroskopą + OV9281 kamerą, aprašytus ankstesniuose straipsniuose. Su PySpectrometer3 veikiančiu matavimo režime, riboflavino tirpalo fluorescencijos spektras užtrunka apie 10 sekundžių: nustatyk mėginį, perjunk į fluorescencijos režimą, paleisk įsigijimą, gauk bangos ilgio kalibruotą emisijos spektrą.
 
-TOSLINK apribojimas vis tiek taikomas surinkimo pusei siaurąja prasme: jei UV kažkaip atgalinę sklaidą patenka į surinkimo pluoštą, PMMA reemituotų matomojoje srityje, pridedant lygų foną. Ilgabangis UV pjovimo filtras surinkimo angoje tai apsaugo. Su filtru vietoje tik bangos ilgiai aukščiau ~400nm pasiekia pluoštą, todėl PMMA fluorescencija iš surinkimo pluošto (kuriai reiktų UV žadinimo) negali atsirasti.
+UV fluorescencijos pusė veikia su išlygomis. TOSLINK apvalkalo sugėrimo problema, aprašyta aukščiau, reiškia, kad matavimas turi PMMA fluorescencijos foną kiekvieną kartą, kai UV lazeris šviečia dėžės viduje. Spindintys emiteriai kaip riboflavinas — valdoma. Silpni fluoroforai ar mineraliniai mėginiai, kur emisija gali būti panaši į pluošto foną — tikra problema.
 
-Sąranka nėra leidybos kokybės — kiuvetės laikiklio geometrija neoptimizuota erdviniam kampui, UV LED spektras nekalibriuotas, o jautrumo korekcija daroma prieš matomos šviesos apšvietimą, o ne UV. Tačiau ji pakankamai funkcionali, kad galėtum identifikuoti, kurie mėginiai fluorescuoja, apibūdinti emisijos spalvą ir apytikrį smailės padėtį, ir atskirti besidengias emisijos juostas mišiniuose.
+### 785nm problema
+
+785nm NIR lazeris turėjo įgalinti Raman spektroskopiją. Raman sklaida yra neelastinė — atgalinė šviesa Stokso poslinkiu pereina į ilgesnius bangos ilgius. 785nm žadinime Raman smailės tipiškiems organiniams junginiams atsiduria maždaug 800–950nm.
+
+Du dalykai tai iš karto sunaikino.
+
+Pirma: IR pjovimo filtras. Kaip aprašyta [ankstesniame straipsnyje](../mini-spectrometer-grating/), optiniame kelyje kažkur yra IR pjovimo filtras — staigus kritimas apie 700–720nm, tada nieko. Visas Raman spektras 785nm žadinime yra anapus to kirpimo. Spektrometras to tiesiog nemato.
+
+Antra: TOSLINK pats neperduoda NIR. PMMA turi vidinę sugerties briauną — C-H pertoninių virpesių stiprios sugerties juostos virš ~700nm. Išmatavimu kelių kabelių ilgių radau reikšmingą, nuo ilgio priklausomą slopinimą virš 800nm. Kuo ilgesnis kabelis, tuo blogiau. Net jei IR filtro nebūtų, bet kokie 785nm žadinami Raman fotonai būtų palaipsniui praryti surinkimo pluošto prieš pasiekiant spektrometrą.
+
+Abi problemos nurodo į tą pačią šakninę priežastį: PMMA turi netinkamą perdavimo langą bet kam virš ~700nm. Tai ne TOSLINK konstruktyvinis trūkumas — TOSLINK skirtas 660nm ryšiams ir tai daro gerai. Problema — bandymas jį stumti į NIR spektroskopiją, kur jis niekada nebuvo skirtas.
+
+Sąranka taip pat nėra leidybos kokybės UV fluorescencijai — kiuvetės laikiklio geometrija neoptimizuota erdviniam kampui, lazerio spektras nekalibriuotas, o jautrumo korekcija daroma prieš matomos šviesos apšvietimą. Tačiau ji pakankamai funkcionali, kad galėtum identifikuoti, kurie mėginiai fluorescuoja, apibūdinti emisijos spalvą ir apytikrį smailės padėtį, ir atskirti besidengias emisijos juostas mišiniuose.
 
 ## Kas toliau
 
-Ši pirmoji versija veikia, bet yra ankšta ir sunkiai rekonfigūruojama. Antroji modulinė versija kuriama — atskiri žadinimo, mėginio ir surinkimo blokai, kuriuos galima pertvarkyti nespausdinant viso laikiklio iš naujo.
+Ši pirmoji versija veikia, bet yra ankšta ir sunkiai rekonfigūruojama. TOSLINK apribojimai — fluorescencija po UV, NIR slopinimas virš 700nm — daro jį netinkamu kitiems eksperimentams. Antroji modulinė versija kuriama naudojant silicio pluoštą, kuris išsprendžia abi problemas žymiai griežtesnių lygiavimo tolerancijų kaina.
 
 Ir kitas pluošto lygiavimo klausimo aspektas, iškilęs dirbant su problema. 200µm daugiamodo pluoštas, senas mikroskopas, 532nm lazeris, ir grubiai 3D spausdinta atgalinio sklaidos sujungtuvo konstrukcija:
 
