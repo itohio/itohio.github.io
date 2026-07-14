@@ -2,7 +2,6 @@
 title: "Pavo20 Pro II GPS Problemos — Triukšmas, Harmonikos ir Ieškojimas Geresnio Izoliacijos Sprendimo"
 date: 2026-07-13
 description: "Pavo20 Pro II vos aptinka 3 GPS palydovus ten, kur 1S skaitmeninis dronas aptinka 20+. Štai ką radau spektro analizatoriuje, ką išbandžiau ir kas lieka neišspręsta."
-draft: true
 toc: true
 categories:
   - FPV

@@ -2,7 +2,6 @@
 title: "Pavo20 Pro II GPS Struggles — Noise, Harmonics, and the Search for Better Isolation"
 date: 2026-07-13
 description: "The Pavo20 Pro II can barely find 3 GPS satellites where a 1S digital build finds 20+. Here is what I found on the spectrum analyser, what I've tried, and what remains unsolved."
-draft: true
 toc: true
 categories:
   - FPV
