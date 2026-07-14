@@ -87,7 +87,7 @@ Dabartinis sąrašas, maždaug tokia tvarka, kokia viskas vyko:
 
 **Du 2 colių riperiai (analoginis ir skaitmeninis)** — tie, kurie pateisina pavadinimą. Analoginis 2S tiesiog plėšia: geros šešios minutės su 580mAh baterija. Skaitmeninis O4 Lite pradėjo nuo maždaug 4 minučių; po ESC ir PID optimizavimo išaugo iki 7 minučių skraidant konservatyviai, arba 5–6 minučių rippinant. Kas keista, nuo tada, kai pradėjau skraidyti šiuos, simuliatoriuje beveik nebemoku skristi — simuliatorius jaučiasi keistai ir nepatogiai, net su identiškais rate'ais, net Air65 Liftoff'e. Tiesiog ne tas pats.
 
-**2,5 colio tolimojo skrydžio eksperimentinė platforma** — antras bandymas, sunkesnis rėmas. Kol kas 1S; planuojama konversija į 2S arba 3S. Eksperimentas tęsiamas.
+**2,5 colio tolimojo skrydžio eksperimentinė platforma** — antras bandymas, sunkesnis rėmas. Skraido 1S, kuris jaučiasi silpnokai ir neefektyviai: 4 minutės su 1000mAh baterija — išskirtinai prastai, ypač kai 2 colių riperiai ištempia 6 minutes su 580mAh ir yra ženkliai greitesni ir galingesni. Iš dalies tai svoris: 120g AUW prieš 60–80g riporiams. Teigiama pusė — GPS veikia kur kas geriau nei Pavo20, o diapazonas 1S yra priimtinas. 2S ar 3S konversija dar nesukurta.
 
 **Pavo20 Pro II** — 2,5 colio GPS burbulinis, pagrindinis GPS konfigūracijų testavimo įrankis ir [atskiro straipsnio apie GPS sunkumus](../pavo20-gps-struggles/) tema. Ne gabiausias mano turimas kvadrotas, bet jis mane labiausiai išmokė apie RF trikdžius ir ESC triukšmą.
 

@@ -87,7 +87,7 @@ The current roster, more or less in the order it happened:
 
 **Two 2" rippers (analog and digital)** — the ones that earn the name. The analog 2S absolutely rips: a solid six minutes on a 580mAh pack. The digital O4 Lite ripper started at around 4 minutes; after ESC and PID optimization it's up to 7 minutes flying conservatively, or 5–6 minutes ripping. Oddly, ever since I started flying these I can barely fly in the simulator anymore — the sim feels weird and awkward, even with identical rates, even the Air65 in Liftoff. It's just not the same.
 
-**A 2.5" long-range experimental platform** — second attempt, heavier frame. Still running 1S for now; the plan is to convert to 2S or 3S. That experiment is ongoing.
+**A 2.5" long-range experimental platform** — second attempt, heavier frame. Running 1S, which feels underpowered and inefficient: 4 minutes on a 1000mAh pack, which is exceptionally poor — the 2" rippers pull 6 minutes on 580mAh and they're significantly faster and more powerful. Part of that is weight: 120g AUW versus 60–80g for the rippers. On the upside, GPS works far better than the Pavo20 and range is reasonable on 1S. The 2S or 3S conversion isn't built yet.
 
 **Pavo20 Pro II** — 2.5" GPS whoop, my main tool for testing GPS configurations and the subject of a [separate article about GPS struggles](../pavo20-gps-struggles/). Not the most capable quad I own, but it taught me the most about RF interference and ESC noise.
 
