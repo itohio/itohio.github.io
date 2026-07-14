@@ -70,7 +70,7 @@ This is a good example of what AI assistance is actually useful for in hardware 
 
 The builds I'm actively tuning:
 
-**AIR65 II** (65mm whoop, BetaFPV Air65 II frame, BetaFPV Air Brushless AIO, ICM42688-P gyro, Bluejay 96kHz ESC) — fast indoor ripping. Main issue: camera replacement pending (Caddx Ant Lite to replace the C03 with the damaged lens). Rates: Actual, center 40–50, max 800, expo 0.45–0.6.
+**AIR65 II** (65mm whoop, BetaFPV Air65 II frame, BetaFPV Air Brushless AIO, ICM42688-P gyro, Bluejay 96kHz ESC, Caddx Ant Lite camera) — fast indoor ripping. Rates: Actual, center 40–50, max 800, expo 0.45–0.6.
 
 **Custom 2" O4 Lite ripper** — props barely clear the VTX, bi-blade props. The clearance constraint means prop wash is more significant than on a conventionally spaced build. This is the quad where step response analysis pays off most — the resonance bands shift depending on throttle position and the prop-to-VTX interaction.
 
