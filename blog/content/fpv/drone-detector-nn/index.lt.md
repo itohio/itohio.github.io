@@ -2,7 +2,6 @@
 title: "Neuroninio Tinklo Apmokymas Dronų Aptikimui iš Garso"
 date: 2026-07-13
 description: "10 klasių akustinis klasifikatorius Shahed-136 dronams ir vartotojų kvadrotoriams, apmokytas beveik nuo nulio, nes duomenų tiesiog nėra. Kas veikė, kas nepavyko ir kodėl INT8 kvantizacija dar nėra atsakymas."
-draft: true
 toc: true
 categories:
   - Mašininis mokymas

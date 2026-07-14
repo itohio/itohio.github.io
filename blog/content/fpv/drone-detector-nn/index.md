@@ -2,7 +2,6 @@
 title: "Training a Neural Network to Detect Shaheds and Quads from Audio"
 date: 2026-07-13
 description: "A 10-class acoustic classifier for Shahed-136 drones and consumer quads, trained mostly from scratch because the data doesn't exist elsewhere. What worked, what failed, and why INT8 quantization isn't the answer yet."
-draft: true
 toc: true
 categories:
   - Machine Learning
@@ -295,7 +294,7 @@ The ring buffer is 15 seconds; each extraction gives a 10-second window with 1-s
 
 The mel preprocessing `FrequencyMasking` and `TimeMasking` issue mentioned in the architecture section is present in the inference path too. Zero the mask parameters before exporting and before running inference. Do not rely on `model.eval()` to disable them.
 
-![Drone Audio Detector UI — per-class probability bars (idle 96%, plane 24%, quad 9% on office ambient). ARGMAX sigmoid left, SOFTMAX relative right. 177ms total inference [FP32].](/images/drone-detector-ui-idle.png)
+![Drone Audio Detector UI — per-class probability bars (idle 96%, plane 24%, quad 9% on office ambient). ARGMAX sigmoid left, SOFTMAX relative right. 177ms total inference [FP32].](drone-detector-ui-idle.png)
 
 ---
 
