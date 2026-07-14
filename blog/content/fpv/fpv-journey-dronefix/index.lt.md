@@ -25,11 +25,11 @@ Iš tikrųjų norėjau priešingo nei tai, kam tie dronai buvo sukurti: nardymo 
 
 Kelerius metus žiūrėjau FPV turinį, puikiai žinodamas, kad tai yra atsakymas, ir nieko nedarydamas. Konstrukcijos atrodė brangios, mokymosi kreivė — staigi, o aš jau turėjau nebaigtų aparatinės įrangos projektų laukimo eilę. Spektrometras. DARP tinklo ryšio darbas. Dronų detektoriaus mokymo duomenų surinkimo kanalo, kuriam vis reikėjo daugiau duomenų.
 
-Tada užsiregistravau į Dronefix.lt mokymo programą ir viskas pasikeitė.
+Tada užsiregistravau į [Dronefix.lt](https://dronumokykla.lt/) mokymo programą ir viskas pasikeitė.
 
 ---
 
-## Dronefix.lt
+## [Dronefix.lt](https://dronumokykla.lt/)
 
 Dronefix.lt vykdo struktūrizuotus FPV pilotų mokymus Lietuvoje. Ne „štai dronas, eik sudaužyk jį" — tikra programa: simuliatoriaus valandos, taisyklių ir oro erdvės teorija, praktika su realiais dronais, pirmųjų pirkimų gairės.
 

@@ -25,11 +25,11 @@ What I actually wanted was the opposite of what those drones were built for: div
 
 I had been watching FPV content for a couple of years, knowing full well it was the answer and doing nothing about it. The builds looked expensive, the learning curve looked steep, and I already had a backlog of hardware projects that weren't getting finished. The spectrometer. The DARP mesh networking work. The drone detector training pipeline that kept needing more data.
 
-And then I signed up for the Dronefix.lt training programme and everything changed.
+And then I signed up for the [Dronefix.lt](https://dronumokykla.lt/) training programme and everything changed.
 
 ---
 
-## Dronefix.lt
+## [Dronefix.lt](https://dronumokykla.lt/)
 
 Dronefix.lt runs structured FPV pilot training in Lithuania. Not "here's a drone, go crash it" — an actual programme: simulator hours, theory on regulations and airspace, hands-on with real builds, guidance on first purchases.
 
