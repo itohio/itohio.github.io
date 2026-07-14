@@ -59,13 +59,19 @@ Pridėjau feritinių karoliukų ant GPS maitinimo linijos ir 100 µF kondensator
 
 Laikas iš tikrųjų išmatuoti triukšmo lygį ten, kur veikia GPS. GPS L1 juosta yra **1575,42 MHz**. Konsteliacijos signalai, pasiekiantys anteną, yra nepaprastai silpni — paprastai apie −130 dBm. Bet koks vietinis trikdis 1,5–1,6 GHz diapazone juos nustelbia.
 
-Prie kiekvieno drono steko prijungiau TinySA su trumpa vielos antena, dronams veikiant įjungtam ir įrenginiams šoviniais (varikliai veikia per variklio bandymo jungą, be sraigtų).
+Prie kiekvieno drono steko prijungiau TinySA su trumpa vielos antena, dronams veikiant įjungtam ir įrenginiams šoviniais (varikliai veikia per variklio bandymo jungą, be sraigtų). Norint atskirti ESC/FC triukšmą nuo VTX, pradinį Pavo20 matavimą atlikau visiškai pašalinęs VTX.
+
+![Pavo20 Pro II be VTX — TinySA trumpa vielos antena prie steko RF triukšmo matavimui](pavo20-no-vtx.jpg)
+*Pavo20 be VTX. TinySA trumpa vielos antena šalia FC/ESC steko. Be VTX — bet koks triukšmas čia kilęs tik iš FC, ESC ir GPS modulio.*
+
+![TinySA bazinio triukšmo matuojamumas, 1,2–1,8 GHz — viskas išjungta, etaloninis matavimas prieš prijungiant Pavo20](tinysa-baseline.jpg)
+*Bazinis matavimas. TinySA antena pozicijoje, viskas išjungta. Plokščia triukšmo grinda apie −105 dBm visame 1,2–1,8 GHz diapazone — tai etalonas.*
 
 <!-- IMAGE: TinySA ekrano kopija — 1S Matrix 3-in-1 skaitmeninis dronas, 1,2 GHz–1,8 GHz diapazonas, rodanti triukšmo grindą -->
 *[TODO: TinySA ekrano kopija — 1S skaitmeninis dronas, 1,2–1,8 GHz diapazonas]*
 
-<!-- IMAGE: TinySA ekrano kopija — Pavo20 Pro II, tas pats diapazonas ir nustatymai, rodanti padidėjusį triukšmą GPS juostoje -->
-*[TODO: TinySA ekrano kopija — Pavo20, tas pats 1,2–1,8 GHz diapazonas]*
+![TinySA matavimas — Pavo20 Pro II su baterija, be VTX, 1,2–1,8 GHz — FC/ESC triukšmas aiškiai padidėjęs virš bazinio lygio](tinysa-pavo20-initial.jpg)
+*Pavo20 su baterija (be VTX). Triukšmo grinda gerokai virš −105 dBm bazinio lygio. Aštrus smaigalys apie 1,34 GHz siekia −89 dBm — 16 dB virš bazinio. GPS juosta ties 1575 MHz jau pastebimai pakelta.*
 
 Kontrastas ryškus. 1S drono GPS juostoje triukšmo grinda švari, matomas tik laukiamas atmosferinis fonas. Pavo20 rodo padidėjusią triukšmo grindą visame 1,2–1,8 GHz diapazone su keliais aiškiais smaigaliais 1,4–1,6 GHz regione.
 
@@ -79,13 +85,15 @@ Faktinis trikdžių mechanizmas yra kitoks: **variklio PWM sukuria greito krašt
 
 Be to: **vaizdo siųstuvai** 5,8 GHz gali generuoti subharmonikas ir maišymo produktus. 5,8 GHz VTX ties 200 mW gali gaminti aptinkamą energiją ties 5800/4 = 1450 MHz — tiesiai GPS juostoje.
 
-Tai patvirtinau kitoje aplinkoje:
+Tai patvirtinau kitoje aplinkoje — rūsyje, kur aplinkos RF triukšmas mažesnis:
 
-<!-- IMAGE: TinySA ekrano kopija, daryta rūsyje/ekranuotoje aplinkoje — 1,5 GHz sritis, rodanti perjungimo harmonikas -->
-*[TODO: TinySA ekrano kopija — rūsio testas, 1,4–1,6 GHz diapazonas, perjungimo smaigaliai iš Pavo20 steko]*
+![TinySA MAX HOLD matavimas — Pavo20 Pro II, 1,2–1,8 GHz, akumuliuotas ilgą laiką rūsyje — kelios harmoninių smaigaliai matomi GPS juostos srityje](tinysa-pavo20-maxhold.jpg)
+*MAX HOLD skenavimas po kelių minučių akumuliacijos rūsyje. Keli smaigaliai išsklaidyti 1,2–1,6 GHz diapazone. Smaigaliai nėra pastovaus dažnio harmonikos — jie dreifuoja ir keičiasi priklausomai nuo variklio apkrovos ir temperatūros, kas būdinga perjungimo reguliatoriaus intermoduliavimo produktams.*
 
-<!-- IMAGE: TinySA ekrano kopija — GPS L1 signalo etalonas ties 1575,42 MHz, rodantis faktinį GPS signalo lygį -->
-*[TODO: TinySA ekrano kopija — 1575,42 MHz GPS L1 signalo etalonas]*
+Lauke, GPS antena nukreipta į atvirą dangų, matomas tikrasis GPS signalo kontekstas:
+
+![TinySA matavimas lauke — 1,2–1,8 GHz diapazonas — GPS L1 ties 1575,42 MHz vos matomas virš Pavo20 triukšmo grindos](tinysa-outside-gps.jpg)
+*Matavimas lauke, atviroje erdvėje. GPS L1 signalas ties 1575,42 MHz sukuria plačią plokščiakalniui panašią elevaciją GPS juostoje — visos konsteliacijos signalai vienu metu. Palyginkite signalo lygį su Pavo20 triukšmo smaigaliais. Triukšmo grinda GPS juostoje yra 40–50 dB aukščiau to, ką LNA bando priimti.*
 
 GPS L1 signalas yra tikrai mikroskopiškas. Triukšmo smaigaliai, kuriuos išmatavau, yra 40–50 dB aukščiau GPS signalo lygio. GPS modulio LNA kovoja pralaimėjimo mūšį.
 

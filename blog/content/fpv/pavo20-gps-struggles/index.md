@@ -59,13 +59,19 @@ I added ferrite beads on the GPS power line and a 100µF cap at the module's pow
 
 Time to actually measure the noise floor where GPS operates. GPS L1 band is at **1575.42 MHz**. The constellation signals arriving at the antenna are extraordinarily weak — typically around −130 dBm. Any local interference in the 1.5–1.6 GHz range drowns them out.
 
-I connected a TinySA to a short wire antenna positioned near the stack on each quad, with the quads powered on and armed (motors running via a motor test jig, no props).
+I connected a TinySA to a short wire antenna positioned near the stack on each quad, with the quads powered on and armed (motors running via a motor test jig, no props). To isolate the ESC/FC noise from the VTX, I ran the initial Pavo20 measurement with the VTX removed entirely.
+
+![Pavo20 Pro II with VTX removed — TinySA short-wire probe attached near the stack for RF noise measurement](pavo20-no-vtx.jpg)
+*Pavo20 with VTX removed. The TinySA short-wire probe sits next to the FC/ESC stack. No VTX means any noise measured here is purely from the FC, ESC, and GPS module itself.*
+
+![TinySA baseline noise floor, 1.2–1.8 GHz — everything powered off, reference measurement before connecting the Pavo20](tinysa-baseline.jpg)
+*Baseline measurement. TinySA probe in position, everything powered off. Flat noise floor around −105 dBm across the entire 1.2–1.8 GHz span — this is the reference.*
 
 <!-- IMAGE: TinySA screenshot — 1S Matrix 3-in-1 digital build, 1.2GHz–1.8GHz span, showing noise floor -->
 *[TODO: TinySA screenshot — 1S digital build, 1.2–1.8 GHz span]*
 
-<!-- IMAGE: TinySA screenshot — Pavo20 Pro II, same span and settings, showing elevated noise in GPS band -->
-*[TODO: TinySA screenshot — Pavo20, same 1.2–1.8 GHz span]*
+![TinySA measurement — Pavo20 Pro II on battery, VTX removed, 1.2–1.8 GHz span — FC/ESC noise clearly elevated above baseline](tinysa-pavo20-initial.jpg)
+*Pavo20 on battery (no VTX). Noise floor elevated well above the −105 dBm baseline. A sharp spur at approximately 1.34 GHz reaches −89 dBm — 16 dB above baseline. The GPS band at 1575 MHz is already noticeably raised.*
 
 The contrast is stark. The 1S build shows a clean noise floor in the GPS band with only the expected atmospheric background. The Pavo20 shows a raised noise floor across the entire 1.2–1.8 GHz range, with several distinct spurs in the 1.4–1.6 GHz region.
 
@@ -79,13 +85,15 @@ The actual interference mechanism is different: **motor PWM generates fast-edge 
 
 Additionally: **video transmitters** on 5.8 GHz can generate sub-harmonics and mixing products. A 5.8 GHz VTX at 200mW can produce detectable energy at 5800/4 = 1450 MHz — right in the GPS band.
 
-I confirmed this in a different environment:
+I confirmed this in a different environment — the basement, for lower ambient RF:
 
-<!-- IMAGE: TinySA screenshot taken in basement/shielded environment — 1.5GHz region showing switching harmonics leaking in -->
-*[TODO: TinySA screenshot — basement test, 1.4–1.6 GHz span, showing harmonic spurs from the Pavo20 stack]*
+![TinySA MAX HOLD measurement — Pavo20 Pro II, 1.2–1.8 GHz, accumulated over time in basement environment — multiple harmonic spurs visible in GPS band region](tinysa-pavo20-maxhold.jpg)
+*MAX HOLD scan after several minutes accumulation in the basement. Multiple spurs spread through the 1.2–1.6 GHz range. The spurs are not fixed-frequency harmonics — they drift and shift as motor load and temperature change, which is characteristic of switching regulator intermodulation products rather than clean integer harmonics.*
 
-<!-- IMAGE: TinySA screenshot — GPS L1 signal reference, showing what the GPS signal actually looks like at 1575.42 MHz -->
-*[TODO: TinySA screenshot — 1575.42 MHz GPS L1 signal reference, demonstrating the signal level the module is trying to receive]*
+Outside, GPS antenna pointing at open sky, the actual GPS signal context becomes visible:
+
+![TinySA measurement outside — 1.2–1.8 GHz span — GPS L1 at 1575.42 MHz barely visible above the Pavo20 noise floor](tinysa-outside-gps.jpg)
+*Measurement taken outside with clear sky. The GPS L1 signal at 1575.42 MHz produces a broad plateau-like elevation across the GPS band — the entire constellation arriving at once. Compare the signal level to the noise spurs from the Pavo20 stack. The noise floor in the GPS band is sitting 40–50 dB above what the LNA is trying to receive.*
 
 The GPS L1 signal is genuinely tiny. The noise spurs I measured are 40–50 dB above the GPS signal level. The GPS module's LNA is fighting a losing battle.
 
