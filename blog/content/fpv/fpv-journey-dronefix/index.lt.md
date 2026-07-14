@@ -89,7 +89,7 @@ Dabartinis sąrašas, maždaug tokia tvarka, kokia viskas vyko:
 
 **Pavo20 Pro II** — 2,5 colio GPS burbulinis, pagrindinis GPS konfigūracijų testavimo įrankis ir [atskiro straipsnio apie GPS sunkumus](../pavo20-gps-struggles/) tema. Ne gabiausias mano turimas kvadrotas, bet jis mane labiausiai išmokė apie RF trikdžius ir ESC triukšmą.
 
-**4 colių sulankstomas BabyApe (FoldApe4 stilius)** — užsakytas, dar neatvyko. Rėmas suprojektuotas O3 moduliui, tačiau planuoju jį perflashinti ir naudoti su O4 — turėtų būti suderinama. Ar taps kelioniniu dronu, priklausys nuo to, ar jo skrydžio valdiklis tvarkysis su GPS geriau nei Pavo20.
+**4 colių sulankstomas BabyApe (FoldApe4 stilius)** — užsakytas, dar neatvyko. Rėmas suprojektuotas O3 moduliui, tačiau planuoju jį pritaikyti DJI O4 sistemai — montavimas turėtų būti suderinamas. Ar taps kelioniniu dronu, priklausys nuo to, ar jo skrydžio valdiklis tvarkysis su GPS geriau nei Pavo20.
 
 Kiekviena konstrukcija išmokė ko nors specifinio — variklio krypties gedimų, ESC protokolo nesuderinamumų, blackbox analizės, PID derinimo. Hobis yra tikrai edukacinis būdu, kuris jaučiasi labiau praktiškas nei dauguma programinės įrangos darbų.
 

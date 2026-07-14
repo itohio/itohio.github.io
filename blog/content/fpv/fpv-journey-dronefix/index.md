@@ -89,7 +89,7 @@ The current roster, more or less in the order it happened:
 
 **Pavo20 Pro II** — 2.5" GPS whoop, my main tool for testing GPS configurations and the subject of a [separate article about GPS struggles](../pavo20-gps-struggles/). Not the most capable quad I own, but it taught me the most about RF interference and ESC noise.
 
-**A 4" foldable BabyApe (FoldApe4 style)** — on order, not yet arrived. The frame is designed around an O3 air unit, but I plan to flash it and run O4 — should be compatible. Whether it earns the role of travel drone depends on whether its flight controller handles GPS better than the Pavo20 does.
+**A 4" foldable BabyApe (FoldApe4 style)** — on order, not yet arrived. The frame is designed around an O3 air unit, but I plan to adapt it to the DJI O4 system instead — the mounting should be compatible. Whether it earns the role of travel drone depends on whether its flight controller handles GPS better than the Pavo20 does.
 
 Each build taught something specific — motor direction failures, ESC protocol mismatches, blackbox analysis, PID tuning. The hobby is genuinely educational in a way that feels more hands-on than most software work.
 
