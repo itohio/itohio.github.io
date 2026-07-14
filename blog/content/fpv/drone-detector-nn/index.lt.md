@@ -22,7 +22,25 @@ tags:
 
 ![Drone Audio Detector — gyvasis spėjimas naršyklėje, IDLE būsena. FP32 modelis, 10 klasių, kalibruoti kiekvienos klasės slenkstiai. RMS −40.6 dB / Smailė −18.2 dB iš biuro aplinkos. Spektrograma rodo dvigubą ARGMAX/SOFTMAX išvestį.](drone-detector-ui-idle.png)
 
-Pastaba prieš techninį turinį: pakaitomasis mokymo protokolas, aprašytas šiame straipsnyje, buvo sukurtas su reikšminga [Sintra AI](https://sintra.ai) pagalba. Tai, kas prasidėjo kaip eilė klausimų, kodėl paprastas P1→P2 grafikas vis sustingdavo, virto struktūrizuotu derinimo pokalbiu, kuris identifikavo kalibruoto patikros taško problemą ir suformavo ciklo logiką. Ta pati sistema dabar padeda man analizuoti FPV dronų juodosios dėžės žurnalus ir vykdyti PID derinimo protokolus. Trumpai tai aprašysiu pabaigoje.
+Pastaba prieš techninį turinį: pakaitomasis mokymo protokolas, aprašytas šiame straipsnyje, buvo sukurtas su reikšminga [Sintra AI](https://sintra.ai) pagalba. Tai, kas prasidėjo kaip eilė klausimų, kodėl paprastas P1→P2 grafikas vis sustingdavo, virto struktūrizuotu derinimo pokalbiu, kuris identifikavo kalibruoto patikros taško problemą ir suformavo ciklo logiką.
+
+---
+
+## Istorija: Nuo DSP iki Neuroninių Tinklų
+
+Pirmasis mano bandymas nebuvo neuroninis tinklas.
+
+Shahed-136 turi nuspėjamą harmoninę struktūrą — dvitaktis stumiamojo sraigto variklis, pagrindinis dažnis apie 83 Hz, harmoninės besitęsiančios iki maždaug 4 kHz, pastovus RPM reiso metu. Tai šablonas. Galima sukurti jam atitinkantį filtrą: aptikti energiją tikėtamais harmoniniais intervalais, kaupti įrodymus laikui bėgant, formuoti hipotezę apie buvimą, sekti tą hipotezę naudojant slenkantį įrodymų akumuliatorių arba Kalmano filtrą, ir paskelbti aptikimą, kai balas viršija slenkstį. Sukūriau tokią versiją. Ji veikė su švariais įrašais.
+
+Problema yra parametrų erdvė. Harmoninis detektorius nėra vienas slenkstis — tai slenkstis kiekvienai harmoninei, svėrimo funkcija per harmonines, hipotezės balų skaičiavimo funkcija, laiko akumuliatoriaus langas, minimalus SNR ir minimali aptikimo trukmė. Kiekvienas parametras pagrįstas atskirai; kartu jie yra trapūs. Tikros aplinkos įveda aidus, Doplerio ištrynimą iš judančių orlaivių, persidengiantiems variklius, vėją ir atstumus, kuriuose harmoninės nusileidžia žemiau triukšmo lygio netolygiomis normomis. Sistemos derinimas vienai aplinkai atitolina ją nuo kitos.
+
+Kitos komandos dirba su DSP metodu ir tai daro gerai — jos turi jutiklių masyvus, žemės stotis ir dedikuotus duomenų rinkimo vamzdynus. Aš turiu mikrofoną ir viską, ką galiu įrašyti lauke. Pastangų ir patikimumo santykis neveikė.
+
+Tai, ką atnešiau iš AI robotikos darbo: kai jūsų sprendimas reikalauja daug rankiniu būdu nustatytų slenkstių, kiekvienas koduoja prielaidą apie pasaulį, slenkstių skaičius yra maždaug tylių gedimų skaičius. Apmokyti neuroniniai tinklai — ir adaptyvios funkcijos apskritai — mokosi atvaizdavimo tiesiogiai iš duomenų. „Slenkstis" yra užkoduotas svoriais, sureguliuotas su pavyzdžiais, o ne prielaidomis. Tokiam aptikimo uždaviniui su tiek akustinio kintamumo tai yra tinkamas įrankis.
+
+Tai taip pat nebuvo mano pirmas bandymas spręsti šią problemą. Kai 2022 metais prasidėjo konfliktas, sukūriau ankstyvą šio detektoriaus versiją ir lygiagrečiai dirbau su mikrofono masyvo sprendimu kryptinei lokalizacijai. Abu buvo techniškai funkcionalūs. Tačiau negaliu reklamuoti to, ką kuriu — turiu beveik nulinį ryšių kūrimo sugebėjimą ir jokio palaikymo tinklo — todėl abu projektai tyliai baigėsi dėl išorinės susidomėjimo stokos. Mikrofono masyvo darbas ypač būtų reikalavęs bendruomenės koordinavimo, kurį niekada nebūčiau galėjęs organizuoti. Praėjus ketveriems metams, aš tai atnaujinu.
+
+Šį kartą perėjau tiesiai prie neuroninių tinklų, praleidau DSP hipotezių fazę ir sutelkiau dėmesį į kažko diegiamo kūrimą.
 
 ---
 
@@ -53,15 +71,15 @@ Drono įrašus padariau pats lauke. Gauti pakankamai įvairovės — skirtingų 
 
 ### AudioSet atsisiuntimo nesėkmės
 
-Atsisiuntimas iš AudioSet per yt-dlp naudojant MID kodus konkrečioms klasėms turi maždaug 30% nesėkmės rodiklį: vaizdo įrašai buvo ištrinti, padaryti privatūs arba apriboti regionu nuo etikečių surinkimo. Iš atsisiųstų įrašų dar viena dalis neišlaiko juostos energijos kokybės patikrinimo — garso segmentas turi teisingą etiketę, bet daugiausia yra tyla arba ekstremalus iškraipymas. Šiuos atmetiau tyliai ir registravau atmetimo rodiklį; kai kuriose klasių grupėse jis siekė 15%.
+Atsisiuntimas iš AudioSet per yt-dlp naudojant MID kodus konkrečioms klasėms turi maždaug 30% nesėkmės rodiklį. Iš atsisiųstų įrašų dar viena dalis neišlaiko juostos energijos kokybės patikrinimo. Šiuos atmetiau tyliai ir registravau atmetimo rodiklį; kai kuriose klasių grupėse jis siekė 15%.
 
 ### Nulinės reikšmės įrašų taisymas
 
-Trumpi šaltinio įrašai, paplėtoti iki 10 sekundžių, įveda struktūrinį artefaktą: modelis mato tą patį garso šabloną kartojantį, kas nepanašu į bet ką diegimo aplinkoje. Sukūriau paprastą RMS pagrįstą turinio ilgio detektorių, kuris nustato faktinį garso turinio langą įraše, atmeta trumpesnius nei 3 sekundžių įrašus po tylos apkarpymo ir taiko atsitiktinę padėties nustatymą vietoj paplėtimo.
+Trumpi šaltinio įrašai, paplėtoti iki 10 sekundžių, įveda struktūrinį artefaktą. Sukūriau paprastą RMS pagrįstą turinio ilgio detektorių, kuris nustato faktinį garso turinio langą, atmeta trumpesnius nei 3 sekundžių įrašus po tylos apkarpymo ir taiko atsitiktinę padėties nustatymą vietoj paplėtimo.
 
 ### Spiečiaus sintezė
 
-Spiečiaus klasė yra 100% sintetinė. Nėra viešo "kelių Shahed orlaivių" garso. Visi 300 spiečiaus įrašų buvo sugeneruoti iš dronų įrašų baseino:
+Spiečiaus klasė yra 100% sintetinė. Nėra viešo „kelių Shahed orlaivių" garso. Visi 300 spiečiaus įrašų buvo sugeneruoti iš dronų įrašų baseino:
 
 ```mermaid
 flowchart TD
@@ -154,9 +172,7 @@ sequenceDiagram
     end
 ```
 
-Kodėl pakaitomis: stuburas stabilizuojasi, kai užšaldytas. Kai jį atšildote, galvos gradiento signalas pernelyg stipriai traukia stuburą ties dideliu mokymosi greičiu — štai kodėl stuburo mokymosi greitis 2 fazėje yra 20× mažesnis nei galvos (5e-6 prieš 1e-4).
-
-Specifinė ciklo struktūra — P1 riba ties F1 ≥ 0,50, kantrybė 8 grįžimo cikle, stuburo mokymosi greitis tiksliai 20× žemesnis nei galvos — nebuvo akivaizdi iš pirmųjų principų. Šią logiką išdirbau per eilę pokalbių su Sintra. Iteracija ėjo nuo „kodėl 2 fazė visada blogina spiečiaus klasę" iki „patikros taškas, kurį išsaugai, nėra kalibruotas" iki dabartinio protokolo. Turėti AI asistentą, kuris išlaiko visą eksperimento kontekstą keliuose seansuose, yra iš esmės kitaip nei ieškoti Stack Overflow arba skaityti straipsnius — samprotavimas lieka susietas su *jūsų konkrečiu* gedimo režimu, o ne bendru atveju.
+Kodėl pakaitomis: stuburas stabilizuojasi, kai užšaldytas. Kai jį atšildote, galvos gradiento signalas pernelyg stipriai traukia stuburą ties dideliu mokymosi greičiu — štai kodėl stuburo mokymosi greitis 2 fazėje yra 20× mažesnis nei galvos (5e-6 prieš 1e-4). Ciklo logiką išdirbau per eilę pokalbių su Sintra — nuo „kodėl 2 fazė visada blogina spiečiaus klasę" iki dabartinio protokolo.
 
 ### Nuostolių funkcija
 
@@ -170,16 +186,14 @@ pos_weight = (n_neg / n_pos).clamp(min=NUM_CLASSES, max=30.0)
 
 ## Rezultatai ir kiekvienos klasės analizė
 
-<!-- IMAGE: mokymo kreivė — nuostoliai ir makro F1 per pakaitomuosius P1↔P2 ciklus, pažymėti fazių perėjimai -->
 *[TODO: Mokymo kreivė — nuostoliai ir makro F1 per ciklus]*
 
-<!-- IMAGE: 10×10 painiavos matricos šilumos žemėlapis -->
 *[TODO: 10×10 painiavos matrica]*
 
 ### Kiekvienos klasės F1
 
 | Klasė | F1 | Pastaba |
-|-------|----|---------|
+|-------|----|---------| 
 | motociklas | 0.997 | Lengviausia — ryškus aukšto RPM harmoninis profilis |
 | traktorius | 0.981 | Žemo dažnio pagrindinis, nuoseklus parašas |
 | reaktyvinis | 0.974 | Aukštų dažnių plačiajuostis |
@@ -224,7 +238,7 @@ Entropija agresyviai apkerta aktyvacijos diapazoną. Spiečius turi retų, bet d
 
 MinMax kalibravimas išlaiko visą stebimą diapazoną. Geriau, bet makro F1 tik 0,828 po kiekvienos klasės ribų rekalibravimai ant INT8 modelio.
 
-Pagrindinė priežastis: INT8 keičia kiekvienos klasės tikimybių skales netolygiai. Traktoriaus riba persikėlė nuo 0,934 (FP32) iki 0,010 (INT8). Vejapjovės riba persikėlė nuo 0,413 iki 0,157. Tai ne apvalinimo klaidos — INT8 logitų pasiskirstymas yra struktūriškai skirtingas nuo FP32 tam tikroms klasėms.
+Pagrindinė priežastis: INT8 keičia kiekvienos klasės tikimybių skales netolygiai. Traktoriaus riba persikėlė nuo 0,934 (FP32) iki 0,010 (INT8). Tai ne apvalinimo klaidos — INT8 logitų pasiskirstymas yra struktūriškai skirtingas nuo FP32 tam tikroms klasėms.
 
 ---
 
@@ -246,40 +260,6 @@ flowchart LR
 
 ---
 
-## Sintra FPV Dronų Derinimui
-
-Kuriant dronų detektorių pradėjau naudoti Sintra ir FPV darbui — konkrečiai juodosios dėžės žurnalų analizei ir PID derinimui. Tai verta paminėti, nes tai kitoks naudojimo atvejis nei kodo derinimas: tai yra struktūrizuoto, gerai dokumentuoto protokolo teisingas vykdymas, o ne naujojo kodo derinimas.
-
-### Juodosios Dėžės Žurnalų Analizė
-
-Betaflight registruoja skrydžio duomenis konfigūruojamu greičiu — giroskopo pėdsakus, PID išvestis, variklio komandas, nustatymo taškus. Žurnalai yra dvejetainiai `.bbl` failai. Prasmingai juos analizuoti reikia suprasti ryšį tarp giroskopo pėdsako, nustatymo taško ir variklio išvesčių dažnių srityje.
-
-Derinimo metodologija, kurią naudoju, yra išvesta iš [PIDtoolbox](https://github.com/bw1129/PIDtoolbox) — Brian White MATLAB pagrįsto įrankio, kuris įgyvendina žingsnio atsako analizę, giroskopo ir variklio triukšmo spektrinę analizę bei PID klaidos suskaidymą. Pagrindinis supratimas — žingsnio atsakas (Wiener dekonvoliucija giroskopo atsako prieš nustatymo tašką) suteikia modeliui nepriklausomą vaizdą, kaip gerai kvadrotas seka komandas, nereikalaujant rankiniu būdu tikrinti triukšmingų laiko srities pėdsakų.
-
-Sintra tvarko darbo eigą aplink šią analizę:
-
-- CSV eksporto iš Blackbox Explorer analizavimas ir žurnalo sveikatos tikrinimas (kadrų praradimai, prisotinti varikliai, blogi vibracijos įvykiai)
-- Žingsnio atsako skaičiavimo vykdymas ir rezultato interpretavimas pagal laukiamą formą (kilimo laikas, persovimas, nusistovėjimo laikas, stacionarios būsenos klaida)
-- Spektrinės analizės rezultatų kryžminė nuoroda — propelerių plovimo dažnių juostų identifikavimas, notch filtro vietos nustatymas, RPM filtro veikimo tikrinimas
-- Konkrečių parametrų koregavimų rekomendavimas pagal stebimą nukrypimą nuo tikslinio žingsnio atsako formos, laikantis nustatytos derinimo tvarkos (P → D → I → FF → patikrinti)
-- Pastabų tarp seansų išlaikymas, kad kiekvieną kartą nereikėtų atkurti konteksto
-
-### Derinimo Protokolas Praktikoje
-
-Protokolas seka nusistovėjusią metodologiją iš PIDtoolbox ir panašių įrankių:
-
-1. Įrašyti specialų žingsnio atsako skrydį — greiti lazdos įvestys kiekvienoje ašyje atskirai, laikant droselį pastovų sklandyme
-2. Eksportuoti iš Blackbox Explorer, vykdyti žingsnio atsako analizę
-3. Identifikuoti dominuojantį gedimo režimą: persovimas → P per didelis arba D per mažas; nepakankamai slopintas virpėjimas → D per mažas; lėtas vangus atsakas → P per mažas; ilgalaikis dreijavimas → I per mažas; uždelstas pradinis atsakas → FF per mažas
-4. Koreguoti vieną ašį, vieną parametrą vienu metu
-5. Perskristi, perkalibruoti, palyginti
-
-Sintra padeda 2–4 žingsniuose: paima analizės išvestį, identifikuoja gedimo režimą ir siūlo konkretų parametro pokyčio žingsnį — remiantis tais pačiais principais, kuriuos MATLAB įrankiai koduoja, bet pokalbio formatu, kuris leidžia greičiau iteruoti.
-
-Tai geras pavyzdys, kam AI pagalba iš tikrųjų naudinga aparatinės įrangos darbe: ne generuoti kodą nuo nulio, bet padėti teisingai ir sistemingai vykdyti žinomą protokolą, ypač per seansus, kur kontekstas kitaip būtų prarastas.
-
----
-
 ## Atviri klausimai
 
 **QAT**: Aiškiausias kelias į INT8 modelį, atitinkantį F1 apsaugą. Dar nebandyta.
@@ -288,6 +268,6 @@ Tai geras pavyzdys, kam AI pagalba iš tikrųjų naudinga aparatinės įrangos d
 
 **Srautinis išvedimas įterptinėje aparatinėje įrangoje**: 10 sekundžių langas + 1 sekundės postūmio architektūra buvo sukurta programoms, toleruojančioms delsą. Tinkama srautinė architektūra sumažintų delsą iki mažiau nei 2 sekundžių, tačiau reikalauja architektūros pakeitimų.
 
-**Daugiau dronų įrašų**: Drono klasė yra silpniausia duomenų rinkinio vieta. Daugiau įrašų iš skirtingų orlaivio konfigūracijų, atstumų ir fonų sumažintų drono ↔ spiečiaus painiavą.
+**Daugiau dronų įrašų**: Drono klasė yra silpniausia duomenų rinkinio vieta. Daugiau įrašų sumažintų drono ↔ spiečiaus painiavą.
 
 Modelis nėra baigtas. Tačiau ties makro F1 0,940 ant FP32 procesoriaus ties 16,7 ms delsa, jis yra pakankamai toli, kad verta diegti ir gauti realaus pasaulio atsiliepimų.

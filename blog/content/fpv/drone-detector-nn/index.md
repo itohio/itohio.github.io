@@ -22,7 +22,25 @@ tags:
 
 ![Drone Audio Detector — live inference in browser, IDLE state. FP32 model, 10 classes, per-class calibrated thresholds. RMS −40.6 dB / Peak −18.2 dB from office ambient. Spectrogram shows dual ARGMAX/SOFTMAX output.](drone-detector-ui-idle.png)
 
-A note before the technical content: the staggered training protocol described in this article — and the analysis methodology behind it — was developed with significant help from [Sintra AI](https://sintra.ai). What started as a series of questions about why the naive P1→P2 schedule kept plateauing turned into a structured debugging conversation that identified the calibrated checkpointing problem and shaped the cycle logic. The same tooling now helps me analyze FPV drone blackbox logs and run PID tuning protocols. I'll cover that briefly at the end.
+A note before the technical content: the staggered training protocol described in this article was developed with significant help from [Sintra AI](https://sintra.ai). What started as a series of questions about why the naive P1→P2 schedule kept plateauing turned into a structured debugging conversation that identified the calibrated checkpointing problem and shaped the cycle logic.
+
+---
+
+## Background: From DSP to Neural Networks
+
+The first approach I tried was not a neural network.
+
+Shahed-136 has a predictable harmonic structure — two-stroke pusher engine, fundamental around 83 Hz, harmonics extending to about 4 kHz, consistent RPM under cruise. That's a template. You can build a matched filter for it: detect energy at expected harmonic intervals, accumulate evidence over time, form a hypothesis about presence, track that hypothesis using a sliding evidence accumulator or a Kalman filter, and declare a detection when the score crosses a threshold. I built a version of this. It worked on clean recordings.
+
+The problem is the parameter space. A harmonic detector isn't one threshold — it's a threshold per harmonic, a weighting function across harmonics, a hypothesis scoring function, a temporal accumulator window, a minimum SNR, and a minimum detection duration. Each parameter is defensible in isolation; collectively they're brittle. Real environments introduce echoes, Doppler smear from moving aircraft, overlapping engines, wind, and distances where the harmonics fall below the noise floor at inconsistent rates. Tuning the system to one environment detunes it from another.
+
+Other teams are working the DSP approach and doing it well — they have sensor arrays, ground stations, and dedicated data collection pipelines. I have a microphone and whatever I can record in a field. The effort-to-robustness ratio wasn't going to work.
+
+What I brought from AI robotics work: when your solution requires many hand-tuned thresholds, each encoding an assumption about the world, the number of thresholds is roughly the number of ways it can fail silently. Trained neural networks — and adaptive functions in general — learn the mapping directly from data. The "threshold" is encoded in the weights, tuned on examples rather than assumptions. For a detection task with this much acoustic variability, that's the right tool.
+
+This also wasn't my first attempt at this problem. When the conflict started in 2022, I built an early version of this detector and worked in parallel on a microphone array solution for directional localization. Both were technically functional. But I cannot promote things I build — I have approximately zero networking ability and no support network — so both projects quietly expired for lack of external interest. The microphone array work in particular would have required community coordination I was never going to generate. Four years later, I'm picking this back up.
+
+This time I went directly to neural networks, skipped the DSP hypothesis phase, and focused on making something deployable.
 
 ---
 
@@ -295,42 +313,6 @@ The ring buffer is 15 seconds; each extraction gives a 10-second window with 1-s
 The mel preprocessing `FrequencyMasking` and `TimeMasking` issue mentioned in the architecture section is present in the inference path too. Zero the mask parameters before exporting and before running inference. Do not rely on `model.eval()` to disable them.
 
 ![Drone Audio Detector UI — per-class probability bars (idle 96%, plane 24%, quad 9% on office ambient). ARGMAX sigmoid left, SOFTMAX relative right. 177ms total inference [FP32].](drone-detector-ui-idle.png)
-
----
-
-## Sintra for FPV Drone Tuning
-
-While building the drone detector I started using Sintra for the FPV side of the work as well — specifically for blackbox log analysis and PID tuning. This is worth mentioning because it is a different use case than code debugging: it is about executing a structured, well-documented protocol correctly rather than debugging novel code.
-
-### Blackbox Log Analysis
-
-Betaflight logs flight data at configurable rates — gyro traces, PID outputs, motor commands, setpoints. The logs are binary `.bbl` files. Analyzing them meaningfully requires understanding the relationship between the gyro trace, the setpoint, and the motor outputs in the frequency domain.
-
-The tuning methodology I use is derived from [PIDtoolbox](https://github.com/bw1129/PIDtoolbox) by Brian White — a MATLAB-based tool that implements step response analysis, spectral analysis of gyro and motor noise, and PID error decomposition. The core insight is that step response (the Wiener deconvolution of gyro response vs setpoint) gives a model-independent view of how well the quad tracks commands, without requiring you to manually inspect noisy time-domain traces.
-
-Sintra manages the workflow around this analysis:
-
-- Parsing the exported CSV from Blackbox Explorer and checking log health (frame drops, saturated motors, bad vibration events)
-- Running the step response computation and interpreting the result against the expected shape (rise time, overshoot, settling time, steady-state error)
-- Cross-referencing spectral analysis results — identifying prop wash frequency bands, notch filter placement, whether the RPM filter is doing its job
-- Recommending specific parameter adjustments based on the observed deviation from the target step response shape, following the established tuning order (P → D → I → FF → verify)
-- Keeping notes between sessions so context doesn't have to be re-established every time
-
-The last point matters more than it sounds. A tuning session might span multiple flights and days. Remembering which parameter was changed when, and what the before/after step response looked like, is the difference between systematic improvement and random adjustment. Sintra holds that state.
-
-### The Tuning Protocol in Practice
-
-The protocol follows the established methodology from PIDtoolbox and similar tools:
-
-1. Record a dedicated step response flight — rapid stick inputs on each axis separately, throttle held constant in hover
-2. Export from Blackbox Explorer, run step response analysis
-3. Identify the dominant failure mode: overshoot → P too high or D too low; underdamped ringing → D too low; slow sluggish response → P too low; long-term drift → I too low; delayed initial response → FF too low
-4. Adjust one axis, one parameter at a time
-5. Re-fly, re-analyze, compare
-
-Sintra helps at steps 2–4: it takes the analysis output, identifies the failure mode, and suggests the specific parameter delta to try next — grounded in the same principles the MATLAB tooling encodes, but in a conversational format that is faster to iterate through.
-
-This is a good example of what AI assistance is actually useful for in hardware work: not generating code from scratch, but helping you execute a known protocol correctly and systematically, especially across sessions where context would otherwise be lost.
 
 ---
 
