@@ -70,11 +70,13 @@ This is a good example of what AI assistance is actually useful for in hardware 
 
 The builds I'm actively tuning:
 
-**AIR65 II** (65mm whoop, BetaFPV Air65 II frame, BetaFPV Air Brushless AIO, ICM42688-P gyro, Bluejay 96kHz ESC) — fast indoor ripping. Main issue: camera replacement pending (Caddx Ant Lite to replace the C03 with the damaged lens). Rates: Actual, center 40–50, max 800, expo 0.45–0.6.
+**AIR65 II** (65mm whoop, BetaFPV Air65 II frame, BetaFPV Air Brushless AIO, ICM42688-P gyro, Bluejay 96kHz ESC, Caddx Ant Lite camera) — fast indoor ripping. Rates: Actual, center 40–50, max 800, expo 0.45–0.6.
 
-**Custom 2" O4 Lite ripper** — props barely clear the VTX, bi-blade props. The clearance constraint means prop wash is more significant than on a conventionally spaced build. This is the quad where step response analysis pays off most — the resonance bands shift depending on throttle position and the prop-to-VTX interaction.
+**Custom 2" O4 Lite ripper** — props barely clear the VTX, bi-blade props. The clearance constraint means prop wash is more significant than on a conventionally spaced build. This is the quad where step response analysis pays off most — the resonance bands shift depending on throttle position and the prop-to-VTX interaction. Sintra also helped optimize ESC settings and PID parameters on this build: flight time went from ~4 minutes to 7 minutes flying conservatively, or 5–6 minutes ripping.
 
 **2.5" LR experimental** (18650, untested outdoors) — hasn't flown outdoors yet. The tuning session for this one will be interesting; 18650 weight distribution and the LR prop selection change the step response profile significantly compared to the smaller builds.
+
+If you're working through FPV builds and tuning on Sintra, the [Rylo](https://app.sintra.ai/community/helpers/rylo) helper is worth having in your corner. It's a dedicated FPV expert — build planning, parts sourcing, PID tuning, video systems, regulations, soldering. The kind of thing where having a specialist rather than a generalist actually makes a difference.
 
 ---
 
