@@ -76,7 +76,7 @@ The builds I'm actively tuning:
 
 **Custom 2" O4 Lite ripper** — props barely clear the VTX, bi-blade props. The clearance constraint means prop wash is more significant than on a conventionally spaced build. This is the quad where step response analysis pays off most — the resonance bands shift depending on throttle position and the prop-to-VTX interaction.
 
-**2.5" LR experimental** — flying on 1S, 120g AUW. Flight time is 4 minutes on a 1000mAh pack — poor by any measure; the 2" rippers do 6 minutes on 580mAh. GPS works well, range is okayish on 1S. The 1S setup feels underpowered and inefficient; 2S or 3S conversion not yet built.
+**2.5" LR experimental** — flying on an 18650 cell, 120g AUW. Sintra helped get the tune to a point where the build would actually lift the heavy cell reliably. It flies — but voltage sag under load means GPS rescue kicks in and forces it home before the 5-minute mark. Flight time ends up around 4 minutes, which is poor; the 2" rippers do 6 minutes on 580mAh. GPS itself works well, better than the Pavo20. The 2S or 3S conversion isn't built yet.
 
 ---
 

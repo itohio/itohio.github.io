@@ -78,7 +78,7 @@ Dronai, kuriuos šiuo metu derinu:
 
 **Pasirinktinis 2 colių O4 Lite riperis** — sraigteliai vos praeina pro VTX, dvieigiai sraigteliai. Šis ribojimas reiškia, kad propelerių plovimas yra reikšmingesnis nei standartiniuose rėmuose. Čia žingsnio atsako analizė atsiperka labiausiai — rezonansų juostos keičiasi priklausomai nuo drosselio padėties ir sraigtelio-VTX sąveikos.
 
-**2,5 colio LR eksperimentinis** — skraido 1S, 120g AUW. Skrydžio laikas — 4 minutės su 1000mAh baterija, tai išskirtinai prastai; 2 colių riperiai ištempia 6 minutes su 580mAh. GPS veikia gerai, diapazonas 1S priimtinas. 1S jaučiasi silpnokai ir neefektyviai; 2S ar 3S konversija dar nesukurta.
+**2,5 colio LR eksperimentinis** — skraido su 18650 elementu, 120g AUW. Sintra padėjo sureguliuoti droną taip, kad jis patikimai pakiltų su sunkia baterija. Skraidyti skraido — tačiau įtampos kritimas apkrovos metu verčia GPS rescue grąžinti droną namo dar prieš 5 minučių ribą. Skrydžio laikas išeina apie 4 minutes, o tai prastai; 2 colių riperiai ištempia 6 minutes su 580mAh. GPS pats savaime veikia gerai, geriau nei Pavo20. 2S ar 3S konversija dar nesukurta.
 
 ---
 
