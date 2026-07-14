@@ -1,7 +1,7 @@
 ---
-title: "Miniatūrinis brangakmenių spektroskopas yra difrakcinis grotelių prietaisas, o ne prizma"
+title: "Tai niekada nebuvo prizma: mano spektroskope yra difrakcinis grotelės"
 date: 2025-11-02T18:00:00+02:00
-description: "Atradus, kad kišeninis brangakmenių spektroskopas turi difrakcines groteles, randamas lygiavimo kampas su kamera 3D spausdinimo laikikliui"
+description: "Išardydamas brangakmenių spektroskopą 3D spausdinimo laikiklio projektavimui, atradau, kad visą laiką klysdamas dėl jo optikos — ir kodėl tai iš tikrųjų paaiškina mano duomenis"
 thumbnail: "spectroscope-disassembled.jpg"
 author: admin
 categories:
@@ -18,55 +18,64 @@ series:
   - Spalvų mokslas
 ---
 
-Monitoriaus kalibravimo problema vis dar neišspręsta. Tikslas nepasikeitė: išmatuoti tikrąją monitoriaus pirminių spalvų spektrinę išvestį, o ne tik RGB. CR30 laikomas prie ekrano duoda kažką, bet jis neskirtas emisiniams šaltiniams ir skaičiai kelia abejonių. Reikia tikro spektrometro, nukreipto į ekraną.
+Monitoriaus kalibravimo problema vis dar neišspręsta — reikia išmatuoti tikrąją monitoriaus pirminių spalvų spektrinę išvestį, o ne tik RGB. CR30 laikomas prie ekrano kažką duoda, bet jis neskirtas emisiniams šaltiniams. Reikia kišeninio brangakmenių spektroskopo, kurį naudojau visą laiką, tinkamai integruoto su OV9281 kameros moduliu.
 
-Turiu vieną iš tų kišeninių brangakmenių tikrinimo spektroskopų — tokių, kokius juvelyrikai naudoja akmenims identifikuoti. Mažas cilindrinis vamzdis, pridedi prie akies, žiūri pro jį į šviesos šaltinį ir matai sugerties juostas. Nusipirkau seniai. Ant jo parašyta "SPECTROSCOPE." Maniau, kad jame yra prizma, nes tai tradicinis juvelyro prietaisas.
+Išardžiau jį geresniam 3D spausdintam laikikliui suprojektuoti. Ir proceso metu sužinojau, kad klydau apie jį nuo pat pradžių.
 
-Ne. Jame yra difrakcinis grotelės.
+## Tai ne prizma
 
-## Išardymas
+![Kišeninis spektroskopas su nuimtu priekiniu lęšio elementu, viduje matomas difrakcinis grotelės](spectroscope-disassembled.jpg)
 
-![Kišeninis spektroskopas su nuimtu priekiniu lęšio elementu](spectroscope-disassembled.jpg)
+Priekis atsukami ir lęšio elementas lengvai ištraukiamas. Viduje: plyšys, **difrakcinis grotelės** ir okuliaras. Ne prizma. Grotelės.
 
-Priekis atsukami ir lęšio elementas lengvai ištraukiamas. Viduje: mažos grotelės, plyšys ir okuliaras. Grotelės yra dispersinis elementas — visai ne prizma. Laikomas lęšis yra tik priekinis objektyvas; dispersinis elementas yra giliau vamzdyje.
+Nuo pat pirkimo šį prietaisą vadinu „juvelyro prizmos spektroskopu." Ant prietaiso parašyta "SPECTROSCOPE" ir jis parduodamas kartu su brangakmenių tikrinimo įrankiais. Tradiciniai juvelyrų spektroskopai naudoja prizmas. Šis ne. Kažkur suklysdamas prisiėmiau, niekada nepatvirtinau ir įtraukiau tą prielaidą į viską, ką apie jį rašiau.
 
-Tai nebūtinai blogai. Prietaisas vis tiek veikia. Tačiau tai keičia geometriją: grotelės dispersuoja fiksuotu kampu krintančios šviesos atžvilgiu, ir tas kampas priklauso nuo grotelių dažnio ir bangos ilgio. Su prizma galima sukti ir palenkti ir rasti platų darbinių kameros pozicijų spektrą. Su grotelėmis pirmos eilės difrakcija yra konkrečiu kampu — reikia pataikyti tą kampą kameros jutikliu, kitaip nefiksuosi spektro.
+Tai tas pats instrumentas, kurį naudojau su OV9281 kamera ir Raspberry Pi Zero visiems spektriniams matavimams. Spektroskopo korpusas, lygiavimas, kalibravimas — viskas buvo padaryta manant, kad dispersinis elementas seka Cauchy dispersiją kaip prizma. Neseka. Jis seka grotelių lygtį.
 
-3D spausdinamo laikiklio modeliui reikia žinoti tą kampą tiksliai prieš modeliuojant bet ką.
+## Kodėl duomenys jau žinojo
+
+Žvelgdamas atgal į kalibravimo kreives, tai iš tikrųjų paaiškina kažką, kas mane neramino: jos buvo įtartinai tiesinės.
+
+Su stiklo prizma tikėtumės netiesinės bangos ilgio dispersijos — trumpesni bangos ilgiai (violetinis, mėlynas) suglausti, ilgesni (raudonas) išsklaidyti. Ryšys seka Cauchy lygtį stiklo lūžio rodikliui. Kalibruoji su polinomų tilptimi ir gauni pastebimus išlenktą pikselių pozicijos į bangos ilgį atvaizdavimą.
+
+Mano kalibravimai vis tiek buvo beveik tiesiniai. 100-asis pikselis yra maždaug tokiu pat atstumu nuo 200-ojo, kaip 200-asis nuo 300-ojo, bangos ilgio atžvilgiu. Priskyriau tai konkrečiai prizmos geometrijai ir toliau ėjau. Tai ne prizmos geometrija. Tai todėl, kad **grotelės duoda tiesinę dispersiją** — bangos ilgis proporcingas difrakcijos kampui, ir mažuose kampuose kompaktiniame instrumente tai beveik tiesiškai atvaizduojama ant plokščio jutiklio.
+
+Duomenys visą laiką man sakė. Aš neklausiau.
 
 ## Lygiavimo kampo radimas
 
-Metodas: pritvirtinti kameros modulį ir spektroskopą ant pjovimo kilimėlio, šviesti platjuostį šaltinį į plyšį ir fiziškai sukti kamerą stebint tiesioginį vaizdą, kol spektras yra centruotas ir aštrus. Pjovimo kilimėlio kampų žymėjimai leidžia lengvai nuskaityti kampą.
+Grotelės ir prizmos taip pat skiriasi pozicija kameros atžvilgiu. Su prizma turi lankstumą — gali palenkti, pasukti ir rasti spektrą iš plataus kameros pozicijų spektro. Su grotelėmis pirmos eilės difraguotas spektras yra konkrečiu kampu nuo krintančios šviesos ašies, apibrėžtu grotelių lygtimi:
 
-![Kameros modulio ir spektroskopo vaizdas iš viršaus ant pjovimo kilimėlio, Warsun žibintuvėlis kaip šaltinis](alignment-setup-top.jpg)
+```
+d sin(θ) = mλ
+```
+
+Fiksuotam grotelių dažniui `d`, difrakcijos kampas `θ` keičiasi su bangos ilgiu — taip spektras išsklaidomas. Tačiau matomojo spektro *centras* fiksuotu kampu, ir kamera turi būti ten pastatyta.
+
+![Kameros modulio ir spektroskopo vaizdas iš viršaus ant pjovimo kilimėlio, žibintuvėlis kaip šaltinis](alignment-setup-top.jpg)
 
 ![Lygiavimo sąrankos šoninis kampas](alignment-setup-side.jpg)
 
-Kameros modulis (OV9281 monochrominis) kairėje, spektroskopas pritvirtintas putplasčio bloke apytiksliai sulygintame su kamera, Warsun žibintuvėlis kaip platjuostis baltos šviesos šaltinis dešinėje. Putplastis yra grubus, bet efektyvus būdas laikyti kampą reguliuojant.
+Metodas: pritvirtinti OV9281 modulį ir spektroskopą ant pjovimo kilimėlio, šviesti Warsun žibintuvėliu į plyšį ir fiziškai sukti kamerą stebint tiesioginį vaizdą, kol spektras yra centruotas ir aštrus. Pjovimo kilimėlio kampų žymėjimai duoda tiesioginį nuskaitymą.
 
-## Ką mato kamera
+![Kameros tiesioginis vaizdas rodantis dispersuotą spektrą spektroskopo viduje](grating-on-screen.jpg)
 
-![Kameros tiesioginis vaizdas rodantis difrakcinius grotelių raštus spektroskopo viduje](grating-on-screen.jpg)
+Tai ką mato kamera: grotelių struktūra matoma kaip vertikalios linijos, su dispersuotu spektru kaip horizontali ryški juosta per kadro centrą. Sukti, kol ta juosta yra horizontali ir užpildo kuo daugiau kadro pločio — tada nuskaityti kampą.
 
-Tai kameros tiesioginis vaizdas, nukreiptas į spektroskopo išėjimą, kol žibintuvėlis apšviečia plyšį. Vertikalios linijos yra grotelių struktūra matoma per okuliarą. Ryški horizontali juosta yra dispersuotas spektras — matosi vaivorykštės spalvų srautas per kadro centrą su grotelių struktūra ant jo.
+Išmatuotas lygiavimas: apytiksliai **20–22°** nuo spektroskopo vamzdžio optinės ašies. Tas kampas eina į 3D modelį.
 
-To pakanka nuskaityti kampui: sukti kamerą ant kilimėlio, kol ta spektrinė juosta yra horizontali ir užpildo kiek įmanoma daugiau kadro. Tada nuskaityti kampą tarp spektroskopo ašies ir kameros ašies iš kilimėlio žymėjimų.
+## Kas eina į laikiklio modelį
 
-Išmatuotas lygiavimo kampas yra apytiksliai **20–22°** nuo spektroskopo vamzdžio optinės ašies. Tai skaičius, kuris eina į 3D modelį — kamera turi būti sumontuota tuo kampu plyšio atžvilgiu, o ne tiesiai priešais.
+- **Kampas**: ~21° tarp spektroskopo vamzdžio ašies ir kameros montavimo ašies
+- **Darbinis atstumas**: nustatytas OV9281 lęšio židinio nuotoliu ir spektroskopo išėjimo vyzdžiu — šiuo metu matuojama patvirtinti
+- **Standumas**: jokio lankstumo; net vieno laipsnio kameros svyravimas pastumia spektrinę juostą nuo centro
 
-## Kodėl tai svarbu 3D modeliui
+Esamas laikiklis buvo suprojektuotas remiantis beveik koaksialios prizmos geometrijos prielaida. Jį reikia perprojektuoti nuo nulio teisingam grotelių kampui.
 
-Tiesioginis laikiklis — kamera koaksiali su spektroskopu — visai nefiksuotų spektro. Gautum nulinio laipsnio (nedifraguotą) spindulį tiesiai per, kas yra tiesiog baltos šviesos šaltinis, jokios spektrinės informacijos.
+## Programinė įranga taip pat išaugo
 
-Laikikliu reikia:
-- Fiksuoto plyšio-kameros atstumo (veikia fokusavimą ir spektrinę skiriamąją gebą)
-- ~21° kampo tarp spektroskopo ašies ir kameros montavimo ašies
-- Būdo laikyti kamerą standžiai tuo kampu be lankstumo
+Kol viską aiškinausi, taip pat perrašiau spektrometro programinę įrangą — tai, kas prasidėjo kaip greita [PySpectrometer2](https://github.com/leswright1977/PySpectrometer2) Les Wright klonas, virto žymiai didesniu daiktu. Nauja versija gyvena [github.com/foxis/PySpectrometer3](https://github.com/foxis/PySpectrometer3) (pateko į neteisingą paskyrą — turėtų būti itohio, pataisysiu).
 
-Antrinė sąlyga: naudojamas OV9281 modulis turi konkretų lęšio-jutiklio atstumą, o spektroskopo okuliaras turi savo išėjimo vyzdį. Plyšys turi būti atvaizduotas per groteles ant jutiklio santykiu artimas 1:1 maksimaliai spektrinei skiriamąjai gebai. Tai nustato darbinį atstumą, kuris taip pat eina į 3D modelį.
+Funkcijos, kurių nebuvo pradiniame plane: Raman poslinkio režimas, spalvų mokslo režimas su XYZ/LAB/CRI/CCT išvestimi, kišami kameros backends (Picamera2, OpenCV, RTSP, HTTP MJPEG), jautrumo korekcija prieš etaloninį apšvietimą, PDF ataskaitos, automatinis pasukimo kampas grotelių polinkiui. Tas paskutinis tiesiogiai susijęs čia — programinė įranga gali automatiškai aptikti spektro pasukimą ir jį ištaisyti, kas iš dalies kompensavo tai, kad laikiklis niekada nebuvo tiksliai teisingu kampu.
 
-## Kas toliau
-
-Suprojektuoti ir atspausdinti laikiklio 3D modelį. Kai lygiavimas bus mechaniškai užfiksuotas, kalibruoti bangos ilgio ašį naudojant žinomus spektrinius ryšius — kompaktinė liuminescencinė lemputė turi gyvsidabrio emisijos linijas ties 405, 436, 546, 578nm, kurias lengva identifikuoti. Tada: nukreipti į monitorių, išmatuoti pirmines spalvas.
-
-Tai kelias tikrai suprasti raudono kanalo problemą neperkant €500 spektrofotometro.
+Daugiau apie programinę įrangą kitame straipsnyje.

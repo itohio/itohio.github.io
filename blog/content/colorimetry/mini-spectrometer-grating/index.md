@@ -1,7 +1,7 @@
 ---
-title: "The Mini Jewel Spectroscope Is a Grating, Not a Prism"
+title: "It Was Never a Prism: My Spectrometer Has a Diffraction Grating"
 date: 2025-11-02T18:00:00+02:00
-description: "Discovering the pocket gem spectroscope contains a diffraction grating, then finding the alignment angle with a camera to 3D print a proper holder"
+description: "Disassembling my jewel spectroscope to design a 3D-printed holder, only to discover I've been wrong about its optics the whole time — and why that actually explains the data"
 thumbnail: "spectroscope-disassembled.jpg"
 author: admin
 categories:
@@ -18,55 +18,64 @@ series:
   - Color Science
 ---
 
-Still trying to solve the monitor calibration problem. The goal hasn't changed: measure the actual spectral output of my monitor's primaries, not just RGB. The CR30 held up to the screen gives something, but it's not designed for emissive sources and the numbers are suspect. What I need is a real spectrometer pointed at the screen.
+Still trying to solve the monitor calibration problem — need to measure the actual spectral output of my monitor's primaries, not just RGB. The CR30 held against the screen gives something, but it's not designed for emissive sources. What I need is the pocket jewel spectroscope I've been using all along, properly integrated with the OV9281 camera module.
 
-I have one of those pocket gem inspection spectroscopes — the kind jewelers use to identify stones. Small cylindrical barrel, holds up to your eye, you look through it at a light source and see the absorption bands. Bought it ages ago. It's labeled "SPECTROSCOPE." I assumed it used a prism, because that's the traditional jeweler's instrument.
+I pulled it apart to design a better 3D-printed holder. And in the process found out I've been wrong about it for as long as I've owned it.
 
-It doesn't. It's a diffraction grating.
+## It's not a prism
 
-## Disassembly
+![Pocket spectroscope with the front lens element removed, diffraction grating inside visible](spectroscope-disassembled.jpg)
 
-![Pocket spectroscope with the front lens element removed](spectroscope-disassembled.jpg)
+The front unscrews and the lens element comes right out. Inside: a slit, a **diffraction grating**, and an eyepiece. Not a prism. A grating.
 
-The front unscrews and the lens element pulls right out. Inside: a small grating, a slit, and an eyepiece. The grating is the dispersive element — not a prism at all. The lens I'm holding is just the front objective; the dispersive element is deeper in the barrel.
+I've been calling this a "jeweler's prism spectrometer" since I bought it. The device is labeled "SPECTROSCOPE" and sold alongside gem testing tools. Traditional jeweler's spectroscopes do use prisms. This one doesn't. Somewhere along the way I assumed, never verified, and built that assumption into everything I've written about it since.
 
-That's not necessarily bad. The instrument still works. But it changes the geometry: a grating disperses at a fixed angle relative to the incident light, and that angle is a function of the grating frequency and wavelength. For a prism you can rotate and tilt and find a wide range of workable camera positions. For a grating, the first-order diffraction is at a specific angle — you have to hit that angle with the camera sensor or you're not capturing the spectrum.
+This is the same instrument I've been using with the OV9281 camera and Raspberry Pi Zero for all my spectral measurements. The spectroscope body, the alignment, the calibration — all of it was done under the assumption that the dispersive element followed Cauchy dispersion, like a prism. It doesn't. It follows the grating equation.
 
-For a 3D printed holder, I need to know that angle precisely before I model anything.
+## Why the data already knew
+
+Looking back at the calibration curves, this actually explains something that had been nagging me: they were suspiciously linear.
+
+With a glass prism, you'd expect non-linear wavelength dispersion — shorter wavelengths (violet, blue) compressed together, longer wavelengths (red) spread out. The relationship follows the Cauchy equation for the glass's refractive index. You calibrate it with a polynomial fit and end up with a noticeably curved mapping from pixel position to wavelength.
+
+My calibrations kept coming out nearly linear. Pixel 100 is roughly as far from pixel 200 as pixel 200 is from pixel 300, in wavelength terms. I attributed it to the specific prism geometry and moved on. It's not the prism geometry. It's because **gratings produce linear dispersion** — wavelength is proportional to diffraction angle, and at the small angles in a compact instrument, that maps nearly linearly onto a flat sensor.
+
+The data was telling me the whole time. I wasn't listening.
 
 ## Finding the alignment angle
 
-The approach: mount the camera module and spectroscope on the cutting mat, shine a broadband source into the slit, and physically rotate the camera while watching the live view until the spectrum is centered and in focus. The cutting mat's angle markings make it easy to read off the angle once found.
+Gratings and prisms also differ in how they're positioned relative to the camera. With a prism you have flexibility — you can tilt and rotate and find the spectrum from a range of camera positions. With a grating, the first-order diffracted spectrum sits at a specific angle off the incident light axis, determined by the grating equation:
 
-![Top view of camera module and spectroscope on cutting mat, Warsun flashlight as source](alignment-setup-top.jpg)
+```
+d sin(θ) = mλ
+```
+
+For a fixed grating frequency `d`, the diffraction angle `θ` varies with wavelength — that's how the spectrum is spread. But the *center* of the visible spectrum lands at a fixed angle, and the camera has to be placed there.
+
+![Top view of camera module and spectroscope on cutting mat, flashlight as source](alignment-setup-top.jpg)
 
 ![Side angle of the alignment setup](alignment-setup-side.jpg)
 
-Camera module (OV9281 monochrome) on the left, spectroscope propped in a foam block roughly aligned with the camera, Warsun flashlight as a broadband white source on the right. The foam is a crude but effective way to hold the angle while adjusting.
+Method: mount the OV9281 module and spectroscope on the cutting mat, shine a Warsun flashlight into the slit, and physically rotate the camera while watching the live view until the spectrum is centered and in focus. The angle markings on the cutting mat give a direct readout.
 
-## What the camera sees
+![Camera live view showing the diffracted spectrum inside the spectroscope](grating-on-screen.jpg)
 
-![Camera live view showing diffraction grating lines inside the spectroscope](grating-on-screen.jpg)
+This is what the camera sees: the grating ruling visible as vertical lines, with the dispersed spectrum as a horizontal bright band across the center of the frame. Rotate until that band is horizontal and fills as much of the frame width as possible — then read the angle.
 
-This is the camera's live view aimed into the spectroscope exit while the flashlight illuminates the slit. The vertical lines are the grating ruling visible through the eyepiece. The bright horizontal band is the dispersed spectrum — you can see the rainbow smear across the center of the frame, with the grating structure overlaid.
+Measured alignment: approximately **20–22°** off the optical axis of the spectroscope barrel. That's the angle that goes into the 3D model.
 
-This is enough to read the angle: rotate the camera on the mat until that spectral band is horizontal and fills as much of the frame as possible. Then read the angle between the spectroscope axis and the camera axis off the mat markings.
+## What goes into the holder
 
-The measured alignment angle is approximately **20–22°** off the optical axis of the spectroscope barrel. That's the number that goes into the 3D model — the camera needs to be mounted at that angle relative to the slit, not straight ahead.
+- **Angle**: ~21° between spectroscope barrel axis and camera mount axis
+- **Working distance**: set by the OV9281 lens focal length and the spectroscope's exit pupil — currently measuring to confirm
+- **Rigidity**: no flex; even a degree of camera wobble shifts the spectral band off-center
 
-## Why this matters for the 3D model
+The existing holder was designed around the assumption of a near-coaxial prism geometry. It needs to be redesigned from scratch for the correct grating angle.
 
-A straight-ahead holder — camera coaxial with the spectroscope — wouldn't catch the spectrum at all. You'd get the zero-order (undiffracted) beam straight through, which is just the white light source, no spectral information.
+## The software also grew
 
-The holder needs:
-- A fixed slit-to-camera distance (affects focus and spectral resolution)
-- A ~21° angle between the spectroscope axis and the camera mount axis
-- A way to hold the camera rigidly at that angle without flex
+While figuring all this out I've also been rewriting the spectrometer software — what started as a quick fork of [PySpectrometer2](https://github.com/leswright1977/PySpectrometer2) by Les Wright has turned into something considerably larger. The new version lives at [github.com/foxis/PySpectrometer3](https://github.com/foxis/PySpectrometer3) (ended up in the wrong account — should be itohio, will fix).
 
-Secondary constraint: the OV9281 module I'm using has a specific lens-to-sensor distance, and the spectroscope's eyepiece has its own exit pupil. The slit needs to be imaged through the grating onto the sensor at a 1:1-ish ratio for maximum spectral resolution. That sets the working distance, which also feeds into the 3D model.
+Features that weren't in the original plan: Raman shift mode, Color Science mode with XYZ/LAB/CRI/CCT output, pluggable camera backends (Picamera2, OpenCV, RTSP, HTTP MJPEG), sensitivity correction against reference illuminants, PDF reports, auto-rotation detection for the grating tilt angle. That last one is directly relevant here — the software can auto-detect the spectrum rotation and correct for it, which partly compensated for the fact that the holder was never quite at the right angle.
 
-## Next
-
-Design and print the holder. Once the alignment is locked in mechanically, calibrate the wavelength axis using known spectral lines — a compact fluorescent bulb has mercury emission lines at 405, 436, 546, 578nm that are easy to identify. Then: point it at the monitor, measure the primaries.
-
-That's the path to actually understanding the red channel problem without buying a €500 spectrophotometer.
+More on the software in the next post.
