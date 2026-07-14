@@ -52,12 +52,9 @@ A whoop chassis has almost no space between an aftermarket GPS module and everyt
 Before touching a spectrum analyser I did the obvious checks.
 
 ![GPS module mounted on top of the DJI O4 Pro camera housing — patch antenna and shielded cable visible](pavo20-gps-module.jpg)
-*The GPS module sitting on top of the O4 Pro camera. The patch antenna (ceramic square) is mounted on a small white platform above the camera housing. The shielded cable routes down to the FC. This is the current configuration after the camera-mount experiment — still not enough separation from the BEC.*
+*The GPS module on top of the O4 Pro camera — the only viable mounting position. The ceramic patch antenna must face the sky with nothing above it. Below the camera sits the integrated FC/ESC/VTX board with its 5V BEC. Even at this elevation above the stack, the BEC's near-field radiation still reaches the LNA.*
 
-The GPS module I added sits initially directly above the integrated FC/ESC/VTX board. The antenna ground plane is the PCB copper — which is also the return path for the 5V BEC switching currents. There is no physical shield between the GPS module's LNA and the switching regulator.
-
-<!-- IMAGE: photo of GPS wiring and filtering attempt — ferrite beads, filtering capacitors on power line -->
-*[TODO: Photo — GPS wiring with ferrite beads and power line filtering]*
+The GPS module mounts on top of the O4 Pro camera — the ceramic patch antenna must have a clear, unobstructed view of the sky, so this is the only practical position on the frame. Below the camera is the integrated FC/ESC/VTX board. The GPS LNA is elevated above the stack, but not by much — and the BEC's near-field extends further than the camera height provides.
 
 I added ferrite beads on the GPS power line and a 100µF cap at the module's power pins. This is the standard low-frequency noise fix. It made no measurable difference to satellite count.
 
@@ -91,7 +88,7 @@ The dominant noise source here is not what most people assume. The quad was sitt
 
 The actual culprit is the **5V BEC** (Battery Eliminator Circuit) on the integrated FC/ESC board. BECs are switching regulators, and on a compact integrated stack like the Pavo20's they switch at a few MHz. That sounds harmless — a few MHz is nowhere near 1575 MHz. But fast-edge switching currents produce harmonics and intermodulation products that radiate across a wide spectrum. In practice the BEC spills noise nastily up to several GHz, and those spurs land at unpredictable frequencies depending on the specific regulator design, PCB layout, and load.
 
-When the GPS module is sitting 10–15 mm directly above that BEC, on the same ground plane, the coupling is near-field. It is not traveling via the power line — it is radiating directly from the PCB traces into the GPS LNA.
+With the GPS module above the camera, which sits above the FC/ESC stack, the LNA is still only a few centimetres from the BEC. At 1.5 GHz the near-field boundary (λ/2π) is roughly 3 cm — the GPS module sits at or within that boundary. The coupling is near-field, not radiated: it is not traveling via the power line, it is coupling directly from the PCB traces into the GPS LNA.
 
 Additionally: **video transmitters** on 5.8 GHz can generate sub-harmonics and mixing products. A 5.8 GHz VTX at 200mW can produce detectable energy at 5800/4 = 1450 MHz — right in the GPS band. The VTX measurement confirmed that removing it did not eliminate the noise, which points firmly back to the BEC as the primary source.
 
@@ -129,12 +126,6 @@ Replaced the stock GPS wiring with a shielded balanced audio cable (4-conductor 
 
 **Result: Partial improvement.** Satellite count sometimes reaches 8 instead of the previous maximum of 5. Lock is still unreliable and sometimes fails entirely. Better, but not solved.
 
-### 4. GPS Module on Top of the Camera
-
-Moved the GPS module off the stack entirely — it now sits on top of the DJI O4 Pro camera, further from the FC, ESC, BEC, and VTX. The shielded cable routes down to the FC. The goal was to reduce near-field coupling from the BEC by adding physical distance between the GPS LNA and the switching regulator.
-
-**Result: No significant improvement.** The satellite count and lock reliability are essentially unchanged compared to the shielded cable + decoupling result alone. The near-field BEC coupling either still reaches the module at this distance through the cable itself, or the BEC's radiated field extends far enough that the separation available on a 2.5" frame is insufficient.
-
 ---
 
 ## Root Cause Assessment
@@ -156,11 +147,11 @@ That assumption holds for some flying environments and fails completely in other
 
 ## Where I Am Now
 
-Still searching for a reliable noise isolation solution. Shielded cable + decoupling gave a partial improvement; moving the module to the top of the O4 Pro camera (further from the stack) gave no additional benefit. The BEC's reach in near-field conditions appears to exceed the physical separation available on a 2.5" frame.
+Still searching for a reliable noise isolation solution. Shielded cable + decoupling gave partial improvement; the BEC's near-field clearly extends to the GPS LNA even at camera-top height above the stack. More physical separation is the only remaining lever.
 
 What's left to try:
 
-- **Even longer cable**: routing the GPS module on an extended cable to the front or rear arm, maximising the distance from the FC/ESC board. The separation already tried (camera height) is small — arm-level separation might be a different order of magnitude in near-field attenuation.
+- **Longer cable to an arm**: routing the GPS module to the front or rear arm maximises the distance from the FC/ESC board. Camera-top height is the starting point — arm-level separation would be a different order of magnitude in near-field attenuation.
 - **Active re-radiation (GPS repeater)**: external active GPS antenna with its own LNA, mounted well outside the aircraft envelope, connected via thin coax. Definitively answers whether it's a proximity problem. Total overkill for a whoop, but would confirm the root cause.
 
 ---

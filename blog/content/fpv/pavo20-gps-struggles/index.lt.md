@@ -52,12 +52,9 @@ Burbulinio drono korpuse beveik nėra vietos tarp papildomai pritvirtinto GPS mo
 Prieš imantis spektro analizatoriaus, atlikau akivaizdžius patikrinimus.
 
 ![GPS modulis, sumontuotas ant DJI O4 Pro kameros korpuso viršaus — matoma plytelės antena ir ekranuotas kabelis](pavo20-gps-module.jpg)
-*GPS modulis ant O4 Pro kameros viršaus. Plytelės antena (keraminis kvadratas) sumontuota ant mažos baltos platformos virš kameros korpuso. Ekranuotas kabelis eina žemyn iki FC. Tai dabartinė konfigūracija po kameros montavimo eksperimento — vis dar nepakankamas atstumas nuo BEC.*
+*GPS modulis ant O4 Pro kameros viršaus — vienintelė praktiškai tinkama pozicija. Keraminis plytelės antenas turi nekliudomą dangaus vaizdą viršuje. Po kamera — integruota FC/ESC/VTX plokštė su 5V BEC. Net ir esant šiam pakilimui virš steko, BEC artimojo lauko spinduliavimas vis tiek pasiekia LNA.*
 
-Pradžioje pridėtas GPS modulis sėdėjo tiesiai virš integruotos FC/ESC/VTX plokštės. Antenos įžeminimo plokštuma yra PCB varis — tas pats, per kurį teka 5V BEC perjungimo srovės. Tarp GPS modulio LNA ir perjungimo reguliatoriaus nėra fizinio ekrano.
-
-<!-- IMAGE: GPS laidų ir filtravimo bandymo nuotrauka — feritiniai karoliukai, filtravimo kondensatoriai maitinimo linijoje -->
-*[TODO: Nuotrauka — GPS laidai su feritiniais karoliukais ir maitinimo linijos filtravimas]*
+GPS modulis montuojamas ant O4 Pro kameros viršaus — keraminis plytelės antenas turi turėti laisvą, nekliudomą dangaus vaizdą, todėl tai vienintelė praktiškai tinkama pozicija šiame rėme. Po kamera yra integruota FC/ESC/VTX plokštė. GPS LNA pakyla virš steko, bet ne pakankamai — BEC artimojo lauko spinduliavimas siekia toliau nei kameros aukštis teikia.
 
 Pridėjau feritinių karoliukų ant GPS maitinimo linijos ir 100 µF kondensatorių prie modulio maitinimo kontaktų. Tai standartinis žemo dažnio triukšmo sprendimas. Jis nepadarė jokio išmatuojamo poveikio palydovų skaičiui.
 
@@ -91,7 +88,7 @@ Pagrindinis triukšmo šaltinis čia yra ne tas, kurį dauguma žmonių įtaria.
 
 Tikrasis kaltininkas yra **5V BEC** (akumuliatoriaus eliminavimo grandinė) integruotoje FC/ESC plokštėje. BEC yra perjungimo reguliatoriai, ir kompaktiškame integruotame steke, kaip Pavo20, jie persijungia keliais MHz. Tai skamba nekenksmingai — keli MHz yra toli nuo 1575 MHz. Tačiau greito krašto perjungimo srovės sukuria harmonines ir intermoduliavimo produktus, spinduliuojamus per plačią spektro juostą. Praktiškai BEC triukšmas bjauriai išsilieja iki kelių GHz, o smaigaliai patenka į neprognozuojamus dažnius, priklausomai nuo konkretaus reguliatoriaus dizaino, PCB išdėstymo ir apkrovos.
 
-Kai GPS modulis sėdi 10–15 mm tiesiai virš to BEC, ant tos pačios žemės plokštumos, ryšys yra artimojo lauko. Jis nekeliaus maitinimo linija — jis tiesiogiai spinduliuoja iš PCB takelių į GPS LNA.
+GPS moduliui esant virš kameros, kuri pati yra virš FC/ESC steko, LNA vis tiek yra kelių centimetrų atstumu nuo BEC. Ties 1,5 GHz artimojo lauko riba (λ/2π) yra maždaug 3 cm — GPS modulis yra ties ta riba arba jos viduje. Ryšys yra artimojo lauko: jis nekeliaus maitinimo linija — jis tiesiogiai jungiamas iš PCB takelių į GPS LNA.
 
 Be to: **vaizdo siųstuvai** 5,8 GHz gali generuoti subharmonikas ir maišymo produktus. 5,8 GHz VTX ties 200 mW gali gaminti energiją ties 5800/4 = 1450 MHz — tiesiai GPS juostoje. VTX matavimas patvirtino, kad jį pašalinus triukšmas nepagerėjo — tai rodo, kad BEC yra pagrindinis šaltinis.
 
@@ -129,12 +126,6 @@ Standartinė GPS laido instaliacija pakeista ekranuotu subalansuotu audio kabeli
 
 **Rezultatas: Dalinis pagerėjimas.** Palydovų skaičius kartais pasiekia 8, vietoj ankstesnio maksimalaus 5. Fiksavimas vis dar nepatikimas ir kartais visiškai nepavyksta. Geriau, bet neišspręsta.
 
-### 4. GPS modulis ant kameros viršaus
-
-GPS modulis perkeltas nuo steko — dabar jis sėdi ant DJI O4 Pro kameros viršaus, toliau nuo FC, ESC, BEC ir VTX. Ekranuotas kabelis driekiasi žemyn iki FC. Tikslas buvo sumažinti artimojo lauko sujungimą su BEC, pridedant fizinį atstumą tarp GPS LNA ir perjungimo reguliatoriaus.
-
-**Rezultatas: Jokio reikšmingo pagerėjimo.** Palydovų skaičius ir fiksavimo patikimumas iš esmės nepasikeitė, palyginti su ekranuoto kabelio ir dekupliavimo rezultatu. Artimojo lauko BEC sujungimas arba vis dar pasiekia modulį per kabelį, arba BEC spinduliuojamas laukas siekia pakankamai toli, kad 2,5 colio rėmo aukštyje esantis atstumas yra nepakankamas.
-
 ---
 
 ## Pagrindinė priežasties vertinimas
@@ -156,11 +147,11 @@ GPS modulis, naudojamas Pavo20, yra standartinis M8N/M10 variantas miniatiūrizu
 
 ## Kur esu dabar
 
-Vis dar ieškau patikimo triukšmo izoliacijos sprendimo. Ekranuotas kabelis ir dekupliavimas davė dalinį pagerėjimą; GPS modulio perkėlimas ant O4 Pro kameros viršaus (toliau nuo steko) jokio papildomo naudos nedavė. Atrodo, kad BEC artimojo lauko spinduliavimas siekia toliau, nei leidžia 2,5 colio rėmo fizinis atstumas.
+Vis dar ieškau patikimo triukšmo izoliacijos sprendimo. Ekranuotas kabelis ir dekupliavimas davė dalinį pagerėjimą; BEC artimojo lauko spinduliavimas aiškiai siekia GPS LNA net esant kameros viršaus aukštyje virš steko. Didesnis fizinis atstumas yra vienintelis likęs svertas.
 
 Kas dar liko išbandyti:
 
-- **Dar ilgesnis kabelis**: GPS modulio išvedimas ant prailginto kabelio iki priekinės ar galinės kojos, maksimaliai didinant atstumą nuo FC/ESC plokštės. Iki šiol išbandytas atstumas (kameros aukštis) yra nedidelis — kojų lygio atstumas artimojo lauko slopinimui gali būti visiškai kito masto.
+- **Ilgesnis kabelis iki kojos**: GPS modulio išvedimas iki priekinės ar galinės kojos maksimaliai padidina atstumą nuo FC/ESC plokštės. Kameros viršus yra atskaitos taškas — kojų lygio atstumas artimojo lauko slopinimui būtų visiškai kito masto.
 - **Aktyvus GPS kartojimas**: išorinė aktyvi GPS antena su sava LNA, gerai išvesta už orlaivio apvalkalo ribų, prijungta plonu koaksialiniu laidu. Galutinai atsakytų, ar tai artimumu pagrįsta problema. Visiškai per sudėtinga burbuliniams dronams, bet patvirtintų pagrindinę priežastį.
 
 ---
