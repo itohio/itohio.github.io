@@ -44,21 +44,23 @@ I'm giving away all the print designs and source code. The Go software version i
 
 ## Prism vs. Diffraction Grating: Choosing the Right Optic
 
-Most DIY spectrometers use diffraction gratings—often repurposed DVDs. While these work, they have limitations. I chose to use a jeweler's gem inspection prism instead, which offers several advantages:
+> **Correction (November 2025):** I wrote the section below believing the dispersive element in my jeweler's spectroscope was a prism. It isn't — it's a diffraction grating. I discovered this when disassembling the spectroscope to design a better 3D-printed holder. In hindsight the calibration curves were suspiciously linear, which is grating behaviour, not prism behaviour. The physics discussion below is still accurate; the part that was wrong is the assumption that *I* was using a prism. I wasn't. See [It Was Never a Prism](../mini-spectrometer-grating/) for the full story.
 
-### Why a Prism?
+Most DIY spectrometers use diffraction gratings—often repurposed DVDs. While these work, they have limitations. I had planned to use a jeweler's gem inspection prism instead, which offers several advantages in theory:
 
-**Advantages:**
+### Why a Prism? (And why I ended up with a grating anyway)
+
+**Prism advantages:**
 - Higher light throughput (no diffraction efficiency losses)
 - Cleaner spectral separation without diffraction orders
 - More compact optical path
 - Better for quantitative measurements
 
-**Trade-offs:**
+**Prism trade-offs:**
 - Non-linear wavelength dispersion (requires more sophisticated calibration than what e.g. Theremino offers)
 - Slightly more expensive than a DVD
 
-The non-linearity is actually manageable with proper calibration, and the improved light collection makes a significant difference when measuring dim samples.
+The non-linearity is actually manageable with proper calibration, and the improved light collection makes a significant difference when measuring dim samples. In practice I ended up with a grating, which produces linear dispersion — easier to calibrate, slightly less light throughput, but entirely workable.
 
 ### The Physics: Diffraction Grating vs. Prism
 
