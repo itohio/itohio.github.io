@@ -55,11 +55,17 @@ What the programme did that I couldn't have done alone:
 
 After Dronefix.lt I did not stop at one quad. I bought one to learn on, then started hoarding motors, frames and flight controllers and building the rest.
 
-<!-- IMAGE: fleet photo — all current quads laid out -->
-*[TODO: Fleet photo — Air65, 2" rippers, 2.5" LR, Pavo20, BabyApe]*
+![Travel kit: Air65 II with Ratel Baby Nano camera (top) and Meteor75 converted to DJI O4 Lite (bottom), in carry case](fleet-whoops-case.jpg)
+*Travel kit. Air65 II with Ratel Baby Nano camera (top), Meteor75 O4 Lite conversion (bottom). Both 1S.*
 
-<!-- IMAGE: individual build photos -->
-*[TODO: Individual build photos]*
+![Digital 2" O4 Lite ripper (left) and analog 2S ripper (right)](fleet-2inch-rippers.jpg)
+*The two 2" rippers — digital O4 Lite build on the left, analog 2S build on the right.*
+
+![Experimental 2.5" long-range platform — currently 1S, being converted to 2S/3S](fleet-lr-experimental.jpg)
+*The experimental long-range platform. Currently 1S — that experiment failed, conversion to 2S/3S planned.*
+
+![Pavo20 Pro II with shielded GPS cable and low-pass filter on VCC](fleet-pavo20-gps.jpg)
+*Pavo20 Pro II with shielded GPS cable and VCC low-pass filter. GPS noise is still a problem.*
 
 The current roster, more or less in the order it happened:
 

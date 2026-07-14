@@ -55,11 +55,17 @@ Ką programa padarė, ko nebūčiau galėjęs padaryti vienas:
 
 Po Dronefix.lt nesustojau ties vienu kvadrotu. Vieną nusipirkau, kad išmokčiau skristi, o tada pradėjau kaupti variklius, rėmus ir skrydžio valdiklius bei konstruoti likusius.
 
-<!-- IMAGE: floto nuotrauka — visi dabartiniai kvadrotrai išdėstyti -->
-*[TODO: Floto nuotrauka — Air65, 2" riperiai, 2,5" LR, Pavo20, BabyApe]*
+![Kelioninis rinkinys: Air65 II su Ratel Baby Nano kamera (viršuje) ir Meteor75 konvertuotas į DJI O4 Lite (apačioje), dėkle](fleet-whoops-case.jpg)
+*Kelioninis rinkinys. Air65 II su Ratel Baby Nano kamera (viršuje), Meteor75 O4 Lite konversija (apačioje). Abu 1S.*
 
-<!-- IMAGE: individualių konstrukcijų nuotraukos -->
-*[TODO: Individualių konstrukcijų nuotraukos]*
+![Skaitmeninis 2" O4 Lite riperis (kairėje) ir analoginis 2S riperis (dešinėje)](fleet-2inch-rippers.jpg)
+*Du 2 colių riperiai — skaitmeninis O4 Lite kairėje, analoginis 2S dešinėje.*
+
+![Eksperimentinė 2,5 colio tolimojo skrydžio platforma — šiuo metu 1S, konvertuojama į 2S/3S](fleet-lr-experimental.jpg)
+*Eksperimentinė tolimojo skrydžio platforma. Šiuo metu 1S — tas eksperimentas nepasisekė, planuojama konversija į 2S/3S.*
+
+![Pavo20 Pro II su ekranuotu GPS kabeliu ir žemų dažnių filtru ant VCC](fleet-pavo20-gps.jpg)
+*Pavo20 Pro II su ekranuotu GPS kabeliu ir VCC žemų dažnių filtru. GPS triukšmo problema vis dar neišspręsta.*
 
 Dabartinis sąrašas, maždaug tokia tvarka, kokia viskas vyko:
 
