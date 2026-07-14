@@ -67,14 +67,23 @@ Darktable's color calibration module works by taking a shot of a known color ref
 
 That's exactly what the CR30 provides: measured Lab values for each patch under D65 illuminant. Feed those into ArgyllCMS alongside the photo measurements and you get a correction that's grounded in actual measurement rather than a factory spec sheet.
 
-Whether the DIY chart is *accurate enough* is still an open question. The acrylic patches are matte and reasonably uniform, but they're nowhere near as spectrally flat or precisely controlled as a professional target. The CR30's ΔE on the painted patches is good — mostly under 3–4 on saturated colors, under 1 on neutrals — but I'd like to validate this against the SpyderChecker 24 before claiming the approach works end-to-end.
+Whether the DIY chart is *accurate enough* is still an open question. The acrylic patches are matte and reasonably uniform, but they're nowhere near as spectrally flat or precisely controlled as a professional target. The CR30's ΔE on the painted patches is good — mostly under 3–4 on saturated colors, under 1 on neutrals — but validating this against the SpyderChecker 24's known Lab values requires a proper monitor calibrator. And that's where I'm stuck.
 
-That validation is the next step.
+## The calibrator problem
+
+Most consumer monitor calibrators — Datacolor Spyder X, X-Rite ColorMunki Display — measure only RGB (or a few broad bands). They give you a corrected gamma curve and white point, which is fine for display calibration, but they don't give you the actual spectral power distribution of your monitor's primaries. For serious color work — understanding *why* a monitor's gamut is shaped the way it is, or validating that a display can actually reproduce the colors in your calibration workflow — you want spectral data.
+
+The CR30 can measure reflectance spectrum from a surface. It can't measure emissive displays directly. So for monitor characterization I'd need something like a spectrophotometer that works in emissive mode: i1Display Pro Plus, or ideally an i1Pro 3. The price gap between a basic colorimeter and a proper spectrophotometer is significant, and I haven't pulled the trigger yet.
+
+While I'm deciding, I did capture the spectral output of my current monitor's primaries using the CR30 held against the screen — crude, but informative. The blue and green channels are roughly what you'd expect from a typical IPS panel. The red channel is... not great. It peaks where it should, but there's a broad secondary lobe that shouldn't be there, which means reds are carrying an unexpected contribution from the green region. On screen it looks fine to the eye, but in color-critical work that kind of spectral impurity will show up as a systematic error that no amount of matrix correction can fully fix.
+
+Which brings me to the other part of the problem: even if I had the perfect calibrator and the perfect DIY chart, my current monitor probably isn't the right tool for photo and video work. That's a separate purchase decision, and one I'm trying not to make until I understand exactly what the spectral limitations of my current display actually are.
 
 ## What's next
 
-- Photograph both charts under controlled light, run through ArgyllCMS, compare the resulting corrections
-- Validate the CR30's measured values against the SpyderChecker 24's known Lab values
-- If the acrylic chart holds up, document the full workflow: chart generation → painting → measurement → Darktable profile
+- Settle on a calibrator that gives actual spectral data (not just RGB) — still researching
+- Until then: photograph both charts under controlled light, run through ArgyllCMS, compare the resulting corrections on the current display
+- Validate the acrylic chart's CR30 measurements against the SpyderChecker 24
+- Figure out whether the monitor's red channel nastiness is a dealbreaker or just a known offset I can work around
 
-The sublimation-printed charts are useful as a quick baseline. The acrylic chart is the one I'm betting on for actual calibration work.
+The sublimation-printed charts are useful as a quick baseline. The acrylic chart is the one I'm betting on for actual calibration work — once there's a calibrator worth trusting on the other end.

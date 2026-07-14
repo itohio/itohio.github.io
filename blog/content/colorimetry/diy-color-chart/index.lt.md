@@ -67,14 +67,23 @@ Darktable spalvų kalibravimo modulis veikia fotografuojant žinomą spalvų eta
 
 Būtent tai CR30 ir suteikia: išmatuotas Lab reikšmes kiekvienam lopui D65 apšvietimo sąlygomis. Paduok jas į ArgyllCMS kartu su nuotraukos matavimais ir gausi korekciją, grindžiamą tikrais matavimais, o ne gamykliniu specifikacijų lapu.
 
-Ar savadarbė lentelė yra *pakankamai tiksli* — dar atviras klausimas. Akriliniai lopai yra matiniai ir pakankamai vienodi, bet toli gražu nėra tokie spectriškai tolygūs ar tiksliai valdomi kaip profesionalus taikinys. CR30 ΔE ant dažytų lopų yra geras — dažniausiai iki 3–4 sodrioms spalvoms, iki 1 neutralioms — bet norėčiau tai patvirtinti prieš SpyderChecker 24, kol pareikšiu, kad metodas veikia visą grandinę.
+Ar savadarbė lentelė yra *pakankamai tiksli* — dar atviras klausimas. Akriliniai lopai yra matiniai ir pakankamai vienodi, bet toli gražu nėra tokie spectriškai tolygūs ar tiksliai valdomi kaip profesionalus taikinys. CR30 ΔE ant dažytų lopų yra geras — dažniausiai iki 3–4 sodrioms spalvoms, iki 1 neutralioms — tačiau patvirtinimas prieš SpyderChecker 24 reikalauja tinkamo monitoriaus kalibratoriaus. Ir čia įstrigo.
 
-Tas patvirtinimas — kitas žingsnis.
+## Kalibratoriaus problema
+
+Dauguma vartotojų monitoriaus kalibratorių — Datacolor Spyder X, X-Rite ColorMunki Display — matuoja tik RGB (arba kelis plačius juostos). Tai suteikia pakoreguotą gamos kreivę ir baltą tašką, kas tinka ekrano kalibravimui, bet neparodo tikrosios spektrinės galios paskirstymo tavo monitoriaus pirminių spalvų. Rimtam spalvų darbui — suprasti *kodėl* monitoriaus gamas turi tokią formą, arba patvirtinti, kad ekranas iš tikrųjų gali atkurti tavo kalibravimo darbo eigoje esančias spalvas — reikia spektrinių duomenų.
+
+CR30 gali matuoti atspindžio spektrą nuo paviršiaus. Tiesioginiai emisiniai ekranai jam neprieinami. Monitoriaus charakterizavimui reikėtų spektrofotometro, veikiančio emisiniame režime: i1Display Pro Plus arba idealiai i1Pro 3. Kainų skirtumas tarp paprastų kolorimetrų ir tikro spektrofotometro yra nemažas, ir dar neišrinkau.
+
+Kol sprendžiu, vis dėlto užfiksavau dabartinio monitoriaus pirminių spalvų spektrinę išvestį su CR30, laikydamas jį prie ekrano — nešvariai, bet informatyviai. Mėlynas ir žalias kanalai maždaug tokie, kokių tikėtumeis iš tipinio IPS skydelio. Raudonas kanalas yra... nelabai geras. Jis pasismaigo ten, kur reikia, tačiau yra platus antrinis kupstas, kurio ten neturėtų būti — tai reiškia, kad raudonose spalvose yra netikėta indėlis iš žalio regiono. Ekrane tai akiai atrodo gerai, tačiau kritiškame spalvų darbe tokio tipo spektriniai negrynumai pasireiškia kaip sisteminga klaida, kurios jokia matricos korekcija negali visiškai ištaisyti.
+
+Tai veda prie kitos problemos dalies: net turėdamas tobulą kalibratorių ir tobulą savadarbę lentelę, dabartinis monitorius tikriausiai nėra tinkamas įrankis nuotraukų ir vaizdo darbui. Tai atskiras pirkimo sprendimas, ir stengiuosi jo neimti tol, kol tiksliai nesuprantu, kokie iš tikrųjų yra dabartinio ekrano spektriniai apribojimai.
 
 ## Kas toliau
 
-- Fotografuoti abi lenteles kontroliuojamoje šviesoje, paleisti per ArgyllCMS, palyginti gautas korekcijas
-- Patvirtinti CR30 išmatuotas reikšmes prieš SpyderChecker 24 žinomas Lab reikšmes
-- Jei akrilinė lentelė atlaikys, dokumentuoti visą darbo eigą: lentelės generavimas → dažymas → matavimas → Darktable profilis
+- Apsispręsti dėl kalibratoriaus, kuris duoda tikrus spektrinius duomenis (ne tik RGB) — dar tyrinėju
+- Iki tol: fotografuoti abi lenteles kontroliuojamoje šviesoje, paleisti per ArgyllCMS, palyginti gautas korekcijas dabartiniame ekrane
+- Patvirtinti akrilinės lentelės CR30 matavimus prieš SpyderChecker 24
+- Išsiaiškinti, ar monitoriaus raudono kanalo negrynumas yra neįveikiama kliūtis, ar tik žinomas poslinkis, su kuriuo galima dirbti
 
-Sublimacijos spaudiniai naudingi kaip greitas bazinis lygis. Akrilinė lentelė — tai, kuria lažinuosi dėl realaus kalibravimo darbo.
+Sublimacijos spaudiniai naudingi kaip greitas bazinis lygis. Akrilinė lentelė — tai, kuria lažinuosi dėl realaus kalibravimo darbo — kai kitame gale bus patikimas kalibratorius.
