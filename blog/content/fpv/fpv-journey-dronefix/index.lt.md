@@ -33,11 +33,20 @@ Tada užsiregistravau į Dronefix.lt mokymo programą ir viskas pasikeitė.
 
 Dronefix.lt vykdo struktūrizuotus FPV pilotų mokymus Lietuvoje. Ne „štai dronas, eik sudaužyk jį" — tikra programa: simuliatoriaus valandos, taisyklių ir oro erdvės teorija, praktika su realiais dronais, pirmųjų pirkimų gairės.
 
-<!-- IMAGE: nuotrauka iš Dronefix.lt akademijos sesijos — grupė, įranga ar skrydžių zona -->
-*[TODO: Nuotrauka iš Dronefix.lt mokymų]*
+![Dronefix.lt akademijos salė — darbo stalai, kvadrotų rėmai sukrauti ant centrinės lentos, lietuvos vėliava](dronefix-academy-hall.jpg)
+*Dronefix.lt erdvė — pramoninis sandėlis, paruošti darbo stalai, akademijos rėmai sukrauti viduryje.*
 
-<!-- IMAGE: simuliatoriaus sąrankos ar ankstyvojo mokymo skrydžio nuotrauka -->
-*[TODO: Nuotrauka — simuliatoriaus sesija ar ankstyvas mokymas]*
+![Praktinis konstravimas Dronefix.lt — laidų jungimas prie kvadroto rėmo darbo stalo](dronefix-workshop-build.jpg)
+*Praktinė konstravimo sesija. Variklio laidai, rėmo stovai, replės. Kaip visada.*
+
+![Litavimas Dronefix.lt darbo stale](dronefix-soldering.jpg)
+*Litavimo praktika. Kas sugeba palit' droną, tas sugeba palit' viską.*
+
+![Artimai: FPV lenktynių dronas iš apačios — antenos, variklių kojos, laidynas](dronefix-drone-closeup.jpg)
+*Vienas iš akademijos dronų. Žemo kampo kadras — variklių kojos ir antenų išvedimas.*
+
+![FPV dronų rėmų lentyna Dronefix.lt](dronefix-drone-rack.jpg)
+*Rėmų siena. Akademija turi pakankamai įrangos visai grupei.*
 
 Akademijoje buvo visokiausių dronų, bet mano akį patraukė mažieji — 2 colių, net keli 3 colių. Mane sužavėjo, kad kažkas toks mažas ir toks lengvas gali turėti tiek galios. Fausto ir Karolio rankose tie mažyčiai kvadrotai atrodė nuostabiai, ir būtent tą akimirką man viskas ir „susidėliojo".
 

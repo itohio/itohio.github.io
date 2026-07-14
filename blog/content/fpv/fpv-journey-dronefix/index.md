@@ -33,11 +33,20 @@ And then I signed up for the Dronefix.lt training programme and everything chang
 
 Dronefix.lt runs structured FPV pilot training in Lithuania. Not "here's a drone, go crash it" — an actual programme: simulator hours, theory on regulations and airspace, hands-on with real builds, guidance on first purchases.
 
-<!-- IMAGE: photo from Dronefix.lt academy session — group, equipment, or flying area -->
-*[TODO: Photo from Dronefix.lt training]*
+![Dronefix.lt academy hall — workbenches, drone frames stacked on a central table, Lithuanian flag](dronefix-academy-hall.jpg)
+*The Dronefix.lt venue — industrial hall, workbenches set out, a stack of academy frames on the centre table.*
 
-<!-- IMAGE: photo of simulator setup or early training flight -->
-*[TODO: Photo — simulator session or early training]*
+![Hands-on build session at Dronefix.lt — wiring a drone frame on a workbench](dronefix-workshop-build.jpg)
+*Hands-on build session. Motor wires, frame standoffs, pliers. The usual.*
+
+![Soldering at the Dronefix.lt workbench](dronefix-soldering.jpg)
+*Soldering practice. If you can solder a drone, you can solder anything.*
+
+![Close-up of an FPV racing drone from below — antennas, motor pods, wiring](dronefix-drone-closeup.jpg)
+*One of the academy drones. Low-angle shot of the motor pods and antenna runs.*
+
+![Rack of FPV drone frames at Dronefix.lt](dronefix-drone-rack.jpg)
+*A wall of frames. The academy keeps enough hardware on hand to run a full cohort.*
 
 The academy had all sorts of drones on hand, but the ones that caught my eye were the small ones — 2", even a few 3" builds. I was fascinated that something that small and that light could pack such a punch. In the hands of Faustas and Karolis those tiny quads were astonishing to watch, and that was the moment the whole thing clicked for me.
 
