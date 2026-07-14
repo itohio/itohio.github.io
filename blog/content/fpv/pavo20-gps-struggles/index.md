@@ -45,7 +45,7 @@ Before touching a spectrum analyser I did the obvious checks.
 <!-- IMAGE: photo of Pavo20 Pro II with GPS module and buzzer soldered, showing physical proximity to VTX area -->
 *[TODO: Photo — soldered GPS and buzzer on Pavo20 Pro II stack]*
 
-The GPS antenna on the Pavo20 sits on the top of the stack, directly above the ESC/VTX board. The antenna ground plane is the PCB copper — which is also carrying motor switching currents and VTX RF ground. There is no physical shield between the GPS module's LNA and the VTX output stage.
+The GPS antenna on the Pavo20 sits on the top of the stack, directly above the ESC/VTX board. The antenna ground plane is the PCB copper — which is also the return path for the 5V BEC switching currents and VTX RF ground. There is no physical shield between the GPS module's LNA and the VTX output stage.
 
 <!-- IMAGE: photo of GPS wiring and filtering attempt — ferrite beads, filtering capacitors on power line -->
 *[TODO: Photo — GPS wiring with ferrite beads and power line filtering]*
@@ -58,7 +58,7 @@ I added ferrite beads on the GPS power line and a 100µF cap at the module's pow
 
 Time to actually measure the noise floor where GPS operates. GPS L1 band is at **1575.42 MHz**. The constellation signals arriving at the antenna are extraordinarily weak — typically around −130 dBm. Any local interference in the 1.5–1.6 GHz range drowns them out.
 
-I connected a TinySA to a short wire antenna positioned near the stack on each quad, with the quads powered on and armed (motors running via a motor test jig, no props). To isolate the ESC/FC noise from the VTX, I ran the initial Pavo20 measurement with the VTX removed entirely.
+I connected a TinySA to a short wire antenna positioned near the stack on each quad, with the quads on battery only — no motors running, no props. To isolate the FC/ESC stack noise from the VTX, I ran the initial Pavo20 measurement with the VTX removed entirely.
 
 ![Pavo20 Pro II with VTX removed — TinySA short-wire probe attached near the stack for RF noise measurement](pavo20-no-vtx.jpg)
 *Pavo20 with VTX removed. The TinySA short-wire probe sits next to the FC/ESC stack. No VTX means any noise measured here is purely from the FC, ESC, and GPS module itself.*
@@ -78,16 +78,18 @@ The contrast is stark. The 1S build shows a clean noise floor in the GPS band wi
 
 ## The Switching Harmonic Problem
 
-ESCs run at a PWM switching frequency — 24, 48, or 96 kHz on modern stacks. Harmonics of these frequencies should be at audio frequencies and their multiples, nothing close to GPS L1.
+The dominant noise source here is not what most people assume. The quad was sitting on a bench — no motors spinning, no props, no flight. Motor PWM was never in the picture.
 
-The actual interference mechanism is different: **motor PWM generates fast-edge current transitions**, and those transitions excite resonances in the power distribution traces, solder joints, and capacitor parasitics. The result is broadband conducted and radiated noise that appears at unpredictable frequencies well above the fundamental switching frequency.
+The actual culprit is the **5V BEC** (Battery Eliminator Circuit) on the integrated FC/ESC board. BECs are switching regulators, and on a compact integrated stack like the Pavo20's they switch at a few MHz. That sounds harmless — a few MHz is nowhere near 1575 MHz. But fast-edge switching currents produce harmonics and intermodulation products that radiate across a wide spectrum. In practice the BEC spills noise nastily up to several GHz, and those spurs land at unpredictable frequencies depending on the specific regulator design, PCB layout, and load.
 
-Additionally: **video transmitters** on 5.8 GHz can generate sub-harmonics and mixing products. A 5.8 GHz VTX at 200mW can produce detectable energy at 5800/4 = 1450 MHz — right in the GPS band.
+When the GPS module is sitting 10–15 mm directly above that BEC, on the same ground plane, the coupling is near-field. It is not traveling via the power line — it is radiating directly from the PCB traces into the GPS LNA.
+
+Additionally: **video transmitters** on 5.8 GHz can generate sub-harmonics and mixing products. A 5.8 GHz VTX at 200mW can produce detectable energy at 5800/4 = 1450 MHz — right in the GPS band. The VTX measurement confirmed that removing it did not eliminate the noise, which points firmly back to the BEC as the primary source.
 
 I confirmed this in a different environment — the basement, for lower ambient RF:
 
 ![TinySA MAX HOLD measurement — Pavo20 Pro II, 1.2–1.8 GHz, accumulated over time in basement environment — multiple harmonic spurs visible in GPS band region](tinysa-pavo20-maxhold.jpg)
-*MAX HOLD scan after several minutes accumulation in the basement. Multiple spurs spread through the 1.2–1.6 GHz range. The spurs are not fixed-frequency harmonics — they drift and shift as motor load and temperature change, which is characteristic of switching regulator intermodulation products rather than clean integer harmonics.*
+*MAX HOLD scan after several minutes accumulation in the basement. Multiple spurs spread through the 1.2–1.6 GHz range. The spurs are not fixed-frequency harmonics — they drift and shift with BEC load and temperature, which is characteristic of switching regulator intermodulation products rather than clean integer harmonics.*
 
 Outside, GPS antenna pointing at open sky, the actual GPS signal context becomes visible:
 
@@ -114,9 +116,9 @@ Setting VTX to pit mode (0 mW) or lowest power (25 mW) during the GPS acquisitio
 
 ### 3. ESC PWM Frequency Reduction
 
-Dropped the ESC PWM frequency from 48 kHz to 24 kHz. Lower frequency means fewer harmonics per unit frequency range — the harmonic density drops.
+Dropped the ESC PWM frequency from 48 kHz to 24 kHz on the hypothesis that motor switching harmonics might be contributing. Lower motor PWM frequency means fewer harmonics per unit frequency range.
 
-**Result: Minimal difference.** The noise profile shifted but did not disappear from the GPS band.
+**Result: Minimal difference.** The noise profile barely shifted — consistent with the BEC being the dominant source rather than motor PWM. The BEC switching frequency and its harmonics are unaffected by Betaflight's PWM settings.
 
 ### 4. Physical Shielding Attempts
 
@@ -132,10 +134,10 @@ The Pavo20 Pro II's integrated stack design prioritizes compactness over RF isol
 
 The interference has at least two components:
 
-1. **Conducted noise** on the GPS module power rail from the switching regulators and ESC current peaks
-2. **Radiated RF** from the VTX at sub-harmonics that land in the GPS L1 band
+1. **Radiated RF from the 5V BEC** — the switching regulator on the integrated FC/ESC board, running at a few MHz with harmonics and spurs spreading into the GHz range. This is the dominant source: it was present even with VTX removed and no motors running.
+2. **VTX sub-harmonics** — a 5.8 GHz transmitter can produce spurs at 5800/4 = 1450 MHz. Secondary contributor; removing the VTX partially reduced the noise but did not eliminate it.
 
-Ferrite beads address component 1 partially. Component 2 requires either physical distance (not available on a whoop) or a shielded GPS module with its own ground plane isolated from the main stack.
+Ferrite beads address conducted noise on the power rail only — they have no effect on the BEC's radiated RF. Physical separation between the GPS module and the BEC is the only approach that actually addresses component 1.
 
 The GPS module used in the Pavo20 is a standard M8N/M10 variant in a miniaturised SMD package — there is no shield can over the RF LNA. This is common on whoop-class GPS builds; the assumption is that flying outdoors provides enough sky view to overcome the degraded SNR.
 

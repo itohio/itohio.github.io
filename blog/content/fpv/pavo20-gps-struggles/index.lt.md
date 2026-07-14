@@ -45,7 +45,7 @@ Prieš imantis spektro analizatoriaus, atlikau akivaizdžius patikrinimus.
 <!-- IMAGE: Pavo20 Pro II nuotrauka su sulituotu GPS moduliu ir garsiakalbiu, rodanti fizinį artumą prie VTX zonos -->
 *[TODO: Nuotrauka — sulituotas GPS ir garsiakalbis ant Pavo20 Pro II steko]*
 
-GPS antena Pavo20 ant steko viršaus, tiesiai virš ESC/VTX plokštės. Antenos įžeminimo plokštuma yra PCB varis — tas pats, kuriuo teka variklio perjungimo srovės ir VTX RF žemė. Tarp GPS modulio LNA ir VTX išvesties pakopo nėra fizinio ekrano.
+GPS antena Pavo20 ant steko viršaus, tiesiai virš ESC/VTX plokštės. Antenos įžeminimo plokštuma yra PCB varis — tas pats, per kurį teka 5V BEC perjungimo srovės ir VTX RF žemė. Tarp GPS modulio LNA ir VTX išvesties pakopo nėra fizinio ekrano.
 
 <!-- IMAGE: GPS laidų ir filtravimo bandymo nuotrauka — feritiniai karoliukai, filtravimo kondensatoriai maitinimo linijoje -->
 *[TODO: Nuotrauka — GPS laidai su feritiniais karoliukais ir maitinimo linijos filtravimas]*
@@ -58,7 +58,7 @@ Pridėjau feritinių karoliukų ant GPS maitinimo linijos ir 100 µF kondensator
 
 Laikas iš tikrųjų išmatuoti triukšmo lygį ten, kur veikia GPS. GPS L1 juosta yra **1575,42 MHz**. Konsteliacijos signalai, pasiekiantys anteną, yra nepaprastai silpni — paprastai apie −130 dBm. Bet koks vietinis trikdis 1,5–1,6 GHz diapazone juos nustelbia.
 
-Prie kiekvieno drono steko prijungiau TinySA su trumpa vielos antena, dronams veikiant įjungtam ir įrenginiams šoviniais (varikliai veikia per variklio bandymo jungą, be sraigtų). Norint atskirti ESC/FC triukšmą nuo VTX, pradinį Pavo20 matavimą atlikau visiškai pašalinęs VTX.
+Prie kiekvieno drono steko prijungiau TinySA su trumpa vielos antena, dronams maitinamus tik iš baterijos — varikliai nestartavo, sraigtų nebuvo. Norint atskirti FC/ESC steko triukšmą nuo VTX, pradinį Pavo20 matavimą atlikau visiškai pašalinęs VTX.
 
 ![Pavo20 Pro II be VTX — TinySA trumpa vielos antena prie steko RF triukšmo matavimui](pavo20-no-vtx.jpg)
 *Pavo20 be VTX. TinySA trumpa vielos antena šalia FC/ESC steko. Be VTX — bet koks triukšmas čia kilęs tik iš FC, ESC ir GPS modulio.*
@@ -78,16 +78,18 @@ Kontrastas ryškus. 1S drono GPS juostoje triukšmo grinda švari, matomas tik l
 
 ## Perjungimo harmonikų problema
 
-ESC veikia pagal PWM perjungimo dažnį — 24, 48 arba 96 kHz šiuolaikiniuose stekuose. Šių dažnių harmonikos turėtų būti garso dažniuose ir jų kartotiniuose — nieko artimo GPS L1.
+Pagrindinis triukšmo šaltinis čia yra ne tas, kurį dauguma žmonių įtaria. Dronas gulėjo ant stalo — jokie varikliai nesisuko, sraigtų nebuvo, skrydžio nebuvo. Variklio PWM čia nedalyvavo.
 
-Faktinis trikdžių mechanizmas yra kitoks: **variklio PWM sukuria greito krašto srovės perėjimus**, ir tie perėjimai žadina rezonanses maitinimo paskirstymo takelių, litavimo taškų ir kondensatorių parazitiniuose elementuose. Rezultatas — plačiajuostis laidinis ir spinduliuojamas triukšmas, atsirandantis netikėtais dažniais gerokai viršijantis pagrindinį perjungimo dažnį.
+Tikrasis kaltininkas yra **5V BEC** (akumuliatoriaus eliminavimo grandinė) integruotoje FC/ESC plokštėje. BEC yra perjungimo reguliatoriai, ir kompaktiškame integruotame steke, kaip Pavo20, jie persijungia keliais MHz. Tai skamba nekenksmingai — keli MHz yra toli nuo 1575 MHz. Tačiau greito krašto perjungimo srovės sukuria harmonines ir intermoduliavimo produktus, spinduliuojamus per plačią spektro juostą. Praktiškai BEC triukšmas bjauriai išsilieja iki kelių GHz, o smaigaliai patenka į neprognozuojamus dažnius, priklausomai nuo konkretaus reguliatoriaus dizaino, PCB išdėstymo ir apkrovos.
 
-Be to: **vaizdo siųstuvai** 5,8 GHz gali generuoti subharmonikas ir maišymo produktus. 5,8 GHz VTX ties 200 mW gali gaminti aptinkamą energiją ties 5800/4 = 1450 MHz — tiesiai GPS juostoje.
+Kai GPS modulis sėdi 10–15 mm tiesiai virš to BEC, ant tos pačios žemės plokštumos, ryšys yra artimojo lauko. Jis nekeliaus maitinimo linija — jis tiesiogiai spinduliuoja iš PCB takelių į GPS LNA.
+
+Be to: **vaizdo siųstuvai** 5,8 GHz gali generuoti subharmonikas ir maišymo produktus. 5,8 GHz VTX ties 200 mW gali gaminti energiją ties 5800/4 = 1450 MHz — tiesiai GPS juostoje. VTX matavimas patvirtino, kad jį pašalinus triukšmas sumažėjo, bet neišnyko — tai rodo, kad BEC yra pagrindinis šaltinis.
 
 Tai patvirtinau kitoje aplinkoje — rūsyje, kur aplinkos RF triukšmas mažesnis:
 
 ![TinySA MAX HOLD matavimas — Pavo20 Pro II, 1,2–1,8 GHz, akumuliuotas ilgą laiką rūsyje — kelios harmoninių smaigaliai matomi GPS juostos srityje](tinysa-pavo20-maxhold.jpg)
-*MAX HOLD skenavimas po kelių minučių akumuliacijos rūsyje. Keli smaigaliai išsklaidyti 1,2–1,6 GHz diapazone. Smaigaliai nėra pastovaus dažnio harmonikos — jie dreifuoja ir keičiasi priklausomai nuo variklio apkrovos ir temperatūros, kas būdinga perjungimo reguliatoriaus intermoduliavimo produktams.*
+*MAX HOLD skenavimas po kelių minučių akumuliacijos rūsyje. Keli smaigaliai išsklaidyti 1,2–1,6 GHz diapazone. Smaigaliai nėra pastovaus dažnio harmonikos — jie dreifuoja ir keičiasi priklausomai nuo BEC apkrovos ir temperatūros, kas būdinga perjungimo reguliatoriaus intermoduliavimo produktams.*
 
 Lauke, GPS antena nukreipta į atvirą dangų, matomas tikrasis GPS signalo kontekstas:
 
@@ -114,9 +116,9 @@ VTX nustatymas į pit režimą (0 mW) arba mažiausią galią (25 mW) GPS įgiji
 
 ### 3. ESC PWM dažnio sumažinimas
 
-Sumažinau ESC PWM dažnį nuo 48 kHz iki 24 kHz. Mažesnis dažnis reiškia mažiau harmonikų vienam dažnio vienetui — harmonikų tankis mažėja.
+Sumažinau ESC PWM dažnį nuo 48 kHz iki 24 kHz, tikrinant hipotezę, kad variklio perjungimo harmonikos gali prisidėti prie triukšmo. Mažesnis variklio PWM dažnis reiškia mažiau harmonikų vienam dažnio vienetui.
 
-**Rezultatas: Minimalus skirtumas.** Triukšmo profilis pasikeitė, bet neišnyko iš GPS juostos.
+**Rezultatas: Minimalus skirtumas.** Triukšmo profilis beveik nepasikeitė — tai atitinka BEC, o ne variklio PWM, kaip pagrindinį šaltinį. BEC perjungimo dažnis ir jo harmonikos nepriklauso nuo Betaflight PWM nustatymų.
 
 ### 4. Fizinio ekranavimo bandymai
 
@@ -132,10 +134,10 @@ Pavo20 Pro II integruoto steko dizainas teikia pirmenybę kompaktiškumui prieš
 
 Trukdžiai turi bent du komponentus:
 
-1. **Laidinis triukšmas** GPS modulio maitinimo linijoje iš perjungimo reguliatorių ir ESC srovės smailių
-2. **Spinduliuojamas RF** iš VTX subharmonikose, krentančiose į GPS L1 juostą
+1. **Spinduliuojamas RF iš 5V BEC** — integruotos FC/ESC plokštės perjungimo reguliatorius, veikiantis keliais MHz, su harmonikais ir smaigaliais, besiskleidžiančiais į GHz diapazoną. Tai pagrindinis šaltinis: buvo matomas net pašalinus VTX ir nesukant variklių.
+2. **VTX subharmonikos** — 5,8 GHz siųstuvas gali gaminti smaigalius ties 5800/4 = 1450 MHz. Antrinis veiksnys; pašalinus VTX triukšmas sumažėjo, bet neišnyko.
 
-Feritiniai karoliukai iš dalies šalina 1 komponentą. 2 komponentui reikia fizinio atstumo (nepasiekiamo burbuliniame drone) arba ekranuoto GPS modulio su nuosava žemės plokštuma, atskirta nuo pagrindinės steko.
+Feritiniai karoliukai veikia tik laidiniam triukšmui maitinimo linijoje — jie neturi jokio poveikio BEC spinduliuojamam RF. Fizinis atstumas tarp GPS modulio ir BEC yra vienintelis metodas, iš tikrųjų sprendžiantis 1 komponentą.
 
 GPS modulis, naudojamas Pavo20, yra standartinis M8N/M10 variantas miniatiūrizuotame SMD pakete — virš RF LNA nėra ekrano dangtelio. Tai įprasta burbulinio GPS drono klasės dronams; prielaida, kad skrendant lauke pakanka dangaus matymo, kad būtų įveiktas pablogėjęs SNR.
 
