@@ -17,6 +17,7 @@ tags:
   - inav
 series:
   - FPV Builds
+thumbnail: "pavo20-gps-overview.jpg"
 ---
 
 The Pavo20 Pro II is a capable 2.5" whoop with GPS built in. On paper that should mean GPS Rescue on a micro build — a genuine safety net. In practice the GPS is nearly useless in most flying conditions: I watch the satellite count sit at 2 or 3 while a different quad on the same field, at the same time, locks onto 20+. This is the story of what I found and where I am with it.

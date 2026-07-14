@@ -16,6 +16,7 @@ tags:
   - betaflight
 series:
   - FPV Builds
+thumbnail: "pavo20-gps-overview.jpg"
 ---
 
 Pavo20 Pro II yra gabus 2,5 colio burbulinis dronas su integruotu GPS. Teoriškai tai turėtų reikšti GPS gelbėjimą mikro drono atveju — tikrą saugos tinklą. Praktiškai GPS beveik nenaudingas daugelyje skrydžio aplinkų: stebiu, kaip palydovų skaičius sustoja ties 2 ar 3, o kitas dronas tame pačiame lauke, tuo pačiu metu, prisijungia prie 20+. Tai istorija apie tai, ką radau ir kur esu dabar.
