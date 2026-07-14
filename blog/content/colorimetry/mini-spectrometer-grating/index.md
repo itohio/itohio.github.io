@@ -1,6 +1,6 @@
 ---
 title: "It Was Never a Prism: My Spectrometer Has a Diffraction Grating"
-date: 2025-11-02T18:00:00+02:00
+date: 2026-11-02T18:00:00+02:00
 description: "Disassembling my jewel spectroscope to design a 3D-printed holder, only to discover I've been wrong about its optics the whole time — and why that actually explains the data"
 thumbnail: "spectroscope-disassembled.jpg"
 author: admin
