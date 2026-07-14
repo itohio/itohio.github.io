@@ -66,18 +66,6 @@ Sintra padeda 2–4 žingsniuose: paima analizės išvestį, identifikuoja gedim
 
 Tai geras pavyzdys, kam AI pagalba iš tikrųjų naudinga aparatinės įrangos darbe: ne generuoti kodą nuo nulio, bet padėti teisingai ir sistemingai vykdyti žinomą protokolą, ypač per seansus, kur kontekstas kitaip būtų prarastas.
 
-### Dabartinis Parko Kontekstas
-
-Aktyviai derinami renginiai:
-
-**AIR65 II** (65mm sraigė, BetaFPV Air65 II rėmas, BetaFPV Air Brushless AIO, ICM42688-P giroskopas, Bluejay 96kHz ESC, Caddx Ant Lite kamera) — greitas vidaus lakdymas. Greičiai: Actual, center 40–50, max 800, expo 0.45–0.6.
-
-**Pasirinktinis 2" O4 Lite ripper** — sraigtai vos praeina pro VTX, dviejų ašmenų sraigtai. Atstumų apribojimas reiškia, kad propelerių plovimas yra reikšmingesnis nei įprastai išdėstytame renginyje. Tai kvadrotas, kuriame žingsnio atsako analizė labiausiai atsiperka — rezonanso juostos keičiasi priklausomai nuo droslio padėties ir sraigtų ir VTX sąveikos. Sintra taip pat padėjo optimizuoti ESC nustatymus ir PID parametrus: skrydžio laikas išaugo nuo ~4 minučių iki 7 minučių skraidant konservatyviai, arba 5–6 minučių rippinant.
-
-**2.5" LR eksperimentinis** (18650, lauke neišbandytas) — dar neskraidė lauke. Derinimo sesija bus įdomi; 18650 svorio pasiskirstymas ir LR sraigtų parinkimas reikšmingai keičia žingsnio atsako profilį, palyginti su mažesniais renginiais.
-
-Jei dirbate su FPV renginiais ir derinimu Sintra platformoje, verta turėti [Rylo](https://app.sintra.ai/community/helpers/rylo) pagalbininką. Tai specializuotas FPV ekspertas — renginių planavimas, dalių ieškojimas, PID derinimas, vaizdo sistemos, taisyklės, litavimas. Sritis, kurioje specialistas, o ne generalistis, tikrai daro skirtumą.
-
 ---
 
 ## Ko AI Pagalba Nepakeičia
@@ -91,3 +79,7 @@ Dėl išsamumo: yra proceso dalių, kuriose AI pagalba prideda naštą, o ne ją
 **Viskas, kas reikalauja žiūrėti vaizdo įrašą** kartu su žurnalo duomenimis — propelerių plovimo įvykiai, atsigavimo elgsena, kaip kvadrotas dorojasi su porūkiais — vis dar yra rankinis koreliavimas.
 
 Įrankis yra naudingas sistemingam proceso viduriui, o ne suvokimo galiūkams.
+
+---
+
+Jei dirbate su FPV renginiais ir derinimu Sintra platformoje, verta turėti [Rylo](https://app.sintra.ai/community/helpers/rylo) pagalbininką. Tai specializuotas FPV ekspertas — renginių planavimas, dalių ieškojimas, PID derinimas, vaizdo sistemos, taisyklės, litavimas. Sritis, kurioje specialistas, o ne generalistis, tikrai daro skirtumą.
