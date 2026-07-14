@@ -1,6 +1,6 @@
 ---
 title: "Šviečiantys daiktai: pirmieji UV fluorescencijos eksperimentai"
-date: 2025-11-09T18:00:00+02:00
+date: 2026-11-09T18:00:00+02:00
 description: "Pluošto sujungto UV fluorescencijos stendo kūrimas — TOSLINK fluorescuoja, silpnina NIR ir nepavyko su 785nm Ramanu. Trys priežastys, kodėl reikėjo pereiti"
 thumbnail: "vitamin-b-cuvette.jpg"
 author: admin

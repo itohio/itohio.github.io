@@ -1,6 +1,6 @@
 ---
 title: "Glowing Things: First UV Fluorescence Experiments"
-date: 2025-11-09T18:00:00+02:00
+date: 2026-11-09T18:00:00+02:00
 description: "Building a fiber-coupled UV fluorescence setup — TOSLINK fluoresces, attenuates NIR, and fails at 785nm Raman. Three reasons it had to go."
 thumbnail: "vitamin-b-cuvette.jpg"
 author: admin
