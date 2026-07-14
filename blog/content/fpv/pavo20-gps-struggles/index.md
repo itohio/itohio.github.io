@@ -1,7 +1,7 @@
 ---
-title: "Pavo20 Pro II GPS Struggles — Noise, Harmonics, and the Search for Better Isolation"
+title: "Pavo20 Pro II GPS Fix Attempts: BEC Switching Noise at 1575 MHz and What Actually Helped"
 date: 2026-07-13
-description: "The Pavo20 Pro II can barely find 3 GPS satellites where a 1S digital build finds 20+. Here is what I found on the spectrum analyser, what I've tried, and what remains unsolved."
+description: "Pavo20 Pro II picks up 3 GPS satellites where a 1S whoop finds 20+. TinySA measurements, BEC harmonic analysis, ferrite bead and shielding tests — and why none of it fully fixed it."
 toc: true
 categories:
   - FPV
@@ -14,13 +14,21 @@ tags:
   - rf
   - tinysa
   - betaflight
-  - inav
+  - emi
+  - bec
+  - switching-regulator
+  - gps-l1
+  - electromagnetic-interference
+  - whoop
+keywords: ["Pavo20 Pro II GPS", "BEC GPS interference", "switching regulator GPS noise", "GPS L1 1575 MHz drone", "FPV whoop GPS fix", "TinySA FPV spectrum", "electromagnetic interference FPV"]
 series:
   - FPV Builds
-thumbnail: "pavo20-gps-overview.jpg"
+thumbnail: "pavo20-gps-module.jpg"
 ---
 
-The Pavo20 Pro II is a capable 2.5" whoop with GPS built in. On paper that should mean GPS Rescue on a micro build — a genuine safety net. In practice the GPS is nearly useless in most flying conditions: I watch the satellite count sit at 2 or 3 while a different quad on the same field, at the same time, locks onto 20+. This is the story of what I found and where I am with it.
+The Pavo20 Pro II is a capable 2.5" whoop — compact, powerful, with a good camera and a surprisingly solid video link even on linear whip antennas. I wanted it as a mountain trip quad: something that fits in a jacket pocket, dives canyons, and has GPS Rescue as a genuine safety net. GPS is not included; I added a module myself, soldered and configured it. That's when the problems started.
+
+In practice the GPS is nearly useless in most flying conditions: I watch the satellite count sit at 2 or 3 while a different quad on the same field, at the same time, locks onto 20+. This is the story of what I found and where I am with it.
 
 ---
 
@@ -33,9 +41,9 @@ First flight of the day. Field is open, sky is clear, no buildings. I power up b
 | 1S Matrix 3-in-1 digital build | ~90s | 20–22 |
 | Pavo20 Pro II | >5min | 2–4 |
 
-The 1S build is smaller. Its electronics are arguably denser. The GPS module is the same generation. The difference is the video system: the 1S build runs a DJI O3 Air Unit on a whoop stack with a camera module, while the Pavo20 runs an integrated stack where the VTX, FC, ESC, and GPS share a single compact board.
+The 1S build is smaller. Its electronics are arguably denser. The GPS module is the same generation. The difference is the stack architecture: the 1S build uses a separate FC and ESC with dedicated boards, while the Pavo20 runs a tightly integrated stack where the VTX, FC, and ESC share a single compact board.
 
-A whoop chassis has almost no space between the GPS module and everything else generating noise.
+A whoop chassis has almost no space between an aftermarket GPS module and everything else generating noise.
 
 ---
 
@@ -43,10 +51,10 @@ A whoop chassis has almost no space between the GPS module and everything else g
 
 Before touching a spectrum analyser I did the obvious checks.
 
-![Pavo20 Pro II with GPS module mounted on top of the O4 Pro camera — full drone overview showing current configuration](pavo20-gps-overview.jpg)
-*Current configuration: the GPS module sits on top of the DJI O4 Pro camera, mounted further above the FC/ESC stack. The shielded cable routes down to the FC. Even with this physical separation from the VTX and BEC, GPS acquisition remains unreliable.*
+![GPS module mounted on top of the DJI O4 Pro camera housing — patch antenna and shielded cable visible](pavo20-gps-module.jpg)
+*The GPS module sitting on top of the O4 Pro camera. The patch antenna (ceramic square) is mounted on a small white platform above the camera housing. The shielded cable routes down to the FC. This is the current configuration after the camera-mount experiment — still not enough separation from the BEC.*
 
-In the stock configuration the GPS antenna sits directly above the ESC/VTX board. The antenna ground plane is the PCB copper — which is also the return path for the 5V BEC switching currents and VTX RF ground. There is no physical shield between the GPS module's LNA and the VTX output stage.
+The GPS module I added sits initially directly above the integrated FC/ESC/VTX board. The antenna ground plane is the PCB copper — which is also the return path for the 5V BEC switching currents. There is no physical shield between the GPS module's LNA and the switching regulator.
 
 <!-- IMAGE: photo of GPS wiring and filtering attempt — ferrite beads, filtering capacitors on power line -->
 *[TODO: Photo — GPS wiring with ferrite beads and power line filtering]*

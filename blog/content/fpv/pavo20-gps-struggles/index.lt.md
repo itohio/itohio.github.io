@@ -1,7 +1,7 @@
 ---
-title: "Pavo20 Pro II GPS Problemos — Triukšmas, Harmonikos ir Ieškojimas Geresnio Izoliacijos Sprendimo"
+title: "Pavo20 Pro II GPS Taisymo Bandymai: BEC Perjungimo Triukšmas 1575 MHz ir Kas Iš Tikrųjų Padėjo"
 date: 2026-07-13
-description: "Pavo20 Pro II vos aptinka 3 GPS palydovus ten, kur 1S skaitmeninis dronas aptinka 20+. Štai ką radau spektro analizatoriuje, ką išbandžiau ir kas lieka neišspręsta."
+description: "Pavo20 Pro II aptinka 3 GPS palydovus ten, kur 1S burbulinis dronas aptinka 20+. TinySA matavimai, BEC harmonikų analizė, feritinių karoliukų ir ekranavimo bandymai — ir kodėl niekas iki galo neišsprendė problemos."
 toc: true
 categories:
   - FPV
@@ -14,12 +14,21 @@ tags:
   - rf
   - tinysa
   - betaflight
+  - emi
+  - bec
+  - switching-regulator
+  - gps-l1
+  - electromagnetic-interference
+  - whoop
+keywords: ["Pavo20 Pro II GPS", "BEC GPS trukdžiai", "perjungimo reguliatorius GPS triukšmas", "GPS L1 1575 MHz dronas", "FPV whoop GPS taisymas", "TinySA FPV spektras", "elektromagnetiniai trukdžiai FPV"]
 series:
   - FPV Builds
-thumbnail: "pavo20-gps-overview.jpg"
+thumbnail: "pavo20-gps-module.jpg"
 ---
 
-Pavo20 Pro II yra gabus 2,5 colio burbulinis dronas su integruotu GPS. Teoriškai tai turėtų reikšti GPS gelbėjimą mikro drono atveju — tikrą saugos tinklą. Praktiškai GPS beveik nenaudingas daugelyje skrydžio aplinkų: stebiu, kaip palydovų skaičius sustoja ties 2 ar 3, o kitas dronas tame pačiame lauke, tuo pačiu metu, prisijungia prie 20+. Tai istorija apie tai, ką radau ir kur esu dabar.
+Pavo20 Pro II yra gabus 2,5 colio burbulinis dronas — kompaktiškas, galingas, su gera kamera ir nustebinančiai stabiliu vaizdo ryšiu net su tiesinėmis antena-plaktukinėmis antenomis. Norėjau jo kaip kalnų kelionių drono: tilptų į švarko kišenę, nertų tarpekliais ir turėtų GPS gelbėjimą kaip tikrą saugos tinklą. GPS modulis neįtrauktas komplekte — pridėjau pats, sulitavau ir sukonfigūravau. Tada prasidėjo problemos.
+
+Praktiškai GPS beveik nenaudingas daugelyje skrydžio aplinkų: stebiu, kaip palydovų skaičius sustoja ties 2 ar 3, o kitas dronas tame pačiame lauke, tuo pačiu metu, prisijungia prie 20+. Tai istorija apie tai, ką radau ir kur esu dabar.
 
 ---
 
@@ -32,9 +41,9 @@ Pirmas tos dienos skrydis. Laukas atviras, dangus giedras, pastatų nėra. Įjun
 | 1S Matrix 3-in-1 skaitmeninis | ~90s | 20–22 |
 | Pavo20 Pro II | >5min | 2–4 |
 
-1S dronas yra mažesnis. Jo elektronika, galima sakyti, dar tankiau sugromuota. GPS modulis yra tos pačios kartos. Skirtumas — vaizdo sistema: 1S dronas naudoja DJI O3 Air Unit burbuliniame steke su kamera, o Pavo20 turi integruotą steką, kuriame VTX, FC, ESC ir GPS yra viena kompaktiška plokštė.
+1S dronas yra mažesnis. Jo elektronika, galima sakyti, dar tankiau sugromuota. GPS modulis yra tos pačios kartos. Skirtumas — steko architektūra: 1S dronas naudoja atskiras FC ir ESC plokštes, o Pavo20 turi sanglaudžiai integruotą steką, kuriame VTX, FC ir ESC — viena kompaktiška plokštė.
 
-Burbulinio drono korpuse beveik nėra vietos tarp GPS modulio ir visko, kas generuoja triukšmą.
+Burbulinio drono korpuse beveik nėra vietos tarp papildomai pritvirtinto GPS modulio ir visko, kas generuoja triukšmą.
 
 ---
 
@@ -42,10 +51,10 @@ Burbulinio drono korpuse beveik nėra vietos tarp GPS modulio ir visko, kas gene
 
 Prieš imantis spektro analizatoriaus, atlikau akivaizdžius patikrinimus.
 
-![Pavo20 Pro II su GPS moduliu, sumontuotu ant DJI O4 Pro kameros viršaus — visas drono apžvalgos vaizdas, rodantis dabartinę konfigūraciją](pavo20-gps-overview.jpg)
-*Dabartinė konfigūracija: GPS modulis sėdi ant DJI O4 Pro kameros viršaus, sumontuotas aukščiau FC/ESC steko. Ekranuotas kabelis eina žemyn iki FC. Net ir esant šiam fiziniam atstumui nuo VTX ir BEC, GPS signalas lieka nepatikimas.*
+![GPS modulis, sumontuotas ant DJI O4 Pro kameros korpuso viršaus — matoma plytelės antena ir ekranuotas kabelis](pavo20-gps-module.jpg)
+*GPS modulis ant O4 Pro kameros viršaus. Plytelės antena (keraminis kvadratas) sumontuota ant mažos baltos platformos virš kameros korpuso. Ekranuotas kabelis eina žemyn iki FC. Tai dabartinė konfigūracija po kameros montavimo eksperimento — vis dar nepakankamas atstumas nuo BEC.*
 
-Standartinėje konfigūracijoje GPS antena sėdi tiesiai virš ESC/VTX plokštės. Antenos įžeminimo plokštuma yra PCB varis — tas pats, per kurį teka 5V BEC perjungimo srovės ir VTX RF žemė. Tarp GPS modulio LNA ir VTX išvesties pakopo nėra fizinio ekrano.
+Pradžioje pridėtas GPS modulis sėdėjo tiesiai virš integruotos FC/ESC/VTX plokštės. Antenos įžeminimo plokštuma yra PCB varis — tas pats, per kurį teka 5V BEC perjungimo srovės. Tarp GPS modulio LNA ir perjungimo reguliatoriaus nėra fizinio ekrano.
 
 <!-- IMAGE: GPS laidų ir filtravimo bandymo nuotrauka — feritiniai karoliukai, filtravimo kondensatoriai maitinimo linijoje -->
 *[TODO: Nuotrauka — GPS laidai su feritiniais karoliukais ir maitinimo linijos filtravimas]*
