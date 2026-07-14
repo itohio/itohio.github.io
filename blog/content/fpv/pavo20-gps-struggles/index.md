@@ -94,9 +94,9 @@ I confirmed this in a different environment — the basement, for lower ambient 
 Outside, GPS antenna pointing at open sky, the actual GPS signal context becomes visible:
 
 ![TinySA measurement outside — 1.2–1.8 GHz span — GPS L1 at 1575.42 MHz barely visible above the Pavo20 noise floor](tinysa-outside-gps.jpg)
-*Measurement taken outside with clear sky. The GPS L1 signal at 1575.42 MHz produces a broad plateau-like elevation across the GPS band — the entire constellation arriving at once. Compare the signal level to the noise spurs from the Pavo20 stack. The noise floor in the GPS band is sitting 40–50 dB above what the LNA is trying to receive.*
+*Measurement taken outside with clear sky. The GPS L1 signal at 1575.42 MHz produces a broad plateau-like elevation across the GPS band — the entire constellation arriving at once. The aggregate GPS signal sits about 20 dB above the baseline noise floor. The BEC spurs visible on the Pavo20 measurements are 10–15 dB above that same baseline — not as dramatic in absolute level, but enough to degrade the SNR that the LNA needs to recover individual satellite signals.*
 
-The GPS L1 signal is genuinely tiny. The noise spurs I measured are 40–50 dB above the GPS signal level. The GPS module's LNA is fighting a losing battle.
+The problem isn't that the spurs overpower the aggregate GPS band — it's that they raise the local noise floor. Individual satellite signals, which the GPS module has to pull out separately, don't survive that kind of noise floor elevation. The LNA is fighting an elevated baseline, not a clean sky.
 
 ---
 
@@ -104,27 +104,21 @@ The GPS L1 signal is genuinely tiny. The noise spurs I measured are 40–50 dB a
 
 ### 1. Ferrite Beads on GPS Power
 
-Ferrite beads on the VCC and GND lines to the GPS module. Effective for conducted noise on the power rail at lower frequencies. No effect on radiated interference from the VTX at 1.5 GHz — RF doesn't travel via the power line at that frequency.
+Ferrite beads on the VCC and GND lines to the GPS module. Effective for conducted noise on the power rail at lower frequencies. No effect on the BEC's radiated RF in the GPS band.
 
 **Result: No improvement in satellite count.**
 
-### 2. Reducing VTX Power
+### 2. Removing the VTX
 
-Setting VTX to pit mode (0 mW) or lowest power (25 mW) during the GPS acquisition phase. This reduces the 5.8 GHz fundamental and therefore its sub-harmonics.
+Removed the VTX entirely from the stack — not just powered down, physically absent. If VTX sub-harmonics at 1450 MHz were the primary source, this should have shown a clear improvement.
 
-**Result: Marginal improvement.** Acquisition sometimes reaches 6–8 satellites with VTX off, but that is not a practical flight scenario.
+**Result: No improvement.** The noise profile on the TinySA was unchanged with the VTX removed. The BEC is the dominant source, not the VTX.
 
-### 3. ESC PWM Frequency Reduction
+### 3. Shielded Cable and Decoupling on the GPS Module
 
-Dropped the ESC PWM frequency from 48 kHz to 24 kHz on the hypothesis that motor switching harmonics might be contributing. Lower motor PWM frequency means fewer harmonics per unit frequency range.
+Replaced the stock GPS wiring with a shielded balanced audio cable (4-conductor with braid shield). The shield connects to FC ground and runs alongside the GPS module, providing some local shielding. Internal conductors carry power (VCC and GND) and data (RX/TX). Added 1 µF and 0.1 µF capacitors in parallel directly on the GPS module's power pins.
 
-**Result: Minimal difference.** The noise profile barely shifted — consistent with the BEC being the dominant source rather than motor PWM. The BEC switching frequency and its harmonics are unaffected by Betaflight's PWM settings.
-
-### 4. Physical Shielding Attempts
-
-Wrapped the GPS module and antenna area with copper foil tape connected to ground. This creates a Faraday shield around the module, but the antenna still needs a line of sight to the sky — and the antenna is right next to the noise source.
-
-**Result: Slight improvement, but the geometry makes it nearly impossible to shield the antenna without blocking the sky-facing GPS signals.**
+**Result: Partial improvement.** Satellite count sometimes reaches 8 instead of the previous maximum of 5. Lock is still unreliable and sometimes fails entirely. Better, but not solved.
 
 ---
 
@@ -135,7 +129,7 @@ The Pavo20 Pro II's integrated stack design prioritizes compactness over RF isol
 The interference has at least two components:
 
 1. **Radiated RF from the 5V BEC** — the switching regulator on the integrated FC/ESC board, running at a few MHz with harmonics and spurs spreading into the GHz range. This is the dominant source: it was present even with VTX removed and no motors running.
-2. **VTX sub-harmonics** — a 5.8 GHz transmitter can produce spurs at 5800/4 = 1450 MHz. Secondary contributor; removing the VTX partially reduced the noise but did not eliminate it.
+2. **VTX sub-harmonics** — a 5.8 GHz transmitter can produce spurs at 5800/4 = 1450 MHz. Turned out not to be a meaningful contributor: removing the VTX entirely made no measurable difference to the noise profile.
 
 Ferrite beads address conducted noise on the power rail only — they have no effect on the BEC's radiated RF. Physical separation between the GPS module and the BEC is the only approach that actually addresses component 1.
 
@@ -147,11 +141,10 @@ That assumption holds for some flying environments and fails completely in other
 
 ## Where I Am Now
 
-I am still searching for a reliable noise isolation solution. Current experiments in progress:
+I am still searching for a reliable noise isolation solution. The shielded cable helped but didn't solve it. What's left to try:
 
-- **Longer GPS cable**: moving the module 5–8 cm further from the stack via a thin cable. Even small physical separation dramatically reduces near-field coupling. The trade-off is weight and mechanical complexity on a build that is supposed to be compact.
-- **Active re-radiation (GPS repeater)**: using an external active GPS antenna with a separate LNA, outside the aircraft envelope, connected via a thin coax. This is overkill for a whoop, but it would confirm whether the problem is purely proximity-based.
-- **INAV migration**: INAV's navigation stack handles degraded GPS lock more gracefully than Betaflight GPS Rescue. If I cannot eliminate the noise, a better software stack might at least work reliably at 6–8 satellites instead of requiring 12+.
+- **Longer GPS cable**: moving the module 5–8 cm further from the stack. Even small physical separation dramatically reduces near-field BEC coupling. The trade-off is weight and mechanical complexity on a build that is supposed to be compact.
+- **Active re-radiation (GPS repeater)**: using an external active GPS antenna with a separate LNA, outside the aircraft envelope, connected via thin coax. This is overkill for a whoop, but it would confirm whether the problem is purely proximity-based.
 
 The 1S Matrix build continues to embarrass the Pavo20 on satellite count every single session. Until I find a fix, GPS Rescue on the Pavo20 remains in the "emergency backup that might not work" category rather than a reliable safety feature.
 
@@ -160,5 +153,3 @@ The 1S Matrix build continues to embarrass the Pavo20 on satellite count every s
 ## Next Steps
 
 I'll update this article as experiments progress. If you've solved this on a similar integrated-stack whoop build, I want to hear about it.
-
-The TinySA files and Betaflight configuration dumps for both builds are available — I'll link them once I've cleaned up the directory structure.

@@ -14,7 +14,6 @@ tags:
   - rf
   - tinysa
   - betaflight
-  - inav
 series:
   - FPV Builds
 ---
@@ -84,7 +83,7 @@ Tikrasis kaltininkas yra **5V BEC** (akumuliatoriaus eliminavimo grandinė) inte
 
 Kai GPS modulis sėdi 10–15 mm tiesiai virš to BEC, ant tos pačios žemės plokštumos, ryšys yra artimojo lauko. Jis nekeliaus maitinimo linija — jis tiesiogiai spinduliuoja iš PCB takelių į GPS LNA.
 
-Be to: **vaizdo siųstuvai** 5,8 GHz gali generuoti subharmonikas ir maišymo produktus. 5,8 GHz VTX ties 200 mW gali gaminti energiją ties 5800/4 = 1450 MHz — tiesiai GPS juostoje. VTX matavimas patvirtino, kad jį pašalinus triukšmas sumažėjo, bet neišnyko — tai rodo, kad BEC yra pagrindinis šaltinis.
+Be to: **vaizdo siųstuvai** 5,8 GHz gali generuoti subharmonikas ir maišymo produktus. 5,8 GHz VTX ties 200 mW gali gaminti energiją ties 5800/4 = 1450 MHz — tiesiai GPS juostoje. VTX matavimas patvirtino, kad jį pašalinus triukšmas nepagerėjo — tai rodo, kad BEC yra pagrindinis šaltinis.
 
 Tai patvirtinau kitoje aplinkoje — rūsyje, kur aplinkos RF triukšmas mažesnis:
 
@@ -94,9 +93,9 @@ Tai patvirtinau kitoje aplinkoje — rūsyje, kur aplinkos RF triukšmas mažesn
 Lauke, GPS antena nukreipta į atvirą dangų, matomas tikrasis GPS signalo kontekstas:
 
 ![TinySA matavimas lauke — 1,2–1,8 GHz diapazonas — GPS L1 ties 1575,42 MHz vos matomas virš Pavo20 triukšmo grindos](tinysa-outside-gps.jpg)
-*Matavimas lauke, atviroje erdvėje. GPS L1 signalas ties 1575,42 MHz sukuria plačią plokščiakalniui panašią elevaciją GPS juostoje — visos konsteliacijos signalai vienu metu. Palyginkite signalo lygį su Pavo20 triukšmo smaigaliais. Triukšmo grinda GPS juostoje yra 40–50 dB aukščiau to, ką LNA bando priimti.*
+*Matavimas lauke, atviroje erdvėje. GPS L1 signalas ties 1575,42 MHz sukuria plačią plokščiakalniui panašią elevaciją GPS juostoje — visos konsteliacijos signalai vienu metu. Suvestinis GPS signalas yra maždaug 20 dB virš bazinės triukšmo grindos. Pavo20 matavimuose matomi BEC smaigaliai yra 10–15 dB virš tos pačios bazinės grindos — ne tokie dramatiškai absoliučiu lygiu, tačiau pakankami, kad degraduotų SNR, kurį LNA turi atkurti atskirų palydovų signalams.*
 
-GPS L1 signalas yra tikrai mikroskopiškas. Triukšmo smaigaliai, kuriuos išmatavau, yra 40–50 dB aukščiau GPS signalo lygio. GPS modulio LNA kovoja pralaimėjimo mūšį.
+Problema ne ta, kad smaigaliai nustelbia suvestinę GPS juostą — problema ta, kad jie pakelia vietinę triukšmo grindą. Atskiri palydovų signalai, kuriuos GPS modulis turi išskirti atskirai, nepereina tokio triukšmo grindos pakilimo. LNA kovoja su pakelta bazine grinda, o ne švariu dangumi.
 
 ---
 
@@ -104,27 +103,21 @@ GPS L1 signalas yra tikrai mikroskopiškas. Triukšmo smaigaliai, kuriuos išmat
 
 ### 1. Feritiniai karoliukai ant GPS maitinimo
 
-Feritiniai karoliukai ant VCC ir GND laidų į GPS modulį. Veiksmingi laidiniam triukšmui maitinimo linijoje žemesniuose dažniuose. Jokio poveikio spinduliuojamam trikdžiui iš VTX ties 1,5 GHz — RF šiame dažnyje nekeliaus maitinimo linija.
+Feritiniai karoliukai ant VCC ir GND laidų į GPS modulį. Veiksmingi laidiniam triukšmui maitinimo linijoje žemesniuose dažniuose. Jokio poveikio BEC spinduliuojamam RF GPS juostoje.
 
 **Rezultatas: Palydovų skaičius nepagerėjo.**
 
-### 2. VTX galios sumažinimas
+### 2. VTX pašalinimas
 
-VTX nustatymas į pit režimą (0 mW) arba mažiausią galią (25 mW) GPS įgijimo fazėje. Tai sumažina 5,8 GHz pagrindinį dažnį ir jo subharmonikas.
+VTX visiškai pašalintas iš steko — ne tik išjungtas, fiziškai pašalintas. Jei VTX subharmonikos ties 1450 MHz būtų pagrindinis šaltinis, tai turėjo parodyti aiškų pagerėjimą.
 
-**Rezultatas: Nedidelis pagerėjimas.** Įgijimas kartais pasiekia 6–8 palydovus, kai VTX išjungtas, tačiau tai nėra praktinis skrydžio scenarijus.
+**Rezultatas: Jokio pagerėjimo.** TinySA triukšmo profilis nepasikeitė pašalinus VTX. BEC yra dominuojantis šaltinis, ne VTX.
 
-### 3. ESC PWM dažnio sumažinimas
+### 3. Ekranuotas kabelis ir dekupliavimas ant GPS modulio
 
-Sumažinau ESC PWM dažnį nuo 48 kHz iki 24 kHz, tikrinant hipotezę, kad variklio perjungimo harmonikos gali prisidėti prie triukšmo. Mažesnis variklio PWM dažnis reiškia mažiau harmonikų vienam dažnio vienetui.
+Standartinė GPS laido instaliacija pakeista ekranuotu subalansuotu audio kabeliu (4 laidų su pynimo ekranu). Ekranas prijungtas prie FC žemės ir driekiamas šalia GPS modulio, suteikdamas tam tikrą vietinį ekranavimą. Vidiniai laidai neša maitinimą (VCC ir GND) bei duomenis (RX/TX). 1 µF ir 0,1 µF kondensatoriai prijungti lygiagrečiai tiesiai ant GPS modulio maitinimo kontaktų.
 
-**Rezultatas: Minimalus skirtumas.** Triukšmo profilis beveik nepasikeitė — tai atitinka BEC, o ne variklio PWM, kaip pagrindinį šaltinį. BEC perjungimo dažnis ir jo harmonikos nepriklauso nuo Betaflight PWM nustatymų.
-
-### 4. Fizinio ekranavimo bandymai
-
-Apvyniotas GPS modulio ir antenos plotas varinės folijos juosta, sujungta su žeme. Tai sukuria Faraday ekraną aplink modulį, tačiau antena vis tiek turi matyti dangų — o antena yra tiesiai šalia triukšmo šaltinio.
-
-**Rezultatas: Nedidelis pagerėjimas, tačiau geometrija beveik neįmanoma ekranuoti anteną neblokuojant dangaus krypties GPS signalų.**
+**Rezultatas: Dalinis pagerėjimas.** Palydovų skaičius kartais pasiekia 8, vietoj ankstesnio maksimalaus 5. Fiksavimas vis dar nepatikimas ir kartais visiškai nepavyksta. Geriau, bet neišspręsta.
 
 ---
 
@@ -135,7 +128,7 @@ Pavo20 Pro II integruoto steko dizainas teikia pirmenybę kompaktiškumui prieš
 Trukdžiai turi bent du komponentus:
 
 1. **Spinduliuojamas RF iš 5V BEC** — integruotos FC/ESC plokštės perjungimo reguliatorius, veikiantis keliais MHz, su harmonikais ir smaigaliais, besiskleidžiančiais į GHz diapazoną. Tai pagrindinis šaltinis: buvo matomas net pašalinus VTX ir nesukant variklių.
-2. **VTX subharmonikos** — 5,8 GHz siųstuvas gali gaminti smaigalius ties 5800/4 = 1450 MHz. Antrinis veiksnys; pašalinus VTX triukšmas sumažėjo, bet neišnyko.
+2. **VTX subharmonikos** — 5,8 GHz siųstuvas gali gaminti smaigalius ties 5800/4 = 1450 MHz. Pasirodė, kad tai nereikšmingas veiksnys: visiškai pašalinus VTX triukšmo profilyje nebuvo jokio išmatuojamo skirtumo.
 
 Feritiniai karoliukai veikia tik laidiniam triukšmui maitinimo linijoje — jie neturi jokio poveikio BEC spinduliuojamam RF. Fizinis atstumas tarp GPS modulio ir BEC yra vienintelis metodas, iš tikrųjų sprendžiantis 1 komponentą.
 
@@ -147,11 +140,10 @@ GPS modulis, naudojamas Pavo20, yra standartinis M8N/M10 variantas miniatiūrizu
 
 ## Kur esu dabar
 
-Vis dar ieškau patikimo triukšmo izoliacijos sprendimo. Šiuo metu vyksta eksperimentai:
+Vis dar ieškau patikimo triukšmo izoliacijos sprendimo. Ekranuotas kabelis padėjo, bet neišsprendė problemos. Kas dar liko išbandyti:
 
 - **Ilgesnis GPS kabelis**: modulio perkėlimas 5–8 cm toliau nuo steko plonu kabeliu. Net nedidelis fizinis atstumas dramatiškai sumažina artimojo lauko sujungimą. Kompromisas — svoris ir mechaninis sudėtingumas ant drono, kuris turėtų būti kompaktiškas.
 - **Aktyvus GPS kartojimas**: išorinė aktyvi GPS antena su atskira LNA, už orlaivio apvalkalo ribų, prijungta plonu koaksialiniu laidu. Tai per sudėtinga burbuliniams dronams, bet patvirtintų, ar problema yra grynai artimumu pagrįsta.
-- **Migracija į INAV**: INAV navigacijos steke blogėjantis GPS ryšys tvarkomas maloniau nei Betaflight GPS gelbėjime. Jei negaliu pašalinti triukšmo, geresnis programinės įrangos stekas gali patikimai veikti ties 6–8 palydovais vietoj reikalaujamų 12+.
 
 1S Matrix dronas kiekvieną sesiją ir toliau gėdina Pavo20 palydovų skaičiumi. Kol nerasiu pataisymo, GPS gelbėjimas Pavo20 lieka kategorijoje „avarinė atsarga, kuri gali neveikti", o ne patikimas saugos elementas.
 
@@ -160,5 +152,3 @@ Vis dar ieškau patikimo triukšmo izoliacijos sprendimo. Šiuo metu vyksta eksp
 ## Kiti žingsniai
 
 Atnaujinsiu šį straipsnį eksperimentams progresuojant. Jei išsprendėte tai panašiame integruoto steko burbuliniam dronui, norėčiau išgirsti.
-
-TinySA failai ir Betaflight konfigūracijos išsaugojimai abiem dronams yra pasiekiami — suspausiu nuorodas, kai sutvarkysite katalogo struktūrą.
