@@ -72,8 +72,7 @@ I connected a TinySA to a short wire antenna positioned near the stack on each q
 ![TinySA baseline noise floor, 1.2–1.8 GHz — everything powered off, reference measurement before connecting the Pavo20](tinysa-baseline.jpg)
 *Baseline measurement. TinySA probe in position, everything powered off. Flat noise floor around −105 dBm across the entire 1.2–1.8 GHz span — this is the reference.*
 
-<!-- IMAGE: TinySA screenshot — 1S Matrix 3-in-1 digital build, 1.2GHz–1.8GHz span, showing noise floor -->
-*[TODO: TinySA screenshot — 1S digital build, 1.2–1.8 GHz span]*
+The 1S build measured essentially flat across the same span — noise at or below the baseline floor, nothing worth screenshotting. The Pavo20 tells a different story:
 
 ![TinySA measurement — Pavo20 Pro II on battery, VTX removed, 1.2–1.8 GHz span — FC/ESC noise clearly elevated above baseline](tinysa-pavo20-initial.jpg)
 *Pavo20 on battery (no VTX). Noise floor elevated well above the −105 dBm baseline. A sharp spur at approximately 1.34 GHz reaches −89 dBm — 16 dB above baseline. The GPS band at 1575 MHz is already noticeably raised.*

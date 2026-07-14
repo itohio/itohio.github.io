@@ -72,8 +72,7 @@ Prie kiekvieno drono steko prijungiau TinySA su trumpa vielos antena, dronams ma
 ![TinySA bazinio triukšmo matuojamumas, 1,2–1,8 GHz — viskas išjungta, etaloninis matavimas prieš prijungiant Pavo20](tinysa-baseline.jpg)
 *Bazinis matavimas. TinySA antena pozicijoje, viskas išjungta. Plokščia triukšmo grinda apie −105 dBm visame 1,2–1,8 GHz diapazone — tai etalonas.*
 
-<!-- IMAGE: TinySA ekrano kopija — 1S Matrix 3-in-1 skaitmeninis dronas, 1,2 GHz–1,8 GHz diapazonas, rodanti triukšmo grindą -->
-*[TODO: TinySA ekrano kopija — 1S skaitmeninis dronas, 1,2–1,8 GHz diapazonas]*
+1S drono matavimas tame pačiame diapazone buvo praktiškai lygus — triukšmas ties baziniu lygiu arba žemiau jo, nieko verto ekrano kopijos. Pavo20 rodo visiškai kitą vaizdą:
 
 ![TinySA matavimas — Pavo20 Pro II su baterija, be VTX, 1,2–1,8 GHz — FC/ESC triukšmas aiškiai padidėjęs virš bazinio lygio](tinysa-pavo20-initial.jpg)
 *Pavo20 su baterija (be VTX). Triukšmo grinda gerokai virš −105 dBm bazinio lygio. Aštrus smaigalys apie 1,34 GHz siekia −89 dBm — 16 dB virš bazinio. GPS juosta ties 1575 MHz jau pastebimai pakelta.*
