@@ -312,8 +312,6 @@ The ring buffer is 15 seconds; each extraction gives a 10-second window with 1-s
 
 The mel preprocessing `FrequencyMasking` and `TimeMasking` issue mentioned in the architecture section is present in the inference path too. Zero the mask parameters before exporting and before running inference. Do not rely on `model.eval()` to disable them.
 
-![Drone Audio Detector UI — per-class probability bars (idle 96%, plane 24%, quad 9% on office ambient). ARGMAX sigmoid left, SOFTMAX relative right. 177ms total inference [FP32].](drone-detector-ui-idle.png)
-
 ---
 
 ## Open Questions
