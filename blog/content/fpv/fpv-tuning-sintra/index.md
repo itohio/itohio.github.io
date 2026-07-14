@@ -68,9 +68,11 @@ This is a good example of what AI assistance is actually useful for in hardware 
 
 ### The Current Fleet Context
 
+All builds run the same rates: Actual, center 10, max 730, expo 0.4–0.5. Same rates in the sim too. The point is that muscle memory transfers between quads — switching from the AIR65 II to the 2" ripper mid-session shouldn't require a mental reset.
+
 The builds I'm actively tuning:
 
-**AIR65 II** (65mm whoop, BetaFPV Air65 II frame, BetaFPV Matrix 1S 5IN1 II, ICM42688-P gyro, Bluejay 96kHz ESC, Caddx Ant Lite camera) — fast indoor ripping. Original board failed: ELRS solder joint issue, rxloss errors after the board warmed up. Replaced with the 5IN1 II — tuning from scratch. Rates: Actual, center 10, max 730, expo 0.4–0.5 — lower center sensitivity for more resolution in the stable flying region.
+**AIR65 II** (65mm whoop, BetaFPV Air65 II frame, BetaFPV Matrix 1S 5IN1 II, ICM42688-P gyro, Bluejay 96kHz ESC, Caddx Ant Lite camera) — fast indoor ripping. Original board failed: ELRS solder joint issue, rxloss errors after the board warmed up. Replaced with the 5IN1 II — tuning from scratch.
 
 **Custom 2" O4 Lite ripper** — props barely clear the VTX, bi-blade props. The clearance constraint means prop wash is more significant than on a conventionally spaced build. This is the quad where step response analysis pays off most — the resonance bands shift depending on throttle position and the prop-to-VTX interaction.
 

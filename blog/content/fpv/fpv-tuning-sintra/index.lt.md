@@ -68,6 +68,20 @@ Tai geras pavyzdys, kam AI pagalba iš tikrųjų naudinga aparatinės įrangos d
 
 ---
 
+### Dabartinis Flotų Kontekstas
+
+Visi dronai naudoja tuos pačius rates: Actual, center 10, max 730, expo 0.4–0.5. Tie patys rates simuliatoriuje taip pat. Esmė ta, kad raumenų atmintis persiduoda tarp dronų — persėdus iš AIR65 II į 2 colių riperį vienos sesijos metu, nereikia mentaliai persikonfigūruoti.
+
+Dronai, kuriuos šiuo metu derinu:
+
+**AIR65 II** (65mm burbulinis, BetaFPV Air65 II rėmas, BetaFPV Matrix 1S 5IN1 II, ICM42688-P giroskopas, Bluejay 96kHz ESC, Caddx Ant Lite kamera) — greitas vidaus rūšiavimas. Originalus valdiklis sugedo: ELRS lusto litavimo defektas, rxloss klaidos po to, kai plokštė įšildavo. Pakeistas į 5IN1 II — derinama iš naujo.
+
+**Pasirinktinis 2 colių O4 Lite riperis** — sraigteliai vos praeina pro VTX, dvieigiai sraigteliai. Šis ribojimas reiškia, kad propelerių plovimas yra reikšmingesnis nei standartiniuose rėmuose. Čia žingsnio atsako analizė atsiperka labiausiai — rezonansų juostos keičiasi priklausomai nuo drosselio padėties ir sraigtelio-VTX sąveikos.
+
+**2,5 colio LR eksperimentinis** (18650, lauke neišbandytas) — dar neskraidė lauke. Derinimo sesija bus įdomi; 18650 svorio pasiskirstymas ir LR sraigtelių parinkimas ženkliai keičia žingsnio atsako profilį, palyginti su mažesniais dronais.
+
+---
+
 ## Ko AI Pagalba Nepakeičia
 
 Dėl išsamumo: yra proceso dalių, kuriose AI pagalba prideda naštą, o ne ją mažina.
