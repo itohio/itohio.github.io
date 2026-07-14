@@ -41,10 +41,10 @@ Burbulinio drono korpuse beveik nėra vietos tarp GPS modulio ir visko, kas gene
 
 Prieš imantis spektro analizatoriaus, atlikau akivaizdžius patikrinimus.
 
-<!-- IMAGE: Pavo20 Pro II nuotrauka su sulituotu GPS moduliu ir garsiakalbiu, rodanti fizinį artumą prie VTX zonos -->
-*[TODO: Nuotrauka — sulituotas GPS ir garsiakalbis ant Pavo20 Pro II steko]*
+![Pavo20 Pro II su GPS moduliu, sumontuotu ant DJI O4 Pro kameros viršaus — visas drono apžvalgos vaizdas, rodantis dabartinę konfigūraciją](pavo20-gps-overview.jpg)
+*Dabartinė konfigūracija: GPS modulis sėdi ant DJI O4 Pro kameros viršaus, sumontuotas aukščiau FC/ESC steko. Ekranuotas kabelis eina žemyn iki FC. Net ir esant šiam fiziniam atstumui nuo VTX ir BEC, GPS signalas lieka nepatikimas.*
 
-GPS antena Pavo20 ant steko viršaus, tiesiai virš ESC/VTX plokštės. Antenos įžeminimo plokštuma yra PCB varis — tas pats, per kurį teka 5V BEC perjungimo srovės ir VTX RF žemė. Tarp GPS modulio LNA ir VTX išvesties pakopo nėra fizinio ekrano.
+Standartinėje konfigūracijoje GPS antena sėdi tiesiai virš ESC/VTX plokštės. Antenos įžeminimo plokštuma yra PCB varis — tas pats, per kurį teka 5V BEC perjungimo srovės ir VTX RF žemė. Tarp GPS modulio LNA ir VTX išvesties pakopo nėra fizinio ekrano.
 
 <!-- IMAGE: GPS laidų ir filtravimo bandymo nuotrauka — feritiniai karoliukai, filtravimo kondensatoriai maitinimo linijoje -->
 *[TODO: Nuotrauka — GPS laidai su feritiniais karoliukais ir maitinimo linijos filtravimas]*
@@ -115,9 +115,15 @@ VTX visiškai pašalintas iš steko — ne tik išjungtas, fiziškai pašalintas
 
 ### 3. Ekranuotas kabelis ir dekupliavimas ant GPS modulio
 
-Standartinė GPS laido instaliacija pakeista ekranuotu subalansuotu audio kabeliu (4 laidų su pynimo ekranu). Ekranas prijungtas prie FC žemės ir driekiamas šalia GPS modulio, suteikdamas tam tikrą vietinį ekranavimą. Vidiniai laidai neša maitinimą (VCC ir GND) bei duomenis (RX/TX). 1 µF ir 0,1 µF kondensatoriai prijungti lygiagrečiai tiesiai ant GPS modulio maitinimo kontaktų.
+Standartinė GPS laido instaliacija pakeista ekranuotu subalansuotu audio kabeliu (4 laidų su pynimo ekranu). Ekranas prijungtas prie FC žemės **tik FC gale** — modulio galo ekranas paliktas neprijungtas (plūduriuojantis). Vidiniai laidai neša maitinimą (VCC ir GND) bei duomenis (RX/TX). 1 µF ir 0,1 µF kondensatoriai prijungti lygiagrečiai tiesiai ant GPS modulio maitinimo kontaktų.
 
 **Rezultatas: Dalinis pagerėjimas.** Palydovų skaičius kartais pasiekia 8, vietoj ankstesnio maksimalaus 5. Fiksavimas vis dar nepatikimas ir kartais visiškai nepavyksta. Geriau, bet neišspręsta.
+
+### 4. GPS modulis ant kameros viršaus
+
+GPS modulis perkeltas nuo steko — dabar jis sėdi ant DJI O4 Pro kameros viršaus, toliau nuo FC, ESC, BEC ir VTX. Ekranuotas kabelis driekiasi žemyn iki FC. Tikslas buvo sumažinti artimojo lauko sujungimą su BEC, pridedant fizinį atstumą tarp GPS LNA ir perjungimo reguliatoriaus.
+
+**Rezultatas: Jokio reikšmingo pagerėjimo.** Palydovų skaičius ir fiksavimo patikimumas iš esmės nepasikeitė, palyginti su ekranuoto kabelio ir dekupliavimo rezultatu. Artimojo lauko BEC sujungimas arba vis dar pasiekia modulį per kabelį, arba BEC spinduliuojamas laukas siekia pakankamai toli, kad 2,5 colio rėmo aukštyje esantis atstumas yra nepakankamas.
 
 ---
 
@@ -140,12 +146,20 @@ GPS modulis, naudojamas Pavo20, yra standartinis M8N/M10 variantas miniatiūrizu
 
 ## Kur esu dabar
 
-Vis dar ieškau patikimo triukšmo izoliacijos sprendimo. Ekranuotas kabelis padėjo, bet neišsprendė problemos. Kas dar liko išbandyti:
+Vis dar ieškau patikimo triukšmo izoliacijos sprendimo. Ekranuotas kabelis ir dekupliavimas davė dalinį pagerėjimą; GPS modulio perkėlimas ant O4 Pro kameros viršaus (toliau nuo steko) jokio papildomo naudos nedavė. Atrodo, kad BEC artimojo lauko spinduliavimas siekia toliau, nei leidžia 2,5 colio rėmo fizinis atstumas.
 
-- **Ilgesnis GPS kabelis**: modulio perkėlimas 5–8 cm toliau nuo steko plonu kabeliu. Net nedidelis fizinis atstumas dramatiškai sumažina artimojo lauko sujungimą. Kompromisas — svoris ir mechaninis sudėtingumas ant drono, kuris turėtų būti kompaktiškas.
-- **Aktyvus GPS kartojimas**: išorinė aktyvi GPS antena su atskira LNA, už orlaivio apvalkalo ribų, prijungta plonu koaksialiniu laidu. Tai per sudėtinga burbuliniams dronams, bet patvirtintų, ar problema yra grynai artimumu pagrįsta.
+Kas dar liko išbandyti:
 
-1S Matrix dronas kiekvieną sesiją ir toliau gėdina Pavo20 palydovų skaičiumi. Kol nerasiu pataisymo, GPS gelbėjimas Pavo20 lieka kategorijoje „avarinė atsarga, kuri gali neveikti", o ne patikimas saugos elementas.
+- **Dar ilgesnis kabelis**: GPS modulio išvedimas ant prailginto kabelio iki priekinės ar galinės kojos, maksimaliai didinant atstumą nuo FC/ESC plokštės. Iki šiol išbandytas atstumas (kameros aukštis) yra nedidelis — kojų lygio atstumas artimojo lauko slopinimui gali būti visiškai kito masto.
+- **Aktyvus GPS kartojimas**: išorinė aktyvi GPS antena su sava LNA, gerai išvesta už orlaivio apvalkalo ribų, prijungta plonu koaksialiniu laidu. Galutinai atsakytų, ar tai artimumu pagrįsta problema. Visiškai per sudėtinga burbuliniams dronams, bet patvirtintų pagrindinę priežastį.
+
+---
+
+### Tuo pačiu metu: ELRS UFL antenos modifikacija
+
+Nesusiję su GPS, bet atlikta tuo pačiu kabelių tvarkymo metu: pridėjau UFL jungtį ELRS imtuvo antenai. Standartinė vidinė antena Pavo20 steke tinkama artimam skrydžiui, bet ne daugiau.
+
+Su UFL modifikacija ir išorine antena ryšys laikėsi stabiliai 1 km atstumu. Ribojantis veiksnys tokiu atstumu buvo baterijos talpa 15 m/s vėjyje — ne radijo ryšys. Ši modifikacija veikė iš pirmo karto ir davė akimirksniui pastebimą rezultatą. Naudingas kontrastas GPS darbui, kuris tokio rezultato nedavė.
 
 ---
 

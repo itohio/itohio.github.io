@@ -42,10 +42,10 @@ A whoop chassis has almost no space between the GPS module and everything else g
 
 Before touching a spectrum analyser I did the obvious checks.
 
-<!-- IMAGE: photo of Pavo20 Pro II with GPS module and buzzer soldered, showing physical proximity to VTX area -->
-*[TODO: Photo — soldered GPS and buzzer on Pavo20 Pro II stack]*
+![Pavo20 Pro II with GPS module mounted on top of the O4 Pro camera — full drone overview showing current configuration](pavo20-gps-overview.jpg)
+*Current configuration: the GPS module sits on top of the DJI O4 Pro camera, mounted further above the FC/ESC stack. The shielded cable routes down to the FC. Even with this physical separation from the VTX and BEC, GPS acquisition remains unreliable.*
 
-The GPS antenna on the Pavo20 sits on the top of the stack, directly above the ESC/VTX board. The antenna ground plane is the PCB copper — which is also the return path for the 5V BEC switching currents and VTX RF ground. There is no physical shield between the GPS module's LNA and the VTX output stage.
+In the stock configuration the GPS antenna sits directly above the ESC/VTX board. The antenna ground plane is the PCB copper — which is also the return path for the 5V BEC switching currents and VTX RF ground. There is no physical shield between the GPS module's LNA and the VTX output stage.
 
 <!-- IMAGE: photo of GPS wiring and filtering attempt — ferrite beads, filtering capacitors on power line -->
 *[TODO: Photo — GPS wiring with ferrite beads and power line filtering]*
@@ -116,9 +116,15 @@ Removed the VTX entirely from the stack — not just powered down, physically ab
 
 ### 3. Shielded Cable and Decoupling on the GPS Module
 
-Replaced the stock GPS wiring with a shielded balanced audio cable (4-conductor with braid shield). The shield connects to FC ground and runs alongside the GPS module, providing some local shielding. Internal conductors carry power (VCC and GND) and data (RX/TX). Added 1 µF and 0.1 µF capacitors in parallel directly on the GPS module's power pins.
+Replaced the stock GPS wiring with a shielded balanced audio cable (4-conductor with braid shield). The shield connects to FC ground **at the FC end only** — the module end of the shield is left unconnected (floating). Internal conductors carry power (VCC and GND) and data (RX/TX). Added 1 µF and 0.1 µF capacitors in parallel directly on the GPS module's power pins.
 
 **Result: Partial improvement.** Satellite count sometimes reaches 8 instead of the previous maximum of 5. Lock is still unreliable and sometimes fails entirely. Better, but not solved.
+
+### 4. GPS Module on Top of the Camera
+
+Moved the GPS module off the stack entirely — it now sits on top of the DJI O4 Pro camera, further from the FC, ESC, BEC, and VTX. The shielded cable routes down to the FC. The goal was to reduce near-field coupling from the BEC by adding physical distance between the GPS LNA and the switching regulator.
+
+**Result: No significant improvement.** The satellite count and lock reliability are essentially unchanged compared to the shielded cable + decoupling result alone. The near-field BEC coupling either still reaches the module at this distance through the cable itself, or the BEC's radiated field extends far enough that the separation available on a 2.5" frame is insufficient.
 
 ---
 
@@ -141,12 +147,20 @@ That assumption holds for some flying environments and fails completely in other
 
 ## Where I Am Now
 
-I am still searching for a reliable noise isolation solution. The shielded cable helped but didn't solve it. What's left to try:
+Still searching for a reliable noise isolation solution. Shielded cable + decoupling gave a partial improvement; moving the module to the top of the O4 Pro camera (further from the stack) gave no additional benefit. The BEC's reach in near-field conditions appears to exceed the physical separation available on a 2.5" frame.
 
-- **Longer GPS cable**: moving the module 5–8 cm further from the stack. Even small physical separation dramatically reduces near-field BEC coupling. The trade-off is weight and mechanical complexity on a build that is supposed to be compact.
-- **Active re-radiation (GPS repeater)**: using an external active GPS antenna with a separate LNA, outside the aircraft envelope, connected via thin coax. This is overkill for a whoop, but it would confirm whether the problem is purely proximity-based.
+What's left to try:
 
-The 1S Matrix build continues to embarrass the Pavo20 on satellite count every single session. Until I find a fix, GPS Rescue on the Pavo20 remains in the "emergency backup that might not work" category rather than a reliable safety feature.
+- **Even longer cable**: routing the GPS module on an extended cable to the front or rear arm, maximising the distance from the FC/ESC board. The separation already tried (camera height) is small — arm-level separation might be a different order of magnitude in near-field attenuation.
+- **Active re-radiation (GPS repeater)**: external active GPS antenna with its own LNA, mounted well outside the aircraft envelope, connected via thin coax. Definitively answers whether it's a proximity problem. Total overkill for a whoop, but would confirm the root cause.
+
+---
+
+### While I Was at It: ELRS UFL Antenna Mod
+
+Not GPS-related, but done during the same round of cable work: I added a UFL connector for the ELRS receiver antenna. The stock internal antenna on the Pavo20 stack is functional for close-in flying but nothing more.
+
+With the UFL mod and an external antenna, the link held clean at 1 km. The limiting factor at that range was battery capacity in 15 m/s wind — not the radio link. That mod worked first time and gave an immediate, measurable result. A useful contrast to the GPS work, which has not.
 
 ---
 
