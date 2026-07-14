@@ -65,8 +65,8 @@ Ką programa padarė, ko nebūčiau galėjęs padaryti vienas:
 
 Po [Dronefix.lt](https://dronumokykla.lt/) nesustojau ties vienu kvadrotu. Vieną nusipirkau, kad išmokčiau skristi, o tada pradėjau kaupti variklius, rėmus ir skrydžio valdiklius bei konstruoti likusius.
 
-![Kelioninis rinkinys: Meteor75 O4 Lite (viršuje) ir Air65 II su Ratel Baby Nano (apačioje), dėkle](fleet-whoops-case.jpg)
-*Kelioninis rinkinys. Meteor75 O4 Lite konversija (viršuje), Air65 II su Ratel Baby Nano (apačioje). Analoginis Air65 naudoja LHCP anteną — geresnei signalo penetracijai pro kliūtis.*
+![Kelioninis rinkinys: Meteor75 O4 Lite (viršuje) ir Air65 II su Caddx Ant Lite (apačioje), dėkle](fleet-whoops-case.jpg)
+*Kelioninis rinkinys. Meteor75 O4 Lite konversija (viršuje), Air65 II su Caddx Ant Lite (apačioje). Analoginis Air65 naudoja LHCP anteną — geresnei signalo penetracijai pro kliūtis.*
 
 ![Analoginis 2S riperis (kairėje) ir skaitmeninis O4 Lite riperis (dešinėje)](fleet-2inch-rippers.jpg)
 *Du 2 colių riperiai — analoginis 2S kairėje, skaitmeninis O4 Lite dešinėje.*
@@ -83,7 +83,7 @@ Dabartinis sąrašas, maždaug tokia tvarka, kokia viskas vyko:
 
 **Pirmas tolimojo skrydžio bandymas** — 3 colių toothpick rėmas su Meteor75 analoginėmis viduriais persodintomis į jį. Lengvas, minimalus, dingo per pirmąjį skrydį. Pameciau jį tiesiogine prasme trys metrai į šoną nuo tos vietos, kur sėdėjau. Dėl inercijos ir per mažos traukos negalėjau jo sugrąžinti, kliudžiau medį, ir jis tiesiog dingo. Ieškojau tris dienas — tiesiogine prasme tris dienas. Peržiūrėjau paskutines milisekundes prieš nutrūkstant vaizdui, peržiūrėjau 360 įrašą bandydamas nustatyti, kur nukrito po atsitrenkimo į šaką. Nieko. Vis dar kažkur ten.
 
-**Du 2 colių riperiai (analoginis ir skaitmeninis)** — tie, kurie pateisina pavadinimą. 2 colių tiesiog plėšia: geros šešios minutės su 2S 580mAh bateriją. Kas keista, nuo tada, kai pradėjau skraidyti šiuos, simuliatoriuje beveik nebemoku skristi — simuliatorius jaučiasi keistai ir nepatogiai, net su identiškais rate'ais, net Air65 Liftoff'e. Tiesiog ne tas pats.
+**Du 2 colių riperiai (analoginis ir skaitmeninis)** — tie, kurie pateisina pavadinimą. Analoginis 2S tiesiog plėšia: geros šešios minutės su 580mAh baterija. Skaitmeninis O4 Lite pradėjo nuo maždaug 4 minučių; po ESC ir PID optimizavimo išaugo iki 7 minučių skraidant konservatyviai, arba 5–6 minučių rippinant. Kas keista, nuo tada, kai pradėjau skraidyti šiuos, simuliatoriuje beveik nebemoku skristi — simuliatorius jaučiasi keistai ir nepatogiai, net su identiškais rate'ais, net Air65 Liftoff'e. Tiesiog ne tas pats.
 
 **2,5 colio tolimojo skrydžio eksperimentinė platforma** — antras bandymas, sunkesnis rėmas. Kol kas 1S; planuojama konversija į 2S arba 3S. Eksperimentas tęsiamas.
 

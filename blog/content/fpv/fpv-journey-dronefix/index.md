@@ -66,7 +66,7 @@ What the programme did that I couldn't have done alone:
 After [Dronefix.lt](https://dronumokykla.lt/) I did not stop at one quad. I bought one to learn on, then started hoarding motors, frames and flight controllers and building the rest.
 
 ![Travel kit: Meteor75 O4 Lite (top) and Air65 II with Ratel Baby Nano (bottom), in carry case](fleet-whoops-case.jpg)
-*Travel kit. Meteor75 O4 Lite conversion (top), Air65 II with Ratel Baby Nano (bottom). The analog Air65 runs an LHCP antenna for better signal penetration through obstacles.*
+*Travel kit. Meteor75 O4 Lite conversion (top), Air65 II with Caddx Ant Lite (bottom). The analog Air65 runs an LHCP antenna for better signal penetration through obstacles.*
 
 ![Analog 2S ripper (left) and digital O4 Lite ripper (right)](fleet-2inch-rippers.jpg)
 *The two 2" rippers — analog 2S build on the left, digital O4 Lite build on the right.*
@@ -83,7 +83,7 @@ The current roster, more or less in the order it happened:
 
 **First long-range attempt** — a 3" toothpick frame running the Meteor75's analog guts transplanted into it. Light, minimal, gone on its maiden flight. I lost it literally three meters to the side of where I was sitting. Between the inertia and not enough thrust I couldn't pull it back, clipped a tree, and it simply vanished. I searched for three days — literally three days. Studied the last few milliseconds before the feed cut out, went through the 360 recording trying to work out where it fell after hitting the branch. Nothing. It's still out there somewhere.
 
-**Two 2" rippers (analog and digital)** — the ones that earn the name. The 2" absolutely rips: a solid six minutes on a 2S 580mAh pack. Oddly, ever since I started flying these I can barely fly in the simulator anymore — the sim feels weird and awkward, even with identical rates, even the Air65 in Liftoff. It's just not the same.
+**Two 2" rippers (analog and digital)** — the ones that earn the name. The analog 2S absolutely rips: a solid six minutes on a 580mAh pack. The digital O4 Lite ripper started at around 4 minutes; after ESC and PID optimization it's up to 7 minutes flying conservatively, or 5–6 minutes ripping. Oddly, ever since I started flying these I can barely fly in the simulator anymore — the sim feels weird and awkward, even with identical rates, even the Air65 in Liftoff. It's just not the same.
 
 **A 2.5" long-range experimental platform** — second attempt, heavier frame. Still running 1S for now; the plan is to convert to 2S or 3S. That experiment is ongoing.
 
