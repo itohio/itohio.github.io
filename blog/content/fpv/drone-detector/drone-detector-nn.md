@@ -21,7 +21,7 @@ tags:
 
 *Live demo: [drone-detector.sintra.site](https://drone-detector.sintra.site)*
 
-![Drone Audio Detector — live inference in browser, IDLE state. FP32 model, 10 classes, per-class calibrated thresholds. RMS −40.6 dB / Peak −18.2 dB from office ambient. Spectrogram shows dual ARGMAX/SOFTMAX output.](/images/drone-detector-ui-idle.png)
+![Drone Audio Detector — live inference in browser, IDLE state. FP32 model, 10 classes, per-class calibrated thresholds. RMS −40.6 dB / Peak −18.2 dB from office ambient. Spectrogram shows dual ARGMAX/SOFTMAX output.](drone-detector-ui-idle.png)
 
 A note before the technical content: the staggered training protocol described in this article — and the analysis methodology behind it — was developed with significant help from [Sintra AI](https://sintra.ai). What started as a series of questions about why the naive P1→P2 schedule kept plateauing turned into a structured debugging conversation that identified the calibrated checkpointing problem and shaped the cycle logic. The same tooling now helps me analyze FPV drone blackbox logs and run PID tuning protocols. I'll cover that briefly at the end.
 
