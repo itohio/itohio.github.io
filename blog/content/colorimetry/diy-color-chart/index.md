@@ -65,7 +65,7 @@ Darktable's color calibration module works by taking a shot of a known color ref
 
 That's exactly what the CR30 provides: measured Lab values for each patch under D65 illuminant. Feed those into ArgyllCMS alongside the photo measurements and you get a correction that's grounded in actual measurement rather than a factory spec sheet.
 
-Whether the DIY chart is *accurate enough* is still an open question. The acrylic patches are matte and reasonably uniform, but they're nowhere near as spectrally flat or precisely controlled as a professional target. The CR30's ΔE on the painted patches is good — mostly under 3–4 on saturated colors, under 1 on neutrals — but validating this against the SpyderChecker 24's known Lab values requires a proper monitor calibrator. And that's where I'm stuck.
+Whether the DIY chart is *accurate enough* is still an open question — and currently unanswerable, because I never systematically labeled the patches. I measured them, but without a labeling system I can't now tell you which physical patch corresponds to which measurement. The plan was to label each one, then run a monthly aging test: acrylic does shift over time, and knowing the rate of hue drift would tell you when a patch needs recoating. The aging test requires someone who sticks to a schedule. I don't, so it hasn't happened.
 
 ## The calibrator problem
 
@@ -84,6 +84,6 @@ Which brings me to the other part of the problem: even if I had the perfect cali
 
 ## Where this leaves things
 
-The acrylic chart works. The ΔE is good enough to ground a real correction. What's left is straightforward: photograph both charts under controlled light, run them through ArgyllCMS, and compare the resulting corrections. Validating the acrylic patches against the SpyderChecker 24's known Lab values is the last sanity check before I'd trust this for anything serious.
+The acrylic chart is built. Whether it's accurate enough is still unknown — that depends on labeling the patches properly and validating them against the SpyderChecker 24's known Lab values, which hasn't happened yet. The aging test hasn't happened either. What's left is more foundational than it looked when I started: photograph both charts under controlled light, run them through ArgyllCMS, and see how the corrections compare once the reference values are trustworthy.
 
-The harder question is the monitor. The chart is now more accurate than the display it's meant to calibrate, and the instrument needed to properly characterize that display costs more than the display itself. The sublimation prints are still useful as a quick baseline. The acrylic chart is waiting for a calibrator worth trusting on the other end.
+The harder question turned out to be the monitor. The chart may already be more accurate than the display it's meant to calibrate — and the instrument needed to properly characterize that display costs more than the display itself. The sublimation prints are still useful as a quick baseline. The acrylic chart is waiting for a calibrator worth trusting on the other end.

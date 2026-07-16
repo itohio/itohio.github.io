@@ -65,7 +65,7 @@ Darktable spalvų kalibravimo modulis veikia fotografuojant žinomą spalvų eta
 
 Būtent tai CR30 ir suteikia: išmatuotas Lab reikšmes kiekvienam lopui D65 apšvietimo sąlygomis. Paduok jas į ArgyllCMS kartu su nuotraukos matavimais ir gausi korekciją, grindžiamą tikrais matavimais, o ne gamykliniu specifikacijų lapu.
 
-Ar savadarbė lentelė yra *pakankamai tiksli* — dar atviras klausimas. Akriliniai lopai yra matiniai ir pakankamai vienodi, bet toli gražu nėra tokie spectriškai tolygūs ar tiksliai valdomi kaip profesionalus taikinys. CR30 ΔE ant dažytų lopų yra geras — dažniausiai iki 3–4 sodrioms spalvoms, iki 1 neutralioms — tačiau patvirtinimas prieš SpyderChecker 24 reikalauja tinkamo monitoriaus kalibratoriaus. Ir čia įstrigo.
+Ar savadarbė lentelė yra *pakankamai tiksli* — dar atviras klausimas, ir kol kas neatsakomas: lopai niekada nebuvo sistemingai sunumeruoti. Išmačiau juos — arba kažką išmačiau — tačiau be žymėjimo sistemos dabar nebegaliu pasakyti, kuris fizinis lopas atitinka kurį matavimą. Planas buvo pažymėti kiekvieną, tada vykdyti mėnesinį senėjimo testą: akrilas bėgant laikui keičiasi, ir žinoti atspalvio dreifo greitį reikštų žinoti, kada lopą reikia perdažyti. Senėjimo testas reikalauja žmogaus, kuris laikosi grafiko. Aš nesilaikau, todėl taip ir neįvyko.
 
 ## Kalibratoriaus problema
 
@@ -84,6 +84,6 @@ Tai veda prie kitos problemos dalies: net turėdamas tobulą kalibratorių ir to
 
 ## Kur esame dabar
 
-Akrilinė lentelė veikia. ΔE pakankamas realiai korekcijai pagrįsti. Liko nesudėtinga dalis: fotografuoti abi lenteles kontroliuojamoje šviesoje, paleisti per ArgyllCMS ir palyginti gautas korekcijas. Akrilinių lopų patvirtinimas prieš SpyderChecker 24 žinomas Lab reikšmes — paskutinis proto patikrinimas prieš pasitikint šia lentele rimtam darbui.
+Akrilinė lentelė pastatyta. Ar ji pakankamai tiksli — vis dar nežinoma: tai priklausys nuo to, ar lopai bus tinkamai sunumeruoti ir patvirtinti prieš SpyderChecker 24 žinomas Lab reikšmes, ko kol kas neįvyko. Senėjimo testas taip pat neįvyko. Likusios užduotys yra labiau fundamentalios nei atrodė pradžioje: fotografuoti abi lenteles kontroliuojamoje šviesoje, paleisti per ArgyllCMS ir palyginti korekcijas, kai etaloninės reikšmės bus patikimos.
 
-Sunkesnis klausimas — monitorius. Lentelė dabar tikslesnė už ekraną, kuriam ji skirta kalibruoti, o prietaisas, reikalingas tam ekranui tinkamai apibūdinti, kainuoja daugiau nei pats ekranas. Sublimacijos spaudiniai vis dar naudingi kaip greitas bazinis lygis. Akrilinė lentelė laukia patikimo kalibratoriaus kitame gale.
+Sunkesnis klausimas pasirodė esantis monitorius. Lentelė gali jau būti tikslesnė už ekraną, kuriam ji skirta kalibruoti — o prietaisas, reikalingas tam ekranui tinkamai apibūdinti, kainuoja daugiau nei pats ekranas. Sublimacijos spaudiniai vis dar naudingi kaip greitas bazinis lygis. Akrilinė lentelė laukia patikimo kalibratoriaus kitame gale.
