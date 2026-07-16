@@ -1,7 +1,6 @@
 ---
 title: "Training a Neural Network to Detect Shaheds and Quads from Audio"
-date: 2026-07-13
-weight: 30
+date: 2026-06-29
 description: "A 10-class acoustic classifier for Shahed-136 drones and consumer quads, trained mostly from scratch because the data doesn't exist elsewhere. What worked, what failed, and why INT8 quantization isn't the answer yet."
 toc: true
 categories:
