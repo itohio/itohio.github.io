@@ -41,7 +41,7 @@ Pirmas tos dienos skrydis. Laukas atviras, dangus giedras, pastatų nėra. Įjun
 | 1S Matrix 3-in-1 skaitmeninis | ~90s | 20–22 |
 | Pavo20 Pro II | >5min | 2–4 |
 
-1S dronas yra mažesnis. Jo elektronika, galima sakyti, dar tankiau sugromuota. GPS modulis yra tos pačios kartos. Skirtumas — steko architektūra: 1S dronas naudoja atskiras FC ir ESC plokštes, o Pavo20 turi sanglaudžiai integruotą steką, kuriame VTX, FC ir ESC — viena kompaktiška plokštė.
+1S dronas taip pat naudoja integruotą FC/ESC/VTX plokštę — BetaFPV Matrix 3-in-1, tą pačią plokštę, kuri naudojama Meteor serijos dronuose. Jis nėra mažiau integruotas nei Pavo20. Skiriasi tai, kad jis veikia su vienu 18650 elementu, todėl BEC mažina įtampą nuo 3,7V, o ne iš kelių elementų akumuliatoriaus. Kitoks BEC darbinis taškas, kitoks harmonikų profilis, kitoks triukšmo lygis GPS juostoje.
 
 Burbulinio drono korpuse beveik nėra vietos tarp papildomai pritvirtinto GPS modulio ir visko, kas generuoja triukšmą.
 
@@ -56,7 +56,7 @@ Prieš imantis spektro analizatoriaus, atlikau akivaizdžius patikrinimus.
 
 GPS modulis montuojamas ant O4 Pro kameros viršaus — keraminis plytelės antenas turi turėti laisvą, nekliudomą dangaus vaizdą, todėl tai vienintelė praktiškai tinkama pozicija šiame rėme. Po kamera yra integruota FC/ESC/VTX plokštė. GPS LNA pakyla virš steko, bet ne pakankamai — BEC artimojo lauko spinduliavimas siekia toliau nei kameros aukštis teikia.
 
-Pridėjau feritinių karoliukų ant GPS maitinimo linijos ir 100 µF kondensatorių prie modulio maitinimo kontaktų. Tai standartinis žemo dažnio triukšmo sprendimas. Jis nepadarė jokio išmatuojamo poveikio palydovų skaičiui.
+Pridėjau feritinį karoliuką ant GPS VCC linijos ir 1 µF bei 0,1 µF SMD kondensatorius lygiagrečiai prie modulio maitinimo kontaktų. Tai standartinis laidiniam žemo dažnio triukšmui skirtas sprendimas. Jis nepadarė jokio išmatuojamo poveikio palydovų skaičiui.
 
 ---
 
@@ -89,7 +89,7 @@ Tikrasis kaltininkas yra **5V BEC** (akumuliatoriaus eliminavimo grandinė) inte
 
 GPS moduliui esant virš kameros, kuri pati yra virš FC/ESC steko, LNA vis tiek yra kelių centimetrų atstumu nuo BEC. Ties 1,5 GHz artimojo lauko riba (λ/2π) yra maždaug 3 cm — GPS modulis yra ties ta riba arba jos viduje. Ryšys yra artimojo lauko: jis nekeliaus maitinimo linija — jis tiesiogiai jungiamas iš PCB takelių į GPS LNA.
 
-Be to: **vaizdo siųstuvai** 5,8 GHz gali generuoti subharmonikas ir maišymo produktus. 5,8 GHz VTX ties 200 mW gali gaminti energiją ties 5800/4 = 1450 MHz — tiesiai GPS juostoje. VTX matavimas patvirtino, kad jį pašalinus triukšmas nepagerėjo — tai rodo, kad BEC yra pagrindinis šaltinis.
+Taip pat patikrinau VTX kaip kintamąjį: 5,8 GHz siųstuvai gali gaminti subharmonikas ir maišymo produktus plačiame dažnių diapazone. Fiziškai pašalinus VTX iš steko, TinySA triukšmo profilis GPS juostoje nepasikeitė. VTX nėra reikšmingas veiksnys. BEC yra šaltinis.
 
 Tai patvirtinau kitoje aplinkoje — rūsyje, kur aplinkos RF triukšmas mažesnis:
 
@@ -107,9 +107,9 @@ Problema ne ta, kad smaigaliai nustelbia suvestinę GPS juostą — problema ta,
 
 ## Ką išbandžiau
 
-### 1. Feritiniai karoliukai ant GPS maitinimo
+### 1. Feritinis karoliukas ir dekupliavimo kondensatoriai ant GPS maitinimo
 
-Feritiniai karoliukai ant VCC ir GND laidų į GPS modulį. Veiksmingi laidiniam triukšmui maitinimo linijoje žemesniuose dažniuose. Jokio poveikio BEC spinduliuojamam RF GPS juostoje.
+Feritinis karoliukas ant GPS VCC linijos, 1 µF ir 0,1 µF SMD kondensatoriai lygiagrečiai prie modulio maitinimo kontaktų. Veiksmingi laidiniam triukšmui maitinimo linijoje žemesniuose dažniuose. Jokio poveikio BEC spinduliuojamam RF GPS juostoje.
 
 **Rezultatas: Palydovų skaičius nepagerėjo.**
 
@@ -131,16 +131,11 @@ Standartinė GPS laido instaliacija pakeista ekranuotu subalansuotu audio kabeli
 
 Pavo20 Pro II integruoto steko dizainas teikia pirmenybę kompaktiškumui prieš RF izoliaciją. Tai sąmoningas kompromisas 2,5 colio korpusui — tiesiog nėra vietos atskirumui, kuris padarytų skirtumą.
 
-Trukdžiai turi bent du komponentus:
+Trukdžių šaltinis yra **5V BEC** — integruotos FC/ESC plokštės perjungimo reguliatorius. Jis veikia keliais MHz, tačiau greito krašto perjungimo impulsai sukuria harmonikus ir intermoduliavimo produktus, besiskleidžiančius į GHz diapazoną ir patenkančius į GPS juostą. Tai patvirtinta pašalinus visus kitus kintamuosius: VTX fiziškai pašalintas, varikliai neveikia, tik stekas su baterija — triukšmo profilis nepasikeitė.
 
-1. **Spinduliuojamas RF iš 5V BEC** — integruotos FC/ESC plokštės perjungimo reguliatorius, veikiantis keliais MHz, su harmonikais ir smaigaliais, besiskleidžiančiais į GHz diapazoną. Tai pagrindinis šaltinis: buvo matomas net pašalinus VTX ir nesukant variklių.
-2. **VTX subharmonikos** — 5,8 GHz siųstuvas gali gaminti smaigalius ties 5800/4 = 1450 MHz. Pasirodė, kad tai nereikšmingas veiksnys: visiškai pašalinus VTX triukšmo profilyje nebuvo jokio išmatuojamo skirtumo.
+Feritiniai karoliukai veikia tik laidiniam triukšmui maitinimo linijoje — BEC spinduliuojamam RF jie neturi jokio poveikio. Fizinis atstumas yra vienintelis svertas, iš tikrųjų turintis reikšmės.
 
-Feritiniai karoliukai veikia tik laidiniam triukšmui maitinimo linijoje — jie neturi jokio poveikio BEC spinduliuojamam RF. Fizinis atstumas tarp GPS modulio ir BEC yra vienintelis metodas, iš tikrųjų sprendžiantis 1 komponentą.
-
-GPS modulis, naudojamas Pavo20, yra standartinis M8N/M10 variantas miniatiūrizuotame SMD pakete — virš RF LNA nėra ekrano dangtelio. Tai įprasta burbulinio GPS drono klasės dronams; prielaida, kad skrendant lauke pakanka dangaus matymo, kad būtų įveiktas pablogėjęs SNR.
-
-Ši prielaida veikia kai kuriose skrydžio aplinkose ir visiškai neveikia kitose.
+GPS modulis yra standartinis nano M10 su metaliniu ekrano dangteliu virš LNA sekcijos. Tai, kad dangtelis neapsaugo nuo šių trukdžių, yra informatyvu: BEC sujungimas yra pakankamai stiprus, kad prasiskverbtų pro modulio paties RF ekranavimą — patekdamas per maitinimo kontaktus ir tiesiogiai jungiamas į antenos angą kameros viršaus aukštyje. Dangtelis yra suprojektuotas ir sureguliuotas tolimojo lauko izoliacijai; artimojo lauko sujungimas kelių centimetrų atstumu jį apeina.
 
 ---
 
@@ -163,6 +158,12 @@ Su UFL modifikacija ir išorine antena ryšys laikėsi stabiliai 1 km atstumu. R
 
 ---
 
-## Kiti žingsniai
+## Saugos tinklas, kuris iš tikrųjų veikia
 
-Atnaujinsiu šį straipsnį eksperimentams progresuojant. Jei išsprendėte tai panašiame integruoto steko burbuliniam dronui, norėčiau išgirsti.
+GPS gelbėjimas buvo visas tikslas — kalnų dronas, telpa į švarko kišenę, sugrąžina namo tarpeklyje praradus ryšį. Praktiškai jis nė karto nesėkmingai nesuveikė realiomis lauko sąlygomis.
+
+Dėl to jau kelis kartus praradau Pavo20. Aiškiausias atvejis: variklio gedimas skrydžio metu — dronas nukrito maždaug 500 m atstumu. O4 Pro ryšys išliko. Akinėse trumpam pamačiau savo šešėlį ant žolės po krintančiu dronu — to pakako orientuotis prieš nutrūkstant vaizdui. Radau jį su buzeriu. Be ELRS lokalizavimo skriptu ir garsaus buzerio, nė vienas tų dronų nebūtų grįžęs.
+
+GPS gelbėjimas vis dar yra tikslas. ELRS lokalizavimas ir buzeris — atsarginis variantas, kuris iš tikrųjų veikia dabar.
+
+Tinkamo gedimo, buzerio ir lokalizavimo sąranka nusipelno atskiro straipsnio — tikriausiai tada, kai bus ką geresnio pranešti apie patį GPS. Šį straipsnį atnaujinsiu eksperimentams progresuojant.
