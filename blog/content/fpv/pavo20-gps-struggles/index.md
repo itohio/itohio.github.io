@@ -41,7 +41,7 @@ First flight of the day. Field is open, sky is clear, no buildings. I power up b
 | 1S Matrix 3-in-1 digital build | ~90s | 20–22 |
 | Pavo20 Pro II | >5min | 2–4 |
 
-The 1S build is smaller. Its electronics are arguably denser. The GPS module is the same generation. The difference is the stack architecture: the 1S build uses a separate FC and ESC with dedicated boards, while the Pavo20 runs a tightly integrated stack where the VTX, FC, and ESC share a single compact board.
+The 1S build also runs an integrated FC/ESC/VTX board — the BetaFPV Matrix 3-in-1, the same board family used in the Meteor whoops. It is not less integrated than the Pavo20. What differs: it runs on a single 18650 cell, so the BEC is stepping down from 3.7V rather than from a multi-cell pack. Different BEC operating point, different harmonic profile, different noise floor in the GPS band.
 
 A whoop chassis has almost no space between an aftermarket GPS module and everything else generating noise.
 
@@ -56,7 +56,7 @@ Before touching a spectrum analyser I did the obvious checks.
 
 The GPS module mounts on top of the O4 Pro camera — the ceramic patch antenna must have a clear, unobstructed view of the sky, so this is the only practical position on the frame. Below the camera is the integrated FC/ESC/VTX board. The GPS LNA is elevated above the stack, but not by much — and the BEC's near-field extends further than the camera height provides.
 
-I added ferrite beads on the GPS power line and a 100µF cap at the module's power pins. This is the standard low-frequency noise fix. It made no measurable difference to satellite count.
+I added a ferrite bead on the GPS VCC line and 1 µF + 0.1 µF SMD caps in parallel at the module's power pins. This is the standard low-frequency conducted noise fix. It made no measurable difference to satellite count.
 
 ---
 
@@ -89,7 +89,7 @@ The actual culprit is the **5V BEC** (Battery Eliminator Circuit) on the integra
 
 With the GPS module above the camera, which sits above the FC/ESC stack, the LNA is still only a few centimetres from the BEC. At 1.5 GHz the near-field boundary (λ/2π) is roughly 3 cm — the GPS module sits at or within that boundary. The coupling is near-field, not radiated: it is not traveling via the power line, it is coupling directly from the PCB traces into the GPS LNA.
 
-Additionally: **video transmitters** on 5.8 GHz can generate sub-harmonics and mixing products. A 5.8 GHz VTX at 200mW can produce detectable energy at 5800/4 = 1450 MHz — right in the GPS band. The VTX measurement confirmed that removing it did not eliminate the noise, which points firmly back to the BEC as the primary source.
+I also tested the VTX as a variable: 5.8 GHz transmitters can produce sub-harmonics and mixing products across a wide frequency range. With the VTX physically removed from the stack, the TinySA noise profile in the GPS band was unchanged. The VTX is not a meaningful contributor. The BEC is the source.
 
 I confirmed this in a different environment — the basement, for lower ambient RF:
 
@@ -107,9 +107,9 @@ The problem isn't that the spurs overpower the aggregate GPS band — it's that 
 
 ## What I Have Tried
 
-### 1. Ferrite Beads on GPS Power
+### 1. Ferrite Bead and Decoupling Caps on GPS Power
 
-Ferrite beads on the VCC and GND lines to the GPS module. Effective for conducted noise on the power rail at lower frequencies. No effect on the BEC's radiated RF in the GPS band.
+Ferrite bead on the GPS VCC line, plus 1 µF and 0.1 µF SMD caps in parallel at the module's power pins. Effective for conducted noise on the power rail at lower frequencies. No effect on the BEC's radiated RF in the GPS band.
 
 **Result: No improvement in satellite count.**
 
@@ -131,16 +131,11 @@ Replaced the stock GPS wiring with a shielded balanced audio cable (4-conductor 
 
 The Pavo20 Pro II's integrated stack design prioritizes compactness over RF isolation. This is a deliberate trade-off for a 2.5" chassis — there is simply no room for the separation that would make a difference.
 
-The interference has at least two components:
+The interference source is the **5V BEC** — the switching regulator on the integrated FC/ESC board. It runs at a few MHz, but fast switching edges produce harmonics and intermodulation products that spread into the GHz range and land in the GPS band. This was confirmed by removing every other variable: VTX physically removed, motors off, just the stack on battery — the noise profile was unchanged.
 
-1. **Radiated RF from the 5V BEC** — the switching regulator on the integrated FC/ESC board, running at a few MHz with harmonics and spurs spreading into the GHz range. This is the dominant source: it was present even with VTX removed and no motors running.
-2. **VTX sub-harmonics** — a 5.8 GHz transmitter can produce spurs at 5800/4 = 1450 MHz. Turned out not to be a meaningful contributor: removing the VTX entirely made no measurable difference to the noise profile.
+Ferrite beads address conducted noise on the power rail only — they have no effect on the BEC's radiated RF. Physical separation is the only lever that actually matters.
 
-Ferrite beads address conducted noise on the power rail only — they have no effect on the BEC's radiated RF. Physical separation between the GPS module and the BEC is the only approach that actually addresses component 1.
-
-The GPS module used in the Pavo20 is a standard M8N/M10 variant in a miniaturised SMD package — there is no shield can over the RF LNA. This is common on whoop-class GPS builds; the assumption is that flying outdoors provides enough sky view to overcome the degraded SNR.
-
-That assumption holds for some flying environments and fails completely in others.
+The GPS module is a standard nano M10 with a metal shield can over the LNA. That the can doesn't prevent this interference is telling: the BEC coupling is severe enough to penetrate the module's own RF shielding — arriving through the power pins and coupling directly into the antenna aperture at camera-top height. The can is sized and tuned for far-field isolation; near-field coupling at a few centimetres bypasses it.
 
 ---
 
@@ -163,6 +158,12 @@ With the UFL mod and an external antenna, the link held clean at 1 km. The limit
 
 ---
 
-## Next Steps
+## The Safety Net That Actually Works
 
-I'll update this article as experiments progress. If you've solved this on a similar integrated-stack whoop build, I want to hear about it.
+GPS Rescue was the whole point — mountain quad, fits in a jacket pocket, catches you in a canyon. In practice it has never triggered successfully in a real field scenario.
+
+I've lost the Pavo20 several times because of it. The clearest case: a motor fault mid-flight dropped the quad from somewhere around 500m away. The O4 Pro link stayed live. In the goggles I caught a glimpse of my own shadow on the grass below the falling quad — enough to get my bearings before video cut. Found it with the buzzer. Without the ELRS locator script and a loud buzzer, none of those quads would have come home.
+
+GPS Rescue is still the goal. ELRS locator and buzzer are the fallback that actually works right now.
+
+Setting up failsafe, beeper, and locator properly deserves its own article — probably once there's something better to report on GPS itself. I'll update this one as experiments continue.
