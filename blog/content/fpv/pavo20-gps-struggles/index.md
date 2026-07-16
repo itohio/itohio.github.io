@@ -1,6 +1,6 @@
 ---
 title: "Pavo20 Pro II GPS Fix Attempts: BEC Switching Noise at 1575 MHz and What Actually Helped"
-date: 2026-06-22
+date: 2026-07-09
 description: "Pavo20 Pro II picks up 3 GPS satellites where a 1S whoop finds 20+. TinySA measurements, BEC harmonic analysis, ferrite bead and shielding tests — and why none of it fully fixed it."
 toc: true
 categories:
