@@ -41,7 +41,7 @@ First flight of the day. Field is open, sky is clear, no buildings. I power up b
 | 1S Matrix 3-in-1 digital build | ~90s | 20–22 |
 | Pavo20 Pro II | >5min | 2–4 |
 
-The 1S build is smaller. Its electronics are arguably denser. The GPS module is the same generation. The difference is the stack architecture: the 1S build uses a separate FC and ESC with dedicated boards, while the Pavo20 runs a tightly integrated stack where the VTX, FC, and ESC share a single compact board.
+The 1S build also runs an integrated FC/ESC/VTX board — the BetaFPV Matrix 3-in-1, the same board family used in the Meteor whoops. It is not less integrated than the Pavo20. What differs: it runs on a single 18650 cell, so the BEC is stepping down from 3.7V rather than from a multi-cell pack. Different BEC operating point, different harmonic profile, different noise floor in the GPS band.
 
 A whoop chassis has almost no space between an aftermarket GPS module and everything else generating noise.
 
