@@ -1,6 +1,6 @@
 ---
 title: "FPV Derinimas su Sintra AI — ir Kodėl Nekuriu Dar Vienos AI Platformos"
-date: 2026-07-14
+date: 2026-06-25
 description: "Sintra AI naudojimas Betaflight juodosios dėžės žurnalų analizei ir PID derinimui. Kam tai iš tikrųjų padeda, kam ne, ir kodėl naudoju kito žmogaus AI įrankį vietoj savo kūrimo."
 toc: true
 categories:

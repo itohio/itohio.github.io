@@ -1,6 +1,6 @@
 ---
 title: "Pavo20 Pro II GPS Taisymo Bandymai: BEC Perjungimo Triukšmas 1575 MHz ir Kas Iš Tikrųjų Padėjo"
-date: 2026-07-13
+date: 2026-07-09
 description: "Pavo20 Pro II aptinka 3 GPS palydovus ten, kur 1S burbulinis dronas aptinka 20+. TinySA matavimai, BEC harmonikų analizė, feritinių karoliukų ir ekranavimo bandymai — ir kodėl niekas iki galo neišsprendė problemos."
 toc: true
 categories:
