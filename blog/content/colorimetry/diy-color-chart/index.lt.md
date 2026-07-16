@@ -17,9 +17,7 @@ series:
   - Spalvų mokslas
 ---
 
-[Ankstesniame straipsnyje](/colorimetry/reverse-engineering-cr30) minėjau norą sukurti savadarbę spalvų lentelę, kuri galėtų tarnauti kaip etalonas Darktable spalvų kalibravimo moduliui. Tas straipsnis tai pavadino „kito karto tema." Atėjo tas kitas kartas.
-
-Idėja teoriškai paprasta: atspausdinti žinomų spalvų lopus, išmatuoti kiekvieną CR30, ir naudoti ArgyllCMS profiliui sukurti. Praktikoje prireikė dviejų visiškai skirtingų metodų, kol gavau ką nors tinkamo.
+Planas iš [CR30 ardymo straipsnio](/colorimetry/reverse-engineering-cr30): atspausdinti žinomų spalvų lopų rinkinį, kiekvieną išmatuoti su CR30 ir naudoti ArgyllCMS profiliui sukurti. Teoriškai paprasta. Praktikoje prireikė dviejų visiškai skirtingų metodų, kol gavau ką nors tinkamo.
 
 ## Ko tikisi ArgyllCMS
 
@@ -67,23 +65,25 @@ Darktable spalvų kalibravimo modulis veikia fotografuojant žinomą spalvų eta
 
 Būtent tai CR30 ir suteikia: išmatuotas Lab reikšmes kiekvienam lopui D65 apšvietimo sąlygomis. Paduok jas į ArgyllCMS kartu su nuotraukos matavimais ir gausi korekciją, grindžiamą tikrais matavimais, o ne gamykliniu specifikacijų lapu.
 
-Ar savadarbė lentelė yra *pakankamai tiksli* — dar atviras klausimas. Akriliniai lopai yra matiniai ir pakankamai vienodi, bet toli gražu nėra tokie spectriškai tolygūs ar tiksliai valdomi kaip profesionalus taikinys. CR30 ΔE ant dažytų lopų yra geras — dažniausiai iki 3–4 sodrioms spalvoms, iki 1 neutralioms — tačiau patvirtinimas prieš SpyderChecker 24 reikalauja tinkamo monitoriaus kalibratoriaus. Ir čia įstrigo.
+Ar savadarbė lentelė yra *pakankamai tiksli* — dar atviras klausimas, ir kol kas neatsakomas: lopai niekada nebuvo sistemingai sunumeruoti. Išmačiau juos — arba kažką išmačiau — tačiau be žymėjimo sistemos dabar nebegaliu pasakyti, kuris fizinis lopas atitinka kurį matavimą. Planas buvo pažymėti kiekvieną, tada vykdyti mėnesinį senėjimo testą: akrilas bėgant laikui keičiasi, ir žinoti atspalvio dreifo greitį reikštų žinoti, kada lopą reikia perdažyti. Senėjimo testas reikalauja žmogaus, kuris laikosi grafiko. Aš nesilaikau, todėl taip ir neįvyko.
 
 ## Kalibratoriaus problema
 
 Dauguma vartotojų monitoriaus kalibratorių — Datacolor Spyder X, X-Rite ColorMunki Display — matuoja tik RGB (arba kelis plačius juostos). Tai suteikia pakoreguotą gamos kreivę ir baltą tašką, kas tinka ekrano kalibravimui, bet neparodo tikrosios spektrinės galios paskirstymo tavo monitoriaus pirminių spalvų. Rimtam spalvų darbui — suprasti *kodėl* monitoriaus gamas turi tokią formą, arba patvirtinti, kad ekranas iš tikrųjų gali atkurti tavo kalibravimo darbo eigoje esančias spalvas — reikia spektrinių duomenų.
 
-CR30 gali matuoti atspindžio spektrą nuo paviršiaus. Tiesioginiai emisiniai ekranai jam neprieinami. Monitoriaus charakterizavimui reikėtų spektrofotometro, veikiančio emisiniame režime: i1Display Pro Plus arba idealiai i1Pro 3. Kainų skirtumas tarp paprastų kolorimetrų ir tikro spektrofotometro yra nemažas, ir dar neišrinkau.
+CR30 matuoja tik atspindėtą spektrą — emisiniai ekranai jam visiškai nepasiekiami. Žemiau pateikti ekrano spektrai užfiksuoti su savo rankomis sukurtu matomojo spektro spektrometru. Mėlynas ir žalias kanalai maždaug tokie, kokių tikėtumeis iš tipinio IPS skydelio. Raudonas kanalas įdomesnis.
 
-Kol sprendžiu, vis dėlto užfiksavau dabartinio monitoriaus pirminių spalvų spektrinę išvestį su CR30, laikydamas jį prie ekrano — nešvariai, bet informatyviai. Mėlynas ir žalias kanalai maždaug tokie, kokių tikėtumeis iš tipinio IPS skydelio. Raudonas kanalas yra... nelabai geras. Jis pasismaigo ten, kur reikia, tačiau yra platus antrinis kupstas, kurio ten neturėtų būti — tai reiškia, kad raudonose spalvose yra netikėta indėlis iš žalio regiono. Ekrane tai akiai atrodo gerai, tačiau kritiškame spalvų darbe tokio tipo spektriniai negrynumai pasireiškia kaip sisteminga klaida, kurios jokia matricos korekcija negali visiškai ištaisyti.
+![Monitoriaus pirminių spalvų emisijos spektras, išmatuotas savarankiškai sukurtu spektrometru — žalias platus kupstas apie 530 nm, raudono kanalo du siauri fosforo smaigaliai apie 600 nm ir 635 nm](monitor-spectrum.jpg)
+*ThinkPad ekrano emisijos spektras. Žalias: platus kupstas centruotas apie 530 nm. Raudonas: du siauri fosforo smaigaliai — antrinis ties ~600 nm, pagrindinis ties ~635 nm. Tiek ThinkPad, tiek žaidimų monitorius rodo panašų padalintą raudoną. Palyginimui — mano OLED telefonas turi platesnį, lygesnį raudoną kanalą.*
+
+Dvigubas smaigalys — tai, kas svarbu spalvų metrijai: antrinis ties 600 nm reiškia, kad ekrano raudonas neša reikšmingą oranžinį komponentą. Akiai tai nesvarbu — regėjimo sistema integruoja per visą kanalą. Kalibravimo darbui tai sisteminė klaida, kurią 3×3 matricos korekcija gali tik iš dalies kompensuoti.
+
+Tinkamam monitoriaus charakterizavimui reikėtų spektrofotometro su emisiniu režimu — i1Display Pro Plus arba idealiai i1Pro 3. CR10 kolorimetras, kurį turiu, irgi galėtų tikti: jis veikia su ESP32 mikrovaldikliu, todėl programinė įranga turėtų būti įsilaužiama, norint pridėti emisinio matavimo režimą — nors dar neprisikasiau. Kainų skirtumas tarp paprasto kolorimetro ir tikro spektrofotometro bet kuriuo atveju yra nemažas, ir dar neišrinkau nė vieno.
 
 Tai veda prie kitos problemos dalies: net turėdamas tobulą kalibratorių ir tobulą savadarbę lentelę, dabartinis monitorius tikriausiai nėra tinkamas įrankis nuotraukų ir vaizdo darbui. Tai atskiras pirkimo sprendimas, ir stengiuosi jo neimti tol, kol tiksliai nesuprantu, kokie iš tikrųjų yra dabartinio ekrano spektriniai apribojimai.
 
-## Kas toliau
+## Kur esame dabar
 
-- Apsispręsti dėl kalibratoriaus, kuris duoda tikrus spektrinius duomenis (ne tik RGB) — dar tyrinėju
-- Iki tol: fotografuoti abi lenteles kontroliuojamoje šviesoje, paleisti per ArgyllCMS, palyginti gautas korekcijas dabartiniame ekrane
-- Patvirtinti akrilinės lentelės CR30 matavimus prieš SpyderChecker 24
-- Išsiaiškinti, ar monitoriaus raudono kanalo negrynumas yra neįveikiama kliūtis, ar tik žinomas poslinkis, su kuriuo galima dirbti
+Akrilinė lentelė pastatyta. Ar ji pakankamai tiksli — vis dar nežinoma: tai priklausys nuo to, ar lopai bus tinkamai sunumeruoti ir patvirtinti prieš SpyderChecker 24 žinomas Lab reikšmes, ko kol kas neįvyko. Senėjimo testas taip pat neįvyko. Likusios užduotys yra labiau fundamentalios nei atrodė pradžioje: fotografuoti abi lenteles kontroliuojamoje šviesoje, paleisti per ArgyllCMS ir palyginti korekcijas, kai etaloninės reikšmės bus patikimos.
 
-Sublimacijos spaudiniai naudingi kaip greitas bazinis lygis. Akrilinė lentelė — tai, kuria lažinuosi dėl realaus kalibravimo darbo — kai kitame gale bus patikimas kalibratorius.
+Sunkesnis klausimas pasirodė esantis monitorius. Lentelė gali jau būti tikslesnė už ekraną, kuriam ji skirta kalibruoti — o prietaisas, reikalingas tam ekranui tinkamai apibūdinti, kainuoja daugiau nei pats ekranas. Sublimacijos spaudiniai vis dar naudingi kaip greitas bazinis lygis. Akrilinė lentelė laukia patikimo kalibratoriaus kitame gale.
