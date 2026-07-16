@@ -17,9 +17,7 @@ series:
   - Color Science
 ---
 
-In the [previous post](/colorimetry/reverse-engineering-cr30) I mentioned wanting to build a DIY color chart that could serve as a reference for Darktable's color calibration module. That article teased this as "a topic for another time." This is that time.
-
-The idea is simple in theory: print a set of known color patches, measure each one with the CR30, and use ArgyllCMS to build a correction profile. In practice it took two completely different approaches before I got anything usable.
+The plan from the [CR30 teardown](/colorimetry/reverse-engineering-cr30): print a set of known color patches, measure each with the CR30, and use ArgyllCMS to build a correction profile. Simple in theory. In practice it took two completely different approaches before I got anything usable.
 
 ## What ArgyllCMS expects
 
@@ -73,17 +71,16 @@ Whether the DIY chart is *accurate enough* is still an open question. The acryli
 
 Most consumer monitor calibrators — Datacolor Spyder X, X-Rite ColorMunki Display — measure only RGB (or a few broad bands). They give you a corrected gamma curve and white point, which is fine for display calibration, but they don't give you the actual spectral power distribution of your monitor's primaries. For serious color work — understanding *why* a monitor's gamut is shaped the way it is, or validating that a display can actually reproduce the colors in your calibration workflow — you want spectral data.
 
-The CR30 can measure reflectance spectrum from a surface. It can't measure emissive displays directly. So for monitor characterization I'd need something like a spectrophotometer that works in emissive mode: i1Display Pro Plus, or ideally an i1Pro 3. The price gap between a basic colorimeter and a proper spectrophotometer is significant, and I haven't pulled the trigger yet.
+The CR30 is designed for reflective surfaces. Measuring an emissive display with it is crude — no proper contact optics, no emissive calibration mode — but held against the screen it gives useful relative spectral data. The blue and green channels are roughly what you'd expect from a typical IPS panel. The red channel is more interesting.
 
-While I'm deciding, I did capture the spectral output of my current monitor's primaries using the CR30 held against the screen — crude, but informative. The blue and green channels are roughly what you'd expect from a typical IPS panel. The red channel is... not great. It peaks where it should, but there's a broad secondary lobe that shouldn't be there, which means reds are carrying an unexpected contribution from the green region. On screen it looks fine to the eye, but in color-critical work that kind of spectral impurity will show up as a systematic error that no amount of matrix correction can fully fix.
+It shows two narrow phosphor spikes — a main peak around 635 nm and a secondary around 600 nm — rather than the single clean emitter you'd expect. For comparison, my OLED phone has a broader, smoother red; this display's red is sharper but split. To the eye it doesn't matter — the visual system integrates across the channel either way. For colorimetric work it does: that secondary spike at 600 nm means the display's red carries a significant orange component, a systematic error that a 3×3 matrix correction can only partially compensate.
+
+For proper monitor characterization I'd need a spectrophotometer with an emissive mode: i1Display Pro Plus, or ideally an i1Pro 3. The price gap between a basic colorimeter and a real spectrophotometer is significant, and I haven't pulled the trigger yet.
 
 Which brings me to the other part of the problem: even if I had the perfect calibrator and the perfect DIY chart, my current monitor probably isn't the right tool for photo and video work. That's a separate purchase decision, and one I'm trying not to make until I understand exactly what the spectral limitations of my current display actually are.
 
-## What's next
+## Where this leaves things
 
-- Settle on a calibrator that gives actual spectral data (not just RGB) — still researching
-- Until then: photograph both charts under controlled light, run through ArgyllCMS, compare the resulting corrections on the current display
-- Validate the acrylic chart's CR30 measurements against the SpyderChecker 24
-- Figure out whether the monitor's red channel nastiness is a dealbreaker or just a known offset I can work around
+The acrylic chart works. The ΔE is good enough to ground a real correction. What's left is straightforward: photograph both charts under controlled light, run them through ArgyllCMS, and compare the resulting corrections. Validating the acrylic patches against the SpyderChecker 24's known Lab values is the last sanity check before I'd trust this for anything serious.
 
-The sublimation-printed charts are useful as a quick baseline. The acrylic chart is the one I'm betting on for actual calibration work — once there's a calibrator worth trusting on the other end.
+The harder question is the monitor. The chart is now more accurate than the display it's meant to calibrate, and the instrument needed to properly characterize that display costs more than the display itself. The sublimation prints are still useful as a quick baseline. The acrylic chart is waiting for a calibrator worth trusting on the other end.
