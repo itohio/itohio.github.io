@@ -1,6 +1,7 @@
 ---
 title: "FPV Tuning with Sintra AI — And Why I'm Not Building Another AI Platform"
 date: 2026-07-14
+weight: 20
 description: "Using Sintra AI for Betaflight blackbox log analysis and PID tuning. What it actually helps with, what it doesn't, and the honest reason I'm using someone else's AI tooling instead of building my own."
 toc: true
 categories:

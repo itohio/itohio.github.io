@@ -1,6 +1,7 @@
 ---
 title: "FPV: kaip viskas prasidėjo"
 date: 2026-07-13
+weight: 10
 description: "Kelerius metus priešinausi FPV. Tada užsiregistravau į Dronefix.lt mokymo programą, skridau simuliatoriuje, sulydžiau pirmąją konstrukciją ir visiškai pakeičiau projektų prioritetus. Spektrometras gali palaukti."
 toc: false
 thumbnail: "dronefix-academy-hall.jpg"
