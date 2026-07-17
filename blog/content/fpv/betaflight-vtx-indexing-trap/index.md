@@ -2,6 +2,7 @@
 title: "The Betaflight VTX Trap: aux_channel Is 0-Based, vtx_power Is 1-Based"
 date: 2026-07-17
 description: "VTX stuck in pit mode, 400mW unreachable, power always one level too low? In Betaflight's vtx command, aux_channel counts from 0 but vtx_power counts from 1. Nothing warns you. Here is the fix."
+draft: true
 toc: true
 categories:
   - FPV
@@ -22,9 +23,9 @@ series:
   - FPV Builds
 ---
 
-The Betaflight CLI has a reputation for being terse but internally consistent. AUX channels are 0-based: AUX1 is `0`, AUX2 is `1`, AUX6 is `5`. Modes, ranges, adjustment slots — you set them up a few times and your brain quietly files away a rule: *everything in here counts from zero.* So when I wired up VTX power switching on a wheel, I typed the config the way I've typed a hundred other CLI lines, expected it to just work, and moved on.
+Every programmer learns to count from zero. Betaflight agrees: AUX channels are 0-based, so AUX1 is `0` and AUX6 is `5`. Type a few CLI lines and your fingers stop thinking about it. Count from zero. It's the rule the whole configurator seems to run on.
 
-It did not just work. And the reason cost me an evening, because the failure looked like a hardware fault, not a typo.
+Then I lost an evening to a VTX that flatly refused to output 400 mW, and found the one field where Betaflight quietly counts from *one* instead. Nothing warns you. The failure looked like a dead VTX, not a typo — which is exactly why it ate the whole evening.
 
 ---
 
@@ -151,6 +152,6 @@ Reload, and the wheel does what the physical rotation implies: bottom = low, mid
 
 ## The One Thing to Remember
 
-The Betaflight CLI *is* consistent — right up until it isn't, on one field, with no warning. `aux_channel` counts from zero like everything else you've internalised. `vtx_power` counts from one, because it's a `vtxtable` index and that table is 1-indexed. Same command, opposite conventions, one line apart.
+Count from zero. It's the rule your fingers already know, it's the rule almost every field in the Betaflight CLI obeys — and it's the rule `vtx_power` breaks. That field counts from one, because it's an index into a `vtxtable` that starts at 1, and `set vtx_power` breaks the same way for the same reason. Same command, one line apart, opposite conventions, zero warnings.
 
-If your VTX is stuck in pit mode, or 400 mW simply won't appear no matter how you turn the knob, don't reach for the soldering iron first. Count your power values from **1**, check whether `vtxtable[0]` is a PIT entry, and remember that `set vtx_power` is playing by the same 1-based rule. The hardware was never broken. The index was.
+So if your VTX is stuck in pit mode, or 400 mW won't show up no matter how you turn the knob: don't reach for the soldering iron. Count that one field from **1**, check whether `vtxtable[0]` is a PIT entry, and the "dead" VTX comes back to life. The hardware was never broken. I just counted from zero one field too many.

@@ -2,6 +2,7 @@
 title: "Betaflight VTX spąstai: aux_channel skaičiuojamas nuo 0, o vtx_power — nuo 1"
 date: 2026-07-17
 description: "VTX užstrigęs pit režime, 400mW nepasiekiami, galia visada vienu lygiu per žema? Betaflight vtx komandoje aux_channel skaičiuojamas nuo 0, o vtx_power — nuo 1. Niekas apie tai neįspėja. Štai sprendimas."
+draft: true
 toc: true
 categories:
   - FPV
@@ -22,9 +23,9 @@ series:
   - FPV Builds
 ---
 
-Betaflight CLI garsėja tuo, kad yra lakoniška, bet viduje nuosekli. AUX kanalai skaičiuojami nuo 0: AUX1 yra `0`, AUX2 yra `1`, AUX6 yra `5`. Režimai, diapazonai, reguliavimo lizdai — kelis kartus juos sukonfigūravęs, smegenys tyliai užsirašo taisyklę: *čia viskas skaičiuojama nuo nulio.* Todėl kai prijungiau VTX galios perjungimą prie ratuko, surinkau konfigūraciją taip, kaip esu surinkęs šimtą kitų CLI eilučių, tikėjausi, kad tiesiog veiks, ir judėjau toliau.
+Kiekvienas programuotojas išmoksta skaičiuoti nuo nulio. Betaflight pritaria: AUX kanalai skaičiuojami nuo 0, tad AUX1 yra `0`, o AUX6 yra `5`. Surink kelias CLI eilutes ir pirštai nustoja apie tai galvoti. Skaičiuok nuo nulio. Tai taisyklė, ant kurios, atrodo, laikosi visas konfigūratorius.
 
-Netiesiog suveikė. Ir priežastis atsiėjo man visą vakarą, nes gedimas atrodė kaip aparatinės įrangos triktis, o ne kaip rašybos klaida.
+Tada visą vakarą praradau su VTX'u, kuris kategoriškai atsisakė duoti 400 mW, ir radau tą vieną lauką, kur Betaflight tyliai skaičiuoja nuo *vieneto*. Niekas neįspėja. Gedimas atrodė kaip miręs VTX, o ne kaip rašybos klaida — būtent todėl jis ir surijo visą vakarą.
 
 ---
 
@@ -151,6 +152,6 @@ Perkrauk, ir ratukas daro tai, ką siūlo fizinis pasukimas: apačia = žema, vi
 
 ## Ką verta įsiminti
 
-Betaflight CLI *yra* nuosekli — tiksliai iki tos akimirkos, kai ji tokia nustoja būti, viename lauke, be jokio įspėjimo. `aux_channel` skaičiuojamas nuo nulio, kaip ir viskas kita, ką esi įsisavinęs. `vtx_power` skaičiuojamas nuo vieneto, nes tai `vtxtable` indeksas, o ta lentelė indeksuojama nuo 1. Ta pati komanda, priešingos konvencijos, per vieną lauką viena nuo kitos.
+Skaičiuok nuo nulio. Tai taisyklė, kurią tavo pirštai jau moka, taisyklė, kurios paklūsta beveik kiekvienas Betaflight CLI laukas — ir taisyklė, kurią `vtx_power` sulaužo. Tas laukas skaičiuojamas nuo vieneto, nes tai indeksas į `vtxtable`, prasidedančią nuo 1, ir `set vtx_power` lūžta lygiai taip pat dėl tos pačios priežasties. Ta pati komanda, per vieną eilutę, priešingos konvencijos, nulis įspėjimų.
 
-Jei tavo VTX užstrigęs pit režime arba 400 mW tiesiog nepasirodo, kad ir kaip suksi ratuką, pirma nesigriebk lituoklio. Skaičiuok galios reikšmes nuo **1**, patikrink, ar `vtxtable[0]` yra PIT įrašas, ir atmink, kad `set vtx_power` žaidžia pagal tą pačią „nuo 1" taisyklę. Aparatinė įranga niekada nebuvo sugedusi. Sugedęs buvo indeksas.
+Tad jei tavo VTX užstrigęs pit režime arba 400 mW nepasirodo, kad ir kaip suktum ratuką: nesigriebk lituoklio. Skaičiuok tą vieną lauką nuo **vieneto**, patikrink, ar `vtxtable[0]` yra PIT įrašas, ir „miręs" VTX atgyja. Aparatinė įranga niekada nebuvo sugedusi. Aš tiesiog vienu lauku per daug skaičiavau nuo nulio.
