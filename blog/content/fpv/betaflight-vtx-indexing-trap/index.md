@@ -17,8 +17,10 @@ tags:
   - pit-mode
   - emax-th3
   - vtxtable
+  - dbm
+  - restricted-mode
   - troubleshooting
-keywords: ["Betaflight VTX always pit mode", "Betaflight can't set 400mW", "vtx_power 1-based", "Betaflight vtx command indexing", "SmartAudio power one level too low", "Betaflight VTX power switch not working", "vtxtable index off by one"]
+keywords: ["Betaflight VTX always pit mode", "Betaflight can't set 400mW", "vtx_power 1-based", "Betaflight vtx command indexing", "SmartAudio power one level too low", "Betaflight VTX power switch not working", "vtxtable index off by one", "Emax TH3 V02 vtxtable", "Betaflight vtxtable dBm values", "VTX restricted mode 400mW"]
 series:
   - FPV Builds
 ---
@@ -96,6 +98,37 @@ The mapping is `vtx_power = N` selects `vtxtable[N-1]`. Value `0` isn't "the fir
 
 ---
 
+## The vtxtable It Indexes Into
+
+`vtx_power` is a 1-based index — but an index into what, exactly? Here is the actual power table I run on the Emax TH3 V02:
+
+```
+vtxtable powervalues 1 14 20 26
+vtxtable powerlabels PIT 25 100 400
+```
+
+And now the *second* number system shows up. The entries in `powervalues` aren't indices, and they aren't milliwatts — they're **dBm**, the units SmartAudio v2 actually speaks. The conversion is `dBm = 10·log10(mW)`:
+
+| dBm I set | Power | How it's computed |
+|----------:|-------|-------------------|
+| `1` | PIT (~1.3 mW) | pit / essentially off |
+| `14` | 25 mW | 10·log10(25) ≈ 13.98 |
+| `20` | 100 mW | 10·log10(100) = 20 |
+| `26` | 400 mW | 10·log10(400) ≈ 26.02 |
+
+So the full addressing chain has two layers, and each layer counts in a different number system:
+
+| `vtx_power` (1-based index) | vtxtable slot | dBm value | Label |
+|:---------------------------:|:-------------:|:---------:|:-----:|
+| `1` | 1st | `1` | PIT |
+| `2` | 2nd | `14` | 25 mW |
+| `3` | 3rd | `20` | 100 mW |
+| `4` | 4th | `26` | 400 mW |
+
+This is what makes the trap so easy to fall into. To *define* a level you type its dBm (`26` for 400 mW). To *select* that level from an aux switch you type its 1-based index (`4`). Same VTX, same feature — two completely different numbers for "400 mW" depending on which command you are in, and neither of them is the 0-based value your fingers want to type.
+
+---
+
 ## What I Actually Typed vs What I Got
 
 My wrong config carried the 0-based assumption straight through:
@@ -147,6 +180,16 @@ set vtx_power = 2
 - **`900` and `2100`** at the extremes, not `1000`–`2000`, on purpose: on CRSF the channel endpoints overshoot slightly — the top of the wheel reports around **~2012 µs**, not a clean 2000, and the bottom dips below 1000. A range that ends at exactly `2000` leaves the very top of the wheel unmatched, which — thanks to the fallback trap above — used to dump me straight into pit at max wheel. Widening to `900`–`2100` swallows the overshoot so the endpoints stay locked to the zones I want.
 
 Reload, and the wheel does what the physical rotation implies: bottom = low, middle = medium, top = 400 mW. No pit surprises.
+
+---
+
+## One More Wall: Restricted Mode
+
+Fix the indexing and 400 mW *should* appear at the top of the wheel. If it still doesn't, the VTX itself may be holding it back. Many SmartAudio VTX — the TH3 included — ship with a **restricted (region-locked) mode** that caps output for regulatory compliance. In that state the high-power entries in your `vtxtable` are defined correctly, selected correctly, and simply refused by the hardware.
+
+Restricted mode lives on the VTX, not in Betaflight, so no amount of CLI editing clears it. You disable it on the unit itself — typically a button hold on the VTX (or the matching SmartAudio "unlock") to drop out of the region-locked profile. [TODO: confirm the exact TH3 V02 unlock sequence before publish.]
+
+The tell is diagnostic: if low and mid power select correctly but the top level alone stays dead after the index fix, suspect restriction, not configuration.
 
 ---
 

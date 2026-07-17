@@ -17,8 +17,10 @@ tags:
   - pit-mode
   - emax-th3
   - vtxtable
+  - dbm
+  - restricted-mode
   - troubleshooting
-keywords: ["Betaflight VTX pit režimas", "Betaflight negaliu nustatyti 400mW", "vtx_power skaičiuojamas nuo 1", "Betaflight vtx komanda indeksavimas", "SmartAudio galia vienu lygiu per žema", "Betaflight VTX galios perjungimas neveikia", "vtxtable indeksas per vieną"]
+keywords: ["Betaflight VTX pit režimas", "Betaflight negaliu nustatyti 400mW", "vtx_power skaičiuojamas nuo 1", "Betaflight vtx komanda indeksavimas", "SmartAudio galia vienu lygiu per žema", "Betaflight VTX galios perjungimas neveikia", "vtxtable indeksas per vieną", "Emax TH3 V02 vtxtable", "Betaflight vtxtable dBm reikšmės", "VTX apribotas režimas 400mW"]
 series:
   - FPV Builds
 ---
@@ -96,6 +98,37 @@ Atvaizdavimas toks: `vtx_power = N` išrenka `vtxtable[N-1]`. Reikšmė `0` nėr
 
 ---
 
+## `vtxtable`, į kurią jis indeksuoja
+
+`vtx_power` yra indeksas, skaičiuojamas nuo 1 — bet indeksas į ką? Štai tikroji galios lentelė, kurią naudoju su Emax TH3 V02:
+
+```
+vtxtable powervalues 1 14 20 26
+vtxtable powerlabels PIT 25 100 400
+```
+
+Ir čia išnyra *antra* skaičių sistema. `powervalues` reikšmės nėra indeksai ir nėra milivatai — tai **dBm**, vienetai, kuriais iš tikrųjų kalba SmartAudio v2. Perskaičiavimas: `dBm = 10·log10(mW)`:
+
+| Nustatyta dBm | Galia | Kaip apskaičiuojama |
+|--------------:|-------|---------------------|
+| `1` | PIT (~1,3 mW) | pit / praktiškai išjungta |
+| `14` | 25 mW | 10·log10(25) ≈ 13,98 |
+| `20` | 100 mW | 10·log10(100) = 20 |
+| `26` | 400 mW | 10·log10(400) ≈ 26,02 |
+
+Taigi visa adresavimo grandinė turi du sluoksnius, ir kiekvienas sluoksnis skaičiuoja pagal skirtingą sistemą:
+
+| `vtx_power` (indeksas nuo 1) | vtxtable lizdas | dBm reikšmė | Etiketė |
+|:----------------------------:|:---------------:|:-----------:|:-------:|
+| `1` | 1-as | `1` | PIT |
+| `2` | 2-as | `14` | 25 mW |
+| `3` | 3-ias | `20` | 100 mW |
+| `4` | 4-as | `26` | 400 mW |
+
+Būtent dėl to į šiuos spąstus taip lengva įkliūti. Kad *apibrėžtum* lygį, įvedi jo dBm (`26` – 400 mW). Kad tą lygį *išrinktum* iš aux jungiklio, įvedi jo indeksą, skaičiuojamą nuo 1 (`4`). Tas pats VTX, ta pati funkcija — du visiškai skirtingi skaičiai „400 mW", priklausomai nuo to, kurioje komandoje esi, ir nė vienas iš jų nėra ta „nuo 0" reikšmė, kurią pirštai nori įvesti.
+
+---
+
 ## Ką iš tikrųjų įvedžiau, ir ką gavau
 
 Mano klaidinga konfigūracija pernešė „nuo 0" prielaidą tiesiai per visą eilutę:
@@ -147,6 +180,16 @@ set vtx_power = 2
 - **`900` ir `2100`** kraštuose, o ne `1000`–`2000`, sąmoningai: per CRSF kanalų galiniai taškai šiek tiek peršoka — ratuko viršus rodo apie **~2012 µs**, ne švarų 2000, o apačia nukrenta žemiau 1000. Diapazonas, kuris baigiasi tiksliai ties `2000`, palieka patį ratuko viršų neatitiktą, o tai — dėka aukščiau aprašytų atsarginės reikšmės spąstų — mane ties maksimaliu ratuku įmesdavo tiesiai į pit. Praplėtimas iki `900`–`2100` sugeria peršokimą, tad galiniai taškai lieka pririšti prie zonų, kurių noriu.
 
 Perkrauk, ir ratukas daro tai, ką siūlo fizinis pasukimas: apačia = žema, vidurys = vidutinė, viršus = 400 mW. Jokių pit netikėtumų.
+
+---
+
+## Dar viena siena: apribotas režimas
+
+Sutvarkyk indeksavimą, ir 400 mW *turėtų* pasirodyti ratuko viršuje. Jei vis tiek nepasirodo, gali būti, kad juos laiko pats VTX. Daugelis SmartAudio VTX — tarp jų ir TH3 — parduodami su **apribotu (regionui užrakintu) režimu**, ribojančiu išvestį dėl reglamentų. Tokioje būsenoje aukštos galios įrašai tavo `vtxtable` yra apibrėžti teisingai, išrenkami teisingai — ir tiesiog atmetami aparatinės įrangos.
+
+Apribotas režimas gyvena VTX'e, ne Betaflight'e, tad jokie CLI pakeitimai jo nepašalins. Jį išjungi ant paties įrenginio — paprastai palaikant VTX mygtuką (arba atitinkama SmartAudio „unlock" komanda), kad išeitum iš regionui užrakinto profilio. [TODO: prieš publikaciją patikrinti tikslią TH3 V02 atrakinimo seką.]
+
+Požymis diagnostinis: jei žema ir vidutinė galia išrenkamos teisingai, bet vien viršutinis lygis lieka miręs po indekso pataisymo, įtark apribojimą, ne konfigūraciją.
 
 ---
 
