@@ -18,6 +18,8 @@ tags:
   - RP2040
   - Color Science
   - Spectroscopy
+series:
+  - Color Science
 ---
 
 So here I am, a physicist who got bitten by the color science bug. What started as innocent curiosity about how light works has turned into a full-blown obsession with spectrometers, colorimeters, and now... laser power meters. You know how it goes - you start with one simple question and before you know it, you're knee-deep in soot-covered copper plates and differential amplifiers at 3 AM.

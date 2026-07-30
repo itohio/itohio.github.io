@@ -2,7 +2,7 @@
 title: "Betaflight VTX spąstai: aux_channel skaičiuojamas nuo 0, o vtx_power — nuo 1"
 date: 2026-07-17
 description: "VTX užstrigęs pit režime, 400mW nepasiekiami, galia visada vienu lygiu per žema? Betaflight vtx komandoje aux_channel skaičiuojamas nuo 0, o vtx_power — nuo 1. Niekas apie tai neįspėja. Štai sprendimas."
-draft: true
+draft: false
 toc: true
 categories:
   - FPV

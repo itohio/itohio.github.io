@@ -21,6 +21,8 @@ tags:
   - Golang
   - OpenCV
   - 3D Printing
+series:
+  - Color Science
 ---
 
 After successfully reverse engineering the CR30 colorimeter, I found myself wanting something more versatile - a device that could not only measure reflected light but also handle transmittance measurements with fiber optic coupling. The result is this compact, portable visible light spectrometer built around a Raspberry Pi Zero 2 W and some clever optical engineering.
