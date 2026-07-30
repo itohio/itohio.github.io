@@ -44,7 +44,7 @@ I'm giving away all the print designs and source code. The Go software version i
 
 ## Prism vs. Diffraction Grating: Choosing the Right Optic
 
-> **Correction (November 2025):** I wrote the section below believing the dispersive element in my jeweler's spectroscope was a prism. It isn't — it's a diffraction grating. I discovered this when disassembling the spectroscope to design a better 3D-printed holder. In hindsight the calibration curves were suspiciously linear, which is grating behaviour, not prism behaviour. The physics discussion below is still accurate; the part that was wrong is the assumption that *I* was using a prism. I wasn't. See [It Was Never a Prism](../mini-spectrometer-grating/) for the full story.
+> **Correction (November 2026):** I wrote the section below believing the dispersive element in my jeweler's spectroscope was a prism. It isn't — it's a diffraction grating. I discovered this when disassembling the spectroscope to design a better 3D-printed holder. In hindsight the calibration curves were suspiciously linear, which is grating behaviour, not prism behaviour. The physics discussion below is still accurate; the part that was wrong is the assumption that *I* was using a prism. I wasn't. See [It Was Never a Prism](../mini-spectrometer-grating/) for the full story.
 
 Most DIY spectrometers use diffraction gratings—often repurposed DVDs. While these work, they have limitations. I had planned to use a jeweler's gem inspection prism instead, which offers several advantages in theory:
 
