@@ -17,6 +17,8 @@ tags:
   - Python
   - Protocol Analysis
   - Spectral Analysis
+series:
+  - Color Science
 ---
 
 I've always been fascinated by the intersection of hardware and software, especially when it comes to understanding how devices communicate. Recently, I developed a need for monitor calibration as well as properly color correct my photos. I've been looking at X-Rite, Datacolor and other calibration devices and am on the path of acquiring one of those. However, in the meantime I got this idea of creating a simple color chart that could substitute one of those ColorChecker24 cards for simple color correction. For that I needed to print an accurate replica of one of those charts so that Darktable and/or Davinci Resolve would recognize it. Of course it is impossible to do due to various reasons, but it is possible to produce one close enough for regular use(not scientifically accurate at all). For that purpose I have an old sublimation printer that only has CMY colors. Clearly not enough to produce the full gamut, but close enough. Or so I thought...

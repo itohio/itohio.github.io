@@ -2,7 +2,7 @@
 title: "The Betaflight VTX Trap: aux_channel Is 0-Based, vtx_power Is 1-Based"
 date: 2026-07-17
 description: "VTX stuck in pit mode, 400mW unreachable, power always one level too low? In Betaflight's vtx command, aux_channel counts from 0 but vtx_power counts from 1. Nothing warns you. Here is the fix."
-draft: true
+draft: false
 toc: true
 categories:
   - FPV
