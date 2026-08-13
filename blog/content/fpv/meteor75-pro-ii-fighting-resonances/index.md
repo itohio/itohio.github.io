@@ -875,6 +875,32 @@ defines whether the resonance is still being amplified.
 It stayed flat. 84 s of clean indoor hover, second arm, zero impacts, **`0` config changes** —
 so this is purely mechanical, just not a single-variable one:
 
+Here is where it lands on the resonance curve. Only one bin is trustworthy — 79.6 s of dwell at
+300–325 Hz, against 0.5–1.8 s everywhere else — so I am plotting **only that point** rather than
+drawing a line through noise:
+
+<div style="height:400px"><canvas id="c18"></canvas></div>
+<script>
+snakeChart('c18', 'line',
+  { labels: [250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500],
+    datasets: [
+      { label: 'no foam (outdoor)', data: [35, 43, 49, 39, 32, 26, 17, 15, 15, 9, 5] },
+      { label: '+ foam (outdoor)', data: [30, 27, 26, 28, 25, 25, 27, 27, 22, 15, 12] },
+      { label: 'grommets out + TPU (indoor, 79.6 s dwell)', data: [null, null, 39, null, null, null, null, null, null, null, null], pointRadius: 8, showLine: false }
+    ] },
+  'roll pre-filter HF RMS (deg/s)', 'mean prop 1x frequency (Hz)');
+</script>
+
+39 °/s, between the 49 of no foam and the 26 of foam. Except the two curves were flown outdoors
+and that point was flown indoors, which — per the very first finding in this post — is the
+**worst** case for this resonance, because steady RPM parks the props on the mode instead of
+scattering them off it. So that gap to the foam curve is inflated by an unknown amount, and I am
+not going to pretend I know by how much.
+
+Which is exactly why the dose-response, not the curve, was the pre-registered criterion: it
+compares the quad against *itself* at different RPMs within one flight, so it does not care
+about the weather.
+
 <div style="height:360px"><canvas id="c17"></canvas></div>
 <script>
 snakeChart('c17', 'bar',

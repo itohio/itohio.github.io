@@ -852,6 +852,29 @@ stiprinamas.
 Ji liko plokščia. 84 s tvarkingo skrydžio patalpoje, antras armas, jokių smūgių, **`0`
 konfigūracijos pakeitimų** — taigi tai grynai mechaniška, tik ne vieno kintamojo:
 
+Štai kur tai atsiduria rezonanso kreivėje. Tik viena juosta yra patikima — 79,6 s prie
+300–325 Hz, prieš 0,5–1,8 s visur kitur — todėl brėžiu **tik tą tašką**, o ne liniją per triukšmą:
+
+<div style="height:400px"><canvas id="c18"></canvas></div>
+<script>
+snakeChart('c18', 'line',
+  { labels: [250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500],
+    datasets: [
+      { label: 'be putplasčio (lauke)', data: [35, 43, 49, 39, 32, 26, 17, 15, 15, 9, 5] },
+      { label: '+ putplastis (lauke)', data: [30, 27, 26, 28, 25, 25, 27, 27, 22, 15, 12] },
+      { label: 'be įvorių + TPU (patalpoje, 79,6 s)', data: [null, null, 39, null, null, null, null, null, null, null, null], pointRadius: 8, showLine: false }
+    ] },
+  'roll pre-filter HF RMS (deg/s)', 'vidutinis propelerio 1x dažnis (Hz)');
+</script>
+
+39 °/s — tarp 49 be putplasčio ir 26 su putplasčiu. Tik kad tos dvi kreivės nuskraidytos lauke, o
+tas taškas — patalpoje, o tai, pagal patį pirmą šio teksto atradimą, yra **blogiausias** atvejis
+šiam rezonansui: stabilus RPM pastato propelerius tiesiai ant modos. Taigi atotrūkis iki
+putplasčio kreivės yra padidintas nežinomu dydžiu, ir nesidėsiu, kad žinau kokiu.
+
+Būtent todėl kriterijus buvo atsako kreivė, o ne rezonanso kreivė: ji lygina kvadrą su *pačiu
+savimi* prie skirtingų RPM viename skrydyje, tad jai oras nesvarbus.
+
 <div style="height:360px"><canvas id="c17"></canvas></div>
 <script>
 snakeChart('c17', 'bar',
