@@ -836,15 +836,26 @@ first half of the week adjusting a control loop that operates at 20–40 Hz in t
 influencing a structural mode at 320–345 Hz. That was never going to work, and it took a
 dose-response curve to convince me.
 
-## TPU stiffeners inside the gummy balls — first indoor data
+## Stiffening the mount properly — first indoor data
 
-TPU filament inserted inside the gummy-ball mounts to raise their stiffness substantially,
-instead of the foam — so the ESC side of the FC gets its airflow back. The foam works, but it
-is also a blanket over the hot part.
+The foam was a quick test, not a solution. It worked, but it is a blanket over the hot part of
+the board, so it came out. What replaced it was **two** changes, and I have to be upfront that
+I made them in the same session:
+
+1. **The VTX is now mounted directly to the canopy, silicone grommets removed.** They were
+   unnecessary, and taking them out deletes a compliant element from the path between the air
+   unit's mass and the canopy — the canopy and the VTX are now effectively one body.
+2. **TPU filament inserted inside the gummy balls**, raising their stiffness substantially and
+   stiffening the FC-to-frame path.
+
+Both are stiffness increases, on two different load paths, at the same time. So whatever the
+numbers below show, **I cannot split the credit between them.** That is a self-inflicted
+attribution problem and the honest move is to label it rather than pick a winner. A cleaner
+experiment would have changed one at a time.
 
 {{< figure src="tpu-gummy-mod.jpg" alt="Meteor75 Pro II from the rear three-quarter, with a red circle marking one of the flight controller gummy grommets that has TPU filament inserted" caption="TPU filament pushed inside the rubber gummies. The red circle marks one of them. Two jobs, not one: stiffer coupling, and a canopy far less likely to part company with the frame." >}}
 
-It does two things. The second one is immediate and needs no measurement: with filament inside
+The TPU does two jobs. The second is immediate and needs no measurement: with filament inside
 them, the gummies are much less inclined to **separate** — which on a whoop that spends its
 life bouncing off door frames is worth having on its own. The **stiffness** effect is the one
 that needed a log, and there is now a first one.
@@ -861,8 +872,8 @@ section is that I no longer trust a comparison I designed after seeing the data.
 criterion was the **motors-in-band dose-response** staying flat — that is the thing that
 defines whether the resonance is still being amplified.
 
-It stayed flat. 84 s of clean indoor hover, second arm, zero impacts, **`0` config changes from
-the foam flight** — so this is a pure mechanical A/B:
+It stayed flat. 84 s of clean indoor hover, second arm, zero impacts, **`0` config changes** —
+so this is purely mechanical, just not a single-variable one:
 
 <div style="height:360px"><canvas id="c17"></canvas></div>
 <script>
@@ -871,7 +882,7 @@ snakeChart('c17', 'bar',
     datasets: [
       { label: 'rotated, NO foam', data: [35, 41, 52, 55, 57] },
       { label: 'rotated, + foam', data: [29, 31, 33, 33, 33] },
-      { label: 'TPU in gummies (indoor)', data: [49, 52, 52, null, null] }
+      { label: 'grommets out + TPU (indoor)', data: [49, 52, 52, null, null] }
     ] },
   'vibration envelope (deg/s)', 'motors inside the 325-365 Hz resonance window');
 </script>
@@ -882,7 +893,7 @@ Slope across the band, which is the number that matters:
 |---|---|---|
 | rotated, no foam | **+66%** | resonance fully amplifying |
 | rotated, + foam | +15% | mostly killed |
-| **TPU in gummies** | **+6%** | **killed** |
+| **grommets out + TPU in gummies** | **+6%** | **killed** |
 
 Sitting in the resonance window has stopped mattering. That is the criterion, and it passed.
 
@@ -913,7 +924,7 @@ pre-rotation indoor flight read **54 °/s** at 300–325 Hz, and this one reads 
 **28% better**. That is real, but it is one bin.
 
 So: the amplification is dead, the noise floor and the motor balance are the best I have
-measured, and the ESC side is breathing again. Whether TPU fully matches foam on the
+measured, and the ESC side is breathing again. Whether this pair fully matches foam on the
 *structural curve* is still open, and it needs an outdoor flight with actual sweeps. That is
 tomorrow's job. If the peak comes back, the foam was doing something the TPU is not, and I will
 say so here.

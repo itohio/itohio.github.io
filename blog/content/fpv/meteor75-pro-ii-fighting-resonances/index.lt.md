@@ -810,7 +810,21 @@ praleidau reguliuodamas valdymo kilpą, veikiančią 20–40 Hz, tikėdamasis pa
 modą prie 320–345 Hz. Tai niekada nebūtų suveikę, ir mane įtikinti prireikė atsako dozės
 kreivės.
 
-## TPU standintojai gummy ball'ų vidyje — pirmi duomenys patalpoje
+## Tvirtinimo standinimas kaip reikia — pirmi duomenys patalpoje
+
+Putplastis buvo greitas testas, ne sprendimas. Jis veikė, bet tai antklodė ant karščiausios
+plokštės vietos, todėl išėmiau. Jį pakeitė **du** pakeitimai, ir turiu iš karto pasakyti, kad
+padariau juos toje pačioje sesijoje:
+
+1. **VTX dabar tvirtinamas tiesiai prie gaubto, silikoninius įvorius išėmiau.** Jie buvo
+   nereikalingi, o jų išėmimas pašalina lankstų elementą kelyje tarp oro modulio masės ir
+   gaubto — gaubtas ir VTX dabar faktiškai vienas kūnas.
+2. **TPU siūlas įdėtas į gummy ball'us**, gerokai padidinant jų standumą ir sustandinant
+   kelią nuo skraidymo valdiklio iki rėmo.
+
+Abu yra standumo padidinimai, dviejuose skirtinguose apkrovos keliuose, tuo pačiu metu. Todėl
+kad ir ką rodytų skaičiai žemiau, **negaliu paskirstyti nuopelnų tarp jų.** Tai pačiam sau
+sukurta atribucijos problema, ir sąžininga ją pažymėti, o ne pasirinkti laimėtoją.
 
 
 Planas: TPU filamentas įterptas gummy ball tvirtinimų vidun, kad gerokai pakeltų jų standumą,
@@ -836,7 +850,7 @@ nebepatikiu palyginimu, sugalvotu jau pamačius duomenis. Pagrindinis kriterijus
 stiprinamas.
 
 Ji liko plokščia. 84 s tvarkingo skrydžio patalpoje, antras armas, jokių smūgių, **`0`
-konfigūracijos pakeitimų** nuo putplasčio skrydžio — taigi tai grynas mechaninis A/B:
+konfigūracijos pakeitimų** — taigi tai grynai mechaniška, tik ne vieno kintamojo:
 
 <div style="height:360px"><canvas id="c17"></canvas></div>
 <script>
@@ -845,7 +859,7 @@ snakeChart('c17', 'bar',
     datasets: [
       { label: 'pasuktas, BE putplasčio', data: [35, 41, 52, 55, 57] },
       { label: 'pasuktas, + putplastis', data: [29, 31, 33, 33, 33] },
-      { label: 'TPU gummy viduje (patalpoje)', data: [49, 52, 52, null, null] }
+      { label: 'be įvorių + TPU (patalpoje)', data: [49, 52, 52, null, null] }
     ] },
   'vibracijos gaubtinė (deg/s)', 'variklių 325-365 Hz rezonanso lange');
 </script>
@@ -854,7 +868,7 @@ snakeChart('c17', 'bar',
 |---|---|---|
 | pasuktas, be putplasčio | **+66%** | rezonansas pilnai stiprina |
 | pasuktas, + putplastis | +15% | beveik nuslopintas |
-| **TPU gummy viduje** | **+6%** | **nuslopintas** |
+| **be įvorių + TPU gummy viduje** | **+6%** | **nuslopintas** |
 
 Buvimas rezonanso lange nebeturi reikšmės. Tai ir buvo kriterijus, ir jis įvykdytas.
 
@@ -884,7 +898,7 @@ gaubto pasukimą patalpoje buvo **54 °/s** prie 300–325 Hz, o dabar **39** �
 geriau**. Tai tikra, bet tai viena juosta.
 
 Taigi: stiprinimas miręs, triukšmo lygis ir variklių balansas geriausi, kokius matavau, o ESC
-pusė vėl kvėpuoja. Ar TPU pilnai atitinka putplastį *struktūrinėje kreivėje* — dar atviras
+pusė vėl kvėpuoja. Ar ši pora pilnai atitinka putplastį *struktūrinėje kreivėje* — dar atviras
 klausimas, ir jam reikia skrydžio lauke su tikrais perbėgimais. Tai rytojaus darbas.
 
 
