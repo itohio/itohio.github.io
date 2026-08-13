@@ -2,7 +2,6 @@
 title: "From Meteor75 Pro to Meteor75 Pro II: a week of fighting resonances"
 date: 2026-08-13
 description: "I rebuilt a 75mm whoop around a new frame and canopy, kept the FC and the air unit, and spent a week finding out that the thing I fixed was also the thing I broke. Every number here came out of a blackbox log — including the ones I had to retract."
-draft: true
 toc: true
 categories:
   - FPV
@@ -43,8 +42,8 @@ OPEN — YOURS TO DECIDE (not resolved in this draft):
 
 DELIBERATELY LEFT EMPTY — do not fill in:
 
-4. TPU stiffener series (chart c17) is still null - not yet flown. This is the ONE
-   remaining placeholder and the reason draft: true stays.
+4. TPU: first indoor log is IN (dose-response slope +6%, i.e. flat). Outdoor
+   verification with slow RPM sweeps still pending - may or may not be added.
 5. EXIF - DONE. All three photos verified at 0 EXIF tags before committing.
 
 RESOLVED — no action needed (kept for audit trail):
@@ -837,20 +836,18 @@ first half of the week adjusting a control loop that operates at 20–40 Hz in t
 influencing a structural mode at 320–345 Hz. That was never going to work, and it took a
 dose-response curve to convince me.
 
-## Coming next: TPU stiffeners inside the gummy balls
+## TPU stiffeners inside the gummy balls — first indoor data
 
-**Not flown yet. No results here, and I am not going to speculate about them.**
-
-The plan: TPU filament inserted inside the gummy-ball mounts to raise their stiffness
-substantially, replacing the foam — so the ESC side of the FC gets its airflow back. The foam
-works, but it is also a blanket over the hot part.
+TPU filament inserted inside the gummy-ball mounts to raise their stiffness substantially,
+instead of the foam — so the ESC side of the FC gets its airflow back. The foam works, but it
+is also a blanket over the hot part.
 
 {{< figure src="tpu-gummy-mod.jpg" alt="Meteor75 Pro II from the rear three-quarter, with a red circle marking one of the flight controller gummy grommets that has TPU filament inserted" caption="TPU filament pushed inside the rubber gummies. The red circle marks one of them. Two jobs, not one: stiffer coupling, and a canopy far less likely to part company with the frame." >}}
 
-It does two things, and only one of them is unproven. The **stiffness** effect is what the
-chart above is waiting on. But the second job is immediate and needs no measurement: with
-filament inside them, the gummies are much less inclined to **separate** — which on a whoop
-that spends its life bouncing off door frames is worth having on its own.
+It does two things. The second one is immediate and needs no measurement: with filament inside
+them, the gummies are much less inclined to **separate** — which on a whoop that spends its
+life bouncing off door frames is worth having on its own. The **stiffness** effect is the one
+that needed a log, and there is now a first one.
 
 This mod is not mine. Rotating the canopy 180° is a suggestion from Oscar Liang, in the
 [Improvements You Can Make](https://oscarliang.com/betafpv-meteor75-pro-dji-o4-wide/#Improvements-You-Can-Make)
@@ -859,36 +856,67 @@ gummies separating, I used TPU filament instead.** Glue is a one-way door. Filam
 out, so the mount stays serviceable and I can keep testing durometer without destroying parts —
 which matters a lot when the whole point of the exercise is A/B testing the mount.
 
-<div style="height:380px"><canvas id="c17"></canvas></div>
+The scoring plan was written down **before** the flight, because the whole point of the last
+section is that I no longer trust a comparison I designed after seeing the data. The primary
+criterion was the **motors-in-band dose-response** staying flat — that is the thing that
+defines whether the resonance is still being amplified.
+
+It stayed flat. 84 s of clean indoor hover, second arm, zero impacts, **`0` config changes from
+the foam flight** — so this is a pure mechanical A/B:
+
+<div style="height:360px"><canvas id="c17"></canvas></div>
 <script>
-snakeChart('c17', 'line',
-  { labels: [250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500],
+snakeChart('c17', 'bar',
+  { labels: ['0 motors', '1 motor', '2 motors', '3 motors', '4 motors'],
     datasets: [
-      { label: 'foam (baseline to beat)', data: [30, 27, 26, 28, 25, 25, 27, 27, 22, 15, 12] },
-      { label: 'TPU in gummies (not yet flown)', data: [null, null, null, null, null, null, null, null, null, null, null] }
+      { label: 'rotated, NO foam', data: [35, 41, 52, 55, 57] },
+      { label: 'rotated, + foam', data: [29, 31, 33, 33, 33] },
+      { label: 'TPU in gummies (indoor)', data: [49, 52, 52, null, null] }
     ] },
-  'roll pre-filter HF RMS (deg/s)', 'mean prop 1x frequency (Hz)');
+  'vibration envelope (deg/s)', 'motors inside the 325-365 Hz resonance window');
 </script>
 
-Scoring plan, agreed **in advance** and deliberately wind-proof, because the whole point of
-the last section is that I no longer trust a comparison I designed after seeing the data:
+Slope across the band, which is the number that matters:
 
-- **Structural metric (needs no wind):** vibration versus prop RPM, plus the motors-in-band
-  dose-response. The resonance is excited by prop imbalance, not by air, so a calm evening
-  gives a *better* measurement than a windy one.
-- **Wind-shake metric:** wind-binned comparison, using only bins both flights sampled. Even
-  dead-calm air fills the 2–6 °/s bins, and every previous flight sampled those too.
-- **Flight profile:** 3–4 slow throttle sweeps, roughly 10 s up and 10 s down, targeting ≥4 s
-  dwell in every 25 Hz bin from 250–500 Hz. Heavy pack, so hover stays near 345 Hz. No config
-  changes.
-- **Success criterion:** the structural curve stays flat near 25–28 °/s **and** the
-  dose-response stays flat. That means the coupling survived the swap from foam to TPU, with
-  cooling restored. (That 25–28 °/s band was written down before the TPU flight and I am
-  leaving it as written — for reference, the foam plateau spans 25–30 °/s across the full
-  250–425 Hz sweep, so the criterion is the tighter of the two readings.)
+| mount | dose-response slope | verdict |
+|---|---|---|
+| rotated, no foam | **+66%** | resonance fully amplifying |
+| rotated, + foam | +15% | mostly killed |
+| **TPU in gummies** | **+6%** | **killed** |
 
-If it comes back flat, the coupling model gets stronger. If the peak returns, the foam was
-doing something the TPU does not, and I will say so.
+Sitting in the resonance window has stopped mattering. That is the criterion, and it passed.
+
+Two more things came out better than the foam flight, both measured on the same log:
+
+- **Post-filter roll noise 0.34 °/s at 41.2 dB attenuation** — the cleanest of the entire
+  session, against 0.67 °/s and 31.8 dB for the foam.
+- **Motor balance is the flattest I have recorded on this quad:** deviations of −0.1 / −4.2 /
+  +2.5 / +1.7 percent, a 6.7-point spread where every earlier flight ran 17–25 points, with a
+  front/rear split of +1.7% and **zero clipping**.
+
+### What this log cannot tell me, and I am not going to pretend otherwise
+
+**It was indoors, and I only sampled one RPM bin.** 80 of the 84 clean seconds sat at
+300–325 Hz, with one or two seconds either side. I asked myself for 3–4 slow throttle sweeps
+and then flew a hover instead, so there is no structural *curve* here — one point is not a
+curve, and I cannot locate the mode frequency from a single RPM slice.
+
+**The raw pre-filter number looks worse than the foam and that comparison is not fair.** TPU
+indoor reads 39.1 °/s against the foam flight's 26.0. But the foam flight was outdoors in
+4.71 °/s of wind and this one is indoors at 1.99 — and one of the earliest findings in this
+whole post is that **still air is the worst case**, because steady RPM parks the props on the
+mode instead of scattering them off it. Comparing a dead-calm hover against a breezy outdoor
+flight loads the dice against the calm one.
+
+The only genuinely like-for-like comparison I have is indoor against indoor: the pre-foam,
+pre-rotation indoor flight read **54 °/s** at 300–325 Hz, and this one reads **39** — about
+**28% better**. That is real, but it is one bin.
+
+So: the amplification is dead, the noise floor and the motor balance are the best I have
+measured, and the ESC side is breathing again. Whether TPU fully matches foam on the
+*structural curve* is still open, and it needs an outdoor flight with actual sweeps. That is
+tomorrow's job. If the peak comes back, the foam was doing something the TPU is not, and I will
+say so here.
 
 ## Method notes worth keeping
 

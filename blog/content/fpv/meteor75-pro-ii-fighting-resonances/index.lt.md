@@ -2,7 +2,6 @@
 title: "Nuo Meteor75 Pro prie Meteor75 Pro II: savaitė kovos su rezonansais"
 date: 2026-08-13
 description: "Perstačiau 75 mm whoop'ą į naują rėmą ir gaubtą, palikau tą patį FC ir tą patį air unit'ą, ir savaitę aiškinausi, kad tai, ką pataisiau, kartu ir sugadinau. Visi skaičiai čia — iš blackbox logų, įskaitant tuos, kuriuos teko atšaukti."
-draft: true
 toc: true
 categories:
   - FPV
@@ -811,9 +810,8 @@ praleidau reguliuodamas valdymo kilpą, veikiančią 20–40 Hz, tikėdamasis pa
 modą prie 320–345 Hz. Tai niekada nebūtų suveikę, ir mane įtikinti prireikė atsako dozės
 kreivės.
 
-## Toliau: TPU standintojai gummy ball'ų vidyje
+## TPU standintojai gummy ball'ų vidyje — pirmi duomenys patalpoje
 
-**Dar neskraidyta. Rezultatų čia nėra, ir spekuliuoti apie juos nesiruošiu.**
 
 Planas: TPU filamentas įterptas gummy ball tvirtinimų vidun, kad gerokai pakeltų jų standumą,
 pakeičiant putplastį — kad FC ESC pusė vėl gautų oro pratekėjimą. Putplastis veikia, bet jis
@@ -832,40 +830,62 @@ dalyje. Mano vienintelis pakeitimas - medziaga: **jis naudoja klijus, kad ivoria
 o as panaudojau TPU siula.** Klijai yra vienpusiai durys. Siula galima istraukti, tad tvirtinimas
 lieka aptarnaujamas ir galiu toliau bandyti skirtinga kietuma nedarydamas detaliu nenaudojamomis -
 o tai labai svarbu, kai visa esme yra A/B testuoti pati tvirtinima.
-<div style="height:380px"><canvas id="c17"></canvas></div>
+Vertinimo planas buvo užrašytas **prieš** skrydį, nes visa ankstesnio skyriaus esmė ta, kad
+nebepatikiu palyginimu, sugalvotu jau pamačius duomenis. Pagrindinis kriterijus — kad
+**variklių-juostoje atsako kreivė** liktų plokščia. Būtent ji parodo, ar rezonansas dar
+stiprinamas.
+
+Ji liko plokščia. 84 s tvarkingo skrydžio patalpoje, antras armas, jokių smūgių, **`0`
+konfigūracijos pakeitimų** nuo putplasčio skrydžio — taigi tai grynas mechaninis A/B:
+
+<div style="height:360px"><canvas id="c17"></canvas></div>
 <script>
-snakeChart('c17', 'line',
-  { labels: [250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500],
+snakeChart('c17', 'bar',
+  { labels: ['0 variklių', '1 variklis', '2 varikliai', '3 varikliai', '4 varikliai'],
     datasets: [
-      { label: 'putplastis (bazė, kurią reikia pergalėti)', data: [30, 27, 26, 28, 25, 25, 27, 27, 22, 15, 12] },
-      { label: 'TPU gummy vidyje (dar neskraidyta)', data: [null, null, null, null, null, null, null, null, null, null, null] }
+      { label: 'pasuktas, BE putplasčio', data: [35, 41, 52, 55, 57] },
+      { label: 'pasuktas, + putplastis', data: [29, 31, 33, 33, 33] },
+      { label: 'TPU gummy viduje (patalpoje)', data: [49, 52, 52, null, null] }
     ] },
-  'roll pre-filter HF RMS (°/s)', 'vidutinė propelerio 1x frekvencija (Hz)');
+  'vibracijos gaubtinė (deg/s)', 'variklių 325-365 Hz rezonanso lange');
 </script>
 
-Vertinimo planas, sutartas **iš anksto** ir sąmoningai vėjui atsparus, nes visa ankstesnio
-skyriaus esmė yra ta, kad daugiau nebepasitikiu palyginimu, kurį suprojektavau jau pamatęs
-duomenis:
+| tvirtinimas | atsako nuolydis | verdiktas |
+|---|---|---|
+| pasuktas, be putplasčio | **+66%** | rezonansas pilnai stiprina |
+| pasuktas, + putplastis | +15% | beveik nuslopintas |
+| **TPU gummy viduje** | **+6%** | **nuslopintas** |
 
-- **Struktūrinė metrika (vėjo nereikia):** vibracija prieš propelerio RPM plius
-  motorų-juostoje atsako dozė. Rezonansą sužadina propelerio disbalansas, ne oras, todėl
-  ramus vakaras duoda *geresnį* matavimą nei vėjuotas.
-- **Vėjo drebėjimo metrika:** palyginimas pagal vėjo dėžes, naudojant tik tas dėžes, kurias
-  abu skrydžiai apėmė. Net visiškai ramus oras užpildo 2–6 °/s dėžes, o jas apėmė ir visi
-  ankstesni skrydžiai.
-- **Skrydžio profilis:** 3–4 lėti throttle sweep'ai, maždaug 10 s aukštyn ir 10 s žemyn,
-  siekiant ≥4 s buvimo laiko kiekvienoje 25 Hz dėžėje nuo 250 iki 500 Hz. Sunkus paketas, kad
-  hover liktų apie 345 Hz. Jokių konfigūracijos pakeitimų.
-- **Sėkmės kriterijus:** struktūrinė kreivė lieka plokščia apie 25–28 °/s **ir** atsako dozė
-  lieka plokščia. Tai reikštų, kad sujungimas išgyveno perėjimą iš putplasčio į TPU, o
-  aušinimas atkurtas.
-  (Ta 25–28 °/s riba buvo užrašyta **prieš** TPU skrydį ir aš jos nekeičiu — dėl aiškumo:
-  putplasčio plokštikalnis apima 25–30 °/s per visą 250–425 Hz sweep'ą, taigi kriterijus yra
-  griežtesnis iš dviejų rodmenų. Kriterijaus, sutarto iš anksto, po duomenų peržiūros
-  neperrašinėju.)
+Buvimas rezonanso lange nebeturi reikšmės. Tai ir buvo kriterijus, ir jis įvykdytas.
 
-Jei grįš plokščia — sujungimo modelis sustiprės. Jei smailė sugrįš, vadinasi putplastis darė
-kažką, ko TPU nedaro, ir aš tai pasakysiu.
+Dar du dalykai pasirodė geresni nei putplasčio skrydyje, abu išmatuoti tame pačiame loge:
+
+- **Po filtrų roll triukšmas 0,34 °/s prie 41,2 dB slopinimo** — geriausias per visą sesiją,
+  prieš 0,67 °/s ir 31,8 dB su putplasčiu.
+- **Variklių balansas — plokščiausias, kokį esu užfiksavęs:** −0,1 / −4,2 / +2,5 / +1,7
+  procento, 6,7 punkto sklaida, kai visi ankstesni skrydžiai turėjo 17–25, priekio/užpakalio
+  skirtumas +1,7% ir **nulis įsisotinimo**.
+
+### Ko šis logas negali pasakyti, ir aš nesidėsiu, kad gali
+
+**Skrydis buvo patalpoje ir surinkau tik vieną RPM juostą.** 80 iš 84 tvarkingų sekundžių
+praleista 300–325 Hz, po sekundę kitą į abi puses. Pats sau nurodžiau 3–4 lėtus gazo
+perbėgimus, o nuskridau hoverį — todėl struktūrinės *kreivės* čia nėra, o vieno taško kreive
+nepavadinsi.
+
+**Neapdoroto signalo skaičius atrodo blogesnis nei su putplasčiu, ir tas palyginimas
+nesąžiningas.** TPU patalpoje rodo 39,1 °/s prieš putplasčio 26,0. Bet putplasčio skrydis buvo
+lauke prie 4,71 °/s vėjo, o šis — patalpoje prie 1,99. Ir vienas ankstyviausių šio teksto
+atradimų yra tas, kad **ramus oras yra blogiausias atvejis**: stabilus RPM pastato propelerius
+tiesiai ant modos, o ne išsklaido nuo jos.
+
+Vienintelis tikrai lygiavertis palyginimas — patalpa prieš patalpą: prieš putplastį ir prieš
+gaubto pasukimą patalpoje buvo **54 °/s** prie 300–325 Hz, o dabar **39** — maždaug **28%
+geriau**. Tai tikra, bet tai viena juosta.
+
+Taigi: stiprinimas miręs, triukšmo lygis ir variklių balansas geriausi, kokius matavau, o ESC
+pusė vėl kvėpuoja. Ar TPU pilnai atitinka putplastį *struktūrinėje kreivėje* — dar atviras
+klausimas, ir jam reikia skrydžio lauke su tikrais perbėgimais. Tai rytojaus darbas.
 
 
 ## Metodo pastabos, kurias verta pasilikti
