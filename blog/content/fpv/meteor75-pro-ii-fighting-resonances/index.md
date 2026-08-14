@@ -1398,6 +1398,93 @@ before I stopped defending the frame I had built and went to look at the raw unc
 The instrument I trusted most, the blackbox gyro spectrum, was the reason I got stuck. It is
 excellent above 80 Hz and I read it constantly. The answer was underneath it the whole time.
 
+## Why the foam helped after all
+
+The rabbit-chasing section needs a coda, because there is one thing it does not explain: **if the
+shake is a low-frequency authority problem, why did a lump of foam between two boards help so
+much?** Foam does not add thrust. It does not widen the mixer range. It should be irrelevant.
+
+It is not irrelevant. Measured at matched conditions — steady flight, throttle 1380–1560, impacts
+excluded, so aggression differences are not driving it:
+
+<div style="height:400px"><canvas id="c23"></canvas></div>
+<script>
+snakeChart('c23', 'bar',
+  { labels: ['stock gummies', 'LARGE foam', 'all TPU', 'front TPU out', 'SMALL foam'],
+    datasets: [
+      { label: 'vibration, pre-filter 80-780 Hz (deg/s)', data: [38.3, 26.0, 31.0, 26.6, 42.5] },
+      { label: '1-8 Hz UNCOMMANDED motion (deg/s)', data: [4.81, 2.79, 2.97, 3.58, 6.10] }
+    ] },
+  'deg/s', 'mount configuration');
+</script>
+
+| config | vibration | **1–8 Hz uncommanded** | mixer headroom |
+|---|---|---|---|
+| stock gummies, no foam | 38.3 | 4.81 | 639 |
+| **LARGE foam** | **26.0** | **2.79** | **673** |
+| all TPU | 31.0 | 2.97 | 666 |
+| front TPU out | 26.6 | 3.58 | 660 |
+| **SMALL foam pad** | **42.5** | **6.10** | **598** |
+
+**corr(vibration, 1–8 Hz uncommanded) = +0.92. corr(vibration, headroom) = −0.92.** The large foam
+wins on both counts, and the small pad loses on both — **2.2× more low-frequency wobble than the
+large pad.** So the mount does reach the thing I was being asked about. It just does not reach it
+the way I assumed.
+
+### It is not the motor jitter
+
+That was my first guess: vibration gets into the D term, the motors jitter, and the jitter eats
+mixer range. I measured it, and it does not carry the weight. Motor jitter runs **5.3–7.1 counts
+RMS, roughly 1.6–2.1% of the available range.** Real, measurable, and far too small to explain a
+loss of authority.
+
+### The flight controller can only control what it is bolted to
+
+Here is the explanation that actually fits. The O4 and the canopy are a significant mass, and on
+soft gummies that mass can move **relative to the frame.** That makes the aircraft a two-body
+system: the loop commands the frame, and the canopy follows late and overshoots.
+
+**That relative motion is uncontrolled by definition.** No PID gain reaches it, because the gyro is
+on the other body. And it shows up precisely where the complaint lives — slow, uncommanded, 1–8 Hz
+wobble that the pilot can see and the tune cannot touch.
+
+Foam does not stiffen that interface. It **damps** it. Damped, the two masses move as one, and the
+loop is finally controlling the whole aircraft rather than one body bolted to a swinging one.
+
+Which retro-fits the entire sequence of experiments:
+
+- **Large foam best** — it damps the relative mode across the whole interface
+- **TPU worse than foam** — stiffness without damping still permits resonant exchange, it only moves
+  the frequency
+- **Small pad worst** — too small to damp anything, and it introduced a razor-sharp mode at 81×
+  dominance where every other configuration sat between 4.4× and 8.2×
+- **No tune change ever helped** — because it was never a gain problem
+
+So the mount investigation was not a rabbit after all. I simply could not explain *why* it worked
+until I stopped looking above 80 Hz, and for a week I was reporting the right intervention with the
+wrong reason attached.
+
+### Honest limits on this
+
+Five configurations, flown across two days with different packs, different weather and different
+aggression. An r of +0.92 on five confounded points is **suggestive, not proven.** And the
+*within-flight* correlation between vibration and shake is near zero or slightly negative (−0.02 to
+−0.27), which says this is a property of the **configuration**, not moment-to-moment cause and
+effect — consistent with a structural-dynamics explanation and inconsistent with a noise one.
+
+### What I am actually going to do
+
+1. **Go back to the large foam pad.** Best measured result on both metrics; it was never the wrong
+   answer.
+2. **Solve the heat differently instead of shrinking the damper.** A large *thin* damping layer
+   spanning the interface — viscoelastic damping tape rather than a thick block plugging the gap —
+   keeps the damped area while stopping it being an insulating bung. Or keep the large pad and route
+   it clear of the ESC FETs, which are the hot part, not the MCU.
+3. **Stop chasing stiffness.** Damping beats stiffness here, and that is measured rather than
+   assumed.
+4. **Secure the O4 to the frame, not only to the canopy.** Less independently-moving mass is the root
+   fix, and everything else is mitigation.
+
 ## Method notes worth keeping
 
 Practices that repeatedly changed the conclusion — not general advice, things that actually

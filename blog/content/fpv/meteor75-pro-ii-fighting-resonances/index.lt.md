@@ -1287,6 +1287,79 @@ Prietaisas, kuriuo labiausiai tikėjau — blackbox giroskopo spektras — ir bu
 užstrigau. Jis puikus aukščiau 80 Hz. Atsakymas visą laiką buvo po juo.
 
 
+## Kodėl putplastis vis dėlto padėjo
+
+Kiškių gaudymo skyriui reikia užbaigimo, nes vieno dalyko jis nepaaiškina: **jei drebėjimas yra žemų
+frekvencijų valdžios problema, kodėl putplasčio gabalas tarp dviejų plokščių taip padėjo?**
+Putplastis nepriduoda traukos. Neišplečia mikserio diapazono. Jis turėtų būti nesvarbus.
+
+Nėra nesvarbus. Išmatuota sutapatintomis sąlygomis — stabilus skridimas, gazas 1380–1560, smūgiai
+išmesti:
+
+<div style="height:400px"><canvas id="c23"></canvas></div>
+<script>
+snakeChart('c23', 'bar',
+  { labels: ['originalūs gummy', 'DIDELIS putplastis', 'visi TPU', 'priekinis TPU išimtas', 'MAŽAS putplastis'],
+    datasets: [
+      { label: 'vibracija, prieš filtrus 80-780 Hz (deg/s)', data: [38.3, 26.0, 31.0, 26.6, 42.5] },
+      { label: '1-8 Hz NEKOMANDUOTAS judesys (deg/s)', data: [4.81, 2.79, 2.97, 3.58, 6.10] }
+    ] },
+  'deg/s', 'tvirtinimo konfigūracija');
+</script>
+
+| konfigūracija | vibracija | **1–8 Hz nekomanduota** | mikserio atsarga |
+|---|---|---|---|
+| originalūs gummy, be putplasčio | 38,3 | 4,81 | 639 |
+| **DIDELIS putplastis** | **26,0** | **2,79** | **673** |
+| visi TPU | 31,0 | 2,97 | 666 |
+| priekinis TPU išimtas | 26,6 | 3,58 | 660 |
+| **MAŽAS gabalėlis** | **42,5** | **6,10** | **598** |
+
+**corr(vibracija, 1–8 Hz nekomanduota) = +0,92. corr(vibracija, atsarga) = −0,92.**
+
+### Tai ne variklių virpėjimas
+
+Pirmas spėjimas buvo, kad vibracija patenka į D narį, varikliai virpa, o virpėjimas suvartoja
+mikserio diapazoną. Išmatavau — neatlaiko. Variklių virpėjimas yra **5,3–7,1 vienetai RMS, maždaug
+1,6–2,1% diapazono.** Per mažai, kad paaiškintų valdžios praradimą.
+
+### Skraidymo valdiklis valdo tik tai, prie ko yra prisuktas
+
+O4 ir gaubtas yra nemaža masė, o ant lanksčių gummy ta masė gali judėti **rėmo atžvilgiu.** Tai
+padaro aparatą dviejų kūnų sistema: kilpa komanduoja rėmui, o gaubtas seka vėluodamas ir persisuka.
+
+**Tas tarpusavio judesys iš principo nevaldomas.** Jokie PID koeficientai jo nepasiekia, nes
+giroskopas yra ant kito kūno. Ir jis pasireiškia būtent ten, kur ir skundas — lėtas, nekomanduotas,
+1–8 Hz siūbavimas.
+
+Putplastis to sujungimo nesustandina. Jis jį **slopina.** Nuslopinti, abu kūnai juda kaip vienas.
+
+Tai paaiškina visą eksperimentų seką:
+
+- **Didysis putplastis geriausias** — slopina per visą sąlyties plokštumą
+- **TPU blogiau už putplastį** — standumas be slopinimo leidžia rezonansinį apsikeitimą, tik pakeičia dažnį
+- **Mažas gabalėlis blogiausias** — per mažas ką nors slopinti, ir įvedė aštrią modą su 81× dominavimu
+- **Jokie tune pakeitimai nepadėjo** — nes tai niekada nebuvo koeficientų problema
+
+Taigi tvirtinimo tyrimas vis dėlto nebuvo kiškis. Tik nesugebėjau paaiškinti, *kodėl* jis veikia, kol
+nenustojau žiūrėti aukščiau 80 Hz.
+
+### Sąžiningos šio rezultato ribos
+
+Penkios konfigūracijos, dvi dienos, skirtingos baterijos, skirtingas oras, skirtingas agresyvumas.
+r = +0,92 ant penkių susietų taškų yra **užuomina, ne įrodymas.** Ir *skrydžio vidaus* korekliacija
+tarp vibracijos ir drebėjimo yra apie nulį arba šiek tiek negatyvi (−0,02 iki −0,27) — tai reiškia,
+kad tai **konfigūracijos** savybė, o ne momentinis priežastingumas.
+
+### Ką realiai darysiu
+
+1. **Grąžinsiu didelį putplasčio gabalą.** Geriausias išmatuotas rezultatas pagal abu rodiklius.
+2. **Šilumą spręsiu kitaip, o ne mažindamas slopintuvą.** Didelis *plonas* slopinimo sluoksnis per
+   visą sąlytį — slopinanti lipni juosta, o ne storas kamštis.
+3. **Nustosiu vaikytis standumo.** Slopinimas nugali standumą, ir tai išmatuota.
+4. **Pritvirtinsiu O4 prie rėmo, ne tik prie gaubto.** Mažiau savarankiškai judančios masės.
+
+
 ## Metodo pastabos, kurias verta pasilikti
 
 Praktikos, kurios kartotinai pakeitė išvadą — ne bendri patarimai, o dalykai, kurie realiai
