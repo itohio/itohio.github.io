@@ -1028,25 +1028,49 @@ snakeChart('c20', 'line',
   'roll pre-filter HF RMS (deg/s)', 'vidutinis propelerio 1x dažnis (Hz)');
 </script>
 
-| tvirtinimas | vidurkis °/s | **jello 250–450** | **stiprinimo nuolydis** | struktūros ypatybė |
+| tvirtinimas | vidurkis °/s | FC išmatuota 250–450 Hz | **stiprinimo nuolydis** | struktūros ypatybė |
 |---|---|---|---|---|
-| originalūs gummy, be putplasčio | 37,7 | **34,5** | **+65%** | 255 Hz (6,0×) |
-| standus putplastis FC↔VTX | 26,2 | **24,5** | +15% | 368 Hz (5,4×) |
+| originalūs gummy, be putplasčio | 37,7 | 34,5 | **+65%** | 255 Hz (6,0×) |
+| didelis putplastis FC↔VTX | 26,2 | 24,5 | +15% | 368 Hz (5,4×) |
 | visi TPU gummy viduje | 33,0 | 31,0 | **+7%** | 363 Hz (8,2×) |
-| priekinis TPU išimtas | 30,1 | **25,4** | +16% | 280 Hz (4,4×) |
+| priekinis TPU išimtas | 30,1 | 25,4 | +16% | 280 Hz (4,4×) |
 
-Išėmus tik **priekinį** TPU — tą vieną gummy, kuris priekyje sieja gaubtą su rėmu — jello juosta
-nukrito nuo 31,0 iki **25,4**, t. y. 4% ribose nuo putplasčio, o struktūrai fiksuota ypatybė
-nusileido nuo 363 Hz iki 280 Hz. Vienas gummy.
+Išėmus tik **priekinį** TPU — tą vieną gummy, kuris priekyje sieja gaubtą su rėmu — struktūrai
+fiksuota ypatybė nusileido nuo 363 Hz iki 280 Hz, o dominavimas beveik perpus. Vienas gummy.
 
-Netikėta yra pirma eilutė. **Originalūs gummy be jokio gerinimo turi didžiausią jello iš keturių
-(34,5)** — blogiau už bet kurį standų variantą. Lankstesnis sujungimas kameros neapsaugojo, nes
-jello seka *bendrą rezonanso amplitudę*, o ne sujungimo standumą.
+### Stulpelis, kurį turiu atšaukti
+
+Ankstesnė versija tą 250–450 Hz stulpelį vadino „jello juosta“ ir pagal jį rikiavo, kuris tvirtinimas
+duoda daugiausia jello. **Tai buvo klaida, ir ji apvertė tikrovę.**
+
+Tą skaičių matuoja **giroskopas ant skraidymo valdiklio** — jis aprašo, ką patiria *valdiklis*.
+Kamera yra ant **gaubto**, už atskiro tvirtinimo, tad valdiklio vibracija tampa jello tik tiek, kiek
+gaubto kelias ją perduoda.
+
+Kas tikrai nutiko — pastebėta vaizde, o ne išvesta iš giroskopo:
+
+| tvirtinimas | rėmo rezonansas giroskope | jello vaizde |
+|---|---|---|
+| originalūs nemodifikuoti gummy | aiškiai matomas | **nėra** |
+| didelis putplasčio gabalas tarp plokščių | **beveik visiškai nuslopintas** | nėra |
+| TPU sustandinti gummy | šiek tiek mažesnis | **atsiranda jello** |
+
+Su lanksčiais originaliais gummy rėmas gali smarkiai virpėti — 34,5 tame stulpelyje — o kamera to
+nemato. **Lankstūs gummy yra geriausias, o ne blogiausias atvejis jello atžvilgiu.**
+
+> jello ≈ (vibracija ant rėmo) × (gaubto tvirtinimo pralaidumas tuose dažniuose)
+
+Blackbox logas matuoja tik pirmą narį. Antrojo jame nėra — todėl vaizdas buvo vienintelis tinkamas
+prietaisas.
 
 ## Kur dabar
 
-Visi TPU išimti, o prie jungties priklijuotas mažas putplasčio gabalėlis — taip, kad slopintų,
-bet neuždengtų karštosios plokštės pusės.
+Visi TPU išimti, sugrąžinti originalūs gummy, o prie jungties priklijuotas mažas putplasčio
+gabalėlis — taip, kad slopintų, bet neuždengtų karštosios plokštės pusės.
+
+**Svarbu:** putplastis, kuris rezonansą praktiškai nuslopino, buvo **didelis** gabalas tarp
+plokščių, gerokai didesnis už šį. Dabartinis gabalėlis yra kompromisas, ir ar jo pakanka — kaip tik
+ir yra atviras klausimas.
 
 {{< figure src="canopy-foam-damper.jpg" alt="Meteor75 Pro II iš šono ant kilimėlio, po gaubtu matomas mažas šviesus putplasčio gabalėlis prie jungties" caption="Visi TPU išimti, vienas mažas putplasčio gabalėlis prie jungties. Lažybos: pakankamai slopinimo, kad nebūtų jello, ir pakankamai atviros vietos, kad ESC pusė kvėpuotų." >}}
 
@@ -1085,6 +1109,19 @@ Nuojauta dėl žemų apsisukimų teisinga: 2600 RPM pakanka desync rizikai. Tik 
 dyn_idle laikėsi, po 3000 RPM riba buvo vos **0,04%** skrydžio laiko, ilgiausias tęstinis
 epizodas **4 ms**.
 
+
+## Painiava, kurią reikėjo pažymėti daug anksčiau
+
+Tai nėra Meteor75 Pro II. Tai Pro II korpusas su **Pro vidumi**, įskaitant variklius: pasilikau
+originalius **22 000 KV**, o serijinis Pro II turi **21 000 KV**.
+
+- **Nekeičia hoverio sužadinimo dažnio.** Hoverio RPM nustato reikalinga trauka, ne KV — mažesnio KV
+  variklis hoveriuoja tais pačiais apsisukimais, tik prie kiek didesnės gazo padėties.
+- **Keičia RPM-vienam-gazui**, momento konstantą ir srovę, tad pagaliuko–RPM atvaizdavimas ir
+  įsisotinimo atsarga yra paveikti.
+
+Serijinis Pro II su O4 **Wide** skiriasi varikliais, gaubto apkrova ir masės paskirstymu vienu metu.
+Visos išvados išmatuotos ant hibrido, ir negaliu tvirtinti, kad jos perkeliamos serijiniam aparatui.
 
 ## Metodo pastabos, kurias verta pasilikti
 

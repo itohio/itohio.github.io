@@ -469,7 +469,8 @@ snakeChart('c10', 'bar',
 
 Filters alone took the high band 1.68 → 0.38, props took it further. Total −66% at 1–5 Hz,
 −85% up high. And note the ratio: roughly **five times more energy sits in the
-Gyroflow-correctable band than in the jello band.** Which is exactly why the footage looked
+Gyroflow-correctable band than up where a rolling shutter turns vibration into jello.**
+Which is exactly why the footage looked
 acceptable while the gyro was screaming — the visible motion was mostly the kind software can
 undo.
 
@@ -1013,25 +1014,18 @@ Energy in the 250–450 Hz band, which is what a rolling shutter turns into jell
 | **+ foam** | **24.6** |
 | **grommets out + TPU** | **31.0** — up 26% |
 
-Low-frequency shake is now largely imperceptible in the air. Jello is back on the footage. And
-that combination points straight at which of my two changes did what:
+Low-frequency shake is now largely imperceptible in the air. Jello is back on the footage.
 
-- **TPU in the gummies** stiffened the **FC-to-frame** path. That is the path that governed the
-  amplification, and the dose-response says it worked.
-- **Removing the VTX grommets** rigidly bonded the **camera to the canopy**. That is the path
-  that governed what the camera sees — and it is why jello returned.
+**And my first explanation for that was wrong.** I claimed removing the VTX grommets had
+"rigidly bonded the camera to the canopy." It had not. The VTX is a bare board — the **camera is
+mounted on the canopy**, not on the VTX. Those VTX grommets were suspending a board with nothing
+on it, which made them dead weight and one more suspended mass free to resonate. Removing them
+was not the jello mechanism.
 
-I wrote earlier that those grommets "were unnecessary anyway." That was wrong, and the jello is
-the evidence. They were not isolating the flight controller, which is why removing them looked
-harmless on the gyro. **They were isolating the camera.** Different component, different job,
-and I removed it while looking at the wrong instrument.
-
-Which lands exactly where this post started: jello cannot be fixed in post. Neither Gyroflow nor
-RockSteady will touch it. Low-frequency shake can. So of the two symptoms I have been trading
-against each other all week, **I have just traded the fixable one for the unfixable one** — a
-straight downgrade in video terms, even though the gyro trace and the dose-response both
-improved.
-
+The jello mechanism is the **canopy-to-frame** path, because that is what the camera rides on.
+Putting TPU in those gummies stiffened it, and a stiffer path transmits more frame vibration
+straight into the camera. Unlike foam, filament adds stiffness without adding meaningful
+damping — so it couples without absorbing.
 ### One honest caveat about the measurement itself
 
 Stiffening the gyro's own mount changes what the gyro *reports*, not only what the airframe
@@ -1044,7 +1038,7 @@ am not going to pretend the numbers are pure.
 
 Put the VTX grommets **back**, keep the TPU in the gummies. The two act on different paths with
 different symptoms, so there is no obvious reason the camera's isolator has to be sacrificed to
-stiffen the FC mount. If that gives a flat dose-response *and* a quiet jello band, it is the
+stiffen the FC mount. If that gives a flat dose-response *and* clean footage, it is the
 answer. If jello persists, the grommets were not the whole story and the canopy itself is
 transmitting.
 
@@ -1069,38 +1063,85 @@ snakeChart('c20', 'line',
 And the two numbers that actually decide anything — what the camera sees, and whether the mode is
 being driven:
 
-| mount | mean °/s | **jello band 250–450** | **amplification slope** | structure feature |
+| mount | mean °/s | FC-measured 250–450 Hz | **amplification slope** | structure feature |
 |---|---|---|---|---|
-| original gummies, no foam | 37.7 | **34.5** | **+65%** | 255 Hz (6.0×) |
-| stiff foam FC↔VTX | 26.2 | **24.5** | +15% | 368 Hz (5.4×) |
+| original gummies, no foam | 37.7 | 34.5 | **+65%** | 255 Hz (6.0×) |
+| stiff foam FC↔VTX (large pad) | 26.2 | 24.5 | +15% | 368 Hz (5.4×) |
 | all TPU in gummies | 33.0 | 31.0 | **+7%** | 363 Hz (8.2×) |
-| front TPU removed | 30.1 | **25.4** | +16% | 280 Hz (4.4×) |
+| front TPU removed | 30.1 | 25.4 | +16% | 280 Hz (4.4×) |
 
-Removing just the **front** TPU — the one gummy connecting canopy to frame at the nose — dropped
-the jello band from 31.0 to **25.4**, within 4% of the foam, and pulled the structure-fixed
-feature from 363 Hz back down to 280 Hz with its dominance almost halved. One gummy. That is how
-localised this turned out to be.
+Removing just the **front** TPU — the one gummy joining canopy to frame at the nose — pulled the
+structure-fixed feature from 363 Hz back down to 280 Hz and nearly halved its dominance. One
+gummy. That is how localised this turned out to be.
 
-The counterintuitive row is the first one. **Original gummies with no treatment at all has the
-worst jello of the four (34.5)** — worse than every stiff option. Softer coupling did not protect
-the camera, because jello tracks *total resonance amplitude*, not coupling stiffness: with the
-mode sitting at 255 Hz and amplifying +65%, there is simply more vibration energy in the airframe,
-and more of it arrives at the camera even through a softer path.
+### A column I have to withdraw
 
-So there is no monotonic dial here. Too stiff transmits; too soft lets the mode run. What worked
-was damping or detuning it.
+An earlier version of this post called that 250–450 Hz column the "jello band" and used it to rank
+which mount gave the worst jello. **That was wrong, and it inverted reality.**
+
+That number is measured by the **gyro on the flight controller**. It describes what the *FC*
+experiences. The camera is on the **canopy**, behind a separate mount, so FC vibration only becomes
+jello to the extent the canopy path transmits it. Those are two different quantities and I treated
+one as a proxy for the other.
+
+What actually happened, observed on the footage rather than inferred from a gyro:
+
+| mount | frame resonance in the gyro | jello on the video |
+|---|---|---|
+| original unmodified gummies | clearly present | **none** |
+| large foam pad between the boards | **damped essentially away** | none |
+| TPU-stiffened gummies | slightly reduced | **jello appears** |
+
+Which is entirely consistent, and the opposite of what my table implied. With soft original
+gummies the frame can shake hard — 34.5 in that column — and the camera never sees it, because the
+canopy mount is not transmitting. Stiffen that mount and the same frame vibration arrives at the
+sensor. **Soft gummies are the best case for jello, not the worst.**
+
+So the correct reading of jello risk is a product, not a level:
+
+> jello ≈ (vibration at the frame) × (transmissibility of the canopy mount at those frequencies)
+
+The FC gyro measures only the first term. Nothing in a blackbox log measures the second, which is
+why the footage was the only valid instrument here and I should have deferred to it sooner.
+So there is no single dial. Stiff transmits vibration to the camera; soft leaves the mode free to
+run in the airframe. The only option that fixed both at once was **damping** — the large foam pad,
+which killed the resonance in the gyro *and* left the footage clean.
 
 ## Where it stands now
 
-All TPU removed, and a small foam pad glued near the connector — positioned so it damps without
-sitting over the hot side of the board.
+All TPU removed, back to the original gummies, and a small foam pad glued in near the connector —
+positioned so it damps without sitting over the hot side of the board.
 
-{{< figure src="canopy-foam-damper.jpg" alt="Side view of the Meteor75 Pro II on a cutting mat, showing a small pale foam block glued under the canopy near the connector" caption="All TPU out, one small foam pad glued in near the connector. The bet: enough damping to keep jello away, little enough coverage to keep the ESC side breathing." >}}
+{{< figure src="canopy-foam-damper.jpg" alt="Side view of the Meteor75 Pro II on a cutting mat, showing a small pale foam block glued under the canopy near the connector" caption="Original gummies back in, plus one small foam pad near the connector. Note the size: the pad that actually killed the resonance was much larger and sat between the boards." >}}
 
 Jello was the deciding factor, and that is the right call — it is the one symptom nothing
-downstream can fix. Per the table above, bare gummies alone are the worst case for jello, so this
-pad is now doing all the work. Untested at the time of writing; the pack is on charge and the glue
-is curing.
+downstream can fix. Gyroflow will not touch it, RockSteady will not touch it.
+
+**One important thing this photo does not show.** The foam that damped the resonance essentially
+away was a **large** piece between the boards, considerably bigger than the pad here. The current
+pad is a deliberate compromise: enough damping to be worth having, small enough that the ESC side
+keeps breathing. Whether that trade holds is exactly the open question — a smaller damper may not
+reach the mode, and going back to original gummies restores the soft canopy path that kept the
+footage clean in the first place. Untested at the time of writing; the glue is curing.
+
+## The confound I should have flagged much earlier
+
+This is not a Meteor75 Pro II. It is a Pro II shell with **Pro internals**, and that includes the
+motors: I kept the original **22,000 KV** units, where a stock Pro II ships **21,000 KV**.
+
+Being precise about what that does and does not change, because it is easy to overclaim:
+
+- **It does not move the hover excitation frequency.** Hover RPM is set by the thrust the airframe
+  needs, not by KV — a lower-KV motor hovers at the same RPM, just at a slightly higher throttle
+  position. So the 325–365 Hz window the props keep wandering into is not a KV artifact.
+- **It does change RPM-per-throttle**, torque constant and current draw, so stick-to-RPM mapping
+  and the saturation headroom behind that split-S departure are both affected.
+
+The larger point stands though: a stock Pro II with the O4 **Wide** differs from this build in
+motors, canopy loading and mass distribution all at once. Every mount conclusion here is measured
+on a hybrid, and I cannot claim it transfers to a factory unit. Getting hold of a stock Pro II with
+the Wide unit is the honest way to test that, and it is the next thing on the list.
+
 
 ## A snap that was not a crash
 
