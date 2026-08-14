@@ -925,6 +925,91 @@ pusė vėl kvėpuoja. Ar ši pora pilnai atitinka putplastį *struktūrinėje kr
 klausimas, ir jam reikia skrydžio lauke su tikrais perbėgimais. Tai rytojaus darbas.
 
 
+## Patikrinimas lauke — ir kompromisas apsiverčia į kitą pusę
+
+121 s tvarkingo skrydžio lauke, 5,51 °/s vėjo, **nulis konfigūracijos pakeitimų** ir pagaliau
+normalus RPM padengimas: **8 iš 12 juostų** po 4 s ar daugiau, prieš 5 visuose ankstesniuose
+skrydžiuose. Tai geriausias viso šio darbo duomenų rinkinys.
+
+Užrašytas kriterijus išsilaikė. Stiprinimas miręs, dabar patvirtinta ir lauke:
+
+| tvirtinimas | atsako nuolydis |
+|---|---|
+| be putplasčio | +66% |
+| + putplastis | +15% |
+| be įvorių + TPU, patalpoje | +6% |
+| **be įvorių + TPU, lauke** | **+7%** |
+
+Struktūrai fiksuota ypatybė tam neprieštarauja: su TPU ji yra **363 Hz**, su putplasčiu —
+**368 Hz**, be nieko — **255 Hz**. Abu standūs sprendimai atsiduria toje pačioje vietoje.
+
+### Bet putplastis vis tiek tylesnis
+
+Lauke prieš lauką, prie sutapatinto propelerių RPM — sąžiningas palyginimas, kurio laukiau dvi
+dienas:
+
+<div style="height:400px"><canvas id="c19"></canvas></div>
+<script>
+snakeChart('c19', 'line',
+  { labels: [275, 300, 325, 350, 375, 400, 425],
+    datasets: [
+      { label: 'be putplasčio', data: [43, 49, 39, 32, 26, null, null] },
+      { label: '+ putplastis', data: [27, 26, 28, 25, 25, 27, 27] },
+      { label: 'be įvorių + TPU', data: [44, 38, 35, 32, 31, 23, 21] }
+    ] },
+  'roll pre-filter HF RMS (deg/s)', 'vidutinis propelerio 1x dažnis (Hz)');
+</script>
+
+Vidurkis per patikimas juostas: **26,2 °/s putplasčiui, 33,0 TPU** — apie 26% blogiau. Ir kreivė
+mažiau plokščia: 1,13 putplasčiui, **2,14** TPU — blogiau net už 1,85 be jokio tvirtinimo
+gerinimo. Žemajame gale vėl yra pikas: 44 °/s prie 275–300 Hz, nukrentantis iki 21 prie 425.
+
+Taigi stiprinimo *mechanizmas* miręs, bet bendras vibracijos lygis pakilo. Tai du skirtingi
+teiginiai ir abu teisingi.
+
+### Ir tada kamera vėl gavo jello
+
+Šios dalies nenumačiau, ir tai visa šio teksto tezė, atėjusi iš priešingos pusės.
+
+Energija 250–450 Hz juostoje — būtent ją rolling shutter paverčia jello:
+
+| tvirtinimas | 250–450 Hz RMS |
+|---|---|
+| be putplasčio | 34,8 |
+| **+ putplastis** | **24,6** |
+| **be įvorių + TPU** | **31,0** — +26% |
+
+Žemo frekvencijos drebėjimas ore dabar beveik nejuntamas. Jello grįžo į vaizdą. Ir ta kombinacija
+tiesiai parodo, kuris iš dviejų mano pakeitimų ką padarė:
+
+- **TPU gummy viduje** sustandino **valdiklio–rėmo** kelią. Tai kelias, kuris valdė stiprinimą, ir
+  atsako kreivė sako, kad pavyko.
+- **VTX įvorių išėmimas** standžiai sujungė **kamerą su gaubtu**. Tai kelias, kuris valdo tai, ką
+  mato kamera — ir todėl jello grįžo.
+
+Anksčiau parašiau, kad tie įvoriai „vis tiek buvo nereikalingi“. Tai buvo klaida, ir jello yra
+įrodymas. Jie izoliavo ne skraidymo valdiklį — todėl jų išėmimas atrodė nekaltas giroskopo
+duomenyse. **Jie izoliavo kamerą.** Kitas komponentas, kita funkcija, o aš juos išėmiau žiūrėdamas
+į netinkamą prietaisą.
+
+Ir tai nusileidžia lygiai ten, kur šis tekstas prasidėjo: jello nepataisysi po skrydžio. Nei
+Gyroflow, nei RockSteady jo nepaims. Žemų frekvencijų drebėjimą — paims. Taigi iš dviejų simptomų,
+kuriuos visą savaitę keičiau vieną į kitą, **ką tik iškeičiau pataisomą į nepataisomą.**
+
+### Sąžininga išlyga apie patį matavimą
+
+Sustandinus paties giroskopo tvirtinimą, pasikeičia ne tik tai, ką rėmas *daro*, bet ir tai, ką
+giroskopas *praneša*. Standžiai pritvirtintas giroskopas tiksliau susietas su tikruoju rėmo
+judesiu, tad dalis šio prieaugio yra geresnis susietumas su tiesa, o ne blogesnis rėmas. Šių dviejų
+negaliu atskirti giroskopu, kuris pats yra eksperimento dalis.
+
+### Toliau
+
+Įvorius **grąžinti**, TPU gummy viduje palikti. Jie veikia skirtinguose keliuose su skirtingais
+simptomais, tad nėra akivaizdžios priežasties, kodėl kameros izoliatorių reikia aukoti dėl
+standesnio valdiklio tvirtinimo.
+
+
 ## Metodo pastabos, kurias verta pasilikti
 
 Praktikos, kurios kartotinai pakeitė išvadą — ne bendri patarimai, o dalykai, kurie realiai

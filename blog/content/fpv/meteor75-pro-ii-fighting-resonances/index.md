@@ -955,6 +955,99 @@ measured, and the ESC side is breathing again. Whether this pair fully matches f
 tomorrow's job. If the peak comes back, the foam was doing something the TPU is not, and I will
 say so here.
 
+## The outdoor verification — and the trade-off flips the other way
+
+121 s clean, outdoors, 5.51 °/s of wind, **zero config changes**, and finally proper RPM
+coverage: **8 of 12 bins** at 4 s or more, against 5 for every previous flight. This is the
+best dataset of the whole exercise.
+
+The pre-registered criterion held. Amplification is dead, and now confirmed outdoors:
+
+| mount | dose-response slope |
+|---|---|
+| no foam | +66% |
+| + foam | +15% |
+| grommets out + TPU, indoor | +6% |
+| **grommets out + TPU, outdoor** | **+7%** |
+
+The structure-fixed feature agrees with that. It sits at **363 Hz** with the TPU, against
+**368 Hz** with the foam and **255 Hz** with neither. Both stiff solutions land in the same
+place — stiffening moved that feature up by about 110 Hz, and it stayed moved.
+
+### But the foam is still the quieter mount
+
+Outdoor against outdoor, at matched prop RPM, which is the fair comparison I have been waiting
+two days for:
+
+<div style="height:400px"><canvas id="c19"></canvas></div>
+<script>
+snakeChart('c19', 'line',
+  { labels: [275, 300, 325, 350, 375, 400, 425],
+    datasets: [
+      { label: 'no foam', data: [43, 49, 39, 32, 26, null, null] },
+      { label: '+ foam', data: [27, 26, 28, 25, 25, 27, 27] },
+      { label: 'grommets out + TPU', data: [44, 38, 35, 32, 31, 23, 21] }
+    ] },
+  'roll pre-filter HF RMS (deg/s)', 'mean prop 1x frequency (Hz)');
+</script>
+
+Mean across reliable bins: **26.2 °/s for the foam, 33.0 for the TPU** — about 26% worse. And
+the curve is less flat: flatness 1.13 for the foam, **2.14** for the TPU, which is worse even
+than the 1.85 of no mount treatment at all. There is a peak again at the low end, 44 °/s at
+275–300 Hz, falling to 21 by 425.
+
+So the amplification *mechanism* is dead — sitting in the resonance window no longer costs you
+anything — but the overall vibration level is up. Those are different statements and both are
+true.
+
+### And then the camera got jello back
+
+This is the part I did not predict, and it is the whole thesis of this post arriving from the
+opposite direction.
+
+Energy in the 250–450 Hz band, which is what a rolling shutter turns into jello:
+
+| mount | 250–450 Hz RMS |
+|---|---|
+| no foam | 34.8 |
+| **+ foam** | **24.6** |
+| **grommets out + TPU** | **31.0** — up 26% |
+
+Low-frequency shake is now largely imperceptible in the air. Jello is back on the footage. And
+that combination points straight at which of my two changes did what:
+
+- **TPU in the gummies** stiffened the **FC-to-frame** path. That is the path that governed the
+  amplification, and the dose-response says it worked.
+- **Removing the VTX grommets** rigidly bonded the **camera to the canopy**. That is the path
+  that governed what the camera sees — and it is why jello returned.
+
+I wrote earlier that those grommets "were unnecessary anyway." That was wrong, and the jello is
+the evidence. They were not isolating the flight controller, which is why removing them looked
+harmless on the gyro. **They were isolating the camera.** Different component, different job,
+and I removed it while looking at the wrong instrument.
+
+Which lands exactly where this post started: jello cannot be fixed in post. Neither Gyroflow nor
+RockSteady will touch it. Low-frequency shake can. So of the two symptoms I have been trading
+against each other all week, **I have just traded the fixable one for the unfixable one** — a
+straight downgrade in video terms, even though the gyro trace and the dose-response both
+improved.
+
+### One honest caveat about the measurement itself
+
+Stiffening the gyro's own mount changes what the gyro *reports*, not only what the airframe
+*does*. A rigidly mounted gyro is coupled more faithfully to the frame's real motion, so part of
+the increase in these pre-filter numbers is better coupling to the truth rather than a worse
+airframe. I cannot separate those two from a gyro that is itself part of the experiment, and I
+am not going to pretend the numbers are pure.
+
+### Next
+
+Put the VTX grommets **back**, keep the TPU in the gummies. The two act on different paths with
+different symptoms, so there is no obvious reason the camera's isolator has to be sacrificed to
+stiffen the FC mount. If that gives a flat dose-response *and* a quiet jello band, it is the
+answer. If jello persists, the grommets were not the whole story and the canopy itself is
+transmitting.
+
 ## Method notes worth keeping
 
 Practices that repeatedly changed the conclusion — not general advice, things that actually
