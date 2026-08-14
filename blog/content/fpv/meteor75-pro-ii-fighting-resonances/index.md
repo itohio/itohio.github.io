@@ -482,6 +482,8 @@ jello* for *more low-frequency shake* is a good trade, even when the gyro logs l
 
 Everything above is measurements. This is the part that made me care in the first place.
 
+{{< figure src="raw-gyro-noise-trace.jpg" alt="Betaflight blackbox viewer showing the raw gyro trace as a continuous amplitude-modulated noise band across the whole flight, with the filtered gyro, P term, D term and PID sums all sitting flat below it" caption="The thing I am actually fighting. Top trace is raw gyro: a continuous band that swells and fades rather than a clean line. Everything below it - filtered gyro, P, D, PID sums - is flat, which is the filters doing their job. None of that helps the camera." >}}
+
 What I am chasing is the noise you can see directly in the raw gyro trace — a continuous,
 amplitude-modulated band that swells and fades rather than sitting at a constant level. On its own
 it is just a number in a log. The problem is what happens next: **under some conditions the flight

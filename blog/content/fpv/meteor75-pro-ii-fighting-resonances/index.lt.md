@@ -1188,6 +1188,8 @@ atsitrenkimas į grindis buvo 9,8 G, o kritimas 9,6 G. Šis buvo stipresnis už 
 
 Viskas aukščiau — matavimai. Ši dalis paaiškina, kodėl man iš viso tai svarbu.
 
+{{< figure src="raw-gyro-noise-trace.jpg" alt="Betaflight blackbox peržiūros programa: neapdorotas giroskopo pjūvis kaip tolydi amplitudės moduliuota triukšmo juosta per visą skrydį, o žemiau filtruotas giroskopas, P, D ir PID sumos - plokščios" caption="Tai, su kuo iš tikrųjų kariauju. Viršuje neapdorotas giroskopas: tolydi juosta, kuri auga ir traukiasi, o ne švari linija. Viskas žemiau - filtruotas giroskopas, P, D, PID sumos - plokščia, t. y. filtrai dirba savo darbą. Kamerai iš to nieko." >}}
+
 Tai, ko vaikausi, yra triukšmas, kurį matai tiesiai neapdorotame giroskopo pjūvyje — tolydi,
 amplitudės moduliuota juosta, kuri auga ir traukiasi, o ne stovi vienodame lygyje. Pati savaime tai
 tik skaičius loge. Problema — kas nutinka toliau: **tam tikromis aplinkybėmis skraidymo valdiklis
