@@ -1184,6 +1184,43 @@ Prie t = 109,83 s yra **12,9 G** šuolis, pitch 2000 °/s, ir logas baigiasi. An
 atsitrenkimas į grindis buvo 9,8 G, o kritimas 9,6 G. Šis buvo stipresnis už abu.
 
 
+## Su kuo iš tikrųjų kariauju — ir kodėl „Gyroflow sutvarkys“ turi spąstus
+
+Viskas aukščiau — matavimai. Ši dalis paaiškina, kodėl man iš viso tai svarbu.
+
+Tai, ko vaikausi, yra triukšmas, kurį matai tiesiai neapdorotame giroskopo pjūvyje — tolydi,
+amplitudės moduliuota juosta, kuri auga ir traukiasi, o ne stovi vienodame lygyje. Pati savaime tai
+tik skaičius loge. Problema — kas nutinka toliau: **tam tikromis aplinkybėmis skraidymo valdiklis
+jį sustiprina.** Kilpa reaguoja į tą triukšmą, varo variklius juo, ir rėmas tikrai pradeda judėti.
+Tada tai nebėra giroskopo rodmuo — tai **drebėjimas vaizdo sraute**.
+
+Ir tai nėra stipraus vėjo reiškinys. Jis pasireiškia sąlygomis, kurias pavadinčiau ramiomis.
+
+Dabar spąstai, ir tai svarbiausias praktinis dalykas, kurį išmokau:
+
+> **Vaizdo stabilizavimas išgelbsti tik tada, kai yra daug šviesos.**
+
+Šviesią dieną ekspozicijos laikai trumpi. Kiekvienas kadras aiškus, drebėjimas pasireiškia kaip
+kadro-į-kadrą *poslinkis*, ir Gyroflow gali kadrus sulygiuoti ir tai pašalinti.
+
+Apniukusią dieną kamera laiko užraktą atidarytą ilgiau. Dabar drebėjimas įvyksta *ekspozicijos
+metu*, o ne tarp kadrų, ir įsirašo kaip **judesio suliejimas, įspaustas į pikselius**. Stabilizavimas
+gali idealiai sulygiuoti suliejtą kadrą — jis vis tiek suliejtas. Atkurti nėra ko.
+
+Taigi patogus rėminimas, kurį naudojau anksčiau — jello nepataisomas, žemų frekvencijų drebėjimas
+pataisomas — yra per dosnus. Sąžininga versija turi tris lygius:
+
+| simptomas | ar pataisoma po skrydžio? |
+|---|---|
+| jello (rolling-shutter iškraipymas) | **ne** — nei Gyroflow, nei RockSteady |
+| drebėjimas, ryški šviesa, trumpa ekspozicija | **taip** |
+| drebėjimas, prieblanda, ilga ekspozicija | **ne** — tai suliejimas, ne poslinkis |
+
+Du iš trijų neatkuriami, o kurį gausi tą dieną, sprendžia oras, ne tune. Todėl ir kabinausi į
+mechaninę pusę dar ilgai po to, kai skraidymo valdiklis nustojo skųstis: filtrai kilpą jau saugojo
+puikiai, o kamerai iš to nieko.
+
+
 ## Metodo pastabos, kurias verta pasilikti
 
 Praktikos, kurios kartotinai pakeitė išvadą — ne bendri patarimai, o dalykai, kurie realiai

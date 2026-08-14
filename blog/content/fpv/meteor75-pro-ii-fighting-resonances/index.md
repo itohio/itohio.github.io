@@ -433,7 +433,7 @@ stabiliser sees the image.
 **(b) Broadband 10–25 Hz turbulence following.** Measured **Q ≈ 1.9–2.2**. Peak 15.8–17.8 Hz
 on roll, 10.6–12.9 Hz on pitch, amplitude 4.4–5.3 °/s. A control-loop limit cycle would show
 Q = 10–100; Q ≈ 2 is a lightly-damped airframe genuinely being pushed around by turbulent air.
-**This is the band Gyroflow corrects well.**
+**This is the band Gyroflow corrects well — but only in good light. More on that below.**
 
 <div style="height:340px"><canvas id="c11"></canvas></div>
 <script>
@@ -477,6 +477,46 @@ undo.
 That asymmetry is the whole reason the decoupling trade-off matters. Low-frequency shake is
 recoverable in post. Jello is not recoverable by anything. So a change that trades *less
 jello* for *more low-frequency shake* is a good trade, even when the gyro logs look worse.
+
+## What I am actually fighting — and why "Gyroflow fixes it" has a catch
+
+Everything above is measurements. This is the part that made me care in the first place.
+
+What I am chasing is the noise you can see directly in the raw gyro trace — a continuous,
+amplitude-modulated band that swells and fades rather than sitting at a constant level. On its own
+it is just a number in a log. The problem is what happens next: **under some conditions the flight
+controller amplifies it.** The loop reacts to that noise, drives the motors with it, and the
+airframe genuinely moves. At that point it stops being a gyro reading and starts being **shaking in
+the video feed**.
+
+And this is not a heavy-wind phenomenon. It shows up in conditions I would describe as mild.
+
+Now the catch, and it is the single most important practical thing I learned:
+
+> **Video stabilisation only rescues this if there is plenty of light.**
+
+On a bright day, exposure times are short. Each frame is crisp, the shake shows up as
+frame-to-frame *displacement*, and Gyroflow can re-align frames and take it out. That is the case
+that makes stabilisation look like a solution.
+
+On a cloudy day the camera holds the shutter open longer to get the exposure. Now the shake happens
+*during* each exposure instead of between frames, and it is recorded as **motion blur baked into the
+pixels**. Stabilisation can align a blurred frame perfectly and it is still blurred. There is
+nothing to recover. The whole clip is soft.
+
+So the comfortable framing I used earlier in this post — jello is unfixable, low-frequency shake is
+fixable — is too generous. The honest version has three tiers:
+
+| symptom | can it be fixed after the flight? |
+|---|---|
+| jello (rolling-shutter distortion) | **no** — not Gyroflow, not RockSteady |
+| shake, bright light, short exposure | **yes** — this is what stabilisation is for |
+| shake, low light, long exposure | **no** — it is motion blur, not displacement |
+
+Two of those three are unrecoverable, and which one you get on a given day is decided by the
+weather rather than by anything in the tune. That is why I kept going after the mechanical side long
+after the flight controller had stopped complaining: the filters were already protecting the loop
+perfectly well, and none of that reaches the camera.
 
 ## A tuning experiment that failed and got reverted
 
@@ -827,7 +867,7 @@ So here is the thesis, now that all the measurements are on the table.
   And neither Gyroflow nor RockSteady can remove jello — that is the asymmetry that makes
   this whole trade-off matter.
 - The **new** canopy is much better isolated. The camera sees far less high-frequency content.
-  What remains visible is low-frequency, which **Gyroflow handles well.**
+  What remains visible is low-frequency, which **Gyroflow handles well — conditionally.**
 - But that same decoupling created a soft, lightly-damped path between the FC/canopy assembly
   and the frame. The FC now **fights the canopy** — and in higher winds, it loses. Because
   wind shifts motor RPMs into the resonance window, and the mode gets driven.
@@ -1325,7 +1365,7 @@ the camera away from the shaking. The thing I did not expect to buy along with i
 spring between the flight controller and the airframe, tuned by accident to a frequency four
 motors pass through every time the wind pushes the quad sideways.
 
-Better isolation gave me footage Gyroflow can rescue and a gyro trace that looks like an
+Better isolation gave me footage Gyroflow can rescue on a bright day and a gyro trace that looks like an
 emergency. Those are the same change. A week of logs, three retractions and one very
 embarrassing analyser bug later, the only lever that moved the structural problem was a piece
 of foam — and I still cannot tell you whether it worked by adding stiffness, adding modal
