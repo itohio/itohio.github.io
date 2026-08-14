@@ -1010,6 +1010,82 @@ simptomais, tad nėra akivaizdžios priežasties, kodėl kameros izoliatorių re
 standesnio valdiklio tvirtinimo.
 
 
+## Visi keturi tvirtinimai vienoje diagramoje
+
+Visos kreivės — lauke, suskirstytos pagal vidutinį propelerių dažnį, ir įtrauktos tik juostos su
+**4 s ar daugiau** išbūto laiko:
+
+<div style="height:420px"><canvas id="c20"></canvas></div>
+<script>
+snakeChart('c20', 'line',
+  { labels: [250, 275, 300, 325, 350, 375, 400, 425],
+    datasets: [
+      { label: 'originalūs gummy, be putplasčio', data: [null, 43, 49, 39, 32, 26, null, null] },
+      { label: 'standus putplastis FC<->VTX', data: [null, 27, 26, 28, 25, 25, null, null] },
+      { label: 'visi TPU gummy viduje', data: [40, 44, 38, 35, 32, 31, 23, 21] },
+      { label: 'priekinis TPU išimtas', data: [null, 45, 31, 32, 28, 24, 22, null] }
+    ] },
+  'roll pre-filter HF RMS (deg/s)', 'vidutinis propelerio 1x dažnis (Hz)');
+</script>
+
+| tvirtinimas | vidurkis °/s | **jello 250–450** | **stiprinimo nuolydis** | struktūros ypatybė |
+|---|---|---|---|---|
+| originalūs gummy, be putplasčio | 37,7 | **34,5** | **+65%** | 255 Hz (6,0×) |
+| standus putplastis FC↔VTX | 26,2 | **24,5** | +15% | 368 Hz (5,4×) |
+| visi TPU gummy viduje | 33,0 | 31,0 | **+7%** | 363 Hz (8,2×) |
+| priekinis TPU išimtas | 30,1 | **25,4** | +16% | 280 Hz (4,4×) |
+
+Išėmus tik **priekinį** TPU — tą vieną gummy, kuris priekyje sieja gaubtą su rėmu — jello juosta
+nukrito nuo 31,0 iki **25,4**, t. y. 4% ribose nuo putplasčio, o struktūrai fiksuota ypatybė
+nusileido nuo 363 Hz iki 280 Hz. Vienas gummy.
+
+Netikėta yra pirma eilutė. **Originalūs gummy be jokio gerinimo turi didžiausią jello iš keturių
+(34,5)** — blogiau už bet kurį standų variantą. Lankstesnis sujungimas kameros neapsaugojo, nes
+jello seka *bendrą rezonanso amplitudę*, o ne sujungimo standumą.
+
+## Kur dabar
+
+Visi TPU išimti, o prie jungties priklijuotas mažas putplasčio gabalėlis — taip, kad slopintų,
+bet neuždengtų karštosios plokštės pusės.
+
+{{< figure src="canopy-foam-damper.jpg" alt="Meteor75 Pro II iš šono ant kilimėlio, po gaubtu matomas mažas šviesus putplasčio gabalėlis prie jungties" caption="Visi TPU išimti, vienas mažas putplasčio gabalėlis prie jungties. Lažybos: pakankamai slopinimo, kad nebūtų jello, ir pakankamai atviros vietos, kad ESC pusė kvėpuotų." >}}
+
+Jello buvo sprendžiamasis faktorius, ir tai teisingas pasirinkimas — tai vienintelis simptomas,
+kurio niekas vėliau nebepataisys. Pagal lentelę aukščiau, vien gummy be nieko yra blogiausias
+atvejis jello atžvilgiu, tad dabar visą darbą dirba šis gabalėlis. Dar nepatikrinta.
+
+## Snap'as, kuris nebuvo susidūrimas
+
+Vėlai priekinio-TPU skrydyje dariau split-S ir kvadras trūktelėjo, tarsi būtų į kažką atsitrenkęs.
+Nebuvo į ką. Logas sutinka: **3,8 G**, prieš 9,8 G žinomo atsitrenkimo į grindis ir 9,6 G žinomo
+kritimo toje pačioje sesijoje.
+
+Tai ir ne radijas: `rxSignalReceived` ir `rxFlightChannelsValid` nenukrito nė karto,
+`failsafePhase` visą skrydį 0, o mažiausias RSSI yra prie t≈39 s.
+
+Kas nutiko prie t = 86,2–86,5 s: variklis 2 buvo nuvestas į apatinę ribą (248 → 128), jo apsisukimai
+nukrito 6450 → 2700; yaw I narys prisisotino prie −230; varikliai 3 ir 4 atsitrenkė į 2047 lubas,
+kol variklis 2 sėdėjo prie 128. Rezultatas — 346 °/s yaw be jokios komandos.
+
+Intervale 85,5–87,0 s **17,6% kadrų turėjo variklį prie lubų, o 30,4% — prie apatinės ribos.**
+Mikseriui vienu metu neliko atsargos abiejuose galuose.
+
+### Blogo kontakto teorija, patikrinta
+
+Pirma mintis buvo blogas baterijos kontaktas. Logas sako ne: efektyvi varža apie **35 mΩ**
+(normalu), **nulis kadrų** su srove nepaaiškinamu įtampos kritimu, o apsisukimai nukrito **vienam
+varikliui, ne keturiems** — atsijungus baterijai badauja visi keturi. Ir tuo metu variklio 2
+**komanda buvo 238 iš 2047** — mikseris pats jį ten nuvedė.
+
+Išlygos: srovės daviklio skalė šioje plokštėje nepatikrinta, tad 35 mΩ yra orientacinis; regresija
+neatskiria apkrovos kritimo nuo baterijos išsikrovimo (R² tik 0,28). Bet aštraus nepaaiškinamo
+šuolio nebuvimas yra tvirtas rezultatas.
+
+Nuojauta dėl žemų apsisukimų teisinga: 2600 RPM pakanka desync rizikai. Tik šįkart neišdegė —
+dyn_idle laikėsi, po 3000 RPM riba buvo vos **0,04%** skrydžio laiko, ilgiausias tęstinis
+epizodas **4 ms**.
+
+
 ## Metodo pastabos, kurias verta pasilikti
 
 Praktikos, kurios kartotinai pakeitė išvadą — ne bendri patarimai, o dalykai, kurie realiai

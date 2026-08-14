@@ -1048,6 +1048,110 @@ stiffen the FC mount. If that gives a flat dose-response *and* a quiet jello ban
 answer. If jello persists, the grommets were not the whole story and the canopy itself is
 transmitting.
 
+## All four mounts on one chart
+
+This is the comparison the whole post has been building toward. Every curve is outdoor, binned by
+mean prop frequency, and only bins with **4 s or more of dwell** are plotted:
+
+<div style="height:420px"><canvas id="c20"></canvas></div>
+<script>
+snakeChart('c20', 'line',
+  { labels: [250, 275, 300, 325, 350, 375, 400, 425],
+    datasets: [
+      { label: 'original gummies, no foam', data: [null, 43, 49, 39, 32, 26, null, null] },
+      { label: 'stiff foam FC<->VTX', data: [null, 27, 26, 28, 25, 25, null, null] },
+      { label: 'all TPU in gummies', data: [40, 44, 38, 35, 32, 31, 23, 21] },
+      { label: 'front TPU removed', data: [null, 45, 31, 32, 28, 24, 22, null] }
+    ] },
+  'roll pre-filter HF RMS (deg/s)', 'mean prop 1x frequency (Hz)');
+</script>
+
+And the two numbers that actually decide anything — what the camera sees, and whether the mode is
+being driven:
+
+| mount | mean °/s | **jello band 250–450** | **amplification slope** | structure feature |
+|---|---|---|---|---|
+| original gummies, no foam | 37.7 | **34.5** | **+65%** | 255 Hz (6.0×) |
+| stiff foam FC↔VTX | 26.2 | **24.5** | +15% | 368 Hz (5.4×) |
+| all TPU in gummies | 33.0 | 31.0 | **+7%** | 363 Hz (8.2×) |
+| front TPU removed | 30.1 | **25.4** | +16% | 280 Hz (4.4×) |
+
+Removing just the **front** TPU — the one gummy connecting canopy to frame at the nose — dropped
+the jello band from 31.0 to **25.4**, within 4% of the foam, and pulled the structure-fixed
+feature from 363 Hz back down to 280 Hz with its dominance almost halved. One gummy. That is how
+localised this turned out to be.
+
+The counterintuitive row is the first one. **Original gummies with no treatment at all has the
+worst jello of the four (34.5)** — worse than every stiff option. Softer coupling did not protect
+the camera, because jello tracks *total resonance amplitude*, not coupling stiffness: with the
+mode sitting at 255 Hz and amplifying +65%, there is simply more vibration energy in the airframe,
+and more of it arrives at the camera even through a softer path.
+
+So there is no monotonic dial here. Too stiff transmits; too soft lets the mode run. What worked
+was damping or detuning it.
+
+## Where it stands now
+
+All TPU removed, and a small foam pad glued near the connector — positioned so it damps without
+sitting over the hot side of the board.
+
+{{< figure src="canopy-foam-damper.jpg" alt="Side view of the Meteor75 Pro II on a cutting mat, showing a small pale foam block glued under the canopy near the connector" caption="All TPU out, one small foam pad glued in near the connector. The bet: enough damping to keep jello away, little enough coverage to keep the ESC side breathing." >}}
+
+Jello was the deciding factor, and that is the right call — it is the one symptom nothing
+downstream can fix. Per the table above, bare gummies alone are the worst case for jello, so this
+pad is now doing all the work. Untested at the time of writing; the pack is on charge and the glue
+is curing.
+
+## A snap that was not a crash
+
+Late in the front-TPU flight I pulled a split-S and the quad snapped as if it had hit something.
+There was nothing to hit, and the log agrees: **peak 3.8 G**, against 9.8 G for a known floor bump
+and 9.6 G for a known crash in the same session. No impact.
+
+It was also not the radio. `rxSignalReceived` and `rxFlightChannelsValid` never dropped,
+`failsafePhase` stayed 0 for the whole flight, and the RSSI minimum sits at t≈39 s — nowhere near
+the event.
+
+What actually happened, at t = 86.2–86.5 s:
+
+```
+85.95  motor2 driven to the floor (248 -> 128), its RPM falls 6450 -> 2700
+86.20  yaw I-term saturates at -230 and pins there
+86.20  motors 3 and 4 hit the 2047 ceiling WHILE motor2 sits at 128
+86.40  gyro roll -637, pitch -295, yaw +278 deg/s ... commanded yaw = 0
+86.45  yaw reaches 346 deg/s, entirely uncommanded
+```
+
+Across 85.5–87.0 s, **17.6% of frames had a motor at the ceiling and 30.4% had a motor at the
+floor.** The mixer ran out of range at *both ends simultaneously*, so there was no differential
+authority left to answer the sticks. Commanded yaw p99 was 19 °/s; the quad delivered 370.
+
+Cause: a high-throttle split-S on a sagging 1S pack, with the yaw I-term already pinned fighting
+the standing yaw bias measured earlier in this post. Not hardware, not radio — thrust and
+authority running out at the same moment.
+
+### The loose-connector theory, tested
+
+My first instinct was a bad battery connection briefly dropping out. The log says no:
+
+- Fitting `Vbat = V0 − I·R` over the flight gives an effective resistance of about **35 mΩ**,
+  which is the healthy end of normal for a 1S pack plus wiring.
+- **Zero frames** show a voltage deficit unexplained by current draw. A connector letting go
+  produces exactly that signature, and it is absent.
+- The RPM collapse hit **one motor, not four**. At the worst instant motor 2 was at 2600 RPM while
+  motors 1, 3 and 4 were at 21 417, 14 617 and 23 033. A pack disconnect starves all four.
+- At that instant motor 2's **commanded output was 238 of 2047** — the mixer put it there. It was
+  not power-starved, it was told to stop.
+
+Two caveats. The current sensor scale on this board is unverified, so treat the 35 mΩ as
+indicative rather than a measurement. And the regression cannot separate load sag from pack
+depletion over the flight, which is why its R² is only 0.28 — but the absence of any sharp
+unexplained step is robust regardless.
+
+The instinct that low RPM is dangerous is right, though. 2600 RPM is low enough to risk desync on
+spool-up. It just did not get the chance here: dyn_idle held well, with only **0.04%** of airborne
+time under its 3000 RPM target and the longest continuous excursion lasting **4 ms**.
+
 ## Method notes worth keeping
 
 Practices that repeatedly changed the conclusion — not general advice, things that actually
