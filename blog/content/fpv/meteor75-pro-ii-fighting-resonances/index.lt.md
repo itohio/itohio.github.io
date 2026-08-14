@@ -1123,6 +1123,67 @@ originalius **22 000 KV**, o serijinis Pro II turi **21 000 KV**.
 Serijinis Pro II su O4 **Wide** skiriasi varikliais, gaubto apkrova ir masės paskirstymu vienu metu.
 Visos išvados išmatuotos ant hibrido, ir negaliu tvirtinti, kad jos perkeliamos serijiniam aparatui.
 
+## Mažas gabalėlis: blogiausias iš penkių
+
+<div style="height:420px"><canvas id="c21"></canvas></div>
+<script>
+snakeChart('c21', 'line',
+  { labels: [275, 300, 325, 350, 375, 400],
+    datasets: [
+      { label: 'originalūs gummy, be nieko', data: [43, 49, 39, 32, 26, null] },
+      { label: 'DIDELIS putplastis tarp plokščių', data: [27, 26, 28, 25, 25, null] },
+      { label: 'visi TPU gummy viduje', data: [44, 38, 35, 32, 31, 23] },
+      { label: 'priekinis TPU išimtas', data: [45, 31, 32, 28, 24, 22] },
+      { label: 'MAŽAS putplasčio gabalėlis', data: [48, 52, 48, 37, 37, 24] }
+    ] },
+  'roll pre-filter HF RMS (deg/s)', 'vidutinis propelerio 1x dažnis (Hz)');
+</script>
+
+| tvirtinimas | vidurkis °/s | stiprinimas | moda | **dominavimas** |
+|---|---|---|---|---|
+| originalūs gummy, be nieko | 37,7 | +65% | 255 Hz | 6,0× |
+| **DIDELIS putplastis** | **26,2** | +15% | 368 Hz | 5,4× |
+| visi TPU gummy viduje | 33,0 | **+7%** | 363 Hz | 8,2× |
+| priekinis TPU išimtas | 30,1 | +16% | 280 Hz | **4,4×** |
+| **MAŽAS putplasčio gabalėlis** | **41,0** | **+66%** | 311 Hz | **81,1×** |
+
+Didžiausia vidutinė vibracija iš visų — blogiau nei nedaryti nieko — ir stiprinimas vėl +66%.
+Bet labiausiai išsiskiria paskutinis stulpelis: moda yra **81× virš fono**, kai visos kitos
+konfigūracijos yra tarp 4,4× ir 8,2×.
+
+Mažas gabalėlis modos neslopina — jis tik prideda menkai slopintą spyruoklę vienoje vietoje.
+Didysis veikė todėl, kad buvo pakankamai didelis sugerti per visą sąlyties plokštumą.
+
+Ir ta aštri 311 Hz moda paaiškina retkarčiais matomą jello net su lanksčiais originaliais gummy:
+izoliacija nėra absoliuti, o tokio dominavimo moda kartais turi pakankamai amplitudės prasispausti.
+
+**Verdiktas: mažas gabalėlis išimamas.**
+
+## Du trūktelėjimai, ir tai ne tune
+
+Patikrinau tune pirmiausia, nes pats taip įtariau: **konfigūracija identiška ankstesniam skrydžiui.**
+Niekas nebuvo pakeista. Radijas taip pat tvarkoje — nė vieno kadro netekta, `failsafePhase` 0.
+
+| | t = 78,7 s (posūkis) | t = 88,7 s (nusileidimas) |
+|---|---|---|
+| variklis apatinėje riboje | m2 prie **202** | m4 prie **218** |
+| variklis prie lubų | m4 prie 1757 | m2 prie 1734 |
+| kadrų apačioje | **49,2%** | **61,4%** |
+| kadrų prie lubų | 3,0% | **39,0%** |
+| min RPM | 2717 | 2600 |
+
+**Mikseriui vienu metu neliko atsargos abiejuose galuose.** Vienam varikliui esant tuščiąja eiga, o
+kitam prie lubų, nebelieka diferencinės valdžios.
+
+Vienas su tune susijęs radinys tikras: **yaw I narys svyruoja tarp −255 ir +271**, atsitrenkdamas į
+ribą abiem kryptimis. Tai anksčiau išmatuotas pastovus yaw disbalansas.
+
+### Ir smūgis, kurio tuomet nepaminėjau
+
+Prie t = 109,83 s yra **12,9 G** šuolis, pitch 2000 °/s, ir logas baigiasi. Ankstesnis žinomas
+atsitrenkimas į grindis buvo 9,8 G, o kritimas 9,6 G. Šis buvo stipresnis už abu.
+
+
 ## Metodo pastabos, kurias verta pasilikti
 
 Praktikos, kurios kartotinai pakeitė išvadą — ne bendri patarimai, o dalykai, kurie realiai

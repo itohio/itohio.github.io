@@ -1193,6 +1193,92 @@ The instinct that low RPM is dangerous is right, though. 2600 RPM is low enough 
 spool-up. It just did not get the chance here: dyn_idle held well, with only **0.04%** of airborne
 time under its 3000 RPM target and the longest continuous excursion lasting **4 ms**.
 
+## The small pad: worst of all five
+
+The compromise did not work, and it is worth being blunt about how badly:
+
+<div style="height:420px"><canvas id="c21"></canvas></div>
+<script>
+snakeChart('c21', 'line',
+  { labels: [275, 300, 325, 350, 375, 400],
+    datasets: [
+      { label: 'original gummies, no treatment', data: [43, 49, 39, 32, 26, null] },
+      { label: 'LARGE foam between boards', data: [27, 26, 28, 25, 25, null] },
+      { label: 'all TPU in gummies', data: [44, 38, 35, 32, 31, 23] },
+      { label: 'front TPU removed', data: [45, 31, 32, 28, 24, 22] },
+      { label: 'SMALL foam pad, gummies stock', data: [48, 52, 48, 37, 37, 24] }
+    ] },
+  'roll pre-filter HF RMS (deg/s)', 'mean prop 1x frequency (Hz)');
+</script>
+
+| mount | mean °/s | amplification | mode | **dominance** |
+|---|---|---|---|---|
+| original gummies, no treatment | 37.7 | +65% | 255 Hz | 6.0× |
+| **LARGE foam between boards** | **26.2** | +15% | 368 Hz | 5.4× |
+| all TPU in gummies | 33.0 | **+7%** | 363 Hz | 8.2× |
+| front TPU removed | 30.1 | +16% | 280 Hz | **4.4×** |
+| **SMALL foam pad, gummies stock** | **41.0** | **+66%** | 311 Hz | **81.1×** |
+
+Highest mean vibration of any configuration — worse than doing nothing at all — with the
+amplification right back at +66%. And the number that really stands out is the last column: the
+structure-fixed mode is **81× above background**, where every other configuration sits between
+4.4× and 8.2×. That is an order of magnitude sharper.
+
+A small pad does not damp a mode, it just adds a lightly-damped spring in one spot. The large pad
+worked because it was large enough to absorb across the whole interface. Pitch tells the same
+story — 9.4 °/s pre-filter, the worst of the five.
+
+And that sharp 311 Hz mode explains the occasional jello even with soft stock gummies back in.
+Isolation is not absolute; a mode this dominant has enough amplitude to push through a soft mount
+some of the time. Which fits exactly what I saw: not constant jello, but jello *sometimes*.
+
+**Verdict: the small pad comes out.** The honest options are the large pad, which measurably worked
+and cooks the ESC side, or bare stock gummies, which never gave jello but leaves the mode running
+in the airframe.
+
+## Two jerks, and it was not the tune
+
+Two events, one turning and one diving, plus a third at the very end. I checked the tune first
+because that was my own suspicion: **the configuration is byte-identical to the previous flight.**
+Nothing was changed, so nothing was mis-tuned.
+
+Radio is clear too — `rxSignalReceived` and `rxFlightChannelsValid` never dropped a frame,
+`failsafePhase` stayed 0, RSSI minimum 329 with nothing near either event.
+
+Both jerks are the same failure I found behind the earlier split-S snap:
+
+| | t = 78.7 s (turning) | t = 88.7 s (diving) |
+|---|---|---|
+| motor at the idle floor | m2 at **202** | m4 at **218** |
+| motor near the ceiling | m4 at 1757 | m2 at 1734 |
+| frames at the floor | **49.2%** | **61.4%** |
+| frames at the ceiling | 3.0% | **39.0%** |
+| minimum RPM | 2717 | 2600 |
+| throttle | 1559 | 1451 |
+
+The zoom on the first is unambiguous: motor 2 gets driven down 293 → 146 → 124 and pinned near
+150 for roughly 400 ms while motor 4 rides the 2027 ceiling. Pack sags 3.81 → 3.51 V. Yaw walks out
+to 86 °/s against a roll command of 47 and a yaw command of nothing. Then motor 2 spools back —
+433, 562, 735, 917 — and it flies again.
+
+**The mixer ran out of range at both ends simultaneously.** With one motor at idle and another
+maxed, there is no differential authority left to answer the sticks, so the quad goes where physics
+sends it. Flight-wide budget: 2.74% of frames have a motor at the ceiling, and motors 3 and 4 do
+almost all of that saturating (1.60% and 1.30%).
+
+One tune-adjacent finding is real, though: **yaw I-term swings between −255 and +271**, railing in
+both directions. That is the standing yaw bias measured earlier in this post, consuming authority
+before a maneuver even starts. Fixing the imbalance frees more headroom than any gain change will.
+
+There is no dyn_idle problem — only **0.076%** of airborne time sits below its 3000 RPM target and
+the longest excursion is **4 ms**.
+
+### And an impact I did not report at the time
+
+At t = 109.83 s there is a **12.9 G** spike with pitch hitting 2000 °/s, and the log ends. For scale,
+a known floor bump earlier in the session was 9.8 G and a known crash 9.6 G. This was harder than
+both. Worth a close look at the frame and props before the next pack, whatever it was.
+
 ## Method notes worth keeping
 
 Practices that repeatedly changed the conclusion — not general advice, things that actually
