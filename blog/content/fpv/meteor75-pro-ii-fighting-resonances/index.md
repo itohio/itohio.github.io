@@ -1321,6 +1321,83 @@ At t = 109.83 s there is a **12.9 G** spike with pitch hitting 2000 °/s, and th
 a known floor bump earlier in the session was 9.8 G and a known crash 9.6 G. This was harder than
 both. Worth a close look at the frame and props before the next pack, whatever it was.
 
+## Chasing rabbits: I spent a week measuring the wrong band
+
+Time to be honest about the shape of this whole investigation, because the correction is more
+useful than any of the individual results.
+
+I spent a week characterising a structural resonance at 320–345 Hz. I measured it well. Prop
+changes, canopy rotation, foam, TPU in the gummies, five mount configurations, dose-response
+curves, mode frequencies, transmissibility. All of it real, all of it repeatable.
+
+**None of it was the thing I was being asked about.**
+
+The complaint was: the quad shakes, sometimes, for a long time, and it does it flying straight as
+well as turning. If it were a resonance it would do it *all the time*. That objection was correct
+and I talked past it for days.
+
+So I finally went and looked at where the uncommanded motion actually lives. Uncommanded meaning
+gyro minus setpoint — what the quad does that the pilot did not ask for:
+
+<div style="height:380px"><canvas id="c22"></canvas></div>
+<script>
+snakeChart('c22', 'bar',
+  { labels: ['1-4 Hz', '4-8 Hz', '8-15 Hz', '15-25 Hz', '25-40 Hz', '40-70 Hz', '70-120 Hz'],
+    datasets: [ { label: 'share of uncommanded motion power (%)', data: [58.6, 9.4, 16.5, 12.7, 2.2, 0.4, 0.1] } ] },
+  'share of uncommanded motion power (%)', 'band');
+</script>
+
+**Ninety-seven percent of it is below 25 Hz.** My entire analysis lived at 80–780 Hz. I was
+measuring the band my tools were sharpest in, not the band the complaint was in.
+
+### What it looks like at the exact moment the pilot pointed at
+
+Steady fast flight, throttle 1568, props at 447 Hz, sticks essentially still:
+
+| | roll | pitch |
+|---|---|---|
+| dominant frequency | **14.7 Hz** | 33.2 Hz |
+| sharpness | Q = 6.3 | Q = 10.7 |
+| gyro amplitude | **7.79 °/s** | 0.93 °/s |
+| setpoint amplitude in the same band | 0.10 °/s | 0.04 °/s |
+| **gyro / setpoint** | **77×** | 24× |
+| motor saturation in the window | **0.00%** | — |
+
+Seventy-seven times more motion than the stick asked for, and **not one saturated frame.**
+
+Two things that rule out my earlier explanations:
+
+- **The filters are not doing this.** Band-limited 14–23 Hz, unfiltered gyro reads 6.38 °/s and
+  filtered reads 6.37 — a ratio of **1.00**. The filters neither create nor remove it, because that
+  band is deliberately passed through so the loop can control the aircraft. Filtering is irrelevant
+  here, which is why every filter change I made left it untouched.
+- **It is not the 320–345 Hz mode.** It does not track RPM the way a prop-order forcing does, its Q
+  is far too low for the structural feature I had been measuring, and its apparent peak wanders
+  between 10 and 30 Hz across RPM bins with weak prominence.
+
+### It is at least two different problems, split by regime
+
+That is the part I got wrong by trying to force one story:
+
+| regime | what happens | evidence |
+|---|---|---|
+| **high demand, headroom gone** | mixer saturates, loop cannot deliver the commanded torque, 1–4 Hz limit cycle and the hard "jerks" | saturation **leads** shake by 63–419 ms across three flights; shake **7.5× worse** with under 150 counts of headroom left |
+| **steady fast flight, headroom to spare** | 10–20 Hz uncommanded motion, no saturation, disturbance rejection simply running out of authority in that band | 77× gyro-to-setpoint ratio, 0.00% saturated, identical pre- and post-filter |
+
+The jerks and the sustained shake are related but not identical: the jerk is the saturation case at
+its worst, and the everyday shake in fast flight is a rejection problem with the mixer nowhere near
+its limits.
+
+### The lesson worth keeping
+
+A resonance is satisfying to chase. It has a frequency, it responds to mechanical changes, it makes
+clean charts, and every intervention produces a measurable delta — so it *feels* like progress. It
+took a pilot telling me "if it were resonance it would shake all the time" three separate times
+before I stopped defending the frame I had built and went to look at the raw uncommanded motion.
+
+The instrument I trusted most, the blackbox gyro spectrum, was the reason I got stuck. It is
+excellent above 80 Hz and I read it constantly. The answer was underneath it the whole time.
+
 ## Method notes worth keeping
 
 Practices that repeatedly changed the conclusion — not general advice, things that actually

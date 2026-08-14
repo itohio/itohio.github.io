@@ -1223,6 +1223,70 @@ mechaninę pusę dar ilgai po to, kai skraidymo valdiklis nustojo skųstis: filt
 puikiai, o kamerai iš to nieko.
 
 
+## Kiškių gaudymas: visą savaitę mačiau ne tą juostą
+
+Laikas sąžiningai apie visos šios analizės formą, nes klaidos ištaisymas naudingesnis už bet kurį
+atskirą rezultatą.
+
+Savaitę tyriau struktūrinį rezonansą prie 320–345 Hz. Išmatavau jį gerai. Propeleriai, gaubto
+pasukimas, putplastis, TPU, penkios tvirtinimo konfigūracijos. Viskas tikra ir pakartojama.
+
+**Ir nė vienas iš tų dalykų nebuvo tai, apie ką manęs klausė.**
+
+Skundas buvo: kvadras dreba, kartais, ilgai, ir tai daro skrisdamas tiesiai lygiai taip pat kaip
+posūkyje. Jei tai būtų rezonansas — drebėtų *visą laiką*. Tas prieštaravimas buvo teisingas, o aš
+kelias dienas kalbėjau ne apie tai.
+
+<div style="height:380px"><canvas id="c22"></canvas></div>
+<script>
+snakeChart('c22', 'bar',
+  { labels: ['1-4 Hz', '4-8 Hz', '8-15 Hz', '15-25 Hz', '25-40 Hz', '40-70 Hz', '70-120 Hz'],
+    datasets: [ { label: 'nekomanduoto judesio galios dalis (%)', data: [58.6, 9.4, 16.5, 12.7, 2.2, 0.4, 0.1] } ] },
+  'nekomanduoto judesio galios dalis (%)', 'juosta');
+</script>
+
+**Devyniasdešimt septyni procentai yra žemiau 25 Hz.** Visa mano analizė gyveno 80–780 Hz. Mačiau tą
+juostą, kurioje mano įrankiai aštriausi, o ne tą, kurioje buvo skundas.
+
+### Kaip tai atrodo būtent toje vietoje, į kurią pilotas parodė
+
+Stabilus greitas skridimas, gazas 1568, propeleriai 447 Hz, pagaliukai beveik nejudinami:
+
+| | roll | pitch |
+|---|---|---|
+| dominuojantis dažnis | **14,7 Hz** | 33,2 Hz |
+| aštrumas | Q = 6,3 | Q = 10,7 |
+| giroskopo amplitudė | **7,79 °/s** | 0,93 °/s |
+| setpoint toje pačioje juostoje | 0,10 °/s | 0,04 °/s |
+| **giro / setpoint** | **77×** | 24× |
+| variklių įsisotinimas | **0,00%** | — |
+
+Septyniasdešimt septynis kartus daugiau judesio nei prašė pagaliukas, ir **nė vieno įsisotinusio
+kadro.**
+
+- **To nedaro filtrai.** 14–23 Hz juostoje nefiltruotas giroskopas rodo 6,38 °/s, filtruotas 6,37 —
+  santykis **1,00**. Filtrai to nei sukuria, nei pašalina, nes ta juosta specialiai praleidžiama, kad
+  kilpa galėtų valdyti aparatą.
+- **Tai ne 320–345 Hz moda.** Ji neseka RPM taip, kaip propelerio žadinimas, o jos Q per mažas.
+
+### Tai bent dvi skirtingos problemos, atskirtos pagal režimą
+
+| režimas | kas vyksta | įrodymas |
+|---|---|---|
+| **didelis poreikis, atsargos nebeliko** | mikseris įsisotina, kilpa negali pateikti komanduoto momento, 1–4 Hz ciklas ir stiprūs trūktelėjimai | įsisotinimas **aplenkia** drebėjimą 63–419 ms trijuose skrydžiuose; drebėjimas **7,5× stipresnis**, kai atsargos mažiau nei 150 |
+| **stabilus greitas skridimas, atsargos yra** | 10–20 Hz nekomanduotas judesys, be įsisotinimo, tiesiog nepakanka trikdžių atmetimo toje juostoje | 77× giro/setpoint, 0,00% įsisotinimo, identiška prieš ir po filtrų |
+
+### Pamoka, kurią verta pasilikti
+
+Rezonansą gaudyti patrauklu. Jis turi dažnį, reaguoja į mechaninius pakeitimus, iš jo išeina gražios
+diagramos, ir kiekvienas veiksmas duoda išmatuojamą pokytį — todėl *atrodo* kaip progresas. Prireikė,
+kad pilotas tris kartus pasakytų „jei tai būtų rezonansas, drebėtų visą laiką“, kol nustojau ginti
+savo susikurtą paaiškinimą.
+
+Prietaisas, kuriuo labiausiai tikėjau — blackbox giroskopo spektras — ir buvo priežastis, kodėl
+užstrigau. Jis puikus aukščiau 80 Hz. Atsakymas visą laiką buvo po juo.
+
+
 ## Metodo pastabos, kurias verta pasilikti
 
 Praktikos, kurios kartotinai pakeitė išvadą — ne bendri patarimai, o dalykai, kurie realiai
