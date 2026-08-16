@@ -100,26 +100,34 @@
         }
         chartIndex += 1;
       });
+    } else {
+      // Chart.js unavailable (CDN blocked/offline). The stylesheet has hidden
+      // every block, so reveal them rather than silently losing the data.
+      Array.prototype.forEach.call(document.querySelectorAll('.codeblock-chart'), function (x) {
+        x.style.display = 'block';
+        x.style.whiteSpace = 'pre-wrap';
+      });
     }
 
     // Graphviz
     if (typeof Viz !== 'undefined') {
       var vizPrefix = "codeblock-viz-dot";
       Array.prototype.forEach.call(document.querySelectorAll("[class^=" + vizPrefix + "]"), function (x) {
+        var prevDisplay = x.style.display;
+        x.style.display = 'none';
         try {
           var viz = new Viz();
           viz.renderSVGElement(x.textContent)
             .then(function (element) {
               element.style.width = "100%";
               x.parentNode.insertBefore(element, x);
-              x.style.display = 'none';
             })
             .catch(function (err) {
-              x.style.display = 'block';
+              x.style.display = prevDisplay;
               console.error('codeblock-viz-dot failed to render:', err);
             });
         } catch (err) {
-          x.style.display = 'block';
+          x.style.display = prevDisplay;
           console.error('codeblock-viz-dot failed to render:', err);
         }
       });
