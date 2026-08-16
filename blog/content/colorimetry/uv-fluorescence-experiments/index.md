@@ -1,5 +1,5 @@
 ---
-title: "Glowing Things: First UV Fluorescence Experiments"
+title: "UV Fluorescence Experiments With a DIY Spectrometer"
 date: 2026-07-30T18:00:00+02:00
 description: "Building a fiber-coupled UV fluorescence setup — TOSLINK fluoresces, attenuates NIR, and fails at 785nm Raman. Three reasons it had to go."
 thumbnail: "vitamin-b-cuvette.jpg"

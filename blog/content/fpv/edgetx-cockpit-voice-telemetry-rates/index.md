@@ -1,5 +1,5 @@
 ---
-title: "Part 6: Telemetry Logging, and the One Number You Have to Measure Yourself"
+title: "ELRS Telemetry Ratio and EdgeTX Log Rate (Part 6)"
 date: 2026-08-16T14:00:00+03:00
 description: "ELRS telemetry ratio, CRSF frame round-robin and the EdgeTX log period sit in series. Why the arithmetic is not the answer, how to get the real per-sensor rate out of your own CSV, and the 3D viewer I built to read it."
 summary: "ELRS telemetry ratio, CRSF frame round-robin and the EdgeTX log period sit in series. Why the arithmetic is not the answer, how to get the real per-sensor rate out of your own CSV, and the 3D viewer I built to read it."
