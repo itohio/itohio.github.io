@@ -120,10 +120,7 @@ fiksuotas, o kistų tik oras.
   "type": "bar",
   "data": {
     "labels": [
-      [
-        "lauke, gūsingiausia",
-        "(LF over 18)"
-      ],
+      "lauke, gūsingiausia (LF over 18)",
       "lauke, visa",
       "lauke, ramiausia",
       "vidus, švari atkarpa",
@@ -147,7 +144,6 @@ fiksuotas, o kistų tik oras.
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -159,12 +155,6 @@ fiksuotas, o kistų tik oras.
         "title": {
           "display": true,
           "text": "roll pre-filter HF RMS (°/s)"
-        }
-      },
-      "x": {
-        "title": {
-          "display": false,
-          "text": ""
         }
       }
     }
@@ -244,7 +234,6 @@ Išmatuota prie suderinto propelerio RPM:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -256,12 +245,6 @@ Išmatuota prie suderinto propelerio RPM:
         "title": {
           "display": true,
           "text": "pokytis (%)"
-        }
-      },
-      "x": {
-        "title": {
-          "display": false,
-          "text": ""
         }
       }
     }
@@ -366,7 +349,6 @@ Lauke, pilnas RPM sweep'as, tas pats aparatas, taigi čia kinta *sužadinimas*:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -472,7 +454,6 @@ Ir tada atsako dozė, kuri yra maždaug tokia vadovėlinė, kokia lauko duomenys
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -592,7 +573,6 @@ turbulentiškas oras.
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -604,12 +584,6 @@ turbulentiškas oras.
         "title": {
           "display": true,
           "text": "Q faktorius"
-        }
-      },
-      "x": {
-        "title": {
-          "display": false,
-          "text": ""
         }
       }
     }
@@ -673,7 +647,6 @@ Tai kur gyvena tas judesys, kurį realiai *matai*?
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -775,7 +748,6 @@ patalpoje, tie patys propai, 307 vs 309 Hz:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -787,12 +759,6 @@ patalpoje, tie patys propai, 307 vs 309 Hz:
         "title": {
           "display": true,
           "text": "pokytis (%)"
-        }
-      },
-      "x": {
-        "title": {
-          "display": false,
-          "text": ""
         }
       }
     }
@@ -890,7 +856,6 @@ Tada pasukau gaubtą 180° ir eiliškumas **apsivertė**:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -966,7 +931,6 @@ Pasukimas realiai padarė darbą su CoG:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1091,7 +1055,6 @@ Atsako dozė, kuri apibrėžė visą problemą, **sugriuvo**:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1195,7 +1158,6 @@ Rezonanso kreivė sako tą patį:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1277,7 +1239,6 @@ Ir energija neišnyko, ji persikėlė:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1438,7 +1399,6 @@ konfigūracijos pakeitimų.** Rezonanso kreivėje patikima tik viena juosta — 
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1524,7 +1484,6 @@ skrydyje, tad jai oras nesvarbus.
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1670,7 +1629,6 @@ sąžiningas palyginimas, kurio laukiau dvi dienas:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1845,7 +1803,6 @@ Visos kreivės — lauke, suskirstytos pagal vidutinį propelerių dažnį, ir �
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1998,7 +1955,6 @@ Tai buvo blogiausia iš penkių konfigūracijų, ir verta pasakyti atvirai, kaip
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -2178,7 +2134,6 @@ putplasčio nėra nei viename, pakeistas tik paketas.
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -2190,12 +2145,6 @@ putplasčio nėra nei viename, pakeistas tik paketas.
         "title": {
           "display": true,
           "text": "Hz"
-        }
-      },
-      "x": {
-        "title": {
-          "display": false,
-          "text": ""
         }
       }
     }
@@ -2306,7 +2255,6 @@ pagal momentinį vėjo lygį ir lygink tik tas dėžes, kurias abu skrydžiai ti
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -2445,7 +2393,6 @@ setpoint, tai, ką kvadras daro neprašius:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -2571,7 +2518,6 @@ išmesti, tad agresyvumo skirtumai to nevaro:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -2689,7 +2635,6 @@ Išskaidžius osciliuojančią roll komandą 0,5–3 Hz viduje:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
