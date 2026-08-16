@@ -605,6 +605,65 @@ that a low ratio buys you link robustness at the direct cost of log resolution.
 That is the next thing I am going to actually do, and it will get its own post
 with real numbers in it.
 
+### I built a thing that reads these logs
+
+Since the whole point of the red button is producing a CSV, I should mention that
+I have written a browser tool that eats exactly this file:
+
+**[RX Blind-Spot Viewer](https://rxmap-viewer.sintra.site/rxmap/)** — load an
+EdgeTX SD-Logs CSV and it renders your **control link** in 3D. It runs entirely in
+the browser: nothing is uploaded, there is no account, and the log never leaves
+your machine.
+
+[TODO: Screenshot — RX Blind-Spot Viewer, Sphere view with a real flight log loaded]
+
+Three views:
+
+- **Cloud** — true 3D flight positions, coloured by whatever link metric you pick
+- **Sphere** — samples projected by azimuth and elevation, in the **airframe's own
+  reference frame** (nose / starboard / tail / port). This is the one I actually
+  built it for: it is an empirically measured antenna pattern. Overlapping samples
+  read as coverage density, so a dent in the sphere is a real blind spot in a real
+  orientation.
+- **Path** — the trajectory, with marker size and colour inversely proportional to
+  link quality, so bad moments are literally bigger and redder
+
+The metric list is data-driven — it detects which sensors are actually in your log
+and offers those: worst-of-`1RSS`/`2RSS`, `RSNR`, `RQly`, `TRSS`, `TSNR`, and
+`TPWR` (treated as *higher = worse*, since ELRS ramps transmit power up as the link
+degrades). Any raw column is selectable too. It also splits multiple flights out of
+a single log file automatically.
+
+It closes the loop on this whole post. The radio tells me about a limit in the
+moment, in one word, while I am flying. The viewer tells me *why* afterwards, with
+the geometry attached. Same telemetry stream, two ends of the same problem.
+
+Two details in it are worth calling out, because they are the analysis-side
+solutions to problems I hit earlier in this post.
+
+**It has a robust ground reference for altitude** — and that exists precisely
+because of the `GAlt` problem from the L6 section above. `GAlt` is metres above
+MSL, and its *first* samples are its worst, because the fix is fresh. Zero the
+whole flight on one fresh-fix sample and the entire log reads negative. So the
+viewer offers Auto / at-start / lowest / manual referencing, with an optional
+median filter for GPS altitude spikes, and it treats exact zeros in a `GAlt`
+column as "no fix" rather than as sea level. Same physics as the altitude warning
+problem, attacked from the other end.
+
+**It has a current-sensor correction factor** — which is the calibration section
+of this post, made actionable. If the FC current sensor is mis-scaled then every
+mAh figure in the log is wrong by a fixed multiplier, and so is every derived
+number. You set the correction to `actual ÷ logged` and the whole battery model
+rescales with it. (In Betaflight the knob is `ibata_scale`, and note the direction:
+*lower* scale means *higher* reported current.) On top of that it computes
+**return-to-home radius rings at the tightest moment of the flight**, given pack
+capacity, usable percentage, and a reserve you declare safe.
+
+Which is the rigorous version of the `rth` callout at the top of this post. The
+radio gives me a crude voltage proxy for half capacity while I am airborne, in one
+word, with no maths. The viewer tells me afterwards whether that word arrived early
+enough — and on which part of the flight it would not have.
+
 One more measured detail worth flagging: the ELRS telemetry ratio is **not in
 the model YAML**. My `moduleData` block contains only this:
 
@@ -719,6 +778,12 @@ about four minutes of work and it is next on the list.
 
 And it is worse than that, because of what those particular sensors are. See
 below.
+
+The irony is not lost on me: those same sensors are the ones my
+[RX Blind-Spot Viewer](https://rxmap-viewer.sintra.site/rxmap/) reads to build a
+3D antenna pattern. I will happily spend an evening analysing link quality in
+three dimensions after the flight, and I have not spent four minutes making the
+radio say "link" during it.
 
 ## Sharing the config: what is portable and what to scrub
 
@@ -900,7 +965,11 @@ but do not break out per-antenna.
 All three have `logs: 1`, so **they are already being written to the CSV every
 0.3 s.** Which means the claim I just made — "it switches between antennas
 perfectly" — is currently a field impression, not a measurement, and I have the
-data to turn it into one. Count the `ANT` transitions against the `1RSS`/`2RSS`
+data to turn it into one. The Sphere view in the
+[RX Blind-Spot Viewer](https://rxmap-viewer.sintra.site/rxmap/) is built for
+exactly this: it plots the worst of `1RSS`/`2RSS` by azimuth and elevation in the
+airframe's own frame, so an orthogonal antenna pair that is genuinely working
+should show up as a rounder sphere with fewer dents than a single antenna would. Count the `ANT` transitions against the `1RSS`/`2RSS`
 difference and you get the real switching behaviour: how often it swaps, whether
 one antenna is systematically doing all the work, and whether the swaps line up
 with the attitude changes in the blackbox.

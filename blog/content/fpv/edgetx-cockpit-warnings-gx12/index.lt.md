@@ -599,6 +599,67 @@ kaina.
 Būtent tai ir yra sekantis dalykas, kurį tikrai padarysiu, ir jis gaus atskirą
 įrašą su tikrais skaičiais.
 
+### Esu sukūręs įrankį, kuris skaito šiuos žurnalus
+
+Kadangi visa raudono mygtuko esmė yra CSV failo gaminimas, turėčiau paminėti, kad
+esu parašęs naršyklės įrankį, kuris būtent tą failą ir suvirškina:
+
+**[RX Blind-Spot Viewer](https://rxmap-viewer.sintra.site/rxmap/)** — įkelk EdgeTX
+SD-Logs CSV ir jis atvaizduos tavo **valdymo kanalą** trimatėje erdvėje. Viskas
+veikia tik naršyklėje: niekas nėra įkeliama į serverį, paskyros nereikia, žurnalas
+niekada neišeina iš tavo kompiuterio.
+
+[TODO: Ekrano nuotrauka — RX Blind-Spot Viewer, Sphere vaizdas su įkeltu tikru skrydžio žurnalu]
+
+Trys vaizdai:
+
+- **Cloud** — tikros 3D skrydžio pozicijos, nuspalvintos pagal pasirinktą ryšio rodiklį
+- **Sphere** — mėginiai suprojektuoti pagal azimutą ir elevaciją **paties aparato
+  atskaitos sistemoje** (nosis / dešinys / uodega / kairys). Būtent dėl šio vaizdo
+  įrankį ir kūriau: tai empiriškai išmatuota antenos diagrama. Persidengiantys
+  mėginiai skaitomi kaip aprėpties tankis, tad įdubimas sferoje yra tikra akloji
+  zona tikroje orientacijoje.
+- **Path** — trajektorija, kurioje žymeklio dydis ir spalva atvirkščiai
+  proporcingi ryšio kokybei, tad blogos vietos tampa tiesiogiai didesnės ir
+  raudonesnės
+
+Rodiklių sąrašas yra duomenų valdomas — įrankis nustato, kurie sensoriai realiai
+yra tavo žurnale, ir pasiūlo juos: blogiausią iš `1RSS`/`2RSS`, `RSNR`, `RQly`,
+`TRSS`, `TSNR` ir `TPWR` (traktuojamą kaip *didesnis = blogiau*, nes ELRS didina
+siuntimo galią ryšiui blogėjant). Galima pasirinkti ir bet kurį neapdorotą
+stulpelį. Taip pat jis automatiškai atskiria kelis skrydžius iš vieno žurnalo failo.
+
+Tai užbaigia viso šio įrašo ratą. Pultas pasako apie ribą tuo momentu, vienu
+žodžiu, kol skrendu. Peržiūros įrankis pasako *kodėl* po to, su prisegta geometrija.
+Tas pats telemetrijos srautas, du tos pačios problemos galai.
+
+Dvi jo detalės vertos atskiro paminėjimo, nes tai yra analizės pusės sprendimai
+problemoms, į kurias atsitrenkiau anksčiau šiame įraše.
+
+**Jis turi robustų žemės atskaitos tašką aukščiui** — ir tai egzistuoja būtent dėl
+`GAlt` problemos iš L6 skyriaus aukščiau. `GAlt` yra metrai virš jūros lygio, o jo
+*pirmieji* mėginiai yra patys blogiausi, nes fiksavimas ką tik gautas. Nustatyk
+visam skrydžiui nulį pagal vieną šviežio fiksavimo mėginį — ir visas žurnalas taps
+negatyvus. Todėl įrankis leidžia rinktis Auto / pagal pradžią / žemiausią / rankinį
+atskaitos tašką, su pasirenkamu medianiniu filtru GPS aukščio išsišokimams, ir
+traktuoja tikslius nulius `GAlt` stulpelyje kaip „nėra fiksavimo“, o ne kaip jūros
+lygį. Ta pati fizika kaip aukščio įspėjimo problemoje, atakuojama iš kito galo.
+
+**Jis turi srovės sensoriaus korekcijos koeficientą** — o tai yra šio įrašo
+kalibracijos skyrius, padarytas veiksmingu. Jei skrydžio valdiklio srovės
+sensorius blogai sumastelintas, tai kiekvienas mAh skaičius žurnale klysta
+fiksuotu daugikliu, ir kiekvienas išvestinis skaičius taip pat. Nustatai korekciją
+į `tikra ÷ užrašyta`, ir visas baterijos modelis persiskaičiuoja. (Betaflight'e
+parametras yra `ibata_scale`, ir atkreipk dėmesį į kryptį: *mažesnis* mastelis
+reiškia *didesnę* pranešamą srovę.) Papildomai jis apskaičiuoja **grįžimo namo
+radiuso ratus ties įtempčiausiu skrydžio momentu**, žinant paketo talpą, naudojamą
+procentą ir tavo paskelbtą saugų rezervą.
+
+O tai yra rigoroji šio įrašo pradžioje aprašyto `rth` pranešimo versija. Pultas
+duoda grubų įtampos pakaitalą pusei talpos kol esu ore, vienu žodžiu, be jokios
+matematikos. Peržiūros įrankis po to pasako, ar tas žodis atėjo pakankamai anksti —
+ir kurioje skrydžio dalyje nebūtų atėjęs.
+
 Dar viena išmatuota detalė, kurią verta pažymėti: ELRS telemetrijos santykio
 **modelio YAML faile nėra**. Mano `moduleData` blokas turi tik tai:
 
@@ -712,6 +773,12 @@ pastebėjau rašydamas šį įrašą. `RQly < 70 → PLAY_TRACK "link"` yra maž
 keturios minutės darbo ir tai sekantis punktas sąraše.
 
 Ir yra dar blogiau — dėl to, kas būtent tie sensoriai yra. Žr. žemiau.
+
+Ironija manęs neaplenkia: būtent tuos pačius sensorius skaito mano
+[RX Blind-Spot Viewer](https://rxmap-viewer.sintra.site/rxmap/), kad sukurtų 3D
+antenos diagramą. Aš mielai praleisiu vakarą analizuodamas ryšio kokybę trimis
+dimensijomis po skrydžio, o keturių minučių tam, kad pultas skrydžio metu pasakytų
+„link“, dar neskyriau.
 
 ## Dalijimasis konfigūracija: kas perkeliama ir ką ištrinti
 
@@ -892,6 +959,11 @@ matuojami pulte, bet nėra išskirti pagal anteną.
 Visi trys turi `logs: 1`, tad **jie jau rašomi į CSV kas 0,3 s.** Vadinasi,
 teiginys, kurį ką tik pasakiau — „tarp antenų perjungia nepriekaištingai“ — šiuo
 metu yra lauko įspūdis, o ne matavimas, ir turiu duomenis jį matavimu paversti.
+Sphere vaizdas [RX Blind-Spot Viewer](https://rxmap-viewer.sintra.site/rxmap/)
+įrankyje sukurtas būtent tam: jis atvaizduoja blogiausią iš `1RSS`/`2RSS` pagal
+azimutą ir elevaciją paties aparato atskaitos sistemoje, tad realiai veikianti
+statmenų antenų pora turėtų pasirodyti kaip apvalesnė sfera su mažiau įdubimų nei
+viena antena.
 Suskaičiuok `ANT` perjungimus prieš `1RSS`/`2RSS` skirtumą ir gausi realų
 perjungimo elgesį: kaip dažnai keičia, ar viena antena sistemiškai atlieka visą
 darbą, ir ar perjungimai sutampa su orientacijos kaita juodojoje dėžėje.
