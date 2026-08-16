@@ -2785,7 +2785,7 @@ save
 
 Tyčia gerokai žemiau gamyklinio 67, nes noriu nedviprasmiško atsakymo, o ne subtilaus. Jei 1 Hz
 banga sugriūva — diagnozė laikosi, ir tada keliu I atgal aukštyn, kol randu ribą. Jei ji išgyvena
-prie 50 — integratorius nekaltas, ir aš klystu penktą kartą.
+prie 50 — integratorius nekaltas, ir aš klystu vėl.
 
 Verta pasakyti atvirai: **tai trečias mechanizmas, kurį pasiūliau tam pačiam simptomui.**
 Rezonanso vaikymasis matavo ne tą juostą; įsisotinimo istorija paaiškina smarkius trūktelėjimus,
@@ -2793,6 +2793,16 @@ bet ne šito, nes pažymėtoje vietoje nėra nė vieno įsisotinusio kadro. Abu 
 klaidingomis dalimis, nes seka yra sąžiningas įrašas, kaip diagnozė realiai klostėsi.
 
 ## Metodo pastabos, kurias verta pasilikti
+
+**Kaip skaityti skaičius.** Šio teksto skaičiai gauti iš dviejų skirtingų analizės langų ir nėra
+tarpusavyje keičiami. Dauguma lentelių naudoja **skrydį lauke, suskirstytą pagal vidutinį propelerio
+dažnį, įtraukiant tik juostas su 4 s ar daugiau** — tai rinkinys 37,7 / 26,2 / 33,0 / 30,1 / 41,0 °/s.
+Vibracijos ir siūbavimo palyginimas naudoja **stabilų skridimą prie gazo 1380–1560, be smūgių** — tai
+rinkinys 38,3 / 26,0 / 31,0 / 26,6 / 42,5. Tas pats dydis, kitas pjūvis. Kur du skaičiai tam pačiam
+dalykui skiriasi truputį — 34,8 prieš 34,5, +66% prieš +65%, 0,789% prieš 0,812% — skirtumą sudaro
+smūgių atmetimo intervalas arba kitas logas, o ne pataisymas. Po filtrų roll triukšmas nurodytas ir
+0,50, ir 0,67 °/s, nes viena reikšmė yra Welch integracija aukščiau 60 Hz, o kita — 80–780 Hz
+juostinis RMS; tai du skirtingi rodikliai, ne du atsakymai.
 
 Praktikos, kurios kartotinai pakeitė išvadą — ne bendri patarimai, o dalykai, kurie realiai
 apvertė atsakymą būtent šią savaitę:

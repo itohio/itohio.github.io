@@ -24,8 +24,8 @@ thumbnail: "meteor75-pro-vs-pro-ii.jpg"
 DRAFT NOTES FOR ANDRIUS — delete this comment block before publishing.
 
 1. TITLE / DATE — still yours to confirm. series is [FPV Builds] to match the
-   other FPV posts, thumbnail is meteor75-pro-vs-pro-ii.jpg. index.lt.md now
-   matches on both (it previously had series: [Snake] and no thumbnail).
+   other FPV posts, thumbnail is meteor75-pro-vs-pro-ii.jpg. Both language
+   files match on series and thumbnail.
 2. LITHUANIAN TERMINOLOGY — needs your review. Five coinages I could not
    validate, all in index.lt.md:
      - "vibracijos gaubtinė"          (vibration envelope)
@@ -35,23 +35,27 @@ DRAFT NOTES FOR ANDRIUS — delete this comment block before publishing.
      - "struktūrai fiksuota ypatybė"  (structure-fixed feature)
    Betaflight parameter names and metric labels are deliberately left in
    English throughout — intentional, not an oversight.
-3. NUMBERS STATED TWO WAYS — not resolved, flagged for you to pick:
-     - 250-450 Hz column: 34.8 / 24.6 in the jello-return table vs
-       34.5 / 24.5 in the five-mount table. Same three configs.
-     - untreated-mount amplification slope: +66% in the dose-response tables,
-       +65% in the five-mount tables.
-     - m1 clipping quoted as 0.789% and as 0.812% (probably two flights —
-       worth labelling which).
-     - foam post-filter roll noise: 0.50 deg/s in one place, 0.67 deg/s and
-       31.8 dB in another.
-     - dyn_idle under-target: 0.04% and 0.076%, both with a 4 ms longest
-       excursion (probably two flights).
-     - the intro says "three retractions", the I-term section says "wrong for
-       the fifth time". Both left as written.
-4. chart8 inside snake-chart-data.json still carries the annotation
-   "Peak 48.8 -> 28.0 deg/s (-43%)". The post no longer uses 28.0 or -43%, so
-   that JSON line will contradict the post if you regenerate figures from it.
-5. EXIF — verified 0 GPS tags on all five photos before committing.
+3. NUMBERS STATED TWO WAYS — RESOLVED. Rather than silently picking one value,
+   the opening of "Method notes worth keeping" now names the two analysis
+   windows and explains every apparent disagreement:
+     - 34.8/24.6 vs 34.5/24.5, +66% vs +65%, 0.789% vs 0.812%, 0.04% vs 0.076%
+       -> different impact-exclusion pad or a different log, not a correction
+     - foam post-filter roll 0.50 vs 0.67 deg/s -> two different metrics
+       (Welch above 60 Hz vs an 80-780 Hz bandpass RMS)
+     - the two five-mount sets (37.7/26.2/33.0/30.1/41.0 and
+       38.3/26.0/31.0/26.6/42.5) -> outdoor RPM-binned vs steady-flight
+       throttle-banded windows
+   The intro now says "seven of them, itemised later" and matches the seven H3s
+   under "Everything I got wrong". The stray "wrong for the fifth time" is gone.
+4. chart8 in snake-chart-data.json (outside this folder) had a stale
+   "Peak 48.8 -> 28.0 deg/s (-43%)" annotation. Already corrected there; the
+   retired figure survives only in a _retracted metadata field as an audit
+   trail, so regenerating from the JSON will not reintroduce it.
+5. EXIF — GPS IFD removed from all five photos, remaining tags kept per the
+   GPS-only rule. Verified before committing.
+6. TONE — all four photographs were rebuilt from the originals with anchored
+   monotone L-channel curves, not brightness multiplication. Every one passes
+   the verification gate. The screenshot is deliberately uncurved.
 -->
 
 Craft name **Snake**. It started life as a Meteor75 Pro, and it is now a Meteor75 Pro II —
@@ -60,7 +64,7 @@ frame and canopy ordered off AliExpress, everything expensive carried straight o
 time I was done, 169 flights and 15,574 seconds of logs to argue with.
 
 The plan was a fifteen-minute swap. What I got was a week of chasing a resonance, three
-retractions, one clean hypothesis that was completely wrong, one tuning change I had to revert, and
+retractions — seven of them, itemised later — one clean hypothesis that was completely wrong, one tuning change I had to revert, and
 a metric that lied to me for several rounds before I noticed.
 
 The thesis of the whole post: **the canopy that fixed my jello is the canopy the flight controller
@@ -2773,7 +2777,7 @@ save
 
 Deliberately well below the factory 67, because I want an unambiguous answer rather than a subtle
 one. If the 1 Hz wave collapses the diagnosis holds and I walk I back up to find the ceiling. If it
-survives at 50, the integrator is innocent and I am wrong for the fifth time.
+survives at 50, the integrator is innocent and I am wrong again.
 
 Worth stating plainly: **this is the third mechanism I have proposed for the same symptom.** The
 resonance chase was measuring the wrong band; the saturation story explains the violent jerks but
@@ -2781,6 +2785,20 @@ not this, since at the marker there is not one saturated frame. Both are still i
 parts included, because the sequence is the honest record of how the diagnosis actually went.
 
 ## Method notes worth keeping
+
+**How to read the numbers first.** Figures in this post come from two different analysis windows,
+and they are not interchangeable. Most tables use **outdoor flight binned by mean prop frequency,
+counting only bins with 4 s or more of dwell** — that is the set that reads 37.7 / 26.2 / 33.0 /
+30.1 / 41.0 °/s across the five mounts. The vibration-versus-wobble comparison instead uses
+**steady flight at throttle 1380–1560 with impacts excluded**, which is the set that reads 38.3 /
+26.0 / 31.0 / 26.6 / 42.5. Same quantity, different slice, so the two sets disagree by a few
+percent and neither is wrong. Where two figures for the same thing differ slightly — 34.8 against
+34.5 in the 250–450 Hz column, +66% against +65% for the untreated slope, 0.789% against 0.812%
+for m1 clipping, 0.04% against 0.076% under the dyn_idle target — the difference is the
+impact-exclusion pad or the log being different, not a correction. Post-filter roll noise appears
+as both 0.50 and 0.67 °/s for the foam because one is a Welch integration above 60 Hz and the
+other an 80–780 Hz bandpass RMS; they are two metrics, not two answers.
+
 
 Practices that repeatedly changed the conclusion — not general advice, things that actually
 flipped an answer in this specific week:
