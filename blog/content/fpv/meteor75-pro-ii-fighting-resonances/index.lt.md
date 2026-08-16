@@ -2703,6 +2703,131 @@ kad tai **konfigūracijos** savybė, o ne momentinis priežastingumas.
 4. **Pritvirtinsiu O4 prie rėmo, ne tik prie gaubto.** Mažiau savarankiškai judančios masės.
 
 
+## Drebėjimas, kurio nemačiau, ir narys, kuris jį varė
+
+Viskas iki šios vietos matavo 80–780 Hz. Pilotas nuolat kartojo, kad drebėjimą mato akimis, o 350 Hz
+niekas akimis nepamatys — tai pasireiškia kaip jello, kai kamera sujungta, o tai visai kitas
+simptomas.
+
+Jis buvo teisus, ir skaičius visą laiką buvo mano pačios lentelėje: **58,6% nekomanduoto judesio yra
+1–4 Hz juostoje.** Tad pagaliau apribojau originalų logą iki 0,5–3 Hz, būtent toje vietoje, į kurią
+jis parodė.
+
+| ašis | giro RMS | **iš viršaus į apačią** | periodas | **dažnis** | setpoint RMS | santykis |
+|---|---|---|---|---|---|---|
+| **roll** | 8,31 | **47,1 °/s** | 0,90 s | **1,11 Hz** | 5,00 | 2× |
+| **pitch** | 2,88 | 16,6 °/s | 0,56 s | **1,78 Hz** | 1,05 | **3×** |
+
+Vienas kablelis vienas herco ant roll. Pilnas ciklas per mažiau nei sekundę — giro **+21,9 °/s** prie
+t=45,11 iki **−21,2 °/s** prie t=45,91, kai pagaliukas beveik nieko neprašo.
+
+### Kuris narys tai daro
+
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "P",
+      "I",
+      "D",
+      "feedforward"
+    ],
+    "datasets": [
+      {
+        "label": "amplitudė 0.5-3 Hz juostoje, roll ašis",
+        "data": [
+          8.0,
+          16.81,
+          1.42,
+          0.81
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "nario RMS 0.5-3 Hz juostoje"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "PID narys"
+        }
+      }
+    }
+  }
+}
+```
+
+| narys | RMS | dalis osciliuojančios komandos |
+|---|---|---|
+| P | 8,00 | 44% |
+| **I** | **16,81** | **93%** |
+| D | 1,42 | 8% |
+| feedforward | 0,81 | 4% |
+| SUMA | 18,04 | — |
+
+Integratorius sudaro 93% — ir jis *didesnis už sumą*, t. y. P jį dalinai kompensuoja, o ne padeda.
+Įrodymas yra fazė:
+
+```
+I nario fazė vs giro:   roll +105 deg    pitch +90 deg
+I nario periodas:       roll 0,97 s      pitch 0,83 s
+drebėjimo periodas:     roll 0,90 s      pitch 0,56 s
+```
+
+Sveikas integratorius **priešinasi** klaidai — apie 180°. Šis yra prie **+90…+105°**, t. y.
+kvadratūroje: sinchroniškai su klaidos *greičiu*, o ne prieš pačią klaidą. Kvadratūroje esantis
+integratorius nebekoreguoja — jis pumpuoja. Jo periodas sutampa su drebėjimo periodu abiejose ašyse.
+
+Varikliai patvirtina, kad tai komanduojama: roll diferencialas **123,4 vienetai RMS** 0,5–3 Hz
+juostoje, koherencija su giroskopu 0,84.
+
+### Kodėl tai atitinka piloto stebėjimus, o ankstesnės mano versijos – ne
+
+- **Jis tai mato, o aš to nematavau** — 1 Hz yra matomas rėmo judesys; 350 Hz yra jello.
+- **Šviežia baterija, dreba iš karto** — integratoriui įtampa nesvarbi, o tai nužudė mano
+  sag-kompensacijos teoriją.
+- **Tiesiai ir posūkiuose vienodai** — I kaupiasi prieš bet kokią nuolatinę klaidą.
+- **Tęsiasi sekundes** — ciklas užsifiksavęs laikosi.
+- **Jokie mechaniniai pakeitimai nepadėjo** — tai gyvena valdiklyje, ne rėme.
+- **Putplastis vis tiek atrodė padedantis** — plokštės slopinimas didina fazės atsargą.
+
+Ir koeficientai atitinka ašis: **`i_roll` yra 80 prieš serijinį 67, `i_yaw` tas pats +19%** — būtent
+tos dvi ašys ir osciliuoja. Pitch yra *žemiau* serijinio ir dreba maždaug tris kartus mažiau.
+
+### Testas, kuris tai patvirtins arba nužudys
+
+```
+profile 0
+set i_roll = 50
+set i_yaw = 50
+save
+```
+
+Tyčia gerokai žemiau gamyklinio 67, nes noriu nedviprasmiško atsakymo.
+
+Ir tai reikia pasakyti atvirai: **tai trečias mechanizmas, kurį pasiūliau tam pačiam simptomui.**
+Rezonanso vaikymasis matavo ne tą juostą. Įsisotinimo istorija paaiškina smarkius trūktelėjimus, bet
+ne šį drebėjimą. Abu palikti šiame tekste, su klaidingomis dalimis, nes seka yra sąžiningas įrašas.
+
+
 ## Metodo pastabos, kurias verta pasilikti
 
 Praktikos, kurios kartotinai pakeitė išvadą — ne bendri patarimai, o dalykai, kurie realiai

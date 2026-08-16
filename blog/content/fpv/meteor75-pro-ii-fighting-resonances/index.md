@@ -2829,6 +2829,147 @@ effect — consistent with a structural-dynamics explanation and inconsistent wi
 4. **Secure the O4 to the frame, not only to the canopy.** Less independently-moving mass is the root
    fix, and everything else is mitigation.
 
+## The shake I could not see, and the term that was driving it
+
+Everything above this point measured 80–780 Hz. The pilot kept saying he could see the shake with
+his eyes, and that 350 Hz is not something anyone can see — it shows up as jello when the camera is
+coupled, which is a different symptom entirely.
+
+He was right, and the number was in my own band table the whole time: **58.6% of the uncommanded
+motion sits in 1–4 Hz.** So I finally went and band-limited the original log to 0.5–3 Hz, at the
+exact frame he pointed at.
+
+It is there, unmistakably:
+
+| axis | gyro RMS | **peak-to-peak** | period | **frequency** | setpoint RMS | ratio |
+|---|---|---|---|---|---|---|
+| **roll** | 8.31 | **47.1 °/s** | 0.90 s | **1.11 Hz** | 5.00 | 2× |
+| **pitch** | 2.88 | 16.6 °/s | 0.56 s | **1.78 Hz** | 1.05 | **3×** |
+
+One-point-one hertz on roll. A full cycle in under a second — gyro **+21.9 °/s** at t=45.11
+swinging to **−21.2 °/s** at t=45.91, while the stick asks for almost nothing. That is a wave you
+can watch with your eyes, and it is exactly what the pilot had been describing since the first
+message.
+
+### Which term is doing it
+
+Decomposing the oscillating roll command inside 0.5–3 Hz:
+
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "P",
+      "I",
+      "D",
+      "feedforward"
+    ],
+    "datasets": [
+      {
+        "label": "amplitude inside 0.5-3 Hz, roll axis",
+        "data": [
+          8.0,
+          16.81,
+          1.42,
+          0.81
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "RMS of the term inside 0.5-3 Hz"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "PID term"
+        }
+      }
+    }
+  }
+}
+```
+
+| term | RMS | share of the oscillating command |
+|---|---|---|
+| P | 8.00 | 44% |
+| **I** | **16.81** | **93%** |
+| D | 1.42 | 8% |
+| feedforward | 0.81 | 4% |
+| SUM | 18.04 | — |
+
+The integrator is 93% of it — and it is *larger than the sum*, which means P is partly cancelling it
+rather than working with it. The phase is the proof:
+
+```
+I-term phase vs gyro:   roll +105 deg    pitch +90 deg
+I-term own period:      roll 0.97 s      pitch 0.83 s
+shake period:           roll 0.90 s      pitch 0.56 s
+```
+
+A healthy integrator **opposes** the error — near 180°. This one sits at **+90 to +105°**, which is
+quadrature: in step with the error's *rate* rather than against the error itself. An integrator in
+quadrature has stopped correcting and started pumping. It winds up while the error is still growing,
+peaks after the error has already reversed, and hands energy to the next half-cycle. Its own period
+matches the shake period on both axes.
+
+The motors confirm it is being commanded rather than suffered: roll differential **123.4 counts RMS**
+inside 0.5–3 Hz, coherence 0.84 with the gyro.
+
+### Why this fits what the pilot reported and my earlier stories did not
+
+- **He can see it, I could not measure it** — 1 Hz is visible airframe motion; 350 Hz is jello. Two
+  symptoms, and I conflated them for days.
+- **Fresh pack, shaking immediately** — integrator dynamics do not care about voltage, which killed
+  my sag-compensation theory outright.
+- **Straight flight and turns alike** — I winds up against any sustained error, including the
+  standing imbalance measured earlier in this post.
+- **Sustained for seconds** — a limit cycle persists once it locks.
+- **No mechanical change ever fixed it** — it lives in the controller, not the airframe.
+- **The foam still appeared to help** — damping the plant adds phase margin, which raises the
+  threshold for the cycle to sustain. The mount was never the cause, but it did move the margin.
+
+And the gains line up with the axes: **`i_roll` is 80 against stock's 67, `i_yaw` the same +19%** —
+the two axes that oscillate. Pitch sits *below* stock and oscillates roughly a third as hard
+(2.88 versus 8.31).
+
+### The test that will confirm or kill it
+
+```
+profile 0
+set i_roll = 50
+set i_yaw = 50
+save
+```
+
+Deliberately well below the factory 67, because I want an unambiguous answer rather than a subtle
+one. If the 1 Hz wave collapses, the diagnosis holds and I walk I back up to find the ceiling. If it
+survives at 50, the integrator is innocent and I am wrong for the fifth time.
+
+Which is worth stating plainly: **this is the third mechanism I have proposed for the same
+symptom.** The resonance chase was measuring the wrong band. The saturation story explains the
+violent jerks but not this — at the marker there is not one saturated frame. Both are still in this
+post, wrong parts included, because the sequence is the honest record of how the diagnosis actually
+went.
+
+
 ## Method notes worth keeping
 
 Practices that repeatedly changed the conclusion — not general advice, things that actually
