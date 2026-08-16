@@ -1,7 +1,7 @@
 ---
-title: "Part 5: Custom Voice Files, and Why You Cannot Just Copy My Config"
+title: "Part 5: Where the Callouts Come From, and Why You Cannot Just Copy My Config"
 date: 2026-08-16T13:00:00+03:00
-description: "Where EdgeTX keeps custom WAV callouts, what to scrub from a model YAML before publishing it, and the positional sensor-index trap that makes a shared config misbehave silently."
+description: "The callouts come from the stock EdgeTX voice pack, not from anything I recorded. What to scrub from a model YAML before publishing it, and the positional sensor-index trap that makes a shared config misbehave silently."
 draft: false
 toc: true
 weight: 5
@@ -17,14 +17,15 @@ tags:
   - privacy
   - elrs
   - telemetry
-keywords: ["EdgeTX custom wav sounds folder", "EdgeTX model yml portability", "EdgeTX telemetry sensor index tele()", "scrub EdgeTX config before sharing", "ELRS binding phrase privacy"]
+keywords: ["EdgeTX voice pack sounds folder", "EdgeTX model yml portability", "EdgeTX telemetry sensor index tele()", "scrub EdgeTX config before sharing", "ELRS binding phrase privacy"]
 series:
   - EdgeTX Cockpit Voice
 ---
 
-The callouts in [Part 4](/fpv/edgetx-cockpit-voice-callouts/) are custom WAV files,
-not built-in sounds. Two practical things follow from that: where the audio lives,
-and why handing you my config file is less useful than it sounds.
+The callouts in [Part 4](/fpv/edgetx-cockpit-voice-callouts/) come from the voice
+pack that ships with the radio. Two practical things follow from that: where the
+audio actually lives, and why handing you my config file is less useful than it
+sounds.
 
 ## The callouts: rth, gpson, gpsoff, lowbat, warnng, ready
 

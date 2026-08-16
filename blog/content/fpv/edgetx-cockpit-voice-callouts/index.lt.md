@@ -169,4 +169,4 @@ telemetrijos sensoriaus. Jei tai išsprendei EdgeTX'e gražiai, noriu išgirsti.
 Tokia sistema, su kuria skraidau. Šeši ištarti pranešimai, trys palydovų būsenos ir
 vienas aukščio signalas, kuris pasirodė matuojąs ne tai, ką maniau.
 
-**Toliau:** [5 dalis, individualūs garso failai ir kodėl negali nusikopijuoti mano konfigūracijos](/fpv/edgetx-cockpit-voice-audio-and-sharing/)
+**Toliau:** [5 dalis, iš kur atkeliauja pranešimai ir kodėl negali nusikopijuoti mano konfigūracijos](/fpv/edgetx-cockpit-voice-audio-and-sharing/)

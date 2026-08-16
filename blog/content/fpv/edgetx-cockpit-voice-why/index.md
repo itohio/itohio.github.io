@@ -50,7 +50,7 @@ audio beats vision, because audio does not require the pilot to look
 somewhere.**
 
 And yet the default FPV configuration for a 250-gram aircraft with a four-minute
-endurance is.. a number in the corner of the screen.
+endurance is... a number in the corner of the screen.
 
 So I fixed it. My GX12 now talks to me. Not with a Lua script, not with anything
 exotic, just EdgeTX logical switches and special functions, which have been

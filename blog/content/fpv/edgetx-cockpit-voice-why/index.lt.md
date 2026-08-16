@@ -49,7 +49,7 @@ kritinį atakos kampą, aukščio pranešimai, įspėjimai apie reljefą. Visas
 nereikia, kad pilotas kur nors pažiūrėtų.**
 
 Ir vis dėlto standartinė FPV konfigūracija 250 gramų orlaiviui, kurio skrydžio
-laikas keturios minutės, yra.. skaičius ekrano kampe.
+laikas keturios minutės, yra... skaičius ekrano kampe.
 
 Tai aš tai sutvarkiau. Mano GX12 dabar su manimi kalba. Ne Lua skriptu, ne kažkuo
 egzotišku, tiesiog EdgeTX loginiais jungtukais ir specialiosiomis funkcijomis,

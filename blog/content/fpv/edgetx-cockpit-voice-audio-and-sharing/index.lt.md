@@ -1,7 +1,7 @@
 ---
-title: "5 dalis: individualūs garso failai ir kodėl negali tiesiog nusikopijuoti mano konfigūracijos"
+title: "5 dalis: iš kur atkeliauja pranešimai ir kodėl negali tiesiog nusikopijuoti mano konfigūracijos"
 date: 2026-08-16T13:00:00+03:00
-description: "Kur EdgeTX laiko individualius WAV pranešimus, ką ištrinti iš modelio YAML prieš skelbiant ir poziciniai sensorių indeksai, dėl kurių pasidalinta konfigūracija tyliai elgiasi blogai."
+description: "Pranešimai atkeliauja iš standartinio EdgeTX balso paketo, o ne iš to, ką būčiau įrašęs. Ką ištrinti iš modelio YAML prieš skelbiant ir poziciniai sensorių indeksai, dėl kurių pasidalinta konfigūracija tyliai elgiasi blogai."
 draft: false
 toc: true
 weight: 5
@@ -17,15 +17,15 @@ tags:
   - privatumas
   - elrs
   - telemetrija
-keywords: ["EdgeTX individualus wav garsai", "EdgeTX model yml perkeliamumas", "EdgeTX telemetrijos sensoriu indeksai"]
+keywords: ["EdgeTX balso paketo garsai", "EdgeTX model yml perkeliamumas", "EdgeTX telemetrijos sensoriu indeksai"]
 series:
   - EdgeTX Cockpit Voice
 ---
 
-Pranešimai iš [4 dalies](/fpv/edgetx-cockpit-voice-callouts/) yra individualūs WAV
-failai, ne integruoti garsai. Iš to seka du praktiniai dalykai: kur gyvena garsas
-ir kodėl mano konfigūracijos failo perdavimas tau yra mažiau naudingas, nei
-atrodo.
+Pranešimai iš [4 dalies](/fpv/edgetx-cockpit-voice-callouts/) atkeliauja iš balso
+paketo, kuris pateikiamas su pultu. Iš to seka du praktiniai dalykai: kur realiai
+gyvena garsas ir kodėl mano konfigūracijos failo perdavimas tau yra mažiau
+naudingas, nei atrodo.
 
 ## Pranešimai: rth, gpson, gpsoff, lowbat, warnng, ready
 

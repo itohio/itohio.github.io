@@ -177,4 +177,4 @@ cleanly in EdgeTX, I want to hear about it.
 That is the system as I fly it. Six spoken tracks, three satellite states, one
 altitude alarm that turned out to measure something other than what I thought.
 
-**Next:** [Part 5, custom voice files and why you cannot just copy my config](/fpv/edgetx-cockpit-voice-audio-and-sharing/)
+**Next:** [Part 5, where the callouts come from and why you cannot just copy my config](/fpv/edgetx-cockpit-voice-audio-and-sharing/)
