@@ -2834,6 +2834,51 @@ flowchart LR
 - **Check which band the symptom is in before characterising a band.** This is the one that cost
   me the week.
 
+## Where I leave it, and what is next
+
+The foam is out. The TPU inserts are out. What is in instead is a little **B7000 inside the
+grommets** — enough to stiffen them a bit without going back to a filament shim or a thermal
+blanket over the ESC side. That is the whole mechanical change, and I am going to fly it in a
+range of weather before I touch anything else.
+
+And I have decided to stop fighting one of the two symptoms.
+
+**I accept the shake in wind.** Not because it is solved — it is not, and the 1 Hz integrator
+question is still open — but because it is the *recoverable* one. Shake I can stabilise in
+DaVinci. Jello I cannot. There is no filter, no Gyroflow pass and no RockSteady setting that
+un-bakes rolling-shutter distortion out of a frame, so between the two, the one I refuse to ship
+is jello.
+
+That trade is not theoretical. I flew a project shoot recently where people were playing
+volleyball and I orbited around them. **The previous canopy setup shook violently too — and it
+produced so much jello that I came away with no usable footage at all.** Nothing to grade,
+nothing to stabilise, nothing to keep. This floaty canopy will shake in the same conditions, but
+it will hand me frames that are sharp enough to fix. Wobbly and recoverable beats steady and
+ruined.
+
+There is also a simpler answer I should admit to: **if I want cinematic footage of people playing
+sport, I should be flying the Pavo20, not a 75 mm whoop.** Snake weighs almost nothing, and almost
+nothing is exactly what wind pushes around. Choosing the right airframe would have saved me most
+of this week.
+
+### The open list
+
+- **Fly the `i_roll` / `i_yaw` = 50 test and log it.** One CLI paste settles whether the 1.1 Hz
+  wave is the integrator or something else, and I have been putting it off in favour of
+  mechanical changes that were never going to reach it.
+- **Log a 60 s flight with real stick movement.** Flick-and-hold, hard reversals, a few punches.
+  Everything I know about this quad's step response rests on six usable steps from a log that
+  ended in a crash.
+- **Watch the B7000 grommets over a few packs** — does the stiffening hold, and does jello stay
+  away as the glue cures and settles.
+- **Try a stock Meteor75 Pro II with the O4 Wide.** Every conclusion here is measured on a
+  hybrid: Pro internals, Pro motors at 22,000 KV, in a Pro II shell. I cannot claim any of it
+  transfers to a factory unit, and a stock airframe would tell me which half of this was the
+  build and which half was me.
+
+I will post the numbers either way, including the ones that make me look silly. There have been
+plenty of those already.
+
 ## The echo
 
 The thing I set out to fix was jello, and I fixed it — by buying a frame whose canopy holds the

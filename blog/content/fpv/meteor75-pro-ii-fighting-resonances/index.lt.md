@@ -2840,6 +2840,42 @@ flowchart LR
 - **Patikrinti, kurioje juostoje yra simptomas, prieš charakterizuojant juostą.** Būtent šis
   kainavo man savaitę.
 
+## Kur viską palieku ir kas toliau
+
+Putplastis išimtas. TPU įdėklai išimti. Vietoje jų — šiek tiek **B7000 klijų gummy ivorių viduje**,
+kad būtų kiek standesni, bet be filamento įdėklo ir be šiluminės antklodės ant ESC pusės. Tai
+visas mechaninis pakeitimas, ir prieš ką nors kita darydamas paskraidysiu jį įvairiu oru.
+
+Ir vieno iš dviejų simptomų nusprendžiau nebekovoti.
+
+**Priimu drebėjimą vėjyje.** Ne todėl, kad jis išspręstas — neišspręstas, ir 1 Hz integratoriaus
+klausimas dar atviras — o todėl, kad jis *atstatomas*. Drebėjimą galiu stabilizuoti DaVinci. Jello
+negaliu. Nėra filtro, nėra Gyroflow, nėra RockSteady nustatymo, kuris iš kadro išimtų į pikselius
+įrašytą rolling-shutter iškraipymą. Todėl iš šių dviejų aš atsisakau jello.
+
+Šis kompromisas ne teorinis. Neseniai filmavau projektą, kur žmonės žaidė tinklinį, ir aš juos
+apskridau. **Ankstesnis gaubto variantas taip pat drebėjo smarkiai — ir davė tiek jello, kad
+neturėjau nė vieno naudojamo kadro.** Nieko taisyti, nieko stabilizuoti, nieko pasilikti. Šis
+plevėsuojantis gaubtas tomis pačiomis sąlygomis irgi drebės, bet duos kadrus, kurie pakankamai
+aiškūs, kad juos būtų galima sutvarkyti. Drebantis ir atstatomas nugali stabilų ir sugadintą.
+
+Yra ir paprastesnis atsakymas, kurį reikia pripažinti: **jei noriu kinematografiškų kadrų, kaip
+žmonės sportuoja, turėčiau skraidinti Pavo20, o ne 75 mm whoop.** Snake beveik nieko nesveria, o
+būtent beveik nieko vėjas ir nešioja.
+
+### Atvirų darbų sąrašas
+
+- **Atlikti `i_roll` / `i_yaw` = 50 testą ir užrašyti logą.** Vienas CLI įklijavimas išspręs, ar
+  1,1 Hz banga yra integratorius, ar kažkas kita.
+- **Užrašyti 60 s logą su tikru pagaliukų judesiu.** Viskas, ką žinau apie šio kvadro atsaką,
+  laikosi ant šešių tinkamų žingsnių iš logo, kuris baigėsi kritimu.
+- **Stebėti B7000 ivorius kelias baterijas** — ar standumas laikosi ir ar jello nesugrįžta.
+- **Išbandyti serijinį Meteor75 Pro II su O4 Wide.** Visos išvados išmatuotos ant hibrido: Pro
+  vidus, Pro varikliai 22 000 KV, Pro II korpuse.
+
+Skaičius paskelbsiu bet kuriuo atveju, įskaitant tuos, dėl kurių atrodau kvailai. Tokių jau buvo
+nemažai.
+
 ## Atgarsis
 
 Tai, ką ruošiausi pataisyti, buvo jello, ir aš jį pataisiau — nusipirkdamas rėmą, kurio gaubtas
