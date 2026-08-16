@@ -2,9 +2,9 @@
 title: "6 dalis: telemetrijos įrašymas ir vienas skaičius, kurį turi išmatuoti pats"
 date: 2026-08-16T14:00:00+03:00
 description: "ELRS telemetrijos santykis, CRSF kadrų ciklinė eilė ir EdgeTX įrašymo periodas yra nuosekliai. Kodėl aritmetika nėra atsakymas ir 3D įrankis, kurį sukūriau šiems žurnalams skaityti."
+summary: "ELRS telemetrijos santykis, CRSF kadrų ciklinė eilė ir EdgeTX įrašymo periodas yra nuosekliai. Kodėl aritmetika nėra atsakymas ir 3D įrankis, kurį sukūriau šiems žurnalams skaityti."
 draft: false
 toc: true
-weight: 6
 categories:
   - FPV
   - EdgeTX
@@ -22,6 +22,10 @@ series:
   - EdgeTX Cockpit Voice
 thumbnail: "rxmap-sphere-airframe.png"
 ---
+
+> **EdgeTX Cockpit Voice**, 6 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 5 dalis: Iš kur atkeliauja pranešimai](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [7 dalis: Dvi antenos, dvi juostos ›](/fpv/edgetx-cockpit-voice-antennas/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 Raudonas mygtukas šioje sistemoje rašo CSV į SD kortelę. Tas žurnalas pasirodo
 esąs įdomiausias objektas visame projekte ir kartu tas, kurį supratau
@@ -225,4 +229,9 @@ kryptis, kuria toks apsikeitimas turėtų vykti. Skaičius, kurį spėjau, klydo
 eilėmis, ta kryptimi, dėl kurios būčiau rašęs žurnalą dešimt kartų dažniau, nei
 reikia.
 
-**Toliau:** [7 dalis, dvi antenos, dvi juostos ir dronas, kurį praradau dėl poliarizacijos](/fpv/edgetx-cockpit-voice-antennas/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, 6 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 5 dalis: Iš kur atkeliauja pranešimai](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [7 dalis: Dvi antenos, dvi juostos ›](/fpv/edgetx-cockpit-voice-antennas/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

@@ -2,9 +2,9 @@
 title: "3 dalis: trys mygtukai, trys spalvos ir AND vartai, kurie viską sujungia"
 date: 2026-08-16T11:00:00+03:00
 description: "Kaip EdgeTX konfigūruojami funkciniai jungtukai, RGB spalva kiekvienai posistemei ir vienas AND laukas paverčia vienuolika slenksčio detektorių trimis perjungiamomis posistemėmis."
+summary: "Kaip EdgeTX konfigūruojami funkciniai jungtukai, RGB spalva kiekvienai posistemei ir vienas AND laukas paverčia vienuolika slenksčio detektorių trimis perjungiamomis posistemėmis."
 draft: false
 toc: true
-weight: 3
 categories:
   - FPV
   - EdgeTX
@@ -20,6 +20,10 @@ series:
   - EdgeTX Cockpit Voice
 thumbnail: "cfs-buttons-lit.jpg"
 ---
+
+> **EdgeTX Cockpit Voice**, 3 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 2 dalis: Kalibracija, ant kurios stovi kiekvienas įspėjimas](/fpv/edgetx-cockpit-voice-calibration/)  ·  [4 dalis: Ką pultas iš tikrųjų pasako ›](/fpv/edgetx-cockpit-voice-callouts/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 [1 dalis](/fpv/edgetx-cockpit-voice-why/) nustatė tikslą ir vieną skrydžio
 valdiklio nustatymą, ant kurio viskas stovi. Ši dalis yra mechanizmas: kaip pultas
@@ -190,4 +194,9 @@ Tokia visa struktūra. Vienuolika slenksčio detektorių, trys perjungiamos
 posistemės, vienas AND laukas, kuris juos atskiria. Ko visa tai dar nedaro, tai
 neskleidžia garso.
 
-**Toliau:** [4 dalis, ką pultas iš tikrųjų pasako](/fpv/edgetx-cockpit-voice-callouts/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, 3 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 2 dalis: Kalibracija, ant kurios stovi kiekvienas įspėjimas](/fpv/edgetx-cockpit-voice-calibration/)  ·  [4 dalis: Ką pultas iš tikrųjų pasako ›](/fpv/edgetx-cockpit-voice-callouts/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

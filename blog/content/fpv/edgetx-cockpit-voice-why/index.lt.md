@@ -2,9 +2,9 @@
 title: "Kaip daviau savo dronui piloto kabinos balsą, 1 dalis: kodėl dronas turi su tavimi kalbėti"
 date: 2026-08-16T09:00:00+03:00
 description: "Įtampos skaičius OSD kamputyje yra sąsajos, o ne piloto klaida. Kodėl priverčiau savo RadioMaster GX12 kalbėti ir vienas skrydžio valdiklio nustatymas, nuo kurio viskas priklauso."
+summary: "Įtampos skaičius OSD kamputyje yra sąsajos, o ne piloto klaida. Kodėl priverčiau savo RadioMaster GX12 kalbėti ir vienas skrydžio valdiklio nustatymas, nuo kurio viskas priklauso."
 draft: false
 toc: true
-weight: 1
 categories:
   - FPV
   - EdgeTX
@@ -23,6 +23,10 @@ series:
   - EdgeTX Cockpit Voice
 thumbnail: "cover.jpg"
 ---
+
+> **EdgeTX Cockpit Voice**, 1 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [2 dalis: Kalibracija, ant kurios stovi kiekvienas įspėjimas ›](/fpv/edgetx-cockpit-voice-calibration/)
 
 Tą skrydį žinai. Esi gerokai nuskridęs, reljefas geras, linijos plaukia, o tu
 visas esi akiniuose. Kažkur OSD kamputyje įtampos skaičius jau pusantros minutės
@@ -49,7 +53,7 @@ kritinį atakos kampą, aukščio pranešimai, įspėjimai apie reljefą. Visas
 nereikia, kad pilotas kur nors pažiūrėtų.**
 
 Ir vis dėlto standartinė FPV konfigūracija 250 gramų orlaiviui, kurio skrydžio
-laikas keturios minutės, yra.. skaičius ekrano kampe.
+laikas keturios minutės, yra... skaičius ekrano kampe.
 
 Tai aš tai sutvarkiau. Mano GX12 dabar su manimi kalba. Ne Lua skriptu, ne kažkuo
 egzotišku, tiesiog EdgeTX loginiais jungtukais ir specialiosiomis funkcijomis,
@@ -143,4 +147,9 @@ Vienas slenksčių rinkinys dabar reiškia tą patį fizinį dalyką kiekvienam 
 aparatui. Toliau: trys mygtukai, kurie nusprendžia, kuriems įspėjimams leidžiama
 kalbėti, ir AND vartai, neleidžiantys jiems vienas kitam po kojų kliudyti.
 
-**Toliau:** [3 dalis, trys mygtukai, trys spalvos ir AND vartai](/fpv/edgetx-cockpit-voice-buttons/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, 1 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [2 dalis: Kalibracija, ant kurios stovi kiekvienas įspėjimas ›](/fpv/edgetx-cockpit-voice-calibration/)

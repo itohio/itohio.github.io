@@ -2,9 +2,9 @@
 title: "Part 7: Two Antennas, Two Bands, and the Quad I Lost to Polarisation"
 date: 2026-08-16T15:00:00+03:00
 description: "ELRS control-link antennas are linearly polarised, not circular like video. Why one horizontal and one vertical on a true diversity receiver beats a single antenna, and why my telemetry already measures it."
+summary: "ELRS control-link antennas are linearly polarised, not circular like video. Why one horizontal and one vertical on a true diversity receiver beats a single antenna, and why my telemetry already measures it."
 draft: false
 toc: true
-weight: 7
 categories:
   - FPV
   - EdgeTX
@@ -21,6 +21,10 @@ keywords: ["ELRS antenna polarisation linear", "true diversity receiver FPV", "E
 series:
   - EdgeTX Cockpit Voice
 ---
+
+> **EdgeTX Cockpit Voice**, part 7 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 6: Telemetry Logging and the Number You Must Measure](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [Part 8: Four Things Wrong With It ›](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)
 
 The extra buttons are what made this project pleasant. They are not why I bought
 the radio. That decision came out of losing an aircraft, and it is worth a part of
@@ -156,4 +160,9 @@ The information was already arriving. Nobody was listening to it. Which is, more
 or less, the thesis of this entire series, and it leads directly into the part
 where I audit my own work.
 
-**Next:** [Part 8, four things wrong with it](/fpv/edgetx-cockpit-voice-whats-wrong/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, part 7 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 6: Telemetry Logging and the Number You Must Measure](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [Part 8: Four Things Wrong With It ›](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)

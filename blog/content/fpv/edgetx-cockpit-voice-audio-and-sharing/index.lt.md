@@ -1,10 +1,10 @@
 ---
-title: "5 dalis: individualūs garso failai ir kodėl negali tiesiog nusikopijuoti mano konfigūracijos"
+title: "5 dalis: iš kur atkeliauja pranešimai ir kodėl negali tiesiog nusikopijuoti mano konfigūracijos"
 date: 2026-08-16T13:00:00+03:00
-description: "Kur EdgeTX laiko individualius WAV pranešimus, ką ištrinti iš modelio YAML prieš skelbiant ir poziciniai sensorių indeksai, dėl kurių pasidalinta konfigūracija tyliai elgiasi blogai."
+description: "Pranešimai atkeliauja iš standartinio EdgeTX balso paketo, o ne iš to, ką būčiau įrašęs. Ką ištrinti iš modelio YAML prieš skelbiant ir poziciniai sensorių indeksai, dėl kurių pasidalinta konfigūracija tyliai elgiasi blogai."
+summary: "Pranešimai atkeliauja iš standartinio EdgeTX balso paketo, o ne iš to, ką būčiau įrašęs. Ką ištrinti iš modelio YAML prieš skelbiant ir poziciniai sensorių indeksai, dėl kurių pasidalinta konfigūracija tyliai elgiasi blogai."
 draft: false
 toc: true
-weight: 5
 categories:
   - FPV
   - EdgeTX
@@ -17,15 +17,19 @@ tags:
   - privatumas
   - elrs
   - telemetrija
-keywords: ["EdgeTX individualus wav garsai", "EdgeTX model yml perkeliamumas", "EdgeTX telemetrijos sensoriu indeksai"]
+keywords: ["EdgeTX balso paketo garsai", "EdgeTX model yml perkeliamumas", "EdgeTX telemetrijos sensoriu indeksai"]
 series:
   - EdgeTX Cockpit Voice
 ---
 
-Pranešimai iš [4 dalies](/fpv/edgetx-cockpit-voice-callouts/) yra individualūs WAV
-failai, ne integruoti garsai. Iš to seka du praktiniai dalykai: kur gyvena garsas
-ir kodėl mano konfigūracijos failo perdavimas tau yra mažiau naudingas, nei
-atrodo.
+> **EdgeTX Cockpit Voice**, 5 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 4 dalis: Ką pultas iš tikrųjų pasako](/fpv/edgetx-cockpit-voice-callouts/)  ·  [6 dalis: Telemetrijos įrašymas ir skaičius, kurį turi išmatuoti ›](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+
+Pranešimai iš [4 dalies](/fpv/edgetx-cockpit-voice-callouts/) atkeliauja iš balso
+paketo, kuris pateikiamas su pultu. Iš to seka du praktiniai dalykai: kur realiai
+gyvena garsas ir kodėl mano konfigūracijos failo perdavimas tau yra mažiau
+naudingas, nei atrodo.
 
 ## Pranešimai: rth, gpson, gpsoff, lowbat, warnng, ready
 
@@ -133,4 +137,9 @@ Tad atviras patarimas, pageidaujamumo tvarka:
 Perskaityk lenteles, naudok savo sensorių pavadinimus, ir gausi tai, ką realiai
 supranti. Tai svarbu lauke, vėjyje, kai norisi pastumti slenkstį 0,1 V.
 
-**Toliau:** [6 dalis, telemetrijos įrašymas ir vienas skaičius, kurį turi išmatuoti pats](/fpv/edgetx-cockpit-voice-telemetry-rates/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, 5 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 4 dalis: Ką pultas iš tikrųjų pasako](/fpv/edgetx-cockpit-voice-callouts/)  ·  [6 dalis: Telemetrijos įrašymas ir skaičius, kurį turi išmatuoti ›](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

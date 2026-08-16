@@ -2,9 +2,9 @@
 title: "Part 4: What the Radio Actually Says"
 date: 2026-08-16T12:00:00+03:00
 description: "The battery ladder, the satellite callouts, and an altitude alarm that fires on change rather than absolute height. Including the self-test I like most and the delta function I did not plan."
+summary: "The battery ladder, the satellite callouts, and an altitude alarm that fires on change rather than absolute height. Including the self-test I like most and the delta function I did not plan."
 draft: false
 toc: true
-weight: 4
 categories:
   - FPV
   - EdgeTX
@@ -22,6 +22,10 @@ series:
   - EdgeTX Cockpit Voice
 thumbnail: "special-functions-1.jpg"
 ---
+
+> **EdgeTX Cockpit Voice**, part 4 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 3: Three Buttons, Three Colours, and the AND Gate](/fpv/edgetx-cockpit-voice-buttons/)  ·  [Part 5: Where the Callouts Come From ›](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)
 
 The switches from [Part 3](/fpv/edgetx-cockpit-voice-buttons/) are just booleans
 until something turns them into sound. That something is EdgeTX special functions,
@@ -177,4 +181,9 @@ cleanly in EdgeTX, I want to hear about it.
 That is the system as I fly it. Six spoken tracks, three satellite states, one
 altitude alarm that turned out to measure something other than what I thought.
 
-**Next:** [Part 5, custom voice files and why you cannot just copy my config](/fpv/edgetx-cockpit-voice-audio-and-sharing/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, part 4 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 3: Three Buttons, Three Colours, and the AND Gate](/fpv/edgetx-cockpit-voice-buttons/)  ·  [Part 5: Where the Callouts Come From ›](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)

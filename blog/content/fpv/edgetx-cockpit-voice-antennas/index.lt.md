@@ -2,9 +2,9 @@
 title: "7 dalis: dvi antenos, dvi juostos ir dronas, kurį praradau dėl poliarizacijos"
 date: 2026-08-16T15:00:00+03:00
 description: "ELRS valdymo kanalo antenos yra tiesinės poliarizacijos, ne apskritiminės kaip vaizdo. Kodėl viena horizontali ir viena vertikali tikro diversiteto imtuve nugali vieną anteną."
+summary: "ELRS valdymo kanalo antenos yra tiesinės poliarizacijos, ne apskritiminės kaip vaizdo. Kodėl viena horizontali ir viena vertikali tikro diversiteto imtuve nugali vieną anteną."
 draft: false
 toc: true
-weight: 7
 categories:
   - FPV
   - EdgeTX
@@ -20,6 +20,10 @@ keywords: ["ELRS antenu poliarizacija", "tikro diversiteto imtuvas FPV", "ELRS G
 series:
   - EdgeTX Cockpit Voice
 ---
+
+> **EdgeTX Cockpit Voice**, 7 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 6 dalis: Telemetrijos įrašymas ir skaičius, kurį turi išmatuoti](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [8 dalis: Keturi dalykai, kurie negerai ›](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 Papildomi mygtukai yra tai, dėl ko šis projektas buvo malonus. Bet ne dėl jų pirkau
 pultą. Tas sprendimas atsirado praradus aparatą, ir jis vertas atskiros dalies, nes
@@ -152,4 +156,9 @@ Informacija jau atkeliaudavo. Tik niekas jos neklausė. Kas, daugiau ar mažiau,
 visos šios serijos tezė, ir tai vedа tiesiai į dalį, kurioje audituoju savo paties
 darbą.
 
-**Toliau:** [8 dalis, keturi dalykai, kurie čia negerai](/fpv/edgetx-cockpit-voice-whats-wrong/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, 7 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 6 dalis: Telemetrijos įrašymas ir skaičius, kurį turi išmatuoti](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [8 dalis: Keturi dalykai, kurie negerai ›](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

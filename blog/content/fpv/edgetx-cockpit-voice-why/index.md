@@ -2,9 +2,9 @@
 title: "Giving My Quad a Cockpit Voice, Part 1: Why a Drone Should Talk to You"
 date: 2026-08-16T09:00:00+03:00
 description: "A low-battery number in the corner of the OSD is an interface failure, not a pilot failure. Why I made my RadioMaster GX12 speak, and the one flight-controller setting the whole thing depends on."
+summary: "A low-battery number in the corner of the OSD is an interface failure, not a pilot failure. Why I made my RadioMaster GX12 speak, and the one flight-controller setting the whole thing depends on."
 draft: false
 toc: true
-weight: 1
 categories:
   - FPV
   - EdgeTX
@@ -23,6 +23,10 @@ series:
   - EdgeTX Cockpit Voice
 thumbnail: "cover.jpg"
 ---
+
+> **EdgeTX Cockpit Voice**, part 1 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [Part 2: The Calibration Every Battery Warning Rests On ›](/fpv/edgetx-cockpit-voice-calibration/)
 
 You know the flight. You are a long way out, the terrain is good, the lines are
 flowing, and you are entirely inside the goggles. Somewhere in the corner of the
@@ -50,7 +54,7 @@ audio beats vision, because audio does not require the pilot to look
 somewhere.**
 
 And yet the default FPV configuration for a 250-gram aircraft with a four-minute
-endurance is.. a number in the corner of the screen.
+endurance is... a number in the corner of the screen.
 
 So I fixed it. My GX12 now talks to me. Not with a Lua script, not with anything
 exotic, just EdgeTX logical switches and special functions, which have been
@@ -139,4 +143,9 @@ One threshold ladder now means the same physical thing on every aircraft I own.
 Next: the three buttons that decide which warnings are allowed to speak, and the
 AND gate that keeps them from tripping over each other.
 
-**Next:** [Part 3, three buttons, three colours, and the AND gate](/fpv/edgetx-cockpit-voice-buttons/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, part 1 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [Part 2: The Calibration Every Battery Warning Rests On ›](/fpv/edgetx-cockpit-voice-calibration/)

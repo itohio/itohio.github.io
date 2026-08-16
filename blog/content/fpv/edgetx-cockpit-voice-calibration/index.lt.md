@@ -2,9 +2,9 @@
 title: "2 dalis: kalibracija, ant kurios stovi kiekvienas baterijos įspėjimas"
 date: 2026-08-16T10:00:00+03:00
 description: "Blogai sukalibruotas įtampos rodmuo neatrodo sugedęs, jis atrodo tikėtinas. Kodėl report_cell_voltage padaro, kad vbat_scale klaida propaguotųsi du kartus."
+summary: "Blogai sukalibruotas įtampos rodmuo neatrodo sugedęs, jis atrodo tikėtinas. Kodėl report_cell_voltage padaro, kad vbat_scale klaida propaguotųsi du kartus."
 draft: false
 toc: true
-weight: 2
 categories:
   - FPV
   - EdgeTX
@@ -21,6 +21,10 @@ keywords: ["Betaflight vbat_scale kalibracija", "baterijos itampos kalibracija d
 series:
   - EdgeTX Cockpit Voice
 ---
+
+> **EdgeTX Cockpit Voice**, 2 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 1 dalis: Kodėl dronas turi su tavimi kalbėti](/fpv/edgetx-cockpit-voice-why/)  ·  [3 dalis: Trys mygtukai, trys spalvos ir AND vartai ›](/fpv/edgetx-cockpit-voice-buttons/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 Kiekvienas šios serijos baterijos įspėjimas yra palyginimas su skaičiumi. Tad prieš
 visa kita tas skaičius turi būti tikras. Šis skyrius apie nustatymą, kuris tai
@@ -115,4 +119,9 @@ Du mano aparatai vis dar sako tiesą per vėlai. Žinau, kurie du, ir dar
 nesutvarkiau, o tai yra tas dalykas, kuris labiau tinka laboratoriniam sąsiuviniui
 nei vadovui.
 
-**Toliau:** [3 dalis, trys mygtukai, trys spalvos ir AND vartai](/fpv/edgetx-cockpit-voice-buttons/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, 2 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 1 dalis: Kodėl dronas turi su tavimi kalbėti](/fpv/edgetx-cockpit-voice-why/)  ·  [3 dalis: Trys mygtukai, trys spalvos ir AND vartai ›](/fpv/edgetx-cockpit-voice-buttons/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

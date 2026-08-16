@@ -2,9 +2,9 @@
 title: "Part 2: The Calibration Every Battery Warning Rests On"
 date: 2026-08-16T10:00:00+03:00
 description: "A miscalibrated voltage reading does not look broken, it looks plausible. Why report_cell_voltage makes a vbat_scale error propagate twice, and what the 3S-to-4S move does to your alarms."
+summary: "A miscalibrated voltage reading does not look broken, it looks plausible. Why report_cell_voltage makes a vbat_scale error propagate twice, and what the 3S-to-4S move does to your alarms."
 draft: false
 toc: true
-weight: 2
 categories:
   - FPV
   - EdgeTX
@@ -21,6 +21,10 @@ keywords: ["Betaflight vbat_scale calibration", "battery voltage calibration dro
 series:
   - EdgeTX Cockpit Voice
 ---
+
+> **EdgeTX Cockpit Voice**, part 2 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 1: Why a Drone Should Talk to You](/fpv/edgetx-cockpit-voice-why/)  ·  [Part 3: Three Buttons, Three Colours, and the AND Gate ›](/fpv/edgetx-cockpit-voice-buttons/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)
 
 Every battery warning in this series is a comparison against a number. So before
 any of it, the number has to be true. This part is about the setting that decides
@@ -113,4 +117,9 @@ Two of my aircraft are still telling me the truth late. I know which two, and I
 have not fixed it, which is the sort of thing that belongs in a lab notebook
 rather than a tutorial.
 
-**Next:** [Part 3, three buttons, three colours, and the AND gate](/fpv/edgetx-cockpit-voice-buttons/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, part 2 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 1: Why a Drone Should Talk to You](/fpv/edgetx-cockpit-voice-why/)  ·  [Part 3: Three Buttons, Three Colours, and the AND Gate ›](/fpv/edgetx-cockpit-voice-buttons/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)
