@@ -45,6 +45,11 @@
 
 <!-- chart.js rendering -->
 {{ if .Page.Store.Get "hasChart" }}
+{{/* The render hook emits the chart config as ordinary body text, so it is visible
+     until the loader swaps in a canvas. Hide it up front to stop the config
+     flashing on every page load; show it again when JS is unavailable. */}}
+<style>.codeblock-chart{display:none}</style>
+<noscript><style>.codeblock-chart{display:block;white-space:pre-wrap}</style></noscript>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
 {{ end }}
 
@@ -72,30 +77,59 @@
       const chartPrefix = "codeblock-chart";
       var chartIndex = 0;
       Array.prototype.forEach.call(document.querySelectorAll("[class^=" + chartPrefix + "]"), function (x) {
-        x.style.display = 'none';
-        var canvas = document.createElement('canvas');
-        canvas.height = 200;
-        canvas.style.height = 200;
-        canvas.id = 'myChart' + chartIndex;
-        var source = JSON.parse(x.innerText);
-        x.parentNode.insertBefore(canvas, x);
-        var ctx = canvas.getContext('2d');
-        var myChart = new Chart(ctx, source);
+        // One malformed block must not take every later chart down with it.
+        try {
+          var source = JSON.parse(x.textContent);
+          var canvas = document.createElement('canvas');
+          // Units matter: a bare number is invalid CSS and is silently dropped,
+          // which collapses the canvas to zero height for any config that sets
+          // maintainAspectRatio:false.
+          canvas.height = 200;
+          canvas.style.height = '200px';
+          canvas.id = 'myChart' + chartIndex;
+          x.parentNode.insertBefore(canvas, x);
+          new Chart(canvas.getContext('2d'), source);
+          x.style.display = 'none';
+        } catch (err) {
+          // Make the failure visible in the page and name it in the console
+          // rather than dying silently mid-loop.
+          x.style.display = 'block';
+          x.style.whiteSpace = 'pre-wrap';
+          x.setAttribute('data-chart-error', (err && err.message) ? err.message : String(err));
+          console.error('codeblock-chart #' + chartIndex + ' failed to render:', err);
+        }
         chartIndex += 1;
       });
+    } else {
+      // Chart.js unavailable (CDN blocked/offline). The stylesheet has hidden
+      // every block, so reveal them rather than silently losing the data.
+      Array.prototype.forEach.call(document.querySelectorAll('.codeblock-chart'), function (x) {
+        x.style.display = 'block';
+        x.style.whiteSpace = 'pre-wrap';
+      });
     }
-    
+
     // Graphviz
     if (typeof Viz !== 'undefined') {
       var vizPrefix = "codeblock-viz-dot";
       Array.prototype.forEach.call(document.querySelectorAll("[class^=" + vizPrefix + "]"), function (x) {
+        var prevDisplay = x.style.display;
         x.style.display = 'none';
-        var viz = new Viz();
-        viz.renderSVGElement(x.innerText)
-          .then(function (element) {
-            element.style.width = "100%";
-            x.parentNode.insertBefore(element, x);
-          });
+        try {
+          var viz = new Viz();
+          viz.renderSVGElement(x.textContent)
+            .then(function (element) {
+              element.style.width = "100%";
+              x.parentNode.insertBefore(element, x);
+            })
+            .catch(function (err) {
+              x.style.display = prevDisplay;
+              console.error('codeblock-viz-dot failed to render:', err);
+            });
+        } catch (err) {
+          x.style.display = prevDisplay;
+          console.error('codeblock-viz-dot failed to render:', err);
+        }
       });
     }
   });
