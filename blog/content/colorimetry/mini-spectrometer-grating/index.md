@@ -1,7 +1,7 @@
 ---
 title: "DIY Diffraction Grating Spectrometer, Not a Prism"
 date: 2026-07-30T14:00:00+02:00
-description: "Disassembling my jewel spectroscope to design a 3D-printed holder, only to discover I've been wrong about its optics the whole time — and why that actually explains the data"
+description: "I took apart my jewel spectroscope to design a 3D-printed holder, and found out I had been wrong about its optics the whole time."
 thumbnail: "spectroscope-disassembled.jpg"
 author: admin
 categories:

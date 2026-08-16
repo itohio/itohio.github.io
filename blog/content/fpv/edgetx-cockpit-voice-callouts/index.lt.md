@@ -1,7 +1,7 @@
 ---
 title: "4 dalis: ką pultas iš tikrųjų pasako"
 date: 2026-08-16T12:00:00+03:00
-description: "Baterijos laiptai, palydovų pranešimai ir aukščio signalas, kuris suveikia nuo pokyčio, o ne nuo absoliutaus aukščio. Su savitikra, kuri man patinka labiausiai."
+description: "Baterijos laiptai, palydovų pranešimai ir aukščio signalas, kuris suveikia nuo pokyčio, o ne nuo absoliutaus aukščio. Su mano mėgstamiausia savitikra."
 summary: "Baterijos laiptai, palydovų pranešimai ir aukščio signalas, kuris suveikia nuo pokyčio, o ne nuo absoliutaus aukščio. Su savitikra, kuri man patinka labiausiai."
 draft: false
 toc: true

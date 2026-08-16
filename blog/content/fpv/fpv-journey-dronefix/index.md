@@ -1,7 +1,7 @@
 ---
 title: "FPV: how it all began"
 date: 2026-06-01
-description: "I resisted FPV for years. Then I signed up for the Dronefix.lt training programme, flew the simulator, soldered my first build, and completely rearranged my project priorities. The spectrometer can wait."
+description: "I resisted FPV for years. Then I joined the Dronefix.lt programme, flew the sim, soldered my first build, and rearranged every project priority."
 toc: false
 thumbnail: "dronefix-academy-hall.jpg"
 categories:

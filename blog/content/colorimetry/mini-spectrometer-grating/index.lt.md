@@ -1,7 +1,7 @@
 ---
 title: "Tai niekada nebuvo prizma: mano spektroskope yra difrakcinis grotelės"
 date: 2026-07-30T14:00:00+02:00
-description: "Išardydamas brangakmenių spektroskopą 3D spausdinimo laikiklio projektavimui, atradau, kad visą laiką klysdamas dėl jo optikos — ir kodėl tai iš tikrųjų paaiškina mano duomenis"
+description: "Išardžiau brangakmenių spektroskopą, kad suprojektuočiau 3D spausdinamą laikiklį, ir supratau, kad visą laiką klydau dėl jo optikos."
 thumbnail: "spectroscope-disassembled.jpg"
 author: admin
 categories:

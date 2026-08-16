@@ -1,7 +1,7 @@
 ---
 title: "Kaip daviau savo dronui piloto kabinos balsą, 1 dalis: kodėl dronas turi su tavimi kalbėti"
 date: 2026-08-16T09:00:00+03:00
-description: "Įtampos skaičius OSD kamputyje yra sąsajos, o ne piloto klaida. Kodėl priverčiau savo RadioMaster GX12 kalbėti ir vienas skrydžio valdiklio nustatymas, nuo kurio viskas priklauso."
+description: "Įtampos skaičius OSD kamputyje yra sąsajos, o ne piloto klaida. Kodėl priverčiau savo RadioMaster GX12 pasakoti telemetriją balsu."
 summary: "Įtampos skaičius OSD kamputyje yra sąsajos, o ne piloto klaida. Kodėl priverčiau savo RadioMaster GX12 kalbėti ir vienas skrydžio valdiklio nustatymas, nuo kurio viskas priklauso."
 draft: false
 toc: true

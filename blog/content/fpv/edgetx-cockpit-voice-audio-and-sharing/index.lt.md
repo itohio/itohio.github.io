@@ -1,7 +1,7 @@
 ---
 title: "5 dalis: iš kur atkeliauja pranešimai ir kodėl negali tiesiog nusikopijuoti mano konfigūracijos"
 date: 2026-08-16T13:00:00+03:00
-description: "Pranešimai atkeliauja iš standartinio EdgeTX balso paketo, o ne iš to, ką būčiau įrašęs. Ką ištrinti iš modelio YAML prieš skelbiant ir poziciniai sensorių indeksai, dėl kurių pasidalinta konfigūracija tyliai elgiasi blogai."
+description: "Pranešimai atkeliauja iš standartinio EdgeTX balso paketo, o ne iš to, ką būčiau įrašęs."
 summary: "Pranešimai atkeliauja iš standartinio EdgeTX balso paketo, o ne iš to, ką būčiau įrašęs. Ką ištrinti iš modelio YAML prieš skelbiant ir poziciniai sensorių indeksai, dėl kurių pasidalinta konfigūracija tyliai elgiasi blogai."
 draft: false
 toc: true

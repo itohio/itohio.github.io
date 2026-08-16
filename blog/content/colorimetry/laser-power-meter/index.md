@@ -1,7 +1,7 @@
 ---
 title: "Adventures in Color Science: Building a DIY Calorimetric Laser Power Meter"
 date: 2026-02-21T14:00:00+02:00
-description: "A physicist's journey into color science and light spectroscopy, starting with a homemade calorimetric power meter for measuring laser diodes and optical coupling losses"
+description: "A physicist's route into colour science, starting with a homemade calorimetric power meter for laser diodes and optical coupling losses."
 thumbnail: "power-meter.jpg"
 author: admin
 categories:
