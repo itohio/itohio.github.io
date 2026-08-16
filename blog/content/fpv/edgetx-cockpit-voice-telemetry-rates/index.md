@@ -1,7 +1,8 @@
 ---
 title: "Part 6: Telemetry Logging, and the One Number You Have to Measure Yourself"
-date: 2026-08-16T14:00:00+03:00
+date: 2026-08-16T12:00:00+03:00
 description: "ELRS telemetry ratio, CRSF frame round-robin and the EdgeTX log period sit in series. Why the arithmetic is not the answer, how to get the real per-sensor rate out of your own CSV, and the 3D viewer I built to read it."
+summary: "ELRS telemetry ratio, CRSF frame round-robin and the EdgeTX log period sit in series. Why the arithmetic is not the answer, how to get the real per-sensor rate out of your own CSV, and the 3D viewer I built to read it."
 draft: false
 toc: true
 weight: 6
@@ -23,6 +24,10 @@ series:
   - EdgeTX Cockpit Voice
 thumbnail: "rxmap-sphere-airframe.png"
 ---
+
+> **EdgeTX Cockpit Voice**, part 6 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 5: Where the Callouts Come From](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [Part 7: Two Antennas, Two Bands ›](/fpv/edgetx-cockpit-voice-antennas/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)
 
 The red button in this setup writes a CSV to the SD card. That log turns out to be
 the most interesting object in the whole project, and also the one I understood
@@ -224,4 +229,9 @@ direction that trade should ever go. The number I guessed was out by two orders 
 magnitude, in the direction that would have had me logging ten times faster than I
 need to.
 
-**Next:** [Part 7, two antennas, two bands, and the quad I lost to polarisation](/fpv/edgetx-cockpit-voice-antennas/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, part 6 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 5: Where the Callouts Come From](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [Part 7: Two Antennas, Two Bands ›](/fpv/edgetx-cockpit-voice-antennas/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)

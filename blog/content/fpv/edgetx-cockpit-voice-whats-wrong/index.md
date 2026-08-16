@@ -1,7 +1,8 @@
 ---
 title: "Part 8: Four Things Wrong With It"
-date: 2026-08-16T16:00:00+03:00
+date: 2026-08-16T10:00:00+03:00
 description: "Stacked thresholds that layer sirens, zero debounce against punch-out sag, an alarm that fires before the first telemetry frame arrives, and the link-quality warning I never wired up."
+summary: "Stacked thresholds that layer sirens, zero debounce against punch-out sag, an alarm that fires before the first telemetry frame arrives, and the link-quality warning I never wired up."
 draft: false
 toc: true
 weight: 8
@@ -21,6 +22,10 @@ keywords: ["EdgeTX logical switch debounce duration delay", "voltage sag false a
 series:
   - EdgeTX Cockpit Voice
 ---
+
+> **EdgeTX Cockpit Voice**, part 8 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 7: Two Antennas, Two Bands](/fpv/edgetx-cockpit-voice-antennas/)  ·  [Part 9: The Rebuild, Grouped in Flight Order ›](/fpv/edgetx-cockpit-voice-rebuild/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)
 
 Everything so far is what I actually fly. This part is the honest accounting. I
 said at the start there were less clumsy ways to do parts of this, and here is
@@ -163,4 +168,9 @@ would make the radio say "link" during it.
 Four flaws, all of them mine, all of them fixable in an evening. Writing them down
 is the part that makes them fixable.
 
-**Next:** [Part 9, the rebuild, grouped in flight order](/fpv/edgetx-cockpit-voice-rebuild/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, part 8 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 7: Two Antennas, Two Bands](/fpv/edgetx-cockpit-voice-antennas/)  ·  [Part 9: The Rebuild, Grouped in Flight Order ›](/fpv/edgetx-cockpit-voice-rebuild/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)

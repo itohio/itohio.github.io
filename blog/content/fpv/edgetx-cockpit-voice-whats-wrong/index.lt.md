@@ -1,7 +1,8 @@
 ---
 title: "8 dalis: keturi dalykai, kurie čia negerai"
-date: 2026-08-16T16:00:00+03:00
+date: 2026-08-16T10:00:00+03:00
 description: "Sluoksniuojami slenksčiai, nulinis atkirtimo laikas prieš įtampos kritimą, signalas, suveikiantis dar prieš pirmą telemetrijos kadrą, ir ryšio kokybės įspėjimas, kurio niekada neprijungiau."
+summary: "Sluoksniuojami slenksčiai, nulinis atkirtimo laikas prieš įtampos kritimą, signalas, suveikiantis dar prieš pirmą telemetrijos kadrą, ir ryšio kokybės įspėjimas, kurio niekada neprijungiau."
 draft: false
 toc: true
 weight: 8
@@ -19,6 +20,10 @@ keywords: ["EdgeTX loginiu jungtuku atkirtimo laikas", "itampos kritimas netikra
 series:
   - EdgeTX Cockpit Voice
 ---
+
+> **EdgeTX Cockpit Voice**, 8 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 7 dalis: Dvi antenos, dvi juostos](/fpv/edgetx-cockpit-voice-antennas/)  ·  [9 dalis: Perdarymas, sugrupuotas skrydžio tvarka ›](/fpv/edgetx-cockpit-voice-rebuild/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 Viskas iki šiol yra tai, su kuo realiai skraidau. Ši dalis yra atviras
 atsiskaitymas. Pradžioje sakiau, kad kai kurias dalis galima padaryti mažiau
@@ -160,4 +165,9 @@ dimensijomis po skrydžio, o vieno jungtuko, dėl kurio pultas skrydžio metu pa
 Keturi defektai, visi mano, visus galima sutvarkyti per vakarą. Jų užrašymas ir yra
 ta dalis, dėl kurios jie tampa sutvarkomi.
 
-**Toliau:** [9 dalis, perdarymas, sugrupuotas skrydžio tvarka](/fpv/edgetx-cockpit-voice-rebuild/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, 8 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 7 dalis: Dvi antenos, dvi juostos](/fpv/edgetx-cockpit-voice-antennas/)  ·  [9 dalis: Perdarymas, sugrupuotas skrydžio tvarka ›](/fpv/edgetx-cockpit-voice-rebuild/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

@@ -1,7 +1,8 @@
 ---
 title: "Part 9: The Rebuild, Grouped in Flight Order"
-date: 2026-08-16T17:00:00+03:00
+date: 2026-08-16T09:00:00+03:00
 description: "A clean-sheet layout: validity helpers at L1 to L4, then recording, battery and GPS in the order I use them. Plus a minimum-voltage readout that speaks punch-out sag while I am still flying."
+summary: "A clean-sheet layout: validity helpers at L1 to L4, then recording, battery and GPS in the order I use them. Plus a minimum-voltage readout that speaks punch-out sag while I am still flying."
 draft: false
 toc: true
 weight: 9
@@ -21,6 +22,10 @@ keywords: ["EdgeTX logical switch AND helper", "EdgeTX RxBt minimum readout", "E
 series:
   - EdgeTX Cockpit Voice
 ---
+
+> **EdgeTX Cockpit Voice**, part 9 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 8: Four Things Wrong With It](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)
 
 [Part 8](/fpv/edgetx-cockpit-voice-whats-wrong/) listed four things wrong with the
 config I fly today. This part is the fix, designed but not yet flashed, written
@@ -266,3 +271,9 @@ The aircraft knew all along. It just needed a way to say so.
 *If you build a cleaner version of any of this, particularly a proper
 launch-relative altitude warning or a threshold ladder that does not stack, I would
 genuinely like to see it.*
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, part 9 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 8: Four Things Wrong With It](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)

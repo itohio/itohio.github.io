@@ -1,7 +1,8 @@
 ---
 title: "Part 3: Three Buttons, Three Colours, and the AND Gate That Ties Them Together"
-date: 2026-08-16T11:00:00+03:00
+date: 2026-08-16T15:00:00+03:00
 description: "How EdgeTX customisable function switches, an RGB colour per subsystem, and one AND slot per logical switch turn eleven threshold detectors into three things you can switch on and off."
+summary: "How EdgeTX customisable function switches, an RGB colour per subsystem, and one AND slot per logical switch turn eleven threshold detectors into three things you can switch on and off."
 draft: false
 toc: true
 weight: 3
@@ -21,6 +22,10 @@ series:
   - EdgeTX Cockpit Voice
 thumbnail: "cfs-buttons-lit.jpg"
 ---
+
+> **EdgeTX Cockpit Voice**, part 3 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 2: The Calibration Every Battery Warning Rests On](/fpv/edgetx-cockpit-voice-calibration/)  ·  [Part 4: What the Radio Actually Says ›](/fpv/edgetx-cockpit-voice-callouts/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)
 
 [Part 1](/fpv/edgetx-cockpit-voice-why/) established the goal and the one flight
 controller setting the whole thing rests on. This part is the machinery: how the
@@ -194,4 +199,9 @@ That is the whole structure. Eleven threshold detectors, three switchable
 subsystems, one AND slot doing the separating. What none of it does yet is make a
 sound.
 
-**Next:** [Part 4, what the radio actually says](/fpv/edgetx-cockpit-voice-callouts/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, part 3 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 2: The Calibration Every Battery Warning Rests On](/fpv/edgetx-cockpit-voice-calibration/)  ·  [Part 4: What the Radio Actually Says ›](/fpv/edgetx-cockpit-voice-callouts/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)

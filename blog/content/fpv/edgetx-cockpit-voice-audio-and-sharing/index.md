@@ -2,6 +2,7 @@
 title: "Part 5: Where the Callouts Come From, and Why You Cannot Just Copy My Config"
 date: 2026-08-16T13:00:00+03:00
 description: "The callouts come from the stock EdgeTX voice pack, not from anything I recorded. What to scrub from a model YAML before publishing it, and the positional sensor-index trap that makes a shared config misbehave silently."
+summary: "The callouts come from the stock EdgeTX voice pack, not from anything I recorded. What to scrub from a model YAML before publishing it, and the positional sensor-index trap that makes a shared config misbehave silently."
 draft: false
 toc: true
 weight: 5
@@ -21,6 +22,10 @@ keywords: ["EdgeTX voice pack sounds folder", "EdgeTX model yml portability", "E
 series:
   - EdgeTX Cockpit Voice
 ---
+
+> **EdgeTX Cockpit Voice**, part 5 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 4: What the Radio Actually Says](/fpv/edgetx-cockpit-voice-callouts/)  ·  [Part 6: Telemetry Logging and the Number You Must Measure ›](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)
 
 The callouts in [Part 4](/fpv/edgetx-cockpit-voice-callouts/) come from the voice
 pack that ships with the radio. Two practical things follow from that: where the
@@ -135,4 +140,9 @@ Read the tables, use your own sensor names, and you will end up with something y
 actually understand. That matters at a field, in the wind, when you want to move a
 threshold by 0.1 V.
 
-**Next:** [Part 6, telemetry logging and the one number you have to measure yourself](/fpv/edgetx-cockpit-voice-telemetry-rates/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, part 5 of 9. Making a RadioMaster GX12 speak its own telemetry, so a low battery is something I hear instead of something I forgot to look at.
+>
+> [‹ Part 4: What the Radio Actually Says](/fpv/edgetx-cockpit-voice-callouts/)  ·  [Part 6: Telemetry Logging and the Number You Must Measure ›](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [Start at part 1](/fpv/edgetx-cockpit-voice-why/)

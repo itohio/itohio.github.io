@@ -1,7 +1,8 @@
 ---
 title: "4 dalis: ką pultas iš tikrųjų pasako"
-date: 2026-08-16T12:00:00+03:00
+date: 2026-08-16T14:00:00+03:00
 description: "Baterijos laiptai, palydovų pranešimai ir aukščio signalas, kuris suveikia nuo pokyčio, o ne nuo absoliutaus aukščio. Su savitikra, kuri man patinka labiausiai."
+summary: "Baterijos laiptai, palydovų pranešimai ir aukščio signalas, kuris suveikia nuo pokyčio, o ne nuo absoliutaus aukščio. Su savitikra, kuri man patinka labiausiai."
 draft: false
 toc: true
 weight: 4
@@ -22,6 +23,10 @@ series:
   - EdgeTX Cockpit Voice
 thumbnail: "special-functions-1.jpg"
 ---
+
+> **EdgeTX Cockpit Voice**, 4 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 3 dalis: Trys mygtukai, trys spalvos ir AND vartai](/fpv/edgetx-cockpit-voice-buttons/)  ·  [5 dalis: Iš kur atkeliauja pranešimai ›](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 Jungtukai iš [3 dalies](/fpv/edgetx-cockpit-voice-buttons/) yra tik loginės
 reikšmės, kol kažkas jų nepaverčia garsu. Tas kažkas yra EdgeTX specialiosios
@@ -169,4 +174,9 @@ telemetrijos sensoriaus. Jei tai išsprendei EdgeTX'e gražiai, noriu išgirsti.
 Tokia sistema, su kuria skraidau. Šeši ištarti pranešimai, trys palydovų būsenos ir
 vienas aukščio signalas, kuris pasirodė matuojąs ne tai, ką maniau.
 
-**Toliau:** [5 dalis, iš kur atkeliauja pranešimai ir kodėl negali nusikopijuoti mano konfigūracijos](/fpv/edgetx-cockpit-voice-audio-and-sharing/)
+
+---
+
+> **Series:** EdgeTX Cockpit Voice, 4 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+>
+> [‹ 3 dalis: Trys mygtukai, trys spalvos ir AND vartai](/fpv/edgetx-cockpit-voice-buttons/)  ·  [5 dalis: Iš kur atkeliauja pranešimai ›](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
