@@ -1,7 +1,7 @@
 ---
 title: "Building a Portable Visible Light Spectrometer with Raspberry Pi and Fiber Optics"
 date: 2026-02-21T19:48:00+02:00
-description: "Build a portable DIY visible light spectrometer with Raspberry Pi Zero 2W, OV9281 monochrome camera, and TOSLINK fiber optic coupling. Full source code, 3D print files, and calibration guide included."
+description: "Build a portable DIY visible-light spectrometer with a Raspberry Pi Zero 2W, OV9281 mono camera and TOSLINK fibre coupling. Code and STLs included."
 thumbnail: "front.jpg"
 author: admin
 categories:

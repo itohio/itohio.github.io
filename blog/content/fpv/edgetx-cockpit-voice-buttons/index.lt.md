@@ -1,7 +1,7 @@
 ---
 title: "3 dalis: trys mygtukai, trys spalvos ir AND vartai, kurie viską sujungia"
 date: 2026-08-16T11:00:00+03:00
-description: "Kaip EdgeTX konfigūruojami funkciniai jungtukai, RGB spalva kiekvienai posistemei ir vienas AND laukas paverčia vienuolika slenksčio detektorių trimis perjungiamomis posistemėmis."
+description: "Kaip EdgeTX funkciniai jungtukai, RGB spalva kiekvienai posistemei ir vienas AND laukas paverčia vienuolika detektorių trimis valdomais jungtukais."
 summary: "Kaip EdgeTX konfigūruojami funkciniai jungtukai, RGB spalva kiekvienai posistemei ir vienas AND laukas paverčia vienuolika slenksčio detektorių trimis perjungiamomis posistemėmis."
 draft: false
 toc: true

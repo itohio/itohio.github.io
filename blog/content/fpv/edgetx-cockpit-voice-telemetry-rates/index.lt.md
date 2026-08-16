@@ -1,7 +1,7 @@
 ---
 title: "6 dalis: telemetrijos įrašymas ir vienas skaičius, kurį turi išmatuoti pats"
 date: 2026-08-16T14:00:00+03:00
-description: "ELRS telemetrijos santykis, CRSF kadrų ciklinė eilė ir EdgeTX įrašymo periodas yra nuosekliai. Kodėl aritmetika nėra atsakymas ir 3D įrankis, kurį sukūriau šiems žurnalams skaityti."
+description: "ELRS telemetrijos santykis, CRSF kadrų ciklinė eilė ir EdgeTX įrašymo periodas veikia nuosekliai. Kaip išmatuoti tikrąjį jutiklių dažnį."
 summary: "ELRS telemetrijos santykis, CRSF kadrų ciklinė eilė ir EdgeTX įrašymo periodas yra nuosekliai. Kodėl aritmetika nėra atsakymas ir 3D įrankis, kurį sukūriau šiems žurnalams skaityti."
 draft: false
 toc: true

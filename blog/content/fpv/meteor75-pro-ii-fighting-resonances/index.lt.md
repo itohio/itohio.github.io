@@ -1,7 +1,7 @@
 ---
 title: "Nuo Meteor75 Pro prie Meteor75 Pro II: savaitė kovos su rezonansais"
 date: 2026-08-13
-description: "Perstačiau 75 mm whoop'ą į naują rėmą ir gaubtą, palikau tą patį FC ir tą patį air unit'ą, ir savaitę aiškinausi, kad tai, ką pataisiau, kartu ir sugadinau. Visi skaičiai čia — iš blackbox logų, įskaitant tuos, kuriuos teko atšaukti."
+description: "Perstačiau 75 mm whoop'ą į naują rėmą ir gaubtą, palikau tą patį FC, ir savaitę aiškinausi, kad tai, ką pataisiau, kartu ir sugadinau."
 toc: true
 categories:
   - FPV

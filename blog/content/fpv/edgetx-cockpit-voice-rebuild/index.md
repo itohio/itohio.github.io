@@ -1,7 +1,7 @@
 ---
 title: "EdgeTX Telemetry Rebuilt in Flight Order (Part 9)"
 date: 2026-08-16T17:00:00+03:00
-description: "A clean-sheet layout: validity helpers at L1 to L4, then recording, battery and GPS in the order I use them. Plus a minimum-voltage readout that speaks punch-out sag while I am still flying."
+description: "A clean-sheet layout: validity helpers first, then recording, battery and GPS in the order I use them, plus a readout that speaks punch-out sag."
 summary: "A clean-sheet layout: validity helpers at L1 to L4, then recording, battery and GPS in the order I use them. Plus a minimum-voltage readout that speaks punch-out sag while I am still flying."
 draft: false
 toc: true

@@ -1,7 +1,7 @@
 ---
 title: "9 dalis: perdarymas, sugrupuotas skrydžio tvarka"
 date: 2026-08-16T17:00:00+03:00
-description: "Nuo nulio sudarytas išdėstymas: galiojimo pagalbiniai L1 iki L4, tada įrašymas, baterija ir GPS ta tvarka, kuria juos naudoju. Plius minimalios įtampos įgarsinimas."
+description: "Nuo nulio sudarytas išdėstymas: galiojimo pagalbiniai L1 iki L4, tada įrašymas, baterija ir GPS ta tvarka, kuria juos naudoju."
 summary: "Nuo nulio sudarytas išdėstymas: galiojimo pagalbiniai L1 iki L4, tada įrašymas, baterija ir GPS ta tvarka, kuria juos naudoju. Plius minimalios įtampos įgarsinimas."
 draft: false
 toc: true

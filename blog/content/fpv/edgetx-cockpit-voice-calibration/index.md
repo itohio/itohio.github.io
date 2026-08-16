@@ -1,7 +1,7 @@
 ---
 title: "Betaflight Battery Voltage Calibration (Part 2)"
 date: 2026-08-16T10:00:00+03:00
-description: "A miscalibrated voltage reading does not look broken, it looks plausible. Why report_cell_voltage makes a vbat_scale error propagate twice, and what the 3S-to-4S move does to your alarms."
+description: "A miscalibrated voltage reading does not look broken, it looks plausible. Why report_cell_voltage makes a vbat_scale error propagate twice."
 summary: "A miscalibrated voltage reading does not look broken, it looks plausible. Why report_cell_voltage makes a vbat_scale error propagate twice, and what the 3S-to-4S move does to your alarms."
 draft: false
 toc: true

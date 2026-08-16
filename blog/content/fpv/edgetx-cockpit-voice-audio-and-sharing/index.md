@@ -1,7 +1,7 @@
 ---
 title: "EdgeTX Voice Pack and Sound Pack Callouts (Part 5)"
 date: 2026-08-16T13:00:00+03:00
-description: "The callouts come from the stock EdgeTX voice pack, not from anything I recorded. What to scrub from a model YAML before publishing it, and the positional sensor-index trap that makes a shared config misbehave silently."
+description: "The callouts come from the stock EdgeTX voice pack, not from anything I recorded. What to scrub from a model YAML before you publish it."
 summary: "The callouts come from the stock EdgeTX voice pack, not from anything I recorded. What to scrub from a model YAML before publishing it, and the positional sensor-index trap that makes a shared config misbehave silently."
 draft: false
 toc: true

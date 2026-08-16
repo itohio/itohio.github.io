@@ -1,7 +1,7 @@
 ---
 title: "ELRS Gemini and True Diversity Antennas (Part 7)"
 date: 2026-08-16T15:00:00+03:00
-description: "ELRS control-link antennas are linearly polarised, not circular like video. Why one horizontal and one vertical on a true diversity receiver beats a single antenna, and why my telemetry already measures it."
+description: "ELRS control links are linearly polarised, not circular like video. Why one horizontal and one vertical antenna beats a single one on diversity."
 summary: "ELRS control-link antennas are linearly polarised, not circular like video. Why one horizontal and one vertical on a true diversity receiver beats a single antenna, and why my telemetry already measures it."
 draft: false
 toc: true
