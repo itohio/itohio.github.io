@@ -109,7 +109,7 @@ mentė ar tikras aerodinaminis apkrovimas įneštų realios energijos į aukšte
 buvo diapazone ir švari, ir būtent ji yra diagnostinė — tad išvada laikosi ant 2×, o ne ant
 pilno harmonikų vaizdo.
 
-## Kabliukas: daugiau vėjo — mažiau vibracijų
+## Daugiau vėjo — mažiau vibracijų, o taip būti negali
 
 Pirmoji mano nuojauta buvo, kad tai vėjo problema. Taip ir parašyta mano paties pastaboje. Todėl
 lyginau atkarpas prie **suderintos propelerio frekvencijos** (330–350 Hz), kad rezonansas liktų
@@ -122,7 +122,7 @@ fiksuotas, o kistų tik oras.
     "labels": [
       [
         "lauke, gūsingiausia",
-        "(LF>18)"
+        "(LF over 18)"
       ],
       "lauke, visa",
       "lauke, ramiausia",
@@ -412,7 +412,7 @@ balansavimo istorija.
 Tuo metu maniau, kad išsprendžiau viską propų rinkiniu ir notch konfigūracija. Net teisingai
 neaprašiau, *kokia* buvo problema.
 
-## Mechanizmas — ir tvarkinga hipotezė, kuri buvo neteisinga
+## Kodėl drebėjo tik kartais — ir viena tvarkinga hipotezė, kuri buvo klaidinga
 
 Pastebėjimas, kuris viską atvėrė, yra tas, kurį beveik ignoravau, nes buvau jį užsirašęs ir
 palikęs kaip miglotą: *drebėjimas ne visada yra, tik kai kuriose orientacijose vėjo atžvilgiu.*
@@ -1782,7 +1782,7 @@ Visos kreivės — lauke, suskirstytos pagal vidutinį propelerių dažnį, ir �
         "fill": false
       },
       {
-        "label": "standus putplastis FC<->VTX",
+        "label": "standus putplastis FC to VTX",
         "data": [
           null,
           27,
@@ -2876,7 +2876,7 @@ būtent beveik nieko vėjas ir nešioja.
 Skaičius paskelbsiu bet kuriuo atveju, įskaitant tuos, dėl kurių atrodau kvailai. Tokių jau buvo
 nemažai.
 
-## Atgarsis
+## Ką iš tikrųjų nusipirkau
 
 Tai, ką ruošiausi pataisyti, buvo jello, ir aš jį pataisiau — nusipirkdamas rėmą, kurio gaubtas
 laiko kamerą atokiau nuo drebėjimo. Tai, ko nesitikėjau nusipirkti kartu, buvo minkšta spyruoklė
