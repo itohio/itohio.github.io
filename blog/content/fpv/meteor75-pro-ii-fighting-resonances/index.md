@@ -136,10 +136,7 @@ and let only the air change.
   "type": "bar",
   "data": {
     "labels": [
-      [
-        "outdoor gustiest",
-        "(LF over 18)"
-      ],
+      "outdoor gustiest (LF over 18)",
       "outdoor, all",
       "outdoor calmest",
       "indoor clean",
@@ -163,7 +160,6 @@ and let only the air change.
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -175,12 +171,6 @@ and let only the air change.
         "title": {
           "display": true,
           "text": "roll pre-filter HF RMS (deg/s)"
-        }
-      },
-      "x": {
-        "title": {
-          "display": false,
-          "text": ""
         }
       }
     }
@@ -257,7 +247,6 @@ Measured at matched prop RPM:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -269,12 +258,6 @@ Measured at matched prop RPM:
         "title": {
           "display": true,
           "text": "change (%)"
-        }
-      },
-      "x": {
-        "title": {
-          "display": false,
-          "text": ""
         }
       }
     }
@@ -378,7 +361,6 @@ Outdoor, full RPM sweep, same airframe, so what changes here is the *forcing*:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -482,7 +464,6 @@ And the dose-response, about as textbook as field data gets:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -602,7 +583,6 @@ Q = 10–100; Q ≈ 2 is a lightly-damped airframe genuinely being pushed around
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -614,12 +594,6 @@ Q = 10–100; Q ≈ 2 is a lightly-damped airframe genuinely being pushed around
         "title": {
           "display": true,
           "text": "Q factor"
-        }
-      },
-      "x": {
-        "title": {
-          "display": false,
-          "text": ""
         }
       }
     }
@@ -683,7 +657,6 @@ Where does the motion you can actually *see* live?
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -786,7 +759,6 @@ props, 307 vs 309 Hz:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -798,12 +770,6 @@ props, 307 vs 309 Hz:
         "title": {
           "display": true,
           "text": "change (%)"
-        }
-      },
-      "x": {
-        "title": {
-          "display": false,
-          "text": ""
         }
       }
     }
@@ -899,7 +865,6 @@ Then I rotated the canopy 180° and the ordering **reversed**:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -974,7 +939,6 @@ The rotation did real work on CoG:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1095,7 +1059,6 @@ The dose-response that had defined the entire problem **collapsed**:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1198,7 +1161,6 @@ The resonance curve says the same thing:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1280,7 +1242,6 @@ And the energy did not vanish, it moved:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1440,7 +1401,6 @@ everywhere else — so I am plotting that point alone rather than drawing a line
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1526,7 +1486,6 @@ one flight, so it does not care about the weather.
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1670,7 +1629,6 @@ comparison I had been waiting two days for:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1846,7 +1804,6 @@ Every curve outdoor, binned by mean prop frequency, only bins with **4 s or more
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -1999,7 +1956,6 @@ It was the worst configuration of the five, and worth being blunt about how badl
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -2177,7 +2133,6 @@ only the pack swapped.
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -2189,12 +2144,6 @@ only the pack swapped.
         "title": {
           "display": true,
           "text": "Hz"
-        }
-      },
-      "x": {
-        "title": {
-          "display": false,
-          "text": ""
         }
       }
     }
@@ -2304,7 +2253,6 @@ the bins both flights actually sampled:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -2442,7 +2390,6 @@ minus setpoint, what the quad does that I did not ask for:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
@@ -2566,7 +2513,6 @@ differences are not driving it:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": true,
@@ -2682,7 +2628,6 @@ Decomposing the oscillating roll command inside 0.5–3 Hz:
   },
   "options": {
     "responsive": true,
-    "maintainAspectRatio": false,
     "plugins": {
       "legend": {
         "display": false,
