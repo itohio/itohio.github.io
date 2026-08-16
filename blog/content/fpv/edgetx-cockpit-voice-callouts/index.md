@@ -1,11 +1,10 @@
 ---
 title: "Part 4: What the Radio Actually Says"
-date: 2026-08-16T14:00:00+03:00
+date: 2026-08-16T12:00:00+03:00
 description: "The battery ladder, the satellite callouts, and an altitude alarm that fires on change rather than absolute height. Including the self-test I like most and the delta function I did not plan."
 summary: "The battery ladder, the satellite callouts, and an altitude alarm that fires on change rather than absolute height. Including the self-test I like most and the delta function I did not plan."
 draft: false
 toc: true
-weight: 4
 categories:
   - FPV
   - EdgeTX

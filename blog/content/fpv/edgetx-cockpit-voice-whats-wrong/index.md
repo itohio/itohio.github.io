@@ -1,11 +1,10 @@
 ---
 title: "Part 8: Four Things Wrong With It"
-date: 2026-08-16T10:00:00+03:00
+date: 2026-08-16T16:00:00+03:00
 description: "Stacked thresholds that layer sirens, zero debounce against punch-out sag, an alarm that fires before the first telemetry frame arrives, and the link-quality warning I never wired up."
 summary: "Stacked thresholds that layer sirens, zero debounce against punch-out sag, an alarm that fires before the first telemetry frame arrives, and the link-quality warning I never wired up."
 draft: false
 toc: true
-weight: 8
 categories:
   - FPV
   - EdgeTX

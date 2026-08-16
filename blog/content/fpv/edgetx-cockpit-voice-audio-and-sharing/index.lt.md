@@ -5,7 +5,6 @@ description: "Pranešimai atkeliauja iš standartinio EdgeTX balso paketo, o ne 
 summary: "Pranešimai atkeliauja iš standartinio EdgeTX balso paketo, o ne iš to, ką būčiau įrašęs. Ką ištrinti iš modelio YAML prieš skelbiant ir poziciniai sensorių indeksai, dėl kurių pasidalinta konfigūracija tyliai elgiasi blogai."
 draft: false
 toc: true
-weight: 5
 categories:
   - FPV
   - EdgeTX

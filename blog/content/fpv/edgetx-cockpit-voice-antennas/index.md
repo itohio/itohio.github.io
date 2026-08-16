@@ -1,11 +1,10 @@
 ---
 title: "Part 7: Two Antennas, Two Bands, and the Quad I Lost to Polarisation"
-date: 2026-08-16T11:00:00+03:00
+date: 2026-08-16T15:00:00+03:00
 description: "ELRS control-link antennas are linearly polarised, not circular like video. Why one horizontal and one vertical on a true diversity receiver beats a single antenna, and why my telemetry already measures it."
 summary: "ELRS control-link antennas are linearly polarised, not circular like video. Why one horizontal and one vertical on a true diversity receiver beats a single antenna, and why my telemetry already measures it."
 draft: false
 toc: true
-weight: 7
 categories:
   - FPV
   - EdgeTX

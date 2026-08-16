@@ -5,7 +5,6 @@ description: "The callouts come from the stock EdgeTX voice pack, not from anyth
 summary: "The callouts come from the stock EdgeTX voice pack, not from anything I recorded. What to scrub from a model YAML before publishing it, and the positional sensor-index trap that makes a shared config misbehave silently."
 draft: false
 toc: true
-weight: 5
 categories:
   - FPV
   - EdgeTX

@@ -1,11 +1,10 @@
 ---
 title: "Giving My Quad a Cockpit Voice, Part 1: Why a Drone Should Talk to You"
-date: 2026-08-16T17:00:00+03:00
+date: 2026-08-16T09:00:00+03:00
 description: "A low-battery number in the corner of the OSD is an interface failure, not a pilot failure. Why I made my RadioMaster GX12 speak, and the one flight-controller setting the whole thing depends on."
 summary: "A low-battery number in the corner of the OSD is an interface failure, not a pilot failure. Why I made my RadioMaster GX12 speak, and the one flight-controller setting the whole thing depends on."
 draft: false
 toc: true
-weight: 1
 categories:
   - FPV
   - EdgeTX

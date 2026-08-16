@@ -1,11 +1,10 @@
 ---
 title: "7 dalis: dvi antenos, dvi juostos ir dronas, kurį praradau dėl poliarizacijos"
-date: 2026-08-16T11:00:00+03:00
+date: 2026-08-16T15:00:00+03:00
 description: "ELRS valdymo kanalo antenos yra tiesinės poliarizacijos, ne apskritiminės kaip vaizdo. Kodėl viena horizontali ir viena vertikali tikro diversiteto imtuve nugali vieną anteną."
 summary: "ELRS valdymo kanalo antenos yra tiesinės poliarizacijos, ne apskritiminės kaip vaizdo. Kodėl viena horizontali ir viena vertikali tikro diversiteto imtuve nugali vieną anteną."
 draft: false
 toc: true
-weight: 7
 categories:
   - FPV
   - EdgeTX

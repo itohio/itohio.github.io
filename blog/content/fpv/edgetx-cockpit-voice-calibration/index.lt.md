@@ -1,11 +1,10 @@
 ---
 title: "2 dalis: kalibracija, ant kurios stovi kiekvienas baterijos įspėjimas"
-date: 2026-08-16T16:00:00+03:00
+date: 2026-08-16T10:00:00+03:00
 description: "Blogai sukalibruotas įtampos rodmuo neatrodo sugedęs, jis atrodo tikėtinas. Kodėl report_cell_voltage padaro, kad vbat_scale klaida propaguotųsi du kartus."
 summary: "Blogai sukalibruotas įtampos rodmuo neatrodo sugedęs, jis atrodo tikėtinas. Kodėl report_cell_voltage padaro, kad vbat_scale klaida propaguotųsi du kartus."
 draft: false
 toc: true
-weight: 2
 categories:
   - FPV
   - EdgeTX

@@ -1,11 +1,10 @@
 ---
 title: "Kaip daviau savo dronui piloto kabinos balsą, 1 dalis: kodėl dronas turi su tavimi kalbėti"
-date: 2026-08-16T17:00:00+03:00
+date: 2026-08-16T09:00:00+03:00
 description: "Įtampos skaičius OSD kamputyje yra sąsajos, o ne piloto klaida. Kodėl priverčiau savo RadioMaster GX12 kalbėti ir vienas skrydžio valdiklio nustatymas, nuo kurio viskas priklauso."
 summary: "Įtampos skaičius OSD kamputyje yra sąsajos, o ne piloto klaida. Kodėl priverčiau savo RadioMaster GX12 kalbėti ir vienas skrydžio valdiklio nustatymas, nuo kurio viskas priklauso."
 draft: false
 toc: true
-weight: 1
 categories:
   - FPV
   - EdgeTX

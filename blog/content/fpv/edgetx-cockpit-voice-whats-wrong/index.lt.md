@@ -1,11 +1,10 @@
 ---
 title: "8 dalis: keturi dalykai, kurie čia negerai"
-date: 2026-08-16T10:00:00+03:00
+date: 2026-08-16T16:00:00+03:00
 description: "Sluoksniuojami slenksčiai, nulinis atkirtimo laikas prieš įtampos kritimą, signalas, suveikiantis dar prieš pirmą telemetrijos kadrą, ir ryšio kokybės įspėjimas, kurio niekada neprijungiau."
 summary: "Sluoksniuojami slenksčiai, nulinis atkirtimo laikas prieš įtampos kritimą, signalas, suveikiantis dar prieš pirmą telemetrijos kadrą, ir ryšio kokybės įspėjimas, kurio niekada neprijungiau."
 draft: false
 toc: true
-weight: 8
 categories:
   - FPV
   - EdgeTX
