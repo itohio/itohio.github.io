@@ -15,8 +15,8 @@ tags:
   - gyroflow
   - matavimai
 series:
-  - Snake
-# thumbnail: "cover.jpg"   # <-- nustatyti, kai bus nuotraukos
+  - FPV Builds
+thumbnail: "meteor75-pro-vs-pro-ii.jpg"
 ---
 
 <!--
@@ -34,8 +34,11 @@ ANDRIUI PERŽIŪRĖTI — penki terminai, kurių negaliu patvirtinti:
 Jei kuris nors iš jų lietuviškame FPV/virpesių žargone skamba ne taip —
 pakeisk, ir aš atnaujinsiu visus pasikartojimus abiejose versijose.
 
-Pilnas atvirų klausimų sąrašas (Hugo unsafe konfigas, pavadinimas, data,
-serija) — anglų versijos DRAFT NOTES bloke (index.md).
+series ir thumbnail dabar sutampa su anglų versija: [FPV Builds] ir
+meteor75-pro-vs-pro-ii.jpg (anksčiau čia buvo [Snake] ir jokio thumbnail).
+
+Skaičiai, kurie tekste pasakyti dviem skirtingais būdais, surašyti anglų
+versijos DRAFT NOTES bloke (index.md) — nesprendžiau nė vieno, palikta tau.
 -->
 
 Craft name **Snake**. Pradžioje tai buvo Meteor75 Pro, dabar — Meteor75 Pro II: rėmas ir
@@ -47,9 +50,9 @@ Planuota buvo penkiolikos minučių perstatymas. Gavau savaitę rezonanso vaikym
 atšaukimus, vieną tvarkingą hipotezę, kuri buvo visiškai neteisinga, vieną tuning pakeitimą,
 kurį teko atsukti atgal, ir vieną metriką, kuri man kelias iteracijas melavo, kol pastebėjau.
 
-Trumpai — ir tai viso šio įrašo tezė: **gaubtas, kuris išsprendė jello problemą, yra tas pats
-gaubtas, su kuriuo dabar kovoja flight controller'is.** Atskirti kamerą nuo rėmo yra gerai.
-Atskirti ją *minkštai* — ne veltui.
+Viso šio įrašo tezė: **gaubtas, kuris išsprendė jello problemą, yra tas pats gaubtas, su kuriuo
+dabar kovoja flight controller'is.** Atskirti kamerą nuo rėmo yra gerai. Atskirti ją *minkštai* —
+ne veltui.
 
 ## Konstrukcija ir neatitikimas, kuris pasirodė svarbus
 
@@ -70,18 +73,16 @@ Atskirti ją *minkštai* — ne veltui.
 - `yaw_motors_reversed = ON` (props out)
 
 O štai dalis, kuri pasirodė centrinė ir apie kurią pirkdamas nė nepagalvojau: **Pro II gaubtas
-perprojektuotas O4 Wide.** Snake skraido su narrow-FOV O4. Vadinasi, gaubtas neša ne tą masę,
-apie kurią buvo nubraižytas, o FC/gaubto sąsaja nėra ta pora, kuriai rėmas buvo suprojektuotas.
+perprojektuotas O4 Wide.** Snake skraido su narrow-FOV O4, tad gaubtas neša ne tą masę, apie
+kurią buvo nubraižytas, o FC/gaubto sąsaja nėra ta pora, kuriai rėmas buvo suprojektuotas.
 Stačiau hibridą ir vadinau tai upgrade'u.
 
-Du dalykai, kuriuos patikrinau, o ne priėmiau kaip duotybę, prieš tikėdamas bet kuo toliau:
+Du dalykai, kuriuos patikrinau, o ne priėmiau kaip duotybę. **`motor_poles = 12` yra nuostata, o
+ne matavimas**, todėl patikrinau pagal duomenis: išmatuota dominuojanti roll ašies frekvencija,
+padalinta iš apskaičiuotos 1×, davė **1,008–1,020**. Jei fizinis polių skaičius būtų 14, santykis
+būtų apie 1,17. RPM filtras visą laiką nusiteikęs į teisingą frekvenciją.
 
-**`motor_poles = 12` yra nuostata, o ne matavimas.** Todėl patikrinau pagal duomenis: išmatuota
-dominuojanti roll ašies frekvencija, padalinta iš apskaičiuotos 1×, davė **1,008–1,020**. Jei
-fizinis polių skaičius būtų 14, santykis būtų apie 1,17. RPM filtras visą laiką nusiteikęs į
-teisingą frekvenciją.
-
-**Mano PID slankiukai nieko nedarė.** Profile 0 buvo `simplified_pids_mode = OFF`, taigi
+**Ir mano PID slankiukai nieko nedarė.** Profile 0 buvo `simplified_pids_mode = OFF`, taigi
 sukonfigūruotos slankiukų vertės (master multiplier 120, d_gain 120, pi_gain 120) buvo
 **neaktyvios**. Profile 0 visą laiką skraidė su Betaflight 4.5 standartinėmis vertėmis:
 roll 45/80/40, pitch 47/84/46, yaw 45/80/0. Verta žinoti prieš praleidžiant vakarą
@@ -95,24 +96,24 @@ Pirmas logas, seni propai. Roll ašies pre-filter HF energija (80–780 Hz) — 
 Pitch: **8,0**. Yaw: **11,4**. Tai **8,6 : 1 roll/pitch santykis**, o tai nėra triukšmo
 problema — tai vienos ašies mechaninė problema, apsirengusi triukšmo kostiumu.
 
-Po filtrų ta pati ašis rodė **1,38 °/s**. RPM filtras nešė maždaug **34 dB** ir mandagiai
+Po filtrų ta pati ašis rodė **1,38 °/s** — RPM filtras nešė maždaug **34 dB** ir mandagiai
 slėpė nuo flight controller'io didelį mechaninį defektą. Dronas skraidė normaliai. Gyro rėkė.
 
 Harmonikų struktūra pasakė, kokio tipo tai defektas: **1× ir 2× santykis buvo apie 200:1**
-(53:1 iki 212:1, priklausomai nuo motoro). Tai vadovėlinis masės disbalansas. Sulankstyta
+(53:1 iki 212:1, priklausomai nuo motoro), o tai vadovėlinis masės disbalansas. Sulankstyta
 mentė ar tikras aerodinaminis apkrovimas įneštų realios energijos į aukštesnes harmonikas;
 čia jos praktiškai nebuvo.
 
-*Išlyga, kurią užsirašiau tada ir kurios dabar tyliai nenumesiu:* apie 341 Hz 3-ioji harmonika
-atsiduria 1023 Hz, o tai virš šio logo **791 Hz Nyquist**. Blade-pass turinio įvertinti buvo
-neįmanoma. 2× apie 682 Hz buvo diapazone ir švari, ir būtent ji yra diagnostinė, tad išvada
-laikosi — bet laikosi ant 2×, o ne ant pilno harmonikų vaizdo.
+*Išlyga, kurios tyliai nenumesiu:* apie 341 Hz 3-ioji harmonika atsiduria 1023 Hz, o tai virš
+šio logo **791 Hz Nyquist**, tad blade-pass turinio įvertinti buvo neįmanoma. 2× apie 682 Hz
+buvo diapazone ir švari, ir būtent ji yra diagnostinė — tad išvada laikosi ant 2×, o ne ant
+pilno harmonikų vaizdo.
 
 ## Kabliukas: daugiau vėjo — mažiau vibracijų
 
-Visų, įskaitant mano, pirmoji nuojauta buvo, kad tai vėjo problema. Taip ir parašyta
-skunde. Todėl lyginau atkarpas prie **suderintos propelerio frekvencijos** (330–350 Hz), kad
-rezonansas liktų fiksuotas, o kistų tik oras.
+Pirmoji mano nuojauta buvo, kad tai vėjo problema. Taip ir parašyta mano paties pastaboje. Todėl
+lyginau atkarpas prie **suderintos propelerio frekvencijos** (330–350 Hz), kad rezonansas liktų
+fiksuotas, o kistų tik oras.
 
 ```chart
 {
@@ -184,9 +185,9 @@ rezonansas liktų fiksuotas, o kistų tik oras.
 Daugiau vėjo — *mažiau* vibracijų. Visiškai nejudantis oras patalpoje buvo **blogiausias**
 atvejis, kokį pavyko sukurti.
 
-Kurį laiką į tai spoksojau. Tai vienas naudingiausių dalykų visame šiame darbe, nes akivaizdų
-paaiškinimą nužudo pirmą dieną, o ne penktą, ir dar todėl, kad priežastis, kodėl taip
-nutinka, ir *yra* mechanizmas. Palaikykite tą mintį — jai užsidirbti reikės dar kelių skyrių.
+Tai vienas naudingiausių savaitės rezultatų, nes akivaizdų paaiškinimą nužudo pirmą dieną, o ne
+penktą, ir dar todėl, kad priežastis, kodėl taip nutinka, ir *yra* mechanizmas. Jai užsidirbti
+reikės dar kelių skyrių.
 
 ## Du dalykai, kuriuos mano konfigūracija darė neteisingai
 
@@ -203,10 +204,8 @@ gyro_lpf1_dyn_min_hz  = 0
 ```
 
 Vienas notch'as, `q = 400` padarytas plonas kaip adata, su viršutine riba **žemiau tikrosios
-smailės**. Vienintelis filtras, nukreiptas į šią problemą, fiziškai negalėjo jos pasiekti.
-LPF1 buvo visiškai išjungtas.
-
-Pataisymas:
+smailės** — vienintelis filtras, nukreiptas į šią problemą, fiziškai negalėjo jos pasiekti.
+LPF1 buvo visiškai išjungtas. Pataisymas:
 
 ```
 set dyn_notch_count = 3
@@ -278,18 +277,15 @@ Išmatuota prie suderinto propelerio RPM:
 | D-term pitch RMS | 4,3 | 2,2 | −49% |
 | motorų išvesties jitter | 1,37 | 0,80 | **−42%** |
 
-Pre-filter nepasikeitė, ir tai visiškai teisinga bei verta pasakyti garsiai, nes būtent to
-žmonės tikisi iš filtrų, o filtrai to niekada nedaro: **filtrai apsaugo kilpą, jie netaiso
-konstrukcijos.** Dronas po to drebėjo lygiai taip pat stipriai. Tiesiog flight controller'is
-nustojo į tai reaguoti.
+Pre-filter nepasikeitė, ir tai visa esmė: **filtrai apsaugo kilpą, jie netaiso konstrukcijos.**
+Dronas po to drebėjo lygiai taip pat stipriai. Tiesiog flight controller'is nustojo į tai
+reaguoti.
 
 ## Matavimo riba — skaičius, kurį reikėjo nustatyti pirmą
 
-Viskas po šio taško priklauso nuo vieno nuobodaus klausimo: kokio dydžio turi būti pokytis,
-kad man būtų leista jį pavadinti tikru?
-
-Todėl išmatavau pre-filter roll HF RMS sklaidą *viename skrydyje*, prie **fiksuoto** RPM, ir
-laikiau tai savo triukšmo lygiu:
+Viskas po šio taško priklauso nuo vieno nuobodaus klausimo: kokio dydžio turi būti pokytis, kad
+man būtų leista jį pavadinti tikru? Todėl išmatavau pre-filter roll HF RMS sklaidą *viename
+skrydyje*, prie **fiksuoto** RPM, ir laikiau tai savo triukšmo lygiu:
 
 ```
 CV = 9,0%,  max/min = 1,38   (n = 21 langas po 3 s)
@@ -299,17 +295,14 @@ koreliacija su laiku/temperatūra = -0,05
 
 **Bet kuris pokytis, mažesnis nei maždaug ±10%, yra neatskiriamas nuo triukšmo.** Ne
 „tikriausiai triukšmas" — neatskiriamas. Tai nėra dėl paketo įtampos kritimo ir nėra terminis
-dreifas; abi koreliacijos plokščios. Tai tiesiog tiek, kiek šis matavimas blaškosi, kai
-niekas nesikeičia.
-
-Šis vienas skaičius vėliau tą pačią savaitę nužudė kelias išvadas, kurias norėjau pasilikti.
-Jei iš šio įrašo pasiimsite vieną dalyką ir jis nebus apie whoop'us, pasiimkite šį: nustatykite
-triukšmo lygį prieš patikėdami bet kokiu rezultatu — ypač tuo, kuris jums patinka.
+dreifas; abi koreliacijos plokščios. Tai tiesiog tiek, kiek šis matavimas blaškosi, kai niekas
+nesikeičia, ir tas skaičius vėliau tą pačią savaitę nužudė kelias išvadas, kurias norėjau
+pasilikti. Nustatykite triukšmo lygį prieš patikėdami bet kokiu rezultatu — ypač tuo, kuris jums
+patinka.
 
 ## Propai: pirma tikra mechaninė pergalė
 
-Nauji propai iš karto pakeitė tris dalykus, o tai bloga eksperimentinė higiena, bet labai geras
-vakaras:
+Nauji propai iš karto pakeitė tris dalykus — bloga eksperimentinė higiena, labai geras vakaras:
 
 - RPM-per-output sklaida tarp keturių motorų sumažėjo iš **9,2 iki 4,4 procentinio punkto**
 - 1× amplitudės susilygino — m1 108,7 → 56,7 °/s, m4 107,1 → 56,8
@@ -405,9 +398,8 @@ Lauke, pilnas RPM sweep'as, tas pats aparatas, taigi čia kinta *sužadinimas*:
 
 *Sweep'as sąmoningai nukirstas prie 425 Hz. 450 ir 475 Hz krepšeliai duomenyse yra, bet juose
 tik 1,1–3,0 s dwell'o prieš 32–53 s tuose krepšeliuose, kurie svarbūs, o 4 s prašvilpimas per
-rezonansą negali sukelti tokios pačios amplitudės kaip 50 s stovėjimas ant jo. Nubrėžus tuos
-krepšelius vienodu svoriu, uodega atrodytų kaip rezultatas. Visi parodyti krepšeliai abiejuose
-skrydžiuose viršija 4 s.*
+rezonansą negali sukelti tokios pačios amplitudės kaip 50 s stovėjimas ant jo. Visi parodyti
+krepšeliai abiejuose skrydžiuose viršija 4 s.*
 
 −45% smailėje, −56% prie 350–375 Hz. Fiksuotos juostos 325–365 Hz energija:
 **1185 → 263 — 78% mažiau.**
@@ -417,20 +409,18 @@ rezonanso propai nesukuria jokio išmatuojamo skirtumo. Viską, ką nauji propai
 juostos viduje — ir tai pirma užuomina, kad tai iš tikrųjų niekada nebuvo propelerių
 balansavimo istorija.
 
-Tuo metu maniau, kad išsprendžiau viską propų rinkiniu ir notch konfigūracija. Neišsprendžiau.
-Net teisingai neaprašiau, *kokia* buvo problema.
+Tuo metu maniau, kad išsprendžiau viską propų rinkiniu ir notch konfigūracija. Net teisingai
+neaprašiau, *kokia* buvo problema.
 
 ## Mechanizmas — ir tvarkinga hipotezė, kuri buvo neteisinga
 
-Piloto pastebėjimas, kuris viską atvėrė, buvo tas, kurį beveik ignoravau: *„drebėjimas ne
-visada yra, tik kai kuriose orientacijose vėjo atžvilgiu."*
+Pastebėjimas, kuris viską atvėrė, yra tas, kurį beveik ignoravau, nes buvau jį užsirašęs ir
+palikęs kaip miglotą: *drebėjimas ne visada yra, tik kai kuriose orientacijose vėjo atžvilgiu.*
 
-Nenuolatinis. Priklausantis nuo orientacijos. Taigi pirma mano idėja buvo **beat frekvencijos**.
-Keturi motorai, besisukantys 343 / 313 / 337 / 332 Hz, prognozuoja beat'us prie 5,2, 6,1, 11,3,
-19,7, 24,9 ir 31,0 Hz — būtent toje juostoje, kur mačiau judantį aparatą. Tvarkinga teorija.
-Patikrinama. Maloni.
-
-Neteisinga:
+Nenuolatinis. Priklausantis nuo orientacijos. Taigi pirma mano idėja buvo **beat frekvencijos**:
+keturi motorai, besisukantys 343 / 313 / 337 / 332 Hz, prognozuoja beat'us prie 5,2, 6,1, 11,3,
+19,7, 24,9 ir 31,0 Hz — būtent toje juostoje, kur mačiau judantį aparatą. Tvarkinga, patikrinama,
+maloni ir neteisinga:
 
 ```
 coherence(beat gaubtinė, matomas 8-45 Hz judesys) = 0,019 vidurkis, 0,063 maks.
@@ -517,14 +507,14 @@ Ir tada atsako dozė, kuri yra maždaug tokia vadovėlinė, kokia lauko duomenys
 
 **Ji padvigubėja.** Suskaičiuok, kiek propų sėdi rezonanso lange, ir gali prognozuoti drebėjimą.
 
-Tai paaiškina ir nenuolatinumą, ir priklausomybę nuo orientacijos, *ir* atbulą vėjo
-koreliaciją. Vėjo apkrova perskirsto trauką tarp kampų, o tai pastumia atskirų motorų RPM
-20–40 Hz, įslysdama ir išslysdama iš lango. Gūsiai **išsklaido** propus nuo rezonanso.
-Patalpoje dronas kybo kaip prilipęs ir pastato visus keturis tiksliai ant jo — nenutrūkstamai,
-tiek, kiek leisi. Nejudantis oras yra blogiausias atvejis, nes nejudantis oras yra
-*tiksliausias*.
+Tai paaiškina ir nenuolatinumą, ir priklausomybę nuo orientacijos, *ir* atbulą vėjo koreliaciją.
+Vėjo apkrova perskirsto trauką tarp kampų, o tai pastumia atskirų motorų RPM 20–40 Hz,
+įslysdama ir išslysdama iš lango — gūsiai **išsklaido** propus nuo rezonanso. Patalpoje dronas
+kybo kaip prilipęs ir pastato visus keturis tiksliai ant jo, tiek, kiek leisi. **Nejudantis oras
+yra blogiausias atvejis, nes nejudantis oras yra *tiksliausias*.** Šis sakinys sugrįžta kiekvieną
+kartą, kai lyginu skrydį patalpoje su skrydžiu lauke.
 
-### Kodėl propai padėjo — normaliai suformuluota
+Tai perrėmina ir propelerių pergalę:
 
 | | hover | atsarga iki 325 Hz | ≥1 motoras juostoje | ≥3 juostoje | gaubtinė |
 |---|---|---|---|---|---|
@@ -533,7 +523,7 @@ tiek, kiek leisi. Nejudantis oras yra blogiausias atvejis, nes nejudantis oras y
 | nauji propai, lauke | 363 Hz | −38 (virš) | 63% | 6% | 35,4 |
 
 Seni propai kybo **tiesiai rezonanso juostoje** — trys hercai atsargos. Mažesnis disbalansas
-buvo mažesnė pergalės dalis. Darbo taško patraukimas nuo rezonanso — didesnė. Atsitiktinai
+buvo mažesnė pergalės dalis; darbo taško patraukimas nuo rezonanso — didesnė. Atsitiktinai
 padariau teisingą dalyką dėl priežasties, kurios nesupratau.
 
 ```mermaid
@@ -560,26 +550,22 @@ flowchart TD
     style P fill:#bd9361,color:#000
 ```
 
+## Dvi problemos, ne viena — ir spąstai frazėje „Gyroflow sutvarkys"
 
-![Sumontuoto Meteor75 Pro II priekio stambus planas su siauro vaizdo kampo DJI O4 kamera Pro II gaubte](pro-ii-canopy-o4-narrow.jpg)
+Šį atskyrimą prikalti užėmė didžiąją savaitės dalį, ir būtent jis nusprendžia, nuo ko programinė
+įranga gali ir negali išgelbėti.
 
-*Gaubtas, apie kuri visas sis tekstas - suprojektuotas O4 Wide, bet nesa siauro vaizdo kampo O4. Kamera izoliuoja kur kas geriau nei senasis. Bet tuo paciu davė skraidymo valdikliui su kuo grumtis.*
-## Dvi atskiros problemos, ne viena — ir kodėl tai yra Gyroflow argumentas
-
-Šį atskyrimą prikalti užėmė didžiąją savaitės dalį, ir tai yra techninis viso, kas man čia
-svarbu, stuburas — nes jis nusprendžia, nuo ko programinė įranga gali ir negali išgelbėti.
-
-**(a) ~320–345 Hz struktūrinė moda.** Roll dominuoja, 8:1. Tai jello šaltinis. Ji sėdi
-**eile aukščiau už valdymo kilpos naudingą pralaidumą 20–40 Hz.** Jokia PID korekcija, jokia
-TPA nuostata, jokia filtro pakaita jos nepasiekia. Filtrai neleidžia jai pasiekti kilpos; jie
-neuždraudžia aparatui drebėti. Ir **nei Gyroflow, nei RockSteady negali pašalinti jello** —
-tai iškraipymas kadro *vidyje*, pažeidimas įvyksta rolling shutter'io ribose dar prieš tai,
-kai stabilizatorius apskritai pamato vaizdą.
+**(a) ~320–345 Hz struktūrinė moda.** Roll dominuoja, 8:1. Tai jello šaltinis. Ji sėdi **eile
+aukščiau už valdymo kilpos naudingą pralaidumą 20–40 Hz.** Jokia PID korekcija, jokia TPA
+nuostata, jokia filtro pakaita jos nepasiekia. Filtrai neleidžia jai pasiekti kilpos; jie
+neuždraudžia aparatui drebėti. Ir **nei Gyroflow, nei RockSteady negali pašalinti jello** — tai
+iškraipymas kadro *vidyje*, pažeidimas įvyksta rolling shutter'io ribose dar prieš tai, kai
+stabilizatorius apskritai pamato vaizdą.
 
 **(b) Plačiajuostis 10–25 Hz turbulencijos sekimas.** Išmatuotas **Q ≈ 1,9–2,2**. Smailė
 15,8–17,8 Hz roll ašyje, 10,6–12,9 Hz pitch, amplitudė 4,4–5,3 °/s. Valdymo kilpos ribinis
 ciklas rodytų Q = 10–100; Q ≈ 2 yra silpnai slopinamas aparatas, kurį tikrai stumdo
-turbulentiškas oras. **Būtent šią juostą Gyroflow taiso gerai.**
+turbulentiškas oras.
 
 ```chart
 {
@@ -631,9 +617,8 @@ turbulentiškas oras. **Būtent šią juostą Gyroflow taiso gerai.**
 }
 ```
 
-Dėl pilnumo: ten *yra* tikrai aštri moda, prie 48,5 Hz su **Q = 83,7**. Jos amplitudė —
-**0,24 °/s**, t. y. visiškai nereikšminga. Aukštas Q nėra tas pats kaip svarbus, ir tai bus
-pavyzdys, į kurį parodysiu kitą kartą, kai mane sugundys aukšta plona smailė.
+Ten *yra* ir tikrai aštri moda — 48,5 Hz prie **Q = 83,7** — kurios amplitudė **0,24 °/s**, t. y.
+visiškai nereikšminga. Aukštas Q nėra tas pats kaip svarbus.
 
 Tai kur gyvena tas judesys, kurį realiai *matai*?
 
@@ -719,23 +704,47 @@ Tai kur gyvena tas judesys, kurį realiai *matai*?
 | seni propai, nauji filtrai | 1,92 | 1,58 | 1,05 | 0,38 |
 | nauji propai, nauji filtrai | **1,29** | **0,93** | **0,91** | **0,26** |
 
-Vien filtrai nutraukė aukštą juostą 1,68 → 0,38, propai patraukė dar toliau. Iš viso −66% prie
-1–5 Hz, −85% aukštai. Ir įsidėmėkite santykį: maždaug **penkis kartus daugiau energijos yra
-Gyroflow taisomoje juostoje nei jello juostoje.** Būtent todėl vaizdas atrodė priimtinai, kol
-gyro rėkė — matomas judesys daugiausia buvo tos rūšies, kurią programinė įranga gali atsukti.
+Vien filtrai nutraukė aukštą juostą 1,68 → 0,38, propai patraukė dar toliau: −66% prie 1–5 Hz,
+−85% aukštai. Ir įsidėmėkite santykį: maždaug **penkis kartus daugiau energijos yra Gyroflow
+taisomoje juostoje nei ten, kur rolling shutter vibraciją paverčia jello.** Būtent todėl vaizdas
+atrodė priimtinai, kol gyro rėkė.
 
-Šis asimetriškumas ir yra visa priežastis, kodėl atskyrimo kompromisas svarbus. Žemos
-frekvencijos drebėjimą galima atkurti post-produkcijoje. Jello negalima atkurti niekuo. Taigi
-pakeitimas, kuris iškeičia *mažiau jello* į *daugiau žemos frekvencijos drebėjimo*, yra geras
-pakeitimas — net kai gyro logai atrodo blogiau.
+![Betaflight blackbox peržiūros programa: neapdorotas giroskopo pjūvis kaip tolydi amplitudės moduliuota triukšmo juosta per visą skrydį, o žemiau filtruotas giroskopas, P, D ir PID sumos - plokščios](raw-gyro-noise-trace.jpg)
+
+*Tai, su kuo iš tikrųjų kariauju. Viršuje neapdorotas giroskopas: tolydi juosta, kuri auga ir traukiasi, o ne švari linija. Viskas žemiau - filtruotas giroskopas, P, D, PID sumos - plokščia, t. y. filtrai dirba savo darbą. Kamerai iš to nieko.*
+
+Pati savaime ta juosta yra tik skaičius loge. Problema — kas nutinka toliau: **tam tikromis
+aplinkybėmis kilpa į ją reaguoja, varo variklius ja, ir rėmas tikrai pradeda judėti.** Tada tai
+nebėra giroskopo rodmuo — tai drebėjimas vaizdo sraute. Ir tai nėra stipraus vėjo reiškinys; jis
+pasireiškia sąlygomis, kurias pavadinčiau ramiomis.
+
+Dabar spąstai, ir tai svarbiausias praktinis dalykas, kurį išmokau:
+
+> **Vaizdo stabilizavimas išgelbsti tik tada, kai yra daug šviesos.**
+
+Šviesią dieną ekspozicijos laikai trumpi, kiekvienas kadras aiškus, drebėjimas pasireiškia kaip
+kadro-į-kadrą *poslinkis*, ir Gyroflow gali kadrus sulygiuoti ir tai pašalinti. Apniukusią dieną
+kamera laiko užraktą atidarytą ilgiau. Dabar drebėjimas įvyksta *ekspozicijos metu*, o ne tarp
+kadrų, ir įsirašo kaip **judesio suliejimas, įspaustas į pikselius**. Stabilizavimas gali
+idealiai sulygiuoti sulietą kadrą — jis vis tiek sulietas. Visas klipas minkštas.
+
+Taigi patogus rėminimas — jello nepataisomas, žemų frekvencijų drebėjimas pataisomas — yra per
+dosnus. Sąžininga versija turi tris lygius:
+
+| simptomas | ar pataisoma po skrydžio? |
+|---|---|
+| jello (rolling-shutter iškraipymas) | **ne** — nei Gyroflow, nei RockSteady |
+| drebėjimas, ryški šviesa, trumpa ekspozicija | **taip** |
+| drebėjimas, prieblanda, ilga ekspozicija | **ne** — tai suliejimas, ne poslinkis |
+
+Du iš trijų neatkuriami, o kurį gausi tą dieną, sprendžia oras, ne tune. Todėl ir kabinausi į
+mechaninę pusę dar ilgai po to, kai skraidymo valdiklis nustojo skųstis.
 
 ## Tuning eksperimentas, kuris nepavyko ir buvo atsuktas
 
-Buvau išmatavęs, kad D-term'as vėluoja po klaidos **16,4 ms** 8–45 Hz juostoje — beveik pusė
-ciklo prie 17 Hz — todėl `dterm_lpf1_static_hz` pakėlimas iš 75 į 90 atrodė kaip nemokami
-pinigai.
-
-Suderintas hover patalpoje, tie patys propai, 307 vs 309 Hz:
+D-term'as vėlavo po klaidos **16,4 ms** 8–45 Hz juostoje — beveik pusė ciklo prie 17 Hz — todėl
+`dterm_lpf1_static_hz` pakėlimas iš 75 į 90 atrodė kaip nemokami pinigai. Suderintas hover
+patalpoje, tie patys propai, 307 vs 309 Hz:
 
 ```chart
 {
@@ -799,19 +808,19 @@ Suderintas hover patalpoje, tie patys propai, 307 vs 309 Hz:
 | **motorų jitter** | 0,555 | 2,606 | **+370%** |
 | 14 Hz roll virpesys | 1,01 | 2,71 | **+168%** |
 
-Tai nupirko **1,9 ms** vėlinimo. Už 370% didesnį motorų jitter'į. Spektras buvo blogesnis
-*kiekvienoje* frekvencijoje nuo 2 iki 400 Hz. Atsukta, ir atgal negrįžtu.
+Tai nupirko **1,9 ms** vėlinimo už 370% didesnį motorų jitter'į, o spektras buvo blogesnis
+*kiekvienoje* frekvencijoje nuo 2 iki 400 Hz. Atsukta.
 
 Airmode buvo įjungtas tą pačią sesiją (logas patvirtina: feature mask delta lygiai 4194304) ir
 liko — 3,3 s žemiau 1250 throttle su minimalia motorų išvestimi 201, jokio valdymo praradimo.
+**Confound'as:** pasikeitė du kintamieji vienu metu, todėl 14 Hz augimo negalima aiškiai
+priskirti nei filtrui, nei airmode. Kitos keturios eilutės pakankamai didelės, kad tai išgyventų;
+14 Hz skaičius nėra švarus.
 
-**Confound'as, užrašytas sąžiningai:** pasikeitė du kintamieji vienu metu, todėl 14 Hz
-augimo negalima aiškiai priskirti nei filtrui, nei airmode. Kitos keturios eilutės pakankamai
-didelės, kad tai išgyventų, bet 14 Hz skaičius nėra švarus, ir apsimetinėti nesiruošiu.
+### Kodėl negalėjau išmatuoti savo step response
 
-## Kodėl didžiąją savaitės dalį negalėjau išmatuoti savo step response
-
-Kartotinai bandžiau iš šių logų išpešti tikrą step response. Kartotinai užblokuotas įvesties:
+Kartotinai bandžiau iš šių logų išpešti tikrą step response ir kartotinai buvau užblokuotas
+įvesties:
 
 ```
 setpoint energija: roll 95% žemiau 1,7 Hz | pitch 1,4 Hz | yaw 1,5 Hz
@@ -820,22 +829,12 @@ slew įvykių >4000 deg/s^2: 3
 ```
 
 Drono kilpa gyvena 20–40 Hz. Sklandūs, tolydūs roll'ai neturi aukštos frekvencijos turinio,
-taigi step response yra **apribotas įvesties pralaidumo, o ne drono**. „173 ms rise time",
-kurį apskaičiavau pradžioje, buvo tikslus matavimas — mano stick'ų.
+taigi step response yra **apribotas įvesties pralaidumo, o ne drono**. „173 ms rise time", kurį
+apskaičiavau pradžioje, buvo tikslus matavimas — mano stick'ų.
 
 Vienas skrydis su 39 staigiais reversal'ais ir 26 aštriais slew'ais galiausiai davė tikrą
-skaičių: **roll overshoot +10,4% prie 133 ms, rise(90%) 77,7 ms, 50% delay 32,9 ms.** Su
-n = 6 žingsniais, nes logas baigėsi 9,6 G kritimu. Orientacinis. Neužbaigtas.
-
-### Ir bug'as mano paties analizatoriuje
-
-Pirmasis mano raportas išdidžiai paskelbė „overshoot 0,0%" visose trijose ašyse. Visose
-trijose. Lygiai nulis.
-
-Step response funkcija normalizavo kiekvieną atsaką pagal jo **smailę**, o tai pačia
-konstrukcija prikala overshoot prie tiksliai nulio kiekvieną kartą. Pataisyta normalizuoti
-pagal nusistovėjusią vertę. Jei metrika išeina įtartinai švari visose ašyse vienu metu,
-metrika sugedusi — tai ne cinizmas, tiesiog taip bug'as atrodo iš išorės.
+skaičių: **roll overshoot +10,4% prie 133 ms, rise(90%) 77,7 ms, 50% delay 32,9 ms** — su n = 6
+žingsniais, nes logas baigėsi 9,6 G kritimu. Orientacinis, neužbaigtas.
 
 ## Blogas motoras, kuris pasirodė esąs oras
 
@@ -846,9 +845,9 @@ m2 RPM-per-output:  -4,2% iki -6,1%    (blogiausias KIEKVIENAME loge)
 m1 hover output:    +6,7% iki +11,1%   (dirba sunkiausiai, ir VIENINTELIS clipping'antis)
 ```
 
-m1 clipping'o 0,789% kadrų, kai m2 ir m3 sėdėjo lygiai prie 0,000%, o drebėjimas buvo
-**1,59× blogesnis**, kai motorai buvo prie viršutinės ribos. Turėjau užsikirtusį guolį m2 ir
-pervargusį m1. Dvi aparatinės diagnozės, abi užtikrintos.
+m1 clipping'o 0,789% kadrų, kai m2 ir m3 sėdėjo lygiai prie 0,000%, o drebėjimas buvo **1,59×
+blogesnis**, kai motorai buvo prie viršutinės ribos. Diagnozė: užsikirtęs guolis m2 ir
+pervargęs m1. Dvi aparatinės diagnozės, abi užtikrintos.
 
 Tada pasukau gaubtą 180° ir eiliškumas **apsivertė**:
 
@@ -922,7 +921,7 @@ po pasukimo:     m2 = +4,3% iki +8,0%   (laisviausias)
 ```
 
 Motoro defektas negali apsiversti ženklu, kai pasuki gaubtą. **Šablonas yra aerodinaminis —
-gaubtas šešiuoja tuos propus, kurie atsiduria po juo.** Abi diagnozės atšauktos. Tai buvo
+gaubtas aerodinamiškai užstoja tuos propus, kurie atsiduria po juo.** Abi diagnozės atšauktos. Tai buvo
 sumontavimas, ne aparatūra, ir vienintelė priežastis, kodėl tai išsiaiškinau, yra ta, kad
 pakeičiau kažką nesusijusio ir vis tiek toliau mačiau.
 
@@ -996,22 +995,22 @@ Sunkiausiai dirbantis motoras persikėlė iš m1 į m3/m4, o m1 clipping'as nukr
 **0,812% → 0,000%**. **Vien pasukimas sumažino priekio/užpakalio poros skirtumą nuo +9,5% iki
 +3,6%.**
 
-Dvi pastabos apie apimtį, nes šiuos skaičius lengva neteisingai sudėti:
+Dvi pastabos apie apimtį, nes šiuos skaičius lengva neteisingai sudėti. **+12,5% ant m1
+diagramoje yra konkrečiai 15:53 lauko skrydis**, o aukščiau cituotas `+6,7% iki +11,1%`
+intervalas apima 14:26, 15:20 ir 16:28 logus — vienas skrydis prieš intervalą per tris, ir nė
+vienas nepakeičia kito. Ir **pasukimas su putplasčiu yra atskiros intervencijos, kurių CoG
+rezultatai nesigrandina**: pasukimas perkėlė poros skirtumą +9,5% → +3,6%, putplastis, vėliau ir
+nepriklausomai, perkėlė jį +3,4% → +2,0%. Skaityti tai kaip vieną tęstinį pagerėjimą nuo +9,5%
+iki +2,0% būtų klaida.
 
-**+12,5% ant m1 diagramoje yra konkrečiai 15:53 lauko skrydis.** Aukščiau cituotas
-`+6,7% iki +11,1%` intervalas apima 14:26, 15:20 ir 16:28 logus. Abu yra teisingi savo
-apimtyje — vienas yra vienas skrydis, kitas — intervalas per tris. Nė vienas nepakeičia kito.
-
-**Pasukimas ir putplastis yra atskiros intervencijos, ir jų CoG rezultatai nesigrandina.**
-Pasukimas perkėlė poros skirtumą +9,5% → +3,6%. Putplastis, vėliau ir nepriklausomai, perkėlė
-jį +3,4% → +2,0% (ta eilutė yra tvirtinimo lentelėje žemiau). Skaityti tai kaip vieną tęstinį
-pagerėjimą nuo +9,5% iki +2,0% būtų klaida — skirtingos sesijos, skirtingi pakeitimai, o +3,6%
-ir +3,4% pradiniai taškai nėra tas pats matavimas.
+Ši modifikacija ne mano — gaubto pasukimą 180 laipsnių pasiūlė Oscar Liang savo Pro II apžvalgos
+[Improvements You Can Make](https://oscarliang.com/betafpv-meteor75-pro-dji-o4-wide/#Improvements-You-Can-Make)
+dalyje.
 
 ### Baterija, pasverta iš logo failo
 
-Mažas šalutinis nuotykis, įtrauktas, nes man patiko. Du paketai, skraidyti vienas po kito.
-Hover RPM yra tinkamas masės pakaitinis rodiklis prie fiksuoto propo ir konfigūracijos:
+Mažas šalutinis nuotykis, įtrauktas, nes man patiko. Du paketai, skraidyti vienas po kito;
+hover RPM yra tinkamas masės pakaitinis rodiklis prie fiksuoto propo ir konfigūracijos:
 
 ```
 log1: ore 70 s, hover 330 Hz, 966 rodomo krūvio
@@ -1021,21 +1020,38 @@ hover RPM santykis 1,0612 -> masės santykis 1,126 -> log2 yra 12,6% sunkesnis
 
 Identifikuota vien iš logo, be jokios mano įvesties apie tai, kuris paketas buvo kuris.
 
+Baterijos yra ir praktinė priežastis, kodėl gaubtas apsivertė: pasuktas jis duoda geresnį masės
+paskirstymą su **LAVA 2 680 mAh** paketais, kuriais realiai skraidau, tad priekio/užpakalio
+skirtumo perpus sumažėjimas buvo tikslas, o ne laiminga atsitiktinybė. Tie paketai duoda **apie
+3 minutes, kai spaudžiu, ir 5–6 minutes kreiseriniu tempu.** Verta laikyti kartu su
+sunkesnės/lengvesnės baterijos siūla žemiau — sunkesnė davė 36% ilgesnį skraidymo laiką ir 4×
+daugiau motorų clipping'o.
 
-Yra ir praktine priezastis, kodel gaubtas apsiverte, ir tai - baterijos. Pasukus ji, mases
-paskirstymas su **LAVA 2 680 mAh** baterijomis, kuriomis realiai skraidau, tampa geresnis - todel
-priekio/uzpakalio skirtumo perpus sumazejimas buvo tikslas, o ne laiminga atsitiktinybe. Ka tos
-baterijos duoda ore: **apie 3 minutes, kai spaudziu, ir 5-6 minutes kreiseriniu tempu.** Verta
-laikyti kartu su sunkesnes/lengvesnes baterijos siula auksciau - sunkesne davė 36% ilgesni skraidymo
-laika ir 4x daugiau variklio isisotinimo, ir nei vienas is tu dalyku nera nemokamas.
+## Tvirtinimas yra svertas, ne tune'as
 
-## Tvirtinimas: didžiausia atskira pergalė
+![Sumontuoto Meteor75 Pro II priekio stambus planas su siauro vaizdo kampo DJI O4 kamera Pro II gaubte](pro-ii-canopy-o4-narrow.jpg)
 
-Kilpa nepasiekia 320–345 Hz. Propai jau geri. Lieka konstrukcija.
+*Gaubtas, apie kurį visas šis tekstas — suprojektuotas O4 Wide, o nešasi siauro vaizdo kampo O4. Kamerą jis izoliuoja kur kas geriau nei senasis. Bet tuo pačiu davė skraidymo valdikliui su kuo grumtis.*
 
-Taigi: standus putplastis įterptas tarp FC ir VTX, ištempiant gummy ball tvirtinimus ir
-sustandinant gaubto fiksaciją. Tas pats paketas (hover 345 vs 347 Hz), **nulis konfigūracijos
-pakeitimų.** Švarus mechaninis A/B, kas šiame hobyje pasitaiko rečiau, nei turėtų.
+Kilpa nepasiekia 320–345 Hz. Propai jau geri. Lieka konstrukcija — ir viso įrašo tezė: **rėmo ir
+gaubto atskyrimas yra geras ir blogas tuo pačiu metu.**
+
+Senas gaubtas per stipriai perdavė vibracijas į kamerą: jello, kurio vėliau niekas nebepataisys.
+Naujasis izoliuotas gerokai geriau, tad tai, ką kamera dar mato, yra žema frekvencija ir Gyroflow
+formos — sąlyginai. Bet tas pats atskyrimas sukūrė minkštą, silpnai slopinamą kelią tarp
+FC/gaubto mazgo ir rėmo, ir FC dabar **kovoja su gaubtu**. Stipresniame vėjyje pralošia, nes
+vėjas pastumia motorų RPM į rezonanso langą, ir moda būna sužadinama.
+
+Pirmą savaitės pusę praleidau reguliuodamas valdymo kilpą, veikiančią 20–40 Hz, tikėdamasis
+paveikti struktūrinę modą prie 320–345 Hz. Tai niekada nebūtų suveikę, ir mane įtikinti prireikė
+atsako dozės kreivės. Toliau — penkios tvirtinimo konfigūracijos ta tvarka, kuria jas nuskraidžiau,
+o išvada pasislenka du kartus.
+
+### Vienas: didelis putplasčio gabalas, ir stiprinimas sugriuvo
+
+Standus putplastis įterptas tarp FC ir VTX, ištempiant gummy ball tvirtinimus ir sustandinant
+gaubto fiksaciją. Tas pats paketas (hover 345 vs 347 Hz), **nulis konfigūracijos pakeitimų** —
+švarus mechaninis A/B.
 
 Atsako dozė, kuri apibrėžė visą problemą, **sugriuvo**:
 
@@ -1105,9 +1121,9 @@ Atsako dozė, kuri apibrėžė visą problemą, **sugriuvo**:
 | prieš | 35 | 52 | **57** |
 | **po** | **29** | **33** | **33** |
 
-Vibracija anksčiau kildavo 45–63%, kai motorai įeidavo į juostą. Dabar ji plokščia. Motorai,
-sėdintys rezonanso juostoje, **nustojo turėti reikšmės**, o tai daug geresnis rezultatas nei
-juos sumažinti.
+Vibracija anksčiau kildavo 45–63%, kai motorai įeidavo į juostą. Dabar ji plokščia: motorai,
+sėdintys rezonanso juostoje, **nustojo turėti reikšmės**, o tai daug geresnis rezultatas nei juos
+sumažinti.
 
 Rezonanso kreivė sako tą patį:
 
@@ -1215,13 +1231,10 @@ Rezonanso kreivė sako tą patį:
 
 Rezultatas čia yra **smailės išnykimas, o ne jos aukščio sumažėjimas** — ir šis skirtumas yra
 sąmoningas. Prieš putplastį yra neabejotina stiprinimo smailė prie 48,8 °/s. Po putplasčio
-smailės nėra visai: kreivė laikosi tarp 25 ir 30 °/s per visą 250–425 Hz sweep'ą, o
-„maksimumas" yra tiesiog ten, kur tą kartą atsitiktinai nusėdo triukšmas. Cituojant vieną
-skaičių „po", gaunamas procentas, kuris iš tikrųjų yra rezonanso ir tiesios linijos
-palyginimas, todėl jo necituosiu. Kreivė nustojo turėti formą. Tai ir yra rezultatas.
-
-Poros skirtumo eilutė yra **putplasčio** rezultatas ir yra nepriklausoma nuo gaubto pasukimo
-rezultato ankstesnėje posto dalyje — ta pati metrika, kita intervencija, kita sesija.
+smailės nėra visai: kreivė laikosi tarp 25 ir 30 °/s per visą 250–425 Hz sweep'ą, o „maksimumas"
+yra tiesiog ten, kur tą kartą atsitiktinai nusėdo triukšmas. Cituojant vieną skaičių „po",
+gaunamas procentas, kuris iš tikrųjų yra rezonanso ir tiesios linijos palyginimas, todėl jo
+necituosiu. Kreivė nustojo turėti formą. Tai ir yra rezultatas.
 
 Ir energija neišnyko, ji persikėlė:
 
@@ -1297,305 +1310,40 @@ Ir energija neišnyko, ji persikėlė:
 | 420–500 Hz | 16 | 77 |
 
 **Išlyga:** throttle p99 buvo 1751 prieš 1968, taigi dalis to nulinio clipping'o rezultato yra
-mano mažiau agresyvus skraidymas, o ne vien pataisymas. Clipping'o eilutė yra silpniausia toje
-lentelėje ir taip ją reikia skaityti.
+mano mažiau agresyvus skraidymas — silpniausia eilutė toje lentelėje, ir taip ją reikia skaityti.
+Poros skirtumo eilutė yra **putplasčio** rezultatas, nepriklausomas nuo gaubto pasukimo rezultato
+ankstesnėje posto dalyje.
 
-## Trys atšaukimai dėl mechanizmo
+### Du: TPU gummy viduje, nes putplastis šildo plokštę
 
-Pirmiausia tai aprašiau kaip „standumas, ne masė", pagrįsdamas hover-RPM masės patikra
-(−0,8%), modos poslinkiu iš ~325 Hz į ~395 Hz ir užtikrintu „≈48% standesnis".
+Putplastis veikė, bet jis yra antklodė ant karščiausios plokštės vietos, todėl išėmiau. Jį
+pakeitė **du** pakeitimai toje pačioje sesijoje:
 
-Visi trys buvo neteisingi arba nepagrįsti. Man tai buvo užginčyta, ir užginčijimas buvo
-teisingas.
+1. **VTX dabar tvirtinamas tiesiai prie gaubto, silikoninius įvorius išėmiau.** Tai pašalina
+   lankstų elementą kelyje tarp oro modulio masės ir gaubto — gaubtas ir VTX dabar faktiškai
+   vienas kūnas.
+2. **TPU siūlas įdėtas į gummy ball'us**, gerokai padidinant jų standumą ir sustandinant kelią
+   nuo skraidymo valdiklio iki rėmo.
 
-**1. „Standumas, ne masė" yra klaidinga dichotomija.** Anksčiau nepriklausomų kūnų sujungimas
-kartu pakeičia efektyvų standumą, modalinę masę *ir* slopinimą. Iš šių duomenų jų atskirti
-neįmanoma. Suformulavau klausimą, į kurį eksperimentas negalėjo atsakyti, ir vis tiek į jį
-atsakiau.
+Du standumo padidinimai, dviejuose skirtinguose apkrovos keliuose, vienu metu. Todėl kad ir ką
+rodytų skaičiai žemiau, **negaliu paskirstyti nuopelnų tarp jų** — pačiam sau sukurta atribucijos
+problema, ir sąžininga ją pažymėti, o ne pasirinkti laimėtoją.
 
-**2. Hover-RPM masės testas atsakė į neteisingą klausimą.** Hover RPM matuoja **bendrą AUW**.
-Gaubto sujungimas nekeičia bendro AUW — jis keičia **modalinę masę**, tą masės dalį, kuri
-dalyvauja būtent toje modoje. Vieno naudojimas kito atmetimui yra kategorijos klaida, ir tai
-klaida, dėl kurios mažiausiai patenkintas, nes tai tokio tipo klaida, kuri ją darant atrodo
-kaip griežtumas. Tikras matavimas, teisingai atliktas, nukreiptas į neteisingą dydį.
+![Meteor75 Pro II iš užpakalio, raudonu apskritimu pažymėta viena iš skraidymo valdiklio guminių įvorių su įdėtu TPU siūlu](tpu-gummy-mod.jpg)
 
-**3. Modos frekvencijos skaičiai nebuvo patikimi.** Dvi to paties „struktūrai fiksuotos
-frekvencijos" detektoriaus realizacijos stipriai nesutarė su identiškais duomenimis: viena
-sakė 322–329 Hz prie 120× dominavimo, kita — 255 Hz prie 6×. Priežastis matoma, kai
-pažiūri — kai keturi motorai išsibarstę ~30 Hz, į 40 Hz RPM griežinėlį įsimeta lėčiausias
-motoras, tad „vidutinis RPM" yra prastas pavadinimas tam, kas patenka į tą dėžę. 325 → 395 Hz
-poslinkis ir 48% skaičius abu atšaukti.
+*TPU siūlas, įstumtas į guminius įvorius. Raudonas apskritimas žymi vieną iš jų. Du darbai, ne vienas: standesnis susietumas ir gaubtas, kuris kur kas mažiau tikėtinai atsiskirs nuo rėmo.*
 
-Ką *galiu* parodyti, tai tinkamai kontroliuotą palyginimą: lengvas paketas prieš sunkų,
-putplasčio nėra nei viename, pakeistas tik paketas.
+Antrajam TPU darbui matavimų nereikia: su siūlu viduje guminiai įvoriai kur kas mažiau linkę
+**atsiskirti** — o whoop'ui, kuris gyvena atsimušdamas į durų staktas, vien to jau verta. Oscar
+Liang naudoja klijus; aš panaudojau siūlą, nes klijai yra vienpusės durys, o siūlą galima
+ištraukti — ir tai svarbu, kai visa esmė yra A/B testuoti patį tvirtinimą.
 
-```chart
-{
-  "type": "bar",
-  "data": {
-    "labels": [
-      "lengvas paketas",
-      "sunkus paketas"
-    ],
-    "datasets": [
-      {
-        "label": "hover RPM (sužadinimas)",
-        "data": [
-          327,
-          347
-        ],
-        "borderColor": "#244d68",
-        "backgroundColor": "#244d68",
-        "borderWidth": 1
-      },
-      {
-        "label": "struktūrai fiksuota ypatybė",
-        "data": [
-          302,
-          255
-        ],
-        "borderColor": "#915d52",
-        "backgroundColor": "#915d52",
-        "borderWidth": 1
-      }
-    ]
-  },
-  "options": {
-    "responsive": true,
-    "maintainAspectRatio": false,
-    "plugins": {
-      "legend": {
-        "display": true,
-        "position": "bottom"
-      }
-    },
-    "scales": {
-      "y": {
-        "title": {
-          "display": true,
-          "text": "Hz"
-        }
-      },
-      "x": {
-        "title": {
-          "display": false,
-          "text": ""
-        }
-      }
-    }
-  }
-}
-```
-
-| | hover (sužadinimas) | struktūrai fiksuota ypatybė |
-|---|---|---|
-| lengvas paketas | 327 Hz | **302 Hz** |
-| sunkus paketas | 347 Hz | **255 Hz** |
-| pokytis | **+6,1%** | **−15,6%** |
-
-Pridėta prisukta masė nuleido struktūrinę ypatybę **žemiau**, kai sužadinimas pakilo
-**aukščiau**. Tai √(k/m) elgiasi kaip pridera.
-
-**Kas išgyvena nepriklausomai nuo metodo:** amplitudžių rezultatai. Jie visai nepriklauso nuo
-modos lokalizavimo. Putplastis davė didelį, tikrą sumažėjimą — tai neginčijama.
-
-**Mechanizmas neišspręstas, ir tokį jį ir palieku.** Sujungimo (coupling) modelis — kad gaubto
-pririšimas prie rėmo pašalina reliatyvų laisvės laipsnį, o ne vien pastumia spyruoklės
-konstantą — yra bent jau taip pat gerai pagrįstas kaip standumo aiškinimas, o masės pusėje —
-geriau pagrįstas. Eksperimento, kuris juos atskirtų, dar neturiu.
-
-**Praktinė išvada pataisymui:** gummy ball'ai sujungia *FC su rėmu*. Putplastis sujungė
-*gaubtą su FC ir rėmu*. Vien standesni ball'ai to mechanizmo neatkurtų. Būtent todėl sekantis
-eksperimentas standina gummy'us iš vidaus, o ne tiesiog keičia durometrą.
-
-## Metrika, kuri man kelias iteracijas melavo
-
-Kelias iteracijas vėjo drebėjimo verdiktą vertinau vienu globaliu santykiu `drebėjimas / vėjas`
-ir gavau 0,777 → 0,798 → 0,791 → 0,754. Perskaityta kaip: **„−4,4%, triukšmo ribose, tikro
-pagerėjimo nėra."** Vos nenurašiau putplasčio tuo pagrindu.
-
-Tai buvo artefaktas. **Drebėjimas prieš vėją nėra proporcingas**, todėl globalus santykis
-visiškai priklauso nuo to, kurioje vėjo diapazono vietoje pasitaikė paimti duomenis. Suskirsk
-į dėžes pagal momentinį vėjo lygį ir lygink tik tas dėžes, kurias abu skrydžiai tikrai
-apėmė:
-
-```chart
-{
-  "type": "line",
-  "data": {
-    "labels": [
-      3,
-      5,
-      7.5,
-      11,
-      16.5
-    ],
-    "datasets": [
-      {
-        "label": "originalus",
-        "data": [
-          2.29,
-          4.47,
-          6.26,
-          8.74,
-          11.48
-        ],
-        "borderColor": "#244d68",
-        "backgroundColor": "transparent",
-        "borderWidth": 2,
-        "pointRadius": 3,
-        "tension": 0.25,
-        "spanGaps": true,
-        "fill": false
-      },
-      {
-        "label": "sunkus paketas, be putplasčio",
-        "data": [
-          2.27,
-          3.89,
-          5.71,
-          8.18,
-          10.99
-        ],
-        "borderColor": "#915d52",
-        "backgroundColor": "transparent",
-        "borderWidth": 2,
-        "pointRadius": 3,
-        "tension": 0.25,
-        "spanGaps": true,
-        "fill": false
-      },
-      {
-        "label": "sunkus paketas, + putplastis",
-        "data": [
-          2.56,
-          3.66,
-          4.98,
-          6.72,
-          8.52
-        ],
-        "borderColor": "#bd9361",
-        "backgroundColor": "transparent",
-        "borderWidth": 2,
-        "pointRadius": 3,
-        "tension": 0.25,
-        "spanGaps": true,
-        "fill": false
-      }
-    ]
-  },
-  "options": {
-    "responsive": true,
-    "maintainAspectRatio": false,
-    "plugins": {
-      "legend": {
-        "display": true,
-        "position": "bottom"
-      }
-    },
-    "scales": {
-      "y": {
-        "title": {
-          "display": true,
-          "text": "drebėjimo gaubtinė, 8-45 Hz (°/s)"
-        }
-      },
-      "x": {
-        "title": {
-          "display": true,
-          "text": "vėjo / trikdžio lygis, 0,5-15 Hz gaubtinė (°/s)"
-        }
-      }
-    }
-  }
-}
-```
-
-| | w 2–4 | w 4–6 | w 6–9 | w 9–13 | w 13–20 |
-|---|---|---|---|---|---|
-| originalus | 2,29 | 4,47 | 6,26 | 8,74 | 11,48 |
-| sunkus paketas, be putplasčio | 2,27 | 3,89 | 5,71 | 8,18 | 10,99 |
-| **sunkus paketas, + putplastis** | 2,56 | **3,66** | **4,98** | **6,72** | **8,52** |
-
-```
-sunkus be putplasčio -> +putplastis : 6,21 -> 5,29  = -14,8%   (5 bendros dėžės)
-originalus           -> +putplastis : 6,65 -> 5,29  = -20,4%   (5 bendros dėžės)
-```
-
-**Apie 15% mažiau vėjo drebėjimo prie suderinto vėjo, ne 4%.** Ir pažiūrėkite į formą: visi
-keturi skrydžiai sutampa žemiausioje vėjo dėžėje (2,27–2,56) ir išsiskiria tik vėjui augant.
-Tas sutapimas apačioje yra kalibruoto matavimo požymis — skrydžiai nėra vienas nuo kito
-paslinkti, jie turi tikrai skirtingus nuolydžius.
-
-Taip pat auditavau, ir tai daug ką paaiškina apie ankstesnį blaškymąsi: kiekvienas skrydis iki
-šiol pasiekė ≥4 s buvimo laiką tik **5 iš 12 arba 7 iš 12** RPM dėžių. Būtent todėl rezonanso
-kreivė vis išeidavo nepatikima.
-
-## Kur dabar viskas stovi — kokį kompromisą realiai padariau
-
-Taigi štai tezė, dabar kai visi matavimai ant stalo.
-
-**Rėmo ir gaubto atskyrimas yra geras ir blogas tuo pačiu metu.**
-
-- **Senas** gaubtas per stipriai perdavė vibracijas į kamerą ir į savo gyro. Jello. Ir nei
-  Gyroflow, nei RockSteady negali pašalinti jello — būtent tas asimetriškumas visą šį
-  kompromisą padaro svarbų.
-- **Naujas** gaubtas izoliuotas gerokai geriau. Kamera mato daug mažiau aukštos frekvencijos
-  turinio. Kas lieka matoma, yra žema frekvencija, o **su ja Gyroflow susitvarko gerai.**
-- Bet tas pats atskyrimas sukūrė minkštą, silpnai slopinamą kelią tarp FC/gaubto mazgo ir rėmo.
-  FC dabar **kovoja su gaubtu** — ir stipresniame vėjyje pralošia. Nes vėjas pastumia motorų
-  RPM į rezonanso langą, ir moda būna sužadinama.
-
-Būtent todėl **tvirtinimas**, o ne tune'as, pasirodė esąs svertas. Pirmą savaitės pusę
-praleidau reguliuodamas valdymo kilpą, veikiančią 20–40 Hz, tikėdamasis paveikti struktūrinę
-modą prie 320–345 Hz. Tai niekada nebūtų suveikę, ir mane įtikinti prireikė atsako dozės
-kreivės.
-
-## Tvirtinimo standinimas kaip reikia — pirmi duomenys patalpoje
-
-Putplastis buvo greitas testas, ne sprendimas. Jis veikė, bet tai antklodė ant karščiausios
-plokštės vietos, todėl išėmiau. Jį pakeitė **du** pakeitimai, ir turiu iš karto pasakyti, kad
-padariau juos toje pačioje sesijoje:
-
-1. **VTX dabar tvirtinamas tiesiai prie gaubto, silikoninius įvorius išėmiau.** Jie buvo
-   nereikalingi, o jų išėmimas pašalina lankstų elementą kelyje tarp oro modulio masės ir
-   gaubto — gaubtas ir VTX dabar faktiškai vienas kūnas.
-2. **TPU siūlas įdėtas į gummy ball'us**, gerokai padidinant jų standumą ir sustandinant
-   kelią nuo skraidymo valdiklio iki rėmo.
-
-Abu yra standumo padidinimai, dviejuose skirtinguose apkrovos keliuose, tuo pačiu metu. Todėl
-kad ir ką rodytų skaičiai žemiau, **negaliu paskirstyti nuopelnų tarp jų.** Tai pačiam sau
-sukurta atribucijos problema, ir sąžininga ją pažymėti, o ne pasirinkti laimėtoją.
-
-
-Planas: TPU filamentas įterptas gummy ball tvirtinimų vidun, kad gerokai pakeltų jų standumą,
-pakeičiant putplastį — kad FC ESC pusė vėl gautų oro pratekėjimą. Putplastis veikia, bet jis
-kartu yra ir antklodė ant karštos dalies.
-
-![Meteor75 Pro II is uzpakalio, raudonu apskritimu pazymeta viena is skraidymo valdiklio guminiu ivoriu su idetu TPU siulu](tpu-gummy-mod.jpg)
-
-*TPU siulas, istumtas i guminius ivorius. Raudonas apskritimas zymi viena is ju. Du darbai, ne vienas: standesnis susietumas ir gaubtas, kuris kur kas maziau tikėtinai atsiskirs nuo remo.*
-
-Jis atlieka du darbus, ir tik vienas is ju nepatikrintas. **Standumo** efekto grafikas dar
-laukia duomenu. Bet antrasis darbas veikia is karto ir jam nereikia jokiu matavimu: su siulu
-viduje guminiai ivoriai kur kas maziau linke **atsiskirti** - o whoop'ui, kuris gyvena
-atsimusdamas i durų staktas, vien to jau verta.
-
-Si modifikacija ne mano. Gaubto pasukima 180 laipsniu pasiule Oscar Liang savo Pro II apzvalgos
-[Improvements You Can Make](https://oscarliang.com/betafpv-meteor75-pro-dji-o4-wide/#Improvements-You-Can-Make)
-dalyje. Mano vienintelis pakeitimas - medziaga: **jis naudoja klijus, kad ivoriai neatsiskirtu,
-o as panaudojau TPU siula.** Klijai yra vienpusiai durys. Siula galima istraukti, tad tvirtinimas
-lieka aptarnaujamas ir galiu toliau bandyti skirtinga kietuma nedarydamas detaliu nenaudojamomis -
-o tai labai svarbu, kai visa esme yra A/B testuoti pati tvirtinima.
-Vertinimo planas buvo užrašytas **prieš** skrydį, nes visa ankstesnio skyriaus esmė ta, kad
-nebepatikiu palyginimu, sugalvotu jau pamačius duomenis. Pagrindinis kriterijus — kad
-**variklių-juostoje atsako kreivė** liktų plokščia. Būtent ji parodo, ar rezonansas dar
-stiprinamas.
+Vertinimo planas buvo užrašytas **prieš** skrydį, nes nebepatikiu palyginimu, sugalvotu jau
+pamačius duomenis. Pagrindinis kriterijus — kad **variklių-juostoje atsako kreivė** liktų
+plokščia.
 
 Ji liko plokščia. 84 s tvarkingo skrydžio patalpoje, antras armas, jokių smūgių, **`0`
-konfigūracijos pakeitimų** — taigi tai grynai mechaniška, tik ne vieno kintamojo:
-
-Štai kur tai atsiduria rezonanso kreivėje. Tik viena juosta yra patikima — 79,6 s prie
+konfigūracijos pakeitimų.** Rezonanso kreivėje patikima tik viena juosta — 79,6 s prie
 300–325 Hz, prieš 0,5–1,8 s visur kitur — todėl brėžiu **tik tą tašką**, o ne liniją per triukšmą:
 
 ```chart
@@ -1715,13 +1463,11 @@ konfigūracijos pakeitimų** — taigi tai grynai mechaniška, tik ne vieno kint
 }
 ```
 
-39 °/s — tarp 49 be putplasčio ir 26 su putplasčiu. Tik kad tos dvi kreivės nuskraidytos lauke, o
+39 °/s — tarp 49 be putplasčio ir 26 su putplasčiu, tik kad tos dvi kreivės nuskraidytos lauke, o
 tas taškas — patalpoje, o tai, pagal patį pirmą šio teksto atradimą, yra **blogiausias** atvejis
-šiam rezonansui: stabilus RPM pastato propelerius tiesiai ant modos. Taigi atotrūkis iki
-putplasčio kreivės yra padidintas nežinomu dydžiu, ir nesidėsiu, kad žinau kokiu.
-
-Būtent todėl kriterijus buvo atsako kreivė, o ne rezonanso kreivė: ji lygina kvadrą su *pačiu
-savimi* prie skirtingų RPM viename skrydyje, tad jai oras nesvarbus.
+šiam rezonansui. Atotrūkis padidintas nežinomu dydžiu. Būtent todėl kriterijus buvo atsako
+kreivė, o ne rezonanso kreivė: ji lygina kvadrą su *pačiu savimi* prie skirtingų RPM viename
+skrydyje, tad jai oras nesvarbus.
 
 ```chart
 {
@@ -1803,51 +1549,37 @@ savimi* prie skirtingų RPM viename skrydyje, tad jai oras nesvarbus.
 }
 ```
 
+Nuolydis per juostą, o tai ir yra tas skaičius, kuris svarbus:
+
 | tvirtinimas | atsako nuolydis | verdiktas |
 |---|---|---|
 | pasuktas, be putplasčio | **+66%** | rezonansas pilnai stiprina |
 | pasuktas, + putplastis | +15% | beveik nuslopintas |
 | **be įvorių + TPU gummy viduje** | **+6%** | **nuslopintas** |
 
-Buvimas rezonanso lange nebeturi reikšmės. Tai ir buvo kriterijus, ir jis įvykdytas.
+Buvimas rezonanso lange nebeturi reikšmės. Kriterijus įvykdytas. Dar du dalykai tame pačiame loge
+pasirodė geresni nei putplasčio skrydyje: **po filtrų roll triukšmas 0,34 °/s prie 41,2 dB
+slopinimo**, geriausias per visą sesiją, prieš 0,67 °/s ir 31,8 dB su putplasčiu; ir
+**plokščiausias variklių balansas, kokį esu užfiksavęs** — −0,1 / −4,2 / +2,5 / +1,7 procento,
+6,7 punkto sklaida, kai visi ankstesni skrydžiai turėjo 17–25, priekio/užpakalio skirtumas +1,7%
+ir nulis įsisotinimo.
 
-Dar du dalykai pasirodė geresni nei putplasčio skrydyje, abu išmatuoti tame pačiame loge:
+Ko šis logas **negali** pasakyti: jis buvo patalpoje ir surinko vieną RPM juostą, 80 iš 84
+tvarkingų sekundžių prie 300–325 Hz. Pats sau nurodžiau 3–4 lėtus gazo perbėgimus, o nuskridau
+hoverį, todėl struktūrinės *kreivės* čia nėra ir modos frekvencijos iš vieno RPM griežinėlio
+nenustatysiu. Neapdoroto signalo skaičius taip pat atrodo blogesnis nei su putplasčiu — 39,1 °/s
+prieš 26,0 — bet putplasčio skrydis buvo lauke prie 4,71 °/s vėjo, o šis patalpoje prie 1,99, o
+ramus oras yra blogiausias atvejis, tad tas palyginimas nesąžiningas ramiajam. Vienintelis tikrai
+lygiavertis skaičius yra patalpa prieš patalpą: prieš putplastį ir prieš gaubto pasukimą patalpoje
+buvo **54 °/s** prie 300–325 Hz, o dabar **39** — maždaug **28% geriau**. Tikra, bet viena juosta.
 
-- **Po filtrų roll triukšmas 0,34 °/s prie 41,2 dB slopinimo** — geriausias per visą sesiją,
-  prieš 0,67 °/s ir 31,8 dB su putplasčiu.
-- **Variklių balansas — plokščiausias, kokį esu užfiksavęs:** −0,1 / −4,2 / +2,5 / +1,7
-  procento, 6,7 punkto sklaida, kai visi ankstesni skrydžiai turėjo 17–25, priekio/užpakalio
-  skirtumas +1,7% ir **nulis įsisotinimo**.
-
-### Ko šis logas negali pasakyti, ir aš nesidėsiu, kad gali
-
-**Skrydis buvo patalpoje ir surinkau tik vieną RPM juostą.** 80 iš 84 tvarkingų sekundžių
-praleista 300–325 Hz, po sekundę kitą į abi puses. Pats sau nurodžiau 3–4 lėtus gazo
-perbėgimus, o nuskridau hoverį — todėl struktūrinės *kreivės* čia nėra, o vieno taško kreive
-nepavadinsi.
-
-**Neapdoroto signalo skaičius atrodo blogesnis nei su putplasčiu, ir tas palyginimas
-nesąžiningas.** TPU patalpoje rodo 39,1 °/s prieš putplasčio 26,0. Bet putplasčio skrydis buvo
-lauke prie 4,71 °/s vėjo, o šis — patalpoje prie 1,99. Ir vienas ankstyviausių šio teksto
-atradimų yra tas, kad **ramus oras yra blogiausias atvejis**: stabilus RPM pastato propelerius
-tiesiai ant modos, o ne išsklaido nuo jos.
-
-Vienintelis tikrai lygiavertis palyginimas — patalpa prieš patalpą: prieš putplastį ir prieš
-gaubto pasukimą patalpoje buvo **54 °/s** prie 300–325 Hz, o dabar **39** — maždaug **28%
-geriau**. Tai tikra, bet tai viena juosta.
-
-Taigi: stiprinimas miręs, triukšmo lygis ir variklių balansas geriausi, kokius matavau, o ESC
-pusė vėl kvėpuoja. Ar ši pora pilnai atitinka putplastį *struktūrinėje kreivėje* — dar atviras
-klausimas, ir jam reikia skrydžio lauke su tikrais perbėgimais. Tai rytojaus darbas.
-
-
-## Patikrinimas lauke — ir kompromisas apsiverčia į kitą pusę
+### Trys: lauke, kur kompromisas apsivertė
 
 121 s tvarkingo skrydžio lauke, 5,51 °/s vėjo, **nulis konfigūracijos pakeitimų** ir pagaliau
 normalus RPM padengimas: **8 iš 12 juostų** po 4 s ar daugiau, prieš 5 visuose ankstesniuose
-skrydžiuose. Tai geriausias viso šio darbo duomenų rinkinys.
+skrydžiuose. Geriausias viso šio darbo duomenų rinkinys.
 
-Užrašytas kriterijus išsilaikė. Stiprinimas miręs, dabar patvirtinta ir lauke:
+Užrašytas kriterijus išsilaikė, dabar patvirtintas ir lauke:
 
 | tvirtinimas | atsako nuolydis |
 |---|---|
@@ -1857,12 +1589,11 @@ Užrašytas kriterijus išsilaikė. Stiprinimas miręs, dabar patvirtinta ir lau
 | **be įvorių + TPU, lauke** | **+7%** |
 
 Struktūrai fiksuota ypatybė tam neprieštarauja: su TPU ji yra **363 Hz**, su putplasčiu —
-**368 Hz**, be nieko — **255 Hz**. Abu standūs sprendimai atsiduria toje pačioje vietoje.
+**368 Hz**, be nieko — **255 Hz**. Abu standūs sprendimai atsiduria toje pačioje vietoje —
+standinimas tą ypatybę pakėlė, ir ji taip ir liko pakelta.
 
-### Bet putplastis vis tiek tylesnis
-
-Lauke prieš lauką, prie sutapatinto propelerių RPM — sąžiningas palyginimas, kurio laukiau dvi
-dienas:
+Bet putplastis vis tiek tylesnis mount'as. Lauke prieš lauką, prie sutapatinto propelerių RPM —
+sąžiningas palyginimas, kurio laukiau dvi dienas:
 
 ```chart
 {
@@ -1966,16 +1697,15 @@ dienas:
 
 Vidurkis per patikimas juostas: **26,2 °/s putplasčiui, 33,0 TPU** — apie 26% blogiau. Ir kreivė
 mažiau plokščia: 1,13 putplasčiui, **2,14** TPU — blogiau net už 1,85 be jokio tvirtinimo
-gerinimo. Žemajame gale vėl yra pikas: 44 °/s prie 275–300 Hz, nukrentantis iki 21 prie 425.
+gerinimo — su piku vėl žemajame gale, 44 °/s prie 275–300 Hz, nukrentančiu iki 21 prie 425.
 
-Taigi stiprinimo *mechanizmas* miręs, bet bendras vibracijos lygis pakilo. Tai du skirtingi
-teiginiai ir abu teisingi.
+Taigi stiprinimo *mechanizmas* miręs, bet bendras vibracijos lygis pakilo. Du skirtingi teiginiai,
+abu teisingi.
 
 ### Ir tada kamera vėl gavo jello
 
-Šios dalies nenumačiau, ir tai visa šio teksto tezė, atėjusi iš priešingos pusės.
-
-Energija 250–450 Hz juostoje — būtent ją rolling shutter paverčia jello:
+Šios dalies nenumačiau, ir tai visa šio teksto tezė, atėjusi iš priešingos pusės. Energija
+250–450 Hz juostoje — būtent ją rolling shutter paverčia jello:
 
 | tvirtinimas | 250–450 Hz RMS |
 |---|---|
@@ -1983,38 +1713,35 @@ Energija 250–450 Hz juostoje — būtent ją rolling shutter paverčia jello:
 | **+ putplastis** | **24,6** |
 | **be įvorių + TPU** | **31,0** — +26% |
 
-Žemo frekvencijos drebėjimas ore dabar beveik nejuntamas. Jello grįžo į vaizdą. Ir ta kombinacija
-tiesiai parodo, kuris iš dviejų mano pakeitimų ką padarė:
+Žemų frekvencijų drebėjimas ore dabar beveik nejuntamas, o jello grįžo į vaizdą.
 
-- **TPU gummy viduje** sustandino **valdiklio–rėmo** kelią. Tai kelias, kuris valdė stiprinimą, ir
-  atsako kreivė sako, kad pavyko.
-- **VTX įvorių išėmimas** standžiai sujungė **kamerą su gaubtu**. Tai kelias, kuris valdo tai, ką
-  mato kamera — ir todėl jello grįžo.
+**Ir pirmasis mano paaiškinimas buvo neteisingas.** Parašiau, kad VTX įvorių išėmimas „standžiai
+sujungė kamerą su gaubtu". Nesujungė: VTX yra plika plokštė, o **kamera tvirtinama ant gaubto**, ne
+ant VTX. Tie įvoriai kabino plokštę, ant kurios nieko nėra — negyva masė ir dar viena pakabinta
+masė, laisva rezonuoti. Jų išėmimas nebuvo jello mechanizmas.
 
-Anksčiau parašiau, kad tie įvoriai „vis tiek buvo nereikalingi“. Tai buvo klaida, ir jello yra
-įrodymas. Jie izoliavo ne skraidymo valdiklį — todėl jų išėmimas atrodė nekaltas giroskopo
-duomenyse. **Jie izoliavo kamerą.** Kitas komponentas, kita funkcija, o aš juos išėmiau žiūrėdamas
-į netinkamą prietaisą.
+Mechanizmas yra **gaubto–rėmo** kelias, nes būtent ant jo jojasi kamera. TPU tuose gummy jį
+sustandino, o standesnis kelias perduoda daugiau rėmo vibracijos tiesiai į kamerą. Kitaip nei
+putplastis, siūlas prideda standumo be reikšmingo slopinimo — susieja nesugerdamas. Taigi jello
+rizika yra sandauga, o ne lygis:
 
-Ir tai nusileidžia lygiai ten, kur šis tekstas prasidėjo: jello nepataisysi po skrydžio. Nei
-Gyroflow, nei RockSteady jo nepaims. Žemų frekvencijų drebėjimą — paims. Taigi iš dviejų simptomų,
-kuriuos visą savaitę keičiau vieną į kitą, **ką tik iškeičiau pataisomą į nepataisomą.**
+> jello ≈ (vibracija ant rėmo) × (gaubto tvirtinimo pralaidumas tuose dažniuose)
 
-### Sąžininga išlyga apie patį matavimą
+FC giroskopas matuoja tik pirmą narį. Antrojo blackbox loge nėra visai, o tai turi pasekmių
+vienai mano paties lentelei žemiau.
 
-Sustandinus paties giroskopo tvirtinimą, pasikeičia ne tik tai, ką rėmas *daro*, bet ir tai, ką
-giroskopas *praneša*. Standžiai pritvirtintas giroskopas tiksliau susietas su tikruoju rėmo
-judesiu, tad dalis šio prieaugio yra geresnis susietumas su tiesa, o ne blogesnis rėmas. Šių dviejų
-negaliu atskirti giroskopu, kuris pats yra eksperimento dalis.
+Viena išlyga apie patį matavimą: sustandinus paties giroskopo tvirtinimą, pasikeičia ne tik tai,
+ką rėmas *daro*, bet ir tai, ką giroskopas *praneša*. Standžiai pritvirtintas giroskopas tiksliau
+susietas su tikruoju rėmo judesiu, tad dalis šio prieaugio yra geresnis susietumas su tiesa, o ne
+blogesnis rėmas. Šių dviejų negaliu atskirti giroskopu, kuris pats yra eksperimento dalis.
 
-### Toliau
+### Keturi ir penki: visos ant vienos diagramos, ir mažas gabalėlis
 
-Įvorius **grąžinti**, TPU gummy viduje palikti. Jie veikia skirtinguose keliuose su skirtingais
-simptomais, tad nėra akivaizdžios priežasties, kodėl kameros izoliatorių reikia aukoti dėl
-standesnio valdiklio tvirtinimo.
-
-
-## Visi keturi tvirtinimai vienoje diagramoje
+Akivaizdus sekantis žingsnis buvo VTX įvorius **grąžinti**, o TPU gummy viduje palikti —
+skirtingi keliai, skirtingi simptomai, ir nėra priežasties aukoti kameros izoliatoriaus dėl
+standesnio valdiklio tvirtinimo. Išėmus tik **priekinį** TPU — tą vieną gummy, kuris priekyje
+sieja gaubtą su rėmu — struktūrai fiksuota ypatybė nusileido nuo 363 Hz iki 280 Hz, o
+dominavimas beveik perpus. Vienas gummy. Tiek lokalu tai pasirodė esą.
 
 Visos kreivės — lauke, suskirstytos pagal vidutinį propelerių dažnį, ir įtrauktos tik juostos su
 **4 s ar daugiau** išbūto laiko:
@@ -2150,97 +1877,19 @@ Visos kreivės — lauke, suskirstytos pagal vidutinį propelerių dažnį, ir �
 | visi TPU gummy viduje | 33,0 | 31,0 | **+7%** | 363 Hz (8,2×) |
 | priekinis TPU išimtas | 30,1 | 25,4 | +16% | 280 Hz (4,4×) |
 
-Išėmus tik **priekinį** TPU — tą vieną gummy, kuris priekyje sieja gaubtą su rėmu — struktūrai
-fiksuota ypatybė nusileido nuo 363 Hz iki 280 Hz, o dominavimas beveik perpus. Vienas gummy.
-
-### Stulpelis, kurį turiu atšaukti
-
-Ankstesnė versija tą 250–450 Hz stulpelį vadino „jello juosta“ ir pagal jį rikiavo, kuris tvirtinimas
-duoda daugiausia jello. **Tai buvo klaida, ir ji apvertė tikrovę.**
-
-Tą skaičių matuoja **giroskopas ant skraidymo valdiklio** — jis aprašo, ką patiria *valdiklis*.
-Kamera yra ant **gaubto**, už atskiro tvirtinimo, tad valdiklio vibracija tampa jello tik tiek, kiek
-gaubto kelias ją perduoda.
-
-Kas tikrai nutiko — pastebėta vaizde, o ne išvesta iš giroskopo:
-
-| tvirtinimas | rėmo rezonansas giroskope | jello vaizde |
-|---|---|---|
-| originalūs nemodifikuoti gummy | aiškiai matomas | **nėra** |
-| didelis putplasčio gabalas tarp plokščių | **beveik visiškai nuslopintas** | nėra |
-| TPU sustandinti gummy | šiek tiek mažesnis | **atsiranda jello** |
-
-Su lanksčiais originaliais gummy rėmas gali smarkiai virpėti — 34,5 tame stulpelyje — o kamera to
-nemato. **Lankstūs gummy yra geriausias, o ne blogiausias atvejis jello atžvilgiu.**
-
-> jello ≈ (vibracija ant rėmo) × (gaubto tvirtinimo pralaidumas tuose dažniuose)
-
-Blackbox logas matuoja tik pirmą narį. Antrojo jame nėra — todėl vaizdas buvo vienintelis tinkamas
-prietaisas.
-
-## Kur dabar
-
-Visi TPU išimti, sugrąžinti originalūs gummy, o prie jungties priklijuotas mažas putplasčio
-gabalėlis — taip, kad slopintų, bet neuždengtų karštosios plokštės pusės.
-
-**Svarbu:** putplastis, kuris rezonansą praktiškai nuslopino, buvo **didelis** gabalas tarp
-plokščių, gerokai didesnis už šį. Dabartinis gabalėlis yra kompromisas, ir ar jo pakanka — kaip tik
-ir yra atviras klausimas.
+Tada konfigūracija, prie kurios nusėdau, jello būnant sprendžiamuoju faktoriumi: visi TPU išimti,
+sugrąžinti originalūs gummy, o prie jungties priklijuotas **mažas** putplasčio gabalėlis — taip,
+kad slopintų, bet neuždengtų karštosios plokštės pusės:
 
 ![Meteor75 Pro II iš šono ant kilimėlio, po gaubtu matomas mažas šviesus putplasčio gabalėlis prie jungties](canopy-foam-damper.jpg)
 
-*Visi TPU išimti, vienas mažas putplasčio gabalėlis prie jungties. Lažybos: pakankamai slopinimo, kad nebūtų jello, ir pakankamai atviros vietos, kad ESC pusė kvėpuotų.*
+*Sugrąžinti originalūs gummy ir vienas mažas putplasčio gabalėlis prie jungties. Atkreipkite dėmesį į dydį: tas putplastis, kuris realiai nužudė rezonansą, buvo kur kas didesnis ir sėdėjo tarp plokščių.*
 
-Jello buvo sprendžiamasis faktorius, ir tai teisingas pasirinkimas — tai vienintelis simptomas,
-kurio niekas vėliau nebepataisys. Pagal lentelę aukščiau, vien gummy be nieko yra blogiausias
-atvejis jello atžvilgiu, tad dabar visą darbą dirba šis gabalėlis. Dar nepatikrinta.
+Atkreipkite dėmesį į dydį. Putplastis, kuris rezonansą praktiškai nuslopino, buvo **didelis**
+gabalas tarp plokščių, gerokai didesnis už šį. Mažas gabalėlis buvo sąmoningas kompromisas:
+pakankamai slopinimo, kad būtų verta, ir pakankamai mažas, kad ESC pusė kvėpuotų.
 
-## Snap'as, kuris nebuvo susidūrimas
-
-Vėlai priekinio-TPU skrydyje dariau split-S ir kvadras trūktelėjo, tarsi būtų į kažką atsitrenkęs.
-Nebuvo į ką. Logas sutinka: **3,8 G**, prieš 9,8 G žinomo atsitrenkimo į grindis ir 9,6 G žinomo
-kritimo toje pačioje sesijoje.
-
-Tai ir ne radijas: `rxSignalReceived` ir `rxFlightChannelsValid` nenukrito nė karto,
-`failsafePhase` visą skrydį 0, o mažiausias RSSI yra prie t≈39 s.
-
-Kas nutiko prie t = 86,2–86,5 s: variklis 2 buvo nuvestas į apatinę ribą (248 → 128), jo apsisukimai
-nukrito 6450 → 2700; yaw I narys prisisotino prie −230; varikliai 3 ir 4 atsitrenkė į 2047 lubas,
-kol variklis 2 sėdėjo prie 128. Rezultatas — 346 °/s yaw be jokios komandos.
-
-Intervale 85,5–87,0 s **17,6% kadrų turėjo variklį prie lubų, o 30,4% — prie apatinės ribos.**
-Mikseriui vienu metu neliko atsargos abiejuose galuose.
-
-### Blogo kontakto teorija, patikrinta
-
-Pirma mintis buvo blogas baterijos kontaktas. Logas sako ne: efektyvi varža apie **35 mΩ**
-(normalu), **nulis kadrų** su srove nepaaiškinamu įtampos kritimu, o apsisukimai nukrito **vienam
-varikliui, ne keturiems** — atsijungus baterijai badauja visi keturi. Ir tuo metu variklio 2
-**komanda buvo 238 iš 2047** — mikseris pats jį ten nuvedė.
-
-Išlygos: srovės daviklio skalė šioje plokštėje nepatikrinta, tad 35 mΩ yra orientacinis; regresija
-neatskiria apkrovos kritimo nuo baterijos išsikrovimo (R² tik 0,28). Bet aštraus nepaaiškinamo
-šuolio nebuvimas yra tvirtas rezultatas.
-
-Nuojauta dėl žemų apsisukimų teisinga: 2600 RPM pakanka desync rizikai. Tik šįkart neišdegė —
-dyn_idle laikėsi, po 3000 RPM riba buvo vos **0,04%** skrydžio laiko, ilgiausias tęstinis
-epizodas **4 ms**.
-
-
-## Painiava, kurią reikėjo pažymėti daug anksčiau
-
-Tai nėra Meteor75 Pro II. Tai Pro II korpusas su **Pro vidumi**, įskaitant variklius: pasilikau
-originalius **22 000 KV**, o serijinis Pro II turi **21 000 KV**.
-
-- **Nekeičia hoverio sužadinimo dažnio.** Hoverio RPM nustato reikalinga trauka, ne KV — mažesnio KV
-  variklis hoveriuoja tais pačiais apsisukimais, tik prie kiek didesnės gazo padėties.
-- **Keičia RPM-vienam-gazui**, momento konstantą ir srovę, tad pagaliuko–RPM atvaizdavimas ir
-  įsisotinimo atsarga yra paveikti.
-
-Serijinis Pro II su O4 **Wide** skiriasi varikliais, gaubto apkrova ir masės paskirstymu vienu metu.
-Visos išvados išmatuotos ant hibrido, ir negaliu tvirtinti, kad jos perkeliamos serijiniam aparatui.
-
-## Mažas gabalėlis: blogiausias iš penkių
+Tai buvo blogiausia iš penkių konfigūracijų, ir verta pasakyti atvirai, kaip blogai:
 
 ```chart
 {
@@ -2382,22 +2031,72 @@ Visos išvados išmatuotos ant hibrido, ir negaliu tvirtinti, kad jos perkeliamo
 | priekinis TPU išimtas | 30,1 | +16% | 280 Hz | **4,4×** |
 | **MAŽAS putplasčio gabalėlis** | **41,0** | **+66%** | 311 Hz | **81,1×** |
 
-Didžiausia vidutinė vibracija iš visų — blogiau nei nedaryti nieko — ir stiprinimas vėl +66%.
-Bet labiausiai išsiskiria paskutinis stulpelis: moda yra **81× virš fono**, kai visos kitos
-konfigūracijos yra tarp 4,4× ir 8,2×.
+Didžiausia vidutinė vibracija iš visų — blogiau nei nedaryti nieko — ir stiprinimas vėl +66%. Bet
+labiausiai išsiskiria paskutinis stulpelis: struktūrai fiksuota moda yra **81× virš fono**, kai
+visos kitos konfigūracijos yra tarp 4,4× ir 8,2×. Eile aštriau. Pitch sako tą patį — 9,4 °/s
+pre-filter, blogiausia iš penkių.
 
 Mažas gabalėlis modos neslopina — jis tik prideda menkai slopintą spyruoklę vienoje vietoje.
-Didysis veikė todėl, kad buvo pakankamai didelis sugerti per visą sąlyties plokštumą.
+Didysis veikė todėl, kad buvo pakankamai didelis sugerti per visą sąlyties plokštumą. Ir ta aštri
+311 Hz moda paaiškina retkarčiais matomą jello net su sugrąžintais lanksčiais originaliais gummy:
+izoliacija nėra absoliuti, o tokio dominavimo moda kartais prasispaudžia ir per minkštą
+tvirtinimą. Būtent tai ir mačiau — ne nuolatinį jello, o jello *kartais*.
 
-Ir ta aštri 311 Hz moda paaiškina retkarčiais matomą jello net su lanksčiais originaliais gummy:
-izoliacija nėra absoliuti, o tokio dominavimo moda kartais turi pakankamai amplitudės prasispausti.
+**Verdiktas: mažas gabalėlis išimamas.** Sąžiningi variantai yra didelis gabalas, kuris
+išmatuojamai veikė ir šildo ESC pusę, arba pliki originalūs gummy, kurie jello niekada nedavė,
+bet palieka modą laisvai veikti aparate. Vieno rankenėlės čia nėra: standu perduoda vibraciją
+kamerai, minkšta palieka modą laisvą, o vienintelis dalykas, kuris sutvarkė abu iš karto, yra
+**slopinimas**.
 
-**Verdiktas: mažas gabalėlis išimamas.**
+## Trys išgąsčiai, kurie buvo ne tai, kuo atrodė
 
-## Du trūktelėjimai, ir tai ne tune
+Vėlai priekinio-TPU skrydyje dariau split-S ir kvadras trūktelėjo, tarsi būtų į kažką atsitrenkęs.
+Nebuvo į ką, ir logas sutinka: **smailė 3,8 G**, prieš 9,8 G žinomo atsitrenkimo į grindis ir
+9,6 G žinomo kritimo toje pačioje sesijoje. Tai ir ne radijas — `rxSignalReceived` bei
+`rxFlightChannelsValid` nenukrito nė karto, `failsafePhase` visą skrydį 0, o mažiausias RSSI yra
+prie t≈39 s, visai ne prie įvykio.
 
-Patikrinau tune pirmiausia, nes pats taip įtariau: **konfigūracija identiška ankstesniam skrydžiui.**
-Niekas nebuvo pakeista. Radijas taip pat tvarkoje — nė vieno kadro netekta, `failsafePhase` 0.
+Kas realiai nutiko, prie t = 86,2–86,5 s:
+
+```
+85,95  variklis 2 nuvestas į apatinę ribą (248 -> 128), jo RPM krenta 6450 -> 2700
+86,20  yaw I narys prisisotina prie -230 ir ten užstringa
+86,20  varikliai 3 ir 4 atsitrenkia į 2047 lubas, KAI variklis 2 sėdi prie 128
+86,40  gyro roll -637, pitch -295, yaw +278 deg/s ... komanduotas yaw = 0
+86,45  yaw pasiekia 346 deg/s, visiškai be komandos
+```
+
+Intervale 85,5–87,0 s **17,6% kadrų turėjo variklį prie lubų, o 30,4% — prie apatinės ribos.**
+Mikseriui *vienu metu abiejuose galuose* neliko atsargos, tad diferencinės valdžios atsakyti
+pagaliukams nebeliko. Komanduotas yaw p99 buvo 19 °/s; kvadras atidavė 370. Priežastis:
+didelio gazo split-S ant krentančio 1S paketo, kai yaw I narys jau prispaustas prie ribos ir
+kovoja su anksčiau išmatuotu pastoviu yaw disbalansu. Trauka ir valdžia pasibaigė tą pačią
+sekundę.
+
+**Blogo kontakto teorija, patikrinta.** Pirma mintis buvo trumpai atsijungęs baterijos kontaktas.
+Logas sako ne:
+
+- Pritaikius `Vbat = V0 − I·R` per visą skrydį, gaunama apie **35 mΩ** — sveikas 1S paketo su
+  laidais galas.
+- **Nulis kadrų** rodo įtampos deficitą, nepaaiškinamą srove — būtent tokį pėdsaką paliktų
+  atsileidžiantis kontaktas, ir jo nėra.
+- RPM kritimas smogė **vienam varikliui, ne keturiems**: blogiausią akimirką variklis 2 buvo prie
+  2600 RPM, kai varikliai 1, 3 ir 4 buvo prie 21 417, 14 617 ir 23 033. Atsijungus baterijai
+  badauja visi keturi.
+- Tą akimirką variklio 2 **komanda buvo 238 iš 2047**. Mikseris pats jį ten nuvedė. Jam netrūko
+  srovės — jam buvo pasakyta sustoti.
+
+Dvi išlygos: srovės daviklio skalė šioje plokštėje nepatikrinta, tad 35 mΩ yra orientacinis, o
+regresija neatskiria apkrovos kritimo nuo baterijos išsikrovimo per skrydį, todėl jos R² tik
+0,28 — aštraus nepaaiškinamo šuolio nebuvimas yra tvirtas nepaisant to. Nuojauta dėl žemų
+apsisukimų vis dėlto teisinga: 2600 RPM pakanka desync rizikai įsibėgėjant. Tik šįkart neišdegė.
+dyn_idle laikėsi — po 3000 RPM riba buvo vos **0,04%** skrydžio laiko, ilgiausias tęstinis
+epizodas **4 ms**.
+
+**Paskui dar du trūktelėjimai, ir tai ne tune.** Vienas posūkyje, vienas nardant, plius trečias
+pačioje pabaigoje. Patikrinau tune pirmiausia, nes pats taip įtariau: **konfigūracija baitas į
+baitą identiška ankstesniam skrydžiui.** Radijas vėl tvarkoje — nė vieno kadro netekta,
+`failsafePhase` 0, mažiausias RSSI 329 ir nieko šalia nė vieno įvykio.
 
 | | t = 78,7 s (posūkis) | t = 88,7 s (nusileidimas) |
 |---|---|---|
@@ -2407,72 +2106,311 @@ Niekas nebuvo pakeista. Radijas taip pat tvarkoje — nė vieno kadro netekta, `
 | kadrų prie lubų | 3,0% | **39,0%** |
 | min RPM | 2717 | 2600 |
 
-**Mikseriui vienu metu neliko atsargos abiejuose galuose.** Vienam varikliui esant tuščiąja eiga, o
-kitam prie lubų, nebelieka diferencinės valdžios.
+Pirmojo priartinimas nedviprasmiškas: variklis 2 nuvestas 293 → 146 → 124 ir prilaikytas apie
+150 maždaug 400 ms, kol variklis 4 joja ant 2027 lubų. Paketas krenta 3,81 → 3,51 V. Yaw
+išeina iki 86 °/s prieš roll komandą 47 ir jokios yaw komandos. Tada variklis 2 vėl įsibėgėja —
+433, 562, 735, 917 — ir vėl skrenda. Tas pats gedimas kaip split-S. Per visą skrydį 2,74% kadrų
+turi variklį prie lubų, ir beveik viską tai daro varikliai 3 ir 4 (1,60% ir 1,30%).
 
-Vienas su tune susijęs radinys tikras: **yaw I narys svyruoja tarp −255 ir +271**, atsitrenkdamas į
-ribą abiem kryptimis. Tai anksčiau išmatuotas pastovus yaw disbalansas.
+Vienas su tune susijęs radinys tikras: **yaw I narys svyruoja tarp −255 ir +271**, atsitrenkdamas
+į ribą abiem kryptimis. Tai pastovus yaw disbalansas, suvartojantis valdžią dar prieš manevrą, o
+jo pataisymas atlaisvina daugiau atsargos nei bet koks koeficiento pakeitimas. dyn_idle problemos
+ir čia nėra — **0,076%** skrydžio laiko žemiau 3000 RPM tikslo, ilgiausias epizodas **4 ms**.
 
-### Ir smūgis, kurio tuomet nepaminėjau
+**Ir smūgis, kurio tuomet nepaminėjau.** Prie t = 109,83 s yra **12,9 G** šuolis, pitch 2000 °/s,
+ir logas baigiasi. Žinomas atsitrenkimas į grindis buvo 9,8 G, kritimas — 9,6 G; šis stipresnis už
+abu. Verta apžiūrėti rėmą ir propus, kas tai bebuvo.
 
-Prie t = 109,83 s yra **12,9 G** šuolis, pitch 2000 °/s, ir logas baigiasi. Ankstesnis žinomas
-atsitrenkimas į grindis buvo 9,8 G, o kritimas 9,6 G. Šis buvo stipresnis už abu.
+## Visos mano klaidos
 
+Atšaukimai yra naudingiausias šio įrašo turinys, tad štai jie vienoje vietoje. Beveik kiekvienas
+iš jų yra tikras, kompetentingai atliktas matavimas, nukreiptas į neteisingą dydį — būtent tokio
+gedimo dabar tykau labiausiai.
 
-## Su kuo iš tikrųjų kariauju — ir kodėl „Gyroflow sutvarkys“ turi spąstus
+### „Standumas, ne masė" yra klaidinga dichotomija
 
-Viskas aukščiau — matavimai. Ši dalis paaiškina, kodėl man iš viso tai svarbu.
+Pirmiausia putplasčio rezultatą aprašiau kaip „standumas, ne masė", pagrįsdamas hover-RPM masės
+patikra (−0,8%), modos poslinkiu iš ~325 Hz į ~395 Hz ir užtikrintu „≈48% standesnis". Visos trys
+dalys buvo neteisingos arba nepagrįstos. Anksčiau nepriklausomų kūnų sujungimas kartu pakeičia
+efektyvų standumą, modalinę masę *ir* slopinimą, ir iš šių duomenų jų atskirti neįmanoma.
+Suformulavau klausimą, į kurį eksperimentas negalėjo atsakyti, ir vis tiek į jį atsakiau.
 
-![Betaflight blackbox peržiūros programa: neapdorotas giroskopo pjūvis kaip tolydi amplitudės moduliuota triukšmo juosta per visą skrydį, o žemiau filtruotas giroskopas, P, D ir PID sumos - plokščios](raw-gyro-noise-trace.jpg)
+### Hover-RPM masės testas atsakė į neteisingą klausimą
 
-*Tai, su kuo iš tikrųjų kariauju. Viršuje neapdorotas giroskopas: tolydi juosta, kuri auga ir traukiasi, o ne švari linija. Viskas žemiau - filtruotas giroskopas, P, D, PID sumos - plokščia, t. y. filtrai dirba savo darbą. Kamerai iš to nieko.*
+Hover RPM matuoja **bendrą AUW**. Gaubto sujungimas nekeičia bendro AUW — jis keičia **modalinę
+masę**, tą masės dalį, kuri dalyvauja būtent toje modoje. Vieno naudojimas kito atmetimui yra
+kategorijos klaida, ir tai klaida, dėl kurios mažiausiai patenkintas, nes tai tokio tipo klaida,
+kuri ją darant atrodo kaip griežtumas.
 
-Tai, ko vaikausi, yra triukšmas, kurį matai tiesiai neapdorotame giroskopo pjūvyje — tolydi,
-amplitudės moduliuota juosta, kuri auga ir traukiasi, o ne stovi vienodame lygyje. Pati savaime tai
-tik skaičius loge. Problema — kas nutinka toliau: **tam tikromis aplinkybėmis skraidymo valdiklis
-jį sustiprina.** Kilpa reaguoja į tą triukšmą, varo variklius juo, ir rėmas tikrai pradeda judėti.
-Tada tai nebėra giroskopo rodmuo — tai **drebėjimas vaizdo sraute**.
+Ką *galiu* parodyti, tai tinkamai kontroliuotą palyginimą: lengvas paketas prieš sunkų,
+putplasčio nėra nei viename, pakeistas tik paketas.
 
-Ir tai nėra stipraus vėjo reiškinys. Jis pasireiškia sąlygomis, kurias pavadinčiau ramiomis.
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "lengvas paketas",
+      "sunkus paketas"
+    ],
+    "datasets": [
+      {
+        "label": "hover RPM (sužadinimas)",
+        "data": [
+          327,
+          347
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "struktūrai fiksuota ypatybė",
+        "data": [
+          302,
+          255
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "Hz"
+        }
+      },
+      "x": {
+        "title": {
+          "display": false,
+          "text": ""
+        }
+      }
+    }
+  }
+}
+```
 
-Dabar spąstai, ir tai svarbiausias praktinis dalykas, kurį išmokau:
+| | hover (sužadinimas) | struktūrai fiksuota ypatybė |
+|---|---|---|
+| lengvas paketas | 327 Hz | **302 Hz** |
+| sunkus paketas | 347 Hz | **255 Hz** |
+| pokytis | **+6,1%** | **−15,6%** |
 
-> **Vaizdo stabilizavimas išgelbsti tik tada, kai yra daug šviesos.**
+Pridėta prisukta masė nuleido struktūrinę ypatybę **žemiau**, kai sužadinimas pakilo **aukščiau**.
+Tai √(k/m) elgiasi kaip pridera. Sujungimo (coupling) modelis — kad gaubto pririšimas prie rėmo
+pašalina reliatyvų laisvės laipsnį, o ne vien pastumia spyruoklės konstantą — yra bent jau taip
+pat gerai pagrįstas kaip standumo aiškinimas, o masės pusėje — geriau pagrįstas.
 
-Šviesią dieną ekspozicijos laikai trumpi. Kiekvienas kadras aiškus, drebėjimas pasireiškia kaip
-kadro-į-kadrą *poslinkis*, ir Gyroflow gali kadrus sulygiuoti ir tai pašalinti.
+Praktinė pasekmė: gummy ball'ai sujungia *FC su rėmu*, o putplastis sujungė *gaubtą su FC ir
+rėmu*. Vien standesni ball'ai to neatkurtų — būtent todėl sekantis eksperimentas standino
+gummy'us iš vidaus, o ne tiesiog keitė durometrą.
 
-Apniukusią dieną kamera laiko užraktą atidarytą ilgiau. Dabar drebėjimas įvyksta *ekspozicijos
-metu*, o ne tarp kadrų, ir įsirašo kaip **judesio suliejimas, įspaustas į pikselius**. Stabilizavimas
-gali idealiai sulygiuoti suliejtą kadrą — jis vis tiek suliejtas. Atkurti nėra ko.
+### 325 → 395 Hz poslinkis ir 48% skaičius atšaukiami
 
-Taigi patogus rėminimas, kurį naudojau anksčiau — jello nepataisomas, žemų frekvencijų drebėjimas
-pataisomas — yra per dosnus. Sąžininga versija turi tris lygius:
+Dvi to paties „struktūrai fiksuotos frekvencijos" detektoriaus realizacijos stipriai nesutarė su
+identiškais duomenimis: viena sakė 322–329 Hz prie 120× dominavimo, kita — 255 Hz prie 6×.
+Priežastis matoma, kai pažiūri — kai keturi motorai išsibarstę ~30 Hz, į 40 Hz RPM griežinėlį
+įsimeta lėčiausias motoras, tad „vidutinis RPM" yra prastas pavadinimas tam, kas patenka į tą
+dėžę. Abu skaičiai atšaukti.
 
-| simptomas | ar pataisoma po skrydžio? |
-|---|---|
-| jello (rolling-shutter iškraipymas) | **ne** — nei Gyroflow, nei RockSteady |
-| drebėjimas, ryški šviesa, trumpa ekspozicija | **taip** |
-| drebėjimas, prieblanda, ilga ekspozicija | **ne** — tai suliejimas, ne poslinkis |
+Amplitudžių rezultatai išgyvena nepriklausomai nuo metodo; jie visai nepriklauso nuo modos
+lokalizavimo. Putplastis davė didelį, tikrą sumažėjimą — tai niekada nebuvo ginčas.
 
-Du iš trijų neatkuriami, o kurį gausi tą dieną, sprendžia oras, ne tune. Todėl ir kabinausi į
-mechaninę pusę dar ilgai po to, kai skraidymo valdiklis nustojo skųstis: filtrai kilpą jau saugojo
-puikiai, o kamerai iš to nieko.
+### Metrika, kuri man kelias iteracijas melavo
 
+Kelias iteracijas vėjo drebėjimo verdiktą vertinau vienu globaliu santykiu `drebėjimas / vėjas`
+ir gavau 0,777 → 0,798 → 0,791 → 0,754. Perskaityta kaip: **„−4,4%, triukšmo ribose, tikro
+pagerėjimo nėra."** Vos nenurašiau putplasčio tuo pagrindu.
 
-## Kiškių gaudymas: visą savaitę mačiau ne tą juostą
+Artefaktas. **Drebėjimas prieš vėją nėra proporcingas**, todėl globalus santykis visiškai
+priklauso nuo to, kurioje vėjo diapazono vietoje pasitaikė paimti duomenis. Suskirsk į dėžes
+pagal momentinį vėjo lygį ir lygink tik tas dėžes, kurias abu skrydžiai tikrai apėmė:
 
-Laikas sąžiningai apie visos šios analizės formą, nes klaidos ištaisymas naudingesnis už bet kurį
-atskirą rezultatą.
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      3,
+      5,
+      7.5,
+      11,
+      16.5
+    ],
+    "datasets": [
+      {
+        "label": "originalus",
+        "data": [
+          2.29,
+          4.47,
+          6.26,
+          8.74,
+          11.48
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "sunkus paketas, be putplasčio",
+        "data": [
+          2.27,
+          3.89,
+          5.71,
+          8.18,
+          10.99
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "sunkus paketas, + putplastis",
+        "data": [
+          2.56,
+          3.66,
+          4.98,
+          6.72,
+          8.52
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "drebėjimo gaubtinė, 8-45 Hz (°/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "vėjo / trikdžio lygis, 0,5-15 Hz gaubtinė (°/s)"
+        }
+      }
+    }
+  }
+}
+```
 
-Savaitę tyriau struktūrinį rezonansą prie 320–345 Hz. Išmatavau jį gerai. Propeleriai, gaubto
-pasukimas, putplastis, TPU, penkios tvirtinimo konfigūracijos. Viskas tikra ir pakartojama.
+| | w 2–4 | w 4–6 | w 6–9 | w 9–13 | w 13–20 |
+|---|---|---|---|---|---|
+| originalus | 2,29 | 4,47 | 6,26 | 8,74 | 11,48 |
+| sunkus paketas, be putplasčio | 2,27 | 3,89 | 5,71 | 8,18 | 10,99 |
+| **sunkus paketas, + putplastis** | 2,56 | **3,66** | **4,98** | **6,72** | **8,52** |
 
-**Ir nė vienas iš tų dalykų nebuvo tai, apie ką manęs klausė.**
+```
+sunkus be putplasčio -> +putplastis : 6,21 -> 5,29  = -14,8%   (5 bendros dėžės)
+originalus           -> +putplastis : 6,65 -> 5,29  = -20,4%   (5 bendros dėžės)
+```
 
-Skundas buvo: kvadras dreba, kartais, ilgai, ir tai daro skrisdamas tiesiai lygiai taip pat kaip
-posūkyje. Jei tai būtų rezonansas — drebėtų *visą laiką*. Tas prieštaravimas buvo teisingas, o aš
-kelias dienas kalbėjau ne apie tai.
+**Apie 15% mažiau vėjo drebėjimo prie suderinto vėjo, ne 4%.** Ir pažiūrėkite į formą: visi
+keturi skrydžiai sutampa žemiausioje vėjo dėžėje (2,27–2,56) ir išsiskiria tik vėjui augant. Tas
+sutapimas apačioje yra kalibruoto matavimo požymis — skrydžiai nėra vienas nuo kito paslinkti,
+jie turi tikrai skirtingus nuolydžius.
+
+Tuo pačiu auditavau, ir tai daug ką paaiškina apie ankstesnį blaškymąsi: kiekvienas skrydis iki
+šiol pasiekė ≥4 s buvimo laiką tik **5 iš 12 arba 7 iš 12** RPM dėžių.
+
+### Stulpelis, kurį pavadinau „jello juosta"
+
+Ankstesnė šio įrašo versija tą 250–450 Hz stulpelį naudojo rikiuoti, kuris tvirtinimas duoda
+daugiausia jello. **Tai buvo klaida, ir ji apvertė tikrovę.** Tą skaičių matuoja giroskopas ant
+skraidymo valdiklio — jis aprašo, ką patiria *valdiklis*. Kamera yra ant gaubto, už atskiro
+tvirtinimo, tad valdiklio vibracija tampa jello tik tiek, kiek gaubto kelias ją perduoda.
+
+Kas tikrai nutiko — pastebėta vaizde, o ne išvesta iš giroskopo:
+
+| tvirtinimas | rėmo rezonansas giroskope | jello vaizde |
+|---|---|---|
+| originalūs nemodifikuoti gummy | aiškiai matomas | **nėra** |
+| didelis putplasčio gabalas tarp plokščių | **beveik visiškai nuslopintas** | nėra |
+| TPU sustandinti gummy | šiek tiek mažesnis | **atsiranda jello** |
+
+Visiškai nuoseklu, ir priešinga tam, ką numanė mano lentelė. Su lanksčiais originaliais gummy
+rėmas gali smarkiai virpėti — 34,5 tame stulpelyje — o kamera to nemato, nes gaubto tvirtinimas
+neperduoda. Sustandink tą tvirtinimą, ir ta pati vibracija atvyksta į sensorių. **Lankstūs gummy
+yra geriausias, o ne blogiausias atvejis jello atžvilgiu.** Vaizdas čia buvo vienintelis tinkamas
+prietaisas, ir reikėjo jo klausyti anksčiau.
+
+### Bug'as mano paties analizatoriuje
+
+Pirmasis mano step response raportas išdidžiai paskelbė „overshoot 0,0%" visose trijose ašyse.
+Lygiai nulis, visose trijose. Funkcija normalizavo kiekvieną atsaką pagal jo **smailę**, o tai
+pačia konstrukcija prikala overshoot prie tiksliai nulio kiekvieną kartą. Pataisyta normalizuoti
+pagal nusistovėjusią vertę. Jei metrika išeina įtartinai švari visose ašyse vienu metu, metrika
+sugedusi.
+
+### Painiava, kurią reikėjo pažymėti daug anksčiau
+
+Tai nėra Meteor75 Pro II. Tai Pro II korpusas su **Pro vidumi**, įskaitant variklius: pasilikau
+originalius **22 000 KV**, o serijinis Pro II turi **21 000 KV**.
+
+Būnu tikslus, nes čia lengva persistengti. **Tai nekeičia hoverio sužadinimo dažnio** — hoverio
+RPM nustato reikalinga trauka, ne KV, tad mažesnio KV variklis hoveriuoja tais pačiais
+apsisukimais, tik prie kiek didesnės gazo padėties, ir 325–365 Hz langas nėra KV artefaktas. **Bet
+tai keičia RPM-vienam-gazui**, momento konstantą ir srovę, tad pagaliuko–RPM atvaizdavimas ir
+įsisotinimo atsarga už to split-S išsišokimo yra paveikti.
+
+Didesnis dalykas laikosi: serijinis Pro II su O4 **Wide** nuo šio aparato skiriasi varikliais,
+gaubto apkrova ir masės paskirstymu vienu metu. Visos tvirtinimo išvados išmatuotos ant hibrido,
+ir negaliu tvirtinti, kad jos perkeliamos serijiniam aparatui.
+
+## Ir didžioji: savaitę matavau ne tą juostą
+
+Dabar korekcija, kuri naudingesnė už bet kurį atskirą aukščiau esantį rezultatą.
+
+Savaitę tyriau struktūrinį rezonansą prie 320–345 Hz, ir išmatavau jį gerai. Propelerių pakaita,
+gaubto pasukimas, putplastis, TPU gummy viduje, penkios tvirtinimo konfigūracijos, atsako dozės
+kreivės, modų frekvencijos, pralaidumas. Viskas tikra ir pakartojama.
+
+**Ir nė vienas iš tų dalykų nebuvo tai, ką iš tikrųjų buvau nusistatęs pataisyti.**
+
+Savo pastabose vis rašiau tą patį: kvadras dreba, kartais, ilgai, ir tai daro skrisdamas tiesiai
+lygiai taip pat kaip posūkyje. Jei tai būtų rezonansas — drebėtų *visą laiką*. Tas prieštaravimas
+buvo mano pačio, jis buvo teisingas, o aš kelias dienas kalbėjau ne apie tai, nes rezonansą buvo
+kur kas smagiau matuoti.
+
+Tad nuėjau pažiūrėti, kur realiai gyvena nekomanduotas judesys — nekomanduotas reiškia gyro minus
+setpoint, tai, ką kvadras daro neprašius:
 
 ```chart
 {
@@ -2532,10 +2470,10 @@ kelias dienas kalbėjau ne apie tai.
 }
 ```
 
-**Devyniasdešimt septyni procentai yra žemiau 25 Hz.** Visa mano analizė gyveno 80–780 Hz. Mačiau tą
-juostą, kurioje mano įrankiai aštriausi, o ne tą, kurioje buvo skundas.
+**Devyniasdešimt septyni procentai yra žemiau 25 Hz.** Visa mano analizė gyveno 80–780 Hz. Mačiau
+tą juostą, kurioje mano įrankiai aštriausi, o ne tą, kurioje buvo simptomas.
 
-### Kaip tai atrodo būtent toje vietoje, į kurią pilotas parodė
+### Kaip tai atrodo būtent tame kadre, kurį pažymėjau
 
 Stabilus greitas skridimas, gazas 1568, propeleriai 447 Hz, pagaliukai beveik nejudinami:
 
@@ -2551,37 +2489,45 @@ Stabilus greitas skridimas, gazas 1568, propeleriai 447 Hz, pagaliukai beveik ne
 Septyniasdešimt septynis kartus daugiau judesio nei prašė pagaliukas, ir **nė vieno įsisotinusio
 kadro.**
 
-- **To nedaro filtrai.** 14–23 Hz juostoje nefiltruotas giroskopas rodo 6,38 °/s, filtruotas 6,37 —
-  santykis **1,00**. Filtrai to nei sukuria, nei pašalina, nes ta juosta specialiai praleidžiama, kad
-  kilpa galėtų valdyti aparatą.
-- **Tai ne 320–345 Hz moda.** Ji neseka RPM taip, kaip propelerio žadinimas, o jos Q per mažas.
+Du dalykai, kurie atmeta ankstesnius mano paaiškinimus:
+
+- **To nedaro filtrai.** 14–23 Hz juostoje nefiltruotas giroskopas rodo 6,38 °/s, filtruotas
+  6,37 — santykis **1,00**. Filtrai to nei sukuria, nei pašalina, nes ta juosta specialiai
+  praleidžiama, kad kilpa galėtų valdyti aparatą. Filtravimas čia nesvarbus, todėl ir kiekvienas
+  mano filtrų pakeitimas šito nepajudino.
+- **Tai ne 320–345 Hz moda.** Ji neseka RPM taip, kaip propelerio žadinimas, jos Q per mažas tai
+  struktūrinei ypatybei, kurią matavau, o matoma smailė blaškosi tarp 10 ir 30 Hz per RPM dėžes
+  su silpnu išryškėjimu.
 
 ### Tai bent dvi skirtingos problemos, atskirtos pagal režimą
+
+Būtent čia klydau, bandydamas visą laiką sulipdyti vieną istoriją:
 
 | režimas | kas vyksta | įrodymas |
 |---|---|---|
 | **didelis poreikis, atsargos nebeliko** | mikseris įsisotina, kilpa negali pateikti komanduoto momento, 1–4 Hz ciklas ir stiprūs trūktelėjimai | įsisotinimas **aplenkia** drebėjimą 63–419 ms trijuose skrydžiuose; drebėjimas **7,5× stipresnis**, kai atsargos mažiau nei 150 |
 | **stabilus greitas skridimas, atsargos yra** | 10–20 Hz nekomanduotas judesys, be įsisotinimo, tiesiog nepakanka trikdžių atmetimo toje juostoje | 77× giro/setpoint, 0,00% įsisotinimo, identiška prieš ir po filtrų |
 
-### Pamoka, kurią verta pasilikti
+Trūktelėjimai ir tęstinis drebėjimas susiję, bet nėra tas pats: trūktelėjimas yra įsisotinimo
+atvejis blogiausiu variantu, o kasdienis drebėjimas greitame skridime yra atmetimo problema, kai
+mikseris net nepriartėja prie savo ribų.
 
-Rezonansą gaudyti patrauklu. Jis turi dažnį, reaguoja į mechaninius pakeitimus, iš jo išeina gražios
-diagramos, ir kiekvienas veiksmas duoda išmatuojamą pokytį — todėl *atrodo* kaip progresas. Prireikė,
-kad pilotas tris kartus pasakytų „jei tai būtų rezonansas, drebėtų visą laiką“, kol nustojau ginti
-savo susikurtą paaiškinimą.
-
-Prietaisas, kuriuo labiausiai tikėjau — blackbox giroskopo spektras — ir buvo priežastis, kodėl
-užstrigau. Jis puikus aukščiau 80 Hz. Atsakymas visą laiką buvo po juo.
-
+Rezonansą gaudyti patrauklu. Jis turi dažnį, reaguoja į mechaninius pakeitimus, iš jo išeina
+gražios diagramos, ir kiekvienas veiksmas duoda išmatuojamą pokytį — todėl *atrodo* kaip
+progresas. Prireikė, kad tą pačią frazę — „jei tai būtų rezonansas, drebėtų visą laiką" — savo
+pastabose užsirašyčiau tris atskirus kartus, kol nustojau ginti savo susikurtą paaiškinimą ir
+nuėjau pažiūrėti neapdoroto nekomanduoto judesio. Prietaisas, kuriuo labiausiai tikėjau —
+blackbox giroskopo spektras — ir buvo priežastis, kodėl užstrigau. Jis puikus aukščiau 80 Hz, ir
+skaičiau jį nuolat. Atsakymas visą laiką buvo po juo.
 
 ## Kodėl putplastis vis dėlto padėjo
 
-Kiškių gaudymo skyriui reikia užbaigimo, nes vieno dalyko jis nepaaiškina: **jei drebėjimas yra žemų
-frekvencijų valdžios problema, kodėl putplasčio gabalas tarp dviejų plokščių taip padėjo?**
-Putplastis nepriduoda traukos. Neišplečia mikserio diapazono. Jis turėtų būti nesvarbus.
+Lieka vienas nepaaiškintas dalykas: **jei drebėjimas yra žemų frekvencijų valdžios problema,
+kodėl putplasčio gabalas tarp dviejų plokščių taip padėjo?** Putplastis nepriduoda traukos.
+Neišplečia mikserio diapazono. Jis turėtų būti nesvarbus.
 
 Nėra nesvarbus. Išmatuota sutapatintomis sąlygomis — stabilus skridimas, gazas 1380–1560, smūgiai
-išmesti:
+išmesti, tad agresyvumo skirtumai to nevaro:
 
 ```chart
 {
@@ -2658,70 +2604,63 @@ išmesti:
 | priekinis TPU išimtas | 26,6 | 3,58 | 660 |
 | **MAŽAS gabalėlis** | **42,5** | **6,10** | **598** |
 
-**corr(vibracija, 1–8 Hz nekomanduota) = +0,92. corr(vibracija, atsarga) = −0,92.**
+**corr(vibracija, 1–8 Hz nekomanduota) = +0,92. corr(vibracija, atsarga) = −0,92.** Didelis
+putplastis laimi pagal abu rodiklius, mažas gabalėlis pralošia pagal abu, su **2,2× didesniu žemų
+frekvencijų siūbavimu nei didysis.** Taigi tvirtinimas tikrai pasiekia tai, kas man realiai
+svarbu — tik ne taip, kaip maniau.
 
-### Tai ne variklių virpėjimas
+Ne per variklių virpėjimą, kuris buvo pirmas mano spėjimas: vibracija patenka į D narį, varikliai
+virpa, virpėjimas suvartoja mikserio diapazoną. Išmatavau — neatlaiko. Variklių virpėjimas yra
+**5,3–7,1 vienetai RMS, maždaug 1,6–2,1% diapazono** — tikras, ir gerokai per mažas, kad
+paaiškintų valdžios praradimą.
 
-Pirmas spėjimas buvo, kad vibracija patenka į D narį, varikliai virpa, o virpėjimas suvartoja
-mikserio diapazoną. Išmatavau — neatlaiko. Variklių virpėjimas yra **5,3–7,1 vienetai RMS, maždaug
-1,6–2,1% diapazono.** Per mažai, kad paaiškintų valdžios praradimą.
+Paaiškinimas, kuris tinka: O4 ir gaubtas yra nemaža masė, o ant lanksčių gummy ta masė gali judėti
+**rėmo atžvilgiu.** Tai padaro aparatą dviejų kūnų sistema — kilpa komanduoja rėmui, o gaubtas
+seka vėluodamas ir persisuka. **Tas tarpusavio judesys iš principo nevaldomas.** Jokie PID
+koeficientai jo nepasiekia, nes giroskopas yra ant kito kūno. Ir jis pasireiškia būtent ten, kur
+gyvena simptomas: lėtas, nekomanduotas, 1–8 Hz siūbavimas, kurį matau akiniuose ir kurio tune
+nepasiekia.
 
-### Skraidymo valdiklis valdo tik tai, prie ko yra prisuktas
+Putplastis to sujungimo nesustandina, jis jį **slopina.** Nuslopinti, abi masės juda kaip viena, ir
+kilpa pagaliau valdo visą aparatą, o ne vieną kūną, prisuktą prie siūbuojančio. Tai atgaline data
+paaiškina visą eksperimentų seką:
 
-O4 ir gaubtas yra nemaža masė, o ant lanksčių gummy ta masė gali judėti **rėmo atžvilgiu.** Tai
-padaro aparatą dviejų kūnų sistema: kilpa komanduoja rėmui, o gaubtas seka vėluodamas ir persisuka.
-
-**Tas tarpusavio judesys iš principo nevaldomas.** Jokie PID koeficientai jo nepasiekia, nes
-giroskopas yra ant kito kūno. Ir jis pasireiškia būtent ten, kur ir skundas — lėtas, nekomanduotas,
-1–8 Hz siūbavimas.
-
-Putplastis to sujungimo nesustandina. Jis jį **slopina.** Nuslopinti, abu kūnai juda kaip vienas.
-
-Tai paaiškina visą eksperimentų seką:
-
-- **Didysis putplastis geriausias** — slopina per visą sąlyties plokštumą
-- **TPU blogiau už putplastį** — standumas be slopinimo leidžia rezonansinį apsikeitimą, tik pakeičia dažnį
-- **Mažas gabalėlis blogiausias** — per mažas ką nors slopinti, ir įvedė aštrią modą su 81× dominavimu
+- **Didysis putplastis geriausias** — slopina reliatyvią modą per visą sąlyties plokštumą
+- **TPU blogiau už putplastį** — standumas be slopinimo vis tiek leidžia rezonansinį apsikeitimą,
+  tik pakeičia dažnį
+- **Mažas gabalėlis blogiausias** — per mažas ką nors slopinti, ir įvedė skustuvo aštrumo modą su
+  81× dominavimu, kai visos kitos konfigūracijos sėdėjo tarp 4,4× ir 8,2×
 - **Jokie tune pakeitimai nepadėjo** — nes tai niekada nebuvo koeficientų problema
 
-Taigi tvirtinimo tyrimas vis dėlto nebuvo kiškis. Tik nesugebėjau paaiškinti, *kodėl* jis veikia, kol
-nenustojau žiūrėti aukščiau 80 Hz.
+Taigi tvirtinimo tyrimas vis dėlto nebuvo kiškis. Savaitę raportavau teisingą intervenciją su
+neteisinga priežastimi prilipinta prie jos.
 
-### Sąžiningos šio rezultato ribos
-
-Penkios konfigūracijos, dvi dienos, skirtingos baterijos, skirtingas oras, skirtingas agresyvumas.
-r = +0,92 ant penkių susietų taškų yra **užuomina, ne įrodymas.** Ir *skrydžio vidaus* korekliacija
-tarp vibracijos ir drebėjimo yra apie nulį arba šiek tiek negatyvi (−0,02 iki −0,27) — tai reiškia,
-kad tai **konfigūracijos** savybė, o ne momentinis priežastingumas.
-
-### Ką realiai darysiu
-
-1. **Grąžinsiu didelį putplasčio gabalą.** Geriausias išmatuotas rezultatas pagal abu rodiklius.
-2. **Šilumą spręsiu kitaip, o ne mažindamas slopintuvą.** Didelis *plonas* slopinimo sluoksnis per
-   visą sąlytį — slopinanti lipni juosta, o ne storas kamštis.
-3. **Nustosiu vaikytis standumo.** Slopinimas nugali standumą, ir tai išmatuota.
-4. **Pritvirtinsiu O4 prie rėmo, ne tik prie gaubto.** Mažiau savarankiškai judančios masės.
-
+**Sąžiningos ribos.** Penkios konfigūracijos, dvi dienos, skirtingi paketai, skirtingas oras,
+skirtingas agresyvumas. r = +0,92 ant penkių susietų taškų yra **užuomina, ne įrodymas.** Ir
+*skrydžio vidaus* koreliacija tarp vibracijos ir drebėjimo yra apie nulį arba šiek tiek negatyvi
+(−0,02 iki −0,27) — tai reiškia, kad tai **konfigūracijos** savybė, o ne momentinis
+priežastingumas; nuoseklu su struktūrinės dinamikos paaiškinimu ir nenuoseklu su triukšmo.
 
 ## Drebėjimas, kurio nemačiau, ir narys, kuris jį varė
 
-Viskas iki šios vietos matavo 80–780 Hz. Pilotas nuolat kartojo, kad drebėjimą mato akimis, o 350 Hz
-niekas akimis nepamatys — tai pasireiškia kaip jello, kai kamera sujungta, o tai visai kitas
-simptomas.
-
-Jis buvo teisus, ir skaičius visą laiką buvo mano pačios lentelėje: **58,6% nekomanduoto judesio yra
-1–4 Hz juostoje.** Tad pagaliau apribojau originalų logą iki 0,5–3 Hz, būtent toje vietoje, į kurią
-jis parodė.
+Viskas iki šios vietos matavo 80–780 Hz. Bet tą drebėjimą mačiau savo akimis, o 350 Hz niekas
+akimis nepamatys — sujungtas su kamera jis pasireiškia kaip jello, visai kitas simptomas. Buvau
+teisus dėl to, ką mačiau, ir neteisus dėl to, kur to ieškoti, o skaičius visą laiką buvo mano
+paties juostų lentelėje: **58,6% nekomanduoto judesio yra 1–4 Hz juostoje.** Tad apribojau
+originalų logą iki 0,5–3 Hz būtent tame kadre, kurį buvau pažymėjęs, ir jis ten yra:
 
 | ašis | giro RMS | **iš viršaus į apačią** | periodas | **dažnis** | setpoint RMS | santykis |
 |---|---|---|---|---|---|---|
 | **roll** | 8,31 | **47,1 °/s** | 0,90 s | **1,11 Hz** | 5,00 | 2× |
 | **pitch** | 2,88 | 16,6 °/s | 0,56 s | **1,78 Hz** | 1,05 | **3×** |
 
-Vienas kablelis vienas herco ant roll. Pilnas ciklas per mažiau nei sekundę — giro **+21,9 °/s** prie
-t=45,11 iki **−21,2 °/s** prie t=45,91, kai pagaliukas beveik nieko neprašo.
+Vienas kablelis vienas herco ant roll: pilnas ciklas per mažiau nei sekundę, gyro **+21,9 °/s**
+prie t=45,11 nusviręs iki **−21,2 °/s** prie t=45,91, kai pagaliukas beveik nieko neprašo. Tai
+banga, kurią gali matyti akimis, ir būtent tai, ką aprašinėjau nuo pirmo skrydžio.
 
 ### Kuris narys tai daro
+
+Išskaidžius osciliuojančią roll komandą 0,5–3 Hz viduje:
 
 ```chart
 {
@@ -2784,7 +2723,7 @@ t=45,11 iki **−21,2 °/s** prie t=45,91, kai pagaliukas beveik nieko neprašo.
 | SUMA | 18,04 | — |
 
 Integratorius sudaro 93% — ir jis *didesnis už sumą*, t. y. P jį dalinai kompensuoja, o ne padeda.
-Įrodymas yra fazė:
+Fazė yra įrodymas:
 
 ```
 I nario fazė vs giro:   roll +105 deg    pitch +90 deg
@@ -2794,25 +2733,48 @@ drebėjimo periodas:     roll 0,90 s      pitch 0,56 s
 
 Sveikas integratorius **priešinasi** klaidai — apie 180°. Šis yra prie **+90…+105°**, t. y.
 kvadratūroje: sinchroniškai su klaidos *greičiu*, o ne prieš pačią klaidą. Kvadratūroje esantis
-integratorius nebekoreguoja — jis pumpuoja. Jo periodas sutampa su drebėjimo periodu abiejose ašyse.
+integratorius nebekoreguoja — jis pumpuoja: susisuka, kol klaida dar auga, pasiekia smailę jau po
+to, kai klaida apsivertė, ir atiduoda energiją sekančiam pusciklui. Jo periodas sutampa su
+drebėjimo periodu abiejose ašyse.
 
-Varikliai patvirtina, kad tai komanduojama: roll diferencialas **123,4 vienetai RMS** 0,5–3 Hz
-juostoje, koherencija su giroskopu 0,84.
+Varikliai patvirtina, kad tai komanduojama, o ne patiriama: roll diferencialas **123,4 vienetai
+RMS** 0,5–3 Hz juostoje, koherencija su giroskopu 0,84.
 
-### Kodėl tai atitinka piloto stebėjimus, o ankstesnės mano versijos – ne
+### Kodėl tai atitinka tai, ką realiai mačiau, o ankstesnės mano versijos – ne
 
-- **Jis tai mato, o aš to nematavau** — 1 Hz yra matomas rėmo judesys; 350 Hz yra jello.
-- **Šviežia baterija, dreba iš karto** — integratoriui įtampa nesvarbi, o tai nužudė mano
+- **Mačiau tai, bet nematavau** — 1 Hz yra matomas rėmo judesys; 350 Hz yra jello. Du simptomai,
+  ir kelias dienas juos maišiau.
+- **Šviežias paketas, dreba iš karto** — integratoriui įtampa nesvarbi, o tai nužudė mano
   sag-kompensacijos teoriją.
-- **Tiesiai ir posūkiuose vienodai** — I kaupiasi prieš bet kokią nuolatinę klaidą.
-- **Tęsiasi sekundes** — ciklas užsifiksavęs laikosi.
+- **Tiesiai ir posūkiuose vienodai** — I kaupiasi prieš bet kokią nuolatinę klaidą, įskaitant tą
+  patį pastovų disbalansą, išmatuotą anksčiau šiame tekste.
+- **Tęsiasi sekundes** — ribinis ciklas užsifiksavęs laikosi.
 - **Jokie mechaniniai pakeitimai nepadėjo** — tai gyvena valdiklyje, ne rėme.
-- **Putplastis vis tiek atrodė padedantis** — plokštės slopinimas didina fazės atsargą.
+- **Putplastis vis tiek atrodė padedantis** — plokštės slopinimas didina fazės atsargą, o tai
+  pakelia slenkstį ciklui išsilaikyti. Tvirtinimas niekada nebuvo priežastis, bet atsargą jis
+  pajudino.
 
-Ir koeficientai atitinka ašis: **`i_roll` yra 80 prieš serijinį 67, `i_yaw` tas pats +19%** — būtent
-tos dvi ašys ir osciliuoja. Pitch yra *žemiau* serijinio ir dreba maždaug tris kartus mažiau.
+Ir koeficientai atitinka ašis: **`i_roll` yra 80 prieš serijinį 67, `i_yaw` tas pats +19%** —
+būtent tos dvi ašys ir osciliuoja. Pitch yra *žemiau* serijinio ir osciliuoja maždaug trigubai
+mažiau (2,88 prieš 8,31).
 
-### Testas, kuris tai patvirtins arba nužudys
+## Kur dabar viskas stovi, ir testas, kuris tai išsprendžia
+
+Mažas gabalėlis išimamas. Toliau, tvarka:
+
+1. **Grąžinsiu didelį putplasčio gabalą.** Geriausias išmatuotas rezultatas pagal abu rodiklius —
+   80–780 Hz vibraciją ir 1–8 Hz nekomanduotą judesį — ir jello jis niekada nedavė.
+2. **Šilumą spręsiu kitaip, o ne mažindamas slopintuvą.** Didelis *plonas* slopinimo sluoksnis per
+   visą sąlytį — slopinanti lipni juosta, o ne storas kamštis tarpe — išlaiko slopinamą plotą
+   nebūdamas šiluminis kamštis. Arba palikti didelį gabalą ir nukreipti jį šalia ESC FET'ų, kurie
+   ir yra karštoji dalis, o ne MCU.
+3. **Nustosiu vaikytis standumo.** Slopinimas nugali standumą, ir tai išmatuota, o ne priimta.
+4. **Pritvirtinsiu O4 prie rėmo, ne tik prie gaubto.** Mažiau savarankiškai judančios masės yra
+   šaknies pataisymas; visa kita — tik mažinimas.
+5. **Gausiu serijinį Pro II su Wide moduliu.** Visos išvados čia išmatuotos ant hibrido, ir tai
+   sąžiningas būdas išsiaiškinti, kas perkeliama.
+
+Ir tada tas vienas testas, kuris išsprendžia diagnozę, o jis yra CLI įklijavimas, ne atsuktuvas:
 
 ```
 profile 0
@@ -2821,12 +2783,14 @@ set i_yaw = 50
 save
 ```
 
-Tyčia gerokai žemiau gamyklinio 67, nes noriu nedviprasmiško atsakymo.
+Tyčia gerokai žemiau gamyklinio 67, nes noriu nedviprasmiško atsakymo, o ne subtilaus. Jei 1 Hz
+banga sugriūva — diagnozė laikosi, ir tada keliu I atgal aukštyn, kol randu ribą. Jei ji išgyvena
+prie 50 — integratorius nekaltas, ir aš klystu penktą kartą.
 
-Ir tai reikia pasakyti atvirai: **tai trečias mechanizmas, kurį pasiūliau tam pačiam simptomui.**
-Rezonanso vaikymasis matavo ne tą juostą. Įsisotinimo istorija paaiškina smarkius trūktelėjimus, bet
-ne šį drebėjimą. Abu palikti šiame tekste, su klaidingomis dalimis, nes seka yra sąžiningas įrašas.
-
+Verta pasakyti atvirai: **tai trečias mechanizmas, kurį pasiūliau tam pačiam simptomui.**
+Rezonanso vaikymasis matavo ne tą juostą; įsisotinimo istorija paaiškina smarkius trūktelėjimus,
+bet ne šito, nes pažymėtoje vietoje nėra nė vieno įsisotinusio kadro. Abu palikti šiame tekste, su
+klaidingomis dalimis, nes seka yra sąžiningas įrašas, kaip diagnozė realiai klostėsi.
 
 ## Metodo pastabos, kurias verta pasilikti
 
@@ -2851,36 +2815,38 @@ flowchart LR
     style K fill:#244d68,color:#fff
 ```
 
-
 - **Dekoduoti kiekvieną logą faile**, ir bandyti paskutinį net jei jis nukirstas. Baterijos
-  atjungimai ir kritimai reguliariai nukerpa paskutinį logą, o jis dažnai ir yra
-  įdomiausias.
+  atjungimai ir kritimai reguliariai nukerpa paskutinį logą, o jis dažnai ir yra įdomiausias.
 - **Išmesti kritimus ir smūgius**, ir nupjauti ~15 s po arm bei prieš disarm, prieš darant bet
   kokią išvadą.
 - **Pirmiausia nustatyti triukšmo lygį.** CV 9% reiškė, kad kelios „pagerėjimo" vertės buvo
   niekas.
-- **Lyginti prie suderinto RPM**, visada. Rezonansas žalius palyginimus padaro beverčiais.
+- **Lyginti prie suderinto RPM**, visada, ir **sekti buvimo laiką** — 4 s išvyka per rezonansą
+  negali sukaupti tokios pačios amplitudės kaip 70 s pastovėjimas ant jo, tad plonos dėžės
+  klaidina ta kryptimi, kuri atrodo kaip rezultatas.
 - **Užrašyta vertė gali būti nuostata, o ne matavimas.** `motor_poles` buvo patikrintas prieš
-  duomenis, o ne priimtas patikliai.
-- **Niekada nespėti gyro vienetų** — auto-detektuoti ir raportuoti.
-- **Sekti buvimo laiką.** 4 s išvyka per rezonansą negali sukaupti tokios pačios amplitudės
-  kaip 70 s pastovėjimas ant jo, tad plonos dėžės klaidina ta kryptimi, kuri atrodo kaip
-  rezultatas.
+  duomenis, o ne priimtas patikliai. Ir niekada nespėti gyro vienetų — auto-detektuoti ir
+  raportuoti.
+- **Patikrinti, kurioje juostoje yra simptomas, prieš charakterizuojant juostą.** Būtent šis
+  kainavo man savaitę.
 
 ## Atgarsis
 
-Tai, ką ruošiausi pataisyti, buvo jello, ir aš jį pataisiau — nusipirkdamas rėmą, kurio
-gaubtas laiko kamerą atokiau nuo drebėjimo. Tai, ko nesitikėjau nusipirkti kartu, buvo minkšta
-spyruoklė tarp flight controller'io ir aparato, atsitiktinai suderinta į frekvenciją, per kurią
-keturi motorai pralekia kiekvieną kartą, kai vėjas stumia droną į šoną.
+Tai, ką ruošiausi pataisyti, buvo jello, ir aš jį pataisiau — nusipirkdamas rėmą, kurio gaubtas
+laiko kamerą atokiau nuo drebėjimo. Tai, ko nesitikėjau nusipirkti kartu, buvo minkšta spyruoklė
+tarp flight controller'io ir aparato, atsitiktinai suderinta į frekvenciją, per kurią keturi
+motorai pralekia kiekvieną kartą, kai vėjas stumia droną į šoną.
 
-Geresnė izoliacija davė man vaizdą, kurį Gyroflow gali išgelbėti, ir gyro trace'ą, kuris
-atrodo kaip avarija. Tai tas pats pakeitimas. Po savaitės logų, trijų atšaukimų ir vieno labai
-gėdingo analizatoriaus bug'o vienintelis svertas, kuris pajudino struktūrinę problemą, buvo
-putplasčio gabalas — ir vis dar negaliu pasakyti, ar jis suveikė pridėdamas standumo, pridėdamas
-modalinės masės, ar pridėdamas slopinimo.
+Geresnė izoliacija davė man vaizdą, kurį Gyroflow gali išgelbėti šviesią dieną, ir gyro trace'ą,
+kuris atrodo kaip avarija. Tai tas pats pakeitimas. O tas drebėjimas, kurį visą laiką mačiau ir
+nuo kurio viskas prasidėjo, tame trace'e nebuvo visai. Jis buvo hercas su trupučiu, po viskuo, ką
+matavau, varomas integratoriaus, kuris susisuka prieš disbalansą, kurį irgi buvau išmatavęs ir
+padėjęs į šalį kaip nesusijusį.
 
-Toliau propai. Paskui TPU. Skaičius paskelbsiu bet kuriuo atveju.
+Po savaitės logų, kelių atšaukimų ir vieno labai gėdingo analizatoriaus bug'o vienintelis svertas,
+kuris pajudino struktūrinę problemą, buvo putplasčio gabalas. Jis veikia slopindamas — tą dalį
+dabar galiu pasakyti. Ar 1 Hz banga priklauso tai pačiai istorijai, ar vien integratoriui, yra
+vienas CLI įklijavimas nuo atsakymo, ir skaičius paskelbsiu bet kuriuo atveju.
 
 ---
 
