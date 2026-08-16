@@ -65,44 +65,6 @@ RESOLVED — no action needed (kept for audit trail):
    line will be inconsistent with the post if you regenerate figures from it.
 -->
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
-<script>
-window.SNAKE_PALETTE = ['#244d68', '#915d52', '#bd9361', '#95b0c1'];
-function snakeChart(id, type, data, yLabel, xLabel) {
-  data.datasets.forEach(function (ds, i) {
-    var c = window.SNAKE_PALETTE[i % 4];
-    ds.borderColor = c;
-    ds.backgroundColor = (type === 'line') ? 'transparent' : c;
-    ds.borderWidth = (type === 'line') ? 2.5 : 0;
-    ds.pointRadius = (type === 'line') ? 3 : 0;
-    ds.tension = 0.25;
-    ds.spanGaps = true;
-  });
-  new Chart(document.getElementById(id), {
-    type: type,
-    data: data,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { display: data.datasets.length > 1, position: 'bottom' }
-      },
-      scales: {
-        y: {
-          title: { display: true, text: yLabel },
-          grid: { color: 'rgba(36,77,104,0.15)' }
-        },
-        x: {
-          title: { display: !!xLabel, text: xLabel || '' },
-          grid: { display: false }
-        }
-      }
-    }
-  });
-}
-</script>
-
 Craft name **Snake**. It started life as a Meteor75 Pro, and it is now a Meteor75 Pro II —
 frame and canopy ordered off AliExpress, everything expensive carried straight over. Same
 **Matrix 1S 3-in-1 FC**. Same **narrow-FOV DJI O4** air unit. New shell, old guts, and by the
@@ -118,7 +80,9 @@ frame is good. Decoupling it *softly* is not free.
 
 ## The build, and the mismatch that matters
 
-{{< figure src="meteor75-pro-vs-pro-ii.jpg" alt="The old teal Meteor75 Pro frame and canopy laid out beside the new black Meteor75 Pro II frame, assembled with motors and props" caption="Left: the old Pro frame and canopy, stripped. Right: the Pro II, built up. Same flight controller, same air unit, same motors — everything that changed is structural." >}}
+![The old teal Meteor75 Pro frame and canopy laid out beside the new black Meteor75 Pro II frame, assembled with motors and props](meteor75-pro-vs-pro-ii.jpg)
+
+*Left: the old Pro frame and canopy, stripped. Right: the Pro II, built up. Same flight controller, same air unit, same motors — everything that changed is structural.*
 
 - **Frame + canopy:** Meteor75 Pro II, AliExpress parts
 - **Guts:** carried over from the Meteor75 Pro — same Matrix 1S 3-in-1 FC, same narrow-FOV
@@ -180,13 +144,62 @@ Everyone's first instinct, including mine, was that this was a wind problem. It 
 there in the complaint. So I compared sections at **matched prop frequency** (330–350 Hz), to
 hold the resonance constant and let only the air change.
 
-<div style="height:360px"><canvas id="c1"></canvas></div>
-<script>
-snakeChart('c1', 'bar',
-  { labels: ['outdoor gustiest\n(LF>18)', 'outdoor, all', 'outdoor calmest', 'indoor clean', 'indoor calmest air'],
-    datasets: [{ label: 'roll HF RMS', data: [54.9, 63.1, 67.7, 78.1, 80.9] }] },
-  'roll pre-filter HF RMS (deg/s)');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      [
+        "outdoor gustiest",
+        "(LF>18)"
+      ],
+      "outdoor, all",
+      "outdoor calmest",
+      "indoor clean",
+      "indoor calmest air"
+    ],
+    "datasets": [
+      {
+        "label": "roll HF RMS",
+        "data": [
+          54.9,
+          63.1,
+          67.7,
+          78.1,
+          80.9
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": false,
+          "text": ""
+        }
+      }
+    }
+  }
+}
+```
 
 | section | roll HF (°/s) | turbulence | duration |
 |---|---|---|---|
@@ -234,13 +247,57 @@ set gyro_lpf1_dyn_min_hz = 250
 
 Measured at matched prop RPM:
 
-<div style="height:340px"><canvas id="c4"></canvas></div>
-<script>
-snakeChart('c4', 'bar',
-  { labels: ['post-filter roll HF', 'D-term roll RMS', 'D-term pitch RMS', 'motor jitter'],
-    datasets: [{ label: 'change (%)', data: [-70.6, -51.0, -49.0, -42.0] }] },
-  'change (%)');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "post-filter roll HF",
+      "D-term roll RMS",
+      "D-term pitch RMS",
+      "motor jitter"
+    ],
+    "datasets": [
+      {
+        "label": "change (%)",
+        "data": [
+          -70.6,
+          -51.0,
+          -49.0,
+          -42.0
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "change (%)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": false,
+          "text": ""
+        }
+      }
+    }
+  }
+}
+```
 
 | metric | before | after | change |
 |---|---|---|---|
@@ -288,16 +345,86 @@ evening:
 
 Outdoor, full RPM sweep, same airframe, so what is changing here is the *forcing*:
 
-<div style="height:360px"><canvas id="c2"></canvas></div>
-<script>
-snakeChart('c2', 'line',
-  { labels: [275, 300, 325, 350, 375, 400, 425],
-    datasets: [
-      { label: 'old props', data: [42, 55, 62, 55, 43, 32, 25] },
-      { label: 'new props', data: [42, 43, 34, 24, 25, 22, 15] }
-    ] },
-  'roll pre-filter HF RMS (deg/s)', 'prop 1x frequency (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      275,
+      300,
+      325,
+      350,
+      375,
+      400,
+      425
+    ],
+    "datasets": [
+      {
+        "label": "old props",
+        "data": [
+          42,
+          55,
+          62,
+          55,
+          43,
+          32,
+          25
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "new props",
+        "data": [
+          42,
+          43,
+          34,
+          24,
+          25,
+          22,
+          15
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "prop 1x frequency (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 | prop Hz | 275 | 300 | 325 | 350 | 375 | 400 | 425 |
 |---|---|---|---|---|---|---|---|
@@ -352,13 +479,59 @@ What actually predicted the shake was a much duller idea:
 
 And then the dose-response, which is about as textbook as field data ever gets:
 
-<div style="height:360px"><canvas id="c3"></canvas></div>
-<script>
-snakeChart('c3', 'bar',
-  { labels: ['0', '1', '2', '3', '4'],
-    datasets: [{ label: 'vibration envelope', data: [55.46, 78.38, 95.41, 108.71, 111.64] }] },
-  'vibration envelope (deg/s)', 'motors inside 325-365 Hz');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "datasets": [
+      {
+        "label": "vibration envelope",
+        "data": [
+          55.46,
+          78.38,
+          95.41,
+          108.71,
+          111.64
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "vibration envelope (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "motors inside 325-365 Hz"
+        }
+      }
+    }
+  }
+}
+```
 
 | motors inside 325–365 Hz | envelope | % of flight |
 |---|---|---|
@@ -390,8 +563,6 @@ The old props hovered **dead inside** the resonance band — three hertz of marg
 imbalance was the smaller part of the win. Moving the operating point off the resonance was
 the larger part. I had accidentally done the right thing for a reason I did not understand.
 
-<div class="mermaid-wrap">
-
 ```mermaid
 flowchart TD
     A["Symptom: huge vibrations in wind<br/>roll 68.5, pitch 8.0 — 8.6:1"] --> B{"Is it the wind?"}
@@ -416,7 +587,6 @@ flowchart TD
     style P fill:#bd9361,color:#000
 ```
 
-</div>
 
 ## Two separate problems, not one — and why this is the Gyroflow argument
 
@@ -435,13 +605,55 @@ on roll, 10.6–12.9 Hz on pitch, amplitude 4.4–5.3 °/s. A control-loop limit
 Q = 10–100; Q ≈ 2 is a lightly-damped airframe genuinely being pushed around by turbulent air.
 **This is the band Gyroflow corrects well — but only in good light. More on that below.**
 
-<div style="height:340px"><canvas id="c11"></canvas></div>
-<script>
-snakeChart('c11', 'bar',
-  { labels: ['wind shake, roll', 'wind shake, pitch', '48.5 Hz mode'],
-    datasets: [{ label: 'Q factor', data: [2.2, 2.2, 83.7] }] },
-  'Q factor');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "wind shake, roll",
+      "wind shake, pitch",
+      "48.5 Hz mode"
+    ],
+    "datasets": [
+      {
+        "label": "Q factor",
+        "data": [
+          2.2,
+          2.2,
+          83.7
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "Q factor"
+        }
+      },
+      "x": {
+        "title": {
+          "display": false,
+          "text": ""
+        }
+      }
+    }
+  }
+}
+```
 
 For completeness: there *is* a genuinely sharp mode in there, at 48.5 Hz with **Q = 83.7**.
 Its amplitude is **0.24 °/s**, i.e. completely irrelevant. High Q is not the same as
@@ -449,17 +661,81 @@ important, and this is the example I will point at next time I am tempted by a t
 
 Where does the motion you can actually *see* live?
 
-<div style="height:380px"><canvas id="c10"></canvas></div>
-<script>
-snakeChart('c10', 'bar',
-  { labels: ['1-5 Hz', '5-10 Hz', '10-20 Hz', '200-790 Hz'],
-    datasets: [
-      { label: 'old props, old filters', data: [3.84, 2.66, 1.45, 1.68] },
-      { label: 'old props, new filters', data: [1.92, 1.58, 1.05, 0.38] },
-      { label: 'new props, new filters', data: [1.29, 0.93, 0.91, 0.26] }
-    ] },
-  'roll gyro RMS, post-filter (deg/s)', 'band');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "1-5 Hz",
+      "5-10 Hz",
+      "10-20 Hz",
+      "200-790 Hz"
+    ],
+    "datasets": [
+      {
+        "label": "old props, old filters",
+        "data": [
+          3.84,
+          2.66,
+          1.45,
+          1.68
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "old props, new filters",
+        "data": [
+          1.92,
+          1.58,
+          1.05,
+          0.38
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      },
+      {
+        "label": "new props, new filters",
+        "data": [
+          1.29,
+          0.93,
+          0.91,
+          0.26
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "#bd9361",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll gyro RMS, post-filter (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "band"
+        }
+      }
+    }
+  }
+}
+```
 
 | | 1–5 Hz | 5–10 Hz | 10–20 Hz | 200–790 Hz |
 |---|---|---|---|---|
@@ -482,7 +758,9 @@ jello* for *more low-frequency shake* is a good trade, even when the gyro logs l
 
 Everything above is measurements. This is the part that made me care in the first place.
 
-{{< figure src="raw-gyro-noise-trace.jpg" alt="Betaflight blackbox viewer showing the raw gyro trace as a continuous amplitude-modulated noise band across the whole flight, with the filtered gyro, P term, D term and PID sums all sitting flat below it" caption="The thing I am actually fighting. Top trace is raw gyro: a continuous band that swells and fades rather than a clean line. Everything below it - filtered gyro, P, D, PID sums - is flat, which is the filters doing their job. None of that helps the camera." >}}
+![Betaflight blackbox viewer showing the raw gyro trace as a continuous amplitude-modulated noise band across the whole flight, with the filtered gyro, P term, D term and PID sums all sitting flat below it](raw-gyro-noise-trace.jpg)
+
+*The thing I am actually fighting. Top trace is raw gyro: a continuous band that swells and fades rather than a clean line. Everything below it - filtered gyro, P, D, PID sums - is flat, which is the filters doing their job. None of that helps the camera.*
 
 What I am chasing is the noise you can see directly in the raw gyro trace — a continuous,
 amplitude-modulated band that swells and fades rather than sitting at a constant level. On its own
@@ -527,13 +805,59 @@ half-cycle at 17 Hz — so raising `dterm_lpf1_static_hz` from 75 to 90 looked l
 
 Matched indoor hover, same props, 307 vs 309 Hz:
 
-<div style="height:340px"><canvas id="c5"></canvas></div>
-<script>
-snakeChart('c5', 'bar',
-  { labels: ['post-filter noise', 'D-term RMS', 'D-term HF noise', 'motor jitter', '14 Hz oscillation'],
-    datasets: [{ label: 'change (%)', data: [171, 242, 283, 370, 168] }] },
-  'change (%)');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "post-filter noise",
+      "D-term RMS",
+      "D-term HF noise",
+      "motor jitter",
+      "14 Hz oscillation"
+    ],
+    "datasets": [
+      {
+        "label": "change (%)",
+        "data": [
+          171,
+          242,
+          283,
+          370,
+          168
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "change (%)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": false,
+          "text": ""
+        }
+      }
+    }
+  }
+}
+```
 
 | | lpf1 = 75 | lpf1 = 90 | change |
 |---|---|---|---|
@@ -597,16 +921,69 @@ overworked m1. Two hardware diagnoses, both confident.
 
 Then I rotated the canopy 180° and the ordering **reversed**:
 
-<div style="height:340px"><canvas id="c12"></canvas></div>
-<script>
-snakeChart('c12', 'bar',
-  { labels: ['m1', 'm2', 'm3', 'm4'],
-    datasets: [
-      { label: 'before canopy rotation', data: [-0.1, -5.3, 5.0, 0.4] },
-      { label: 'after canopy rotation', data: [3.1, 5.0, -3.4, -4.7] }
-    ] },
-  'RPM per unit output, deviation from mean (%)', 'motor');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "m1",
+      "m2",
+      "m3",
+      "m4"
+    ],
+    "datasets": [
+      {
+        "label": "before canopy rotation",
+        "data": [
+          -0.1,
+          -5.3,
+          5.0,
+          0.4
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "after canopy rotation",
+        "data": [
+          3.1,
+          5.0,
+          -3.4,
+          -4.7
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "RPM per unit output, deviation from mean (%)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "motor"
+        }
+      }
+    }
+  }
+}
+```
 
 ```
 before rotation:  m2 = -4.2% to -6.1%   (worst)
@@ -620,16 +997,69 @@ measuring anyway.
 
 The rotation did do real work on CoG:
 
-<div style="height:340px"><canvas id="c13"></canvas></div>
-<script>
-snakeChart('c13', 'bar',
-  { labels: ['m1', 'm2', 'm3', 'm4'],
-    datasets: [
-      { label: 'before rotation (15:53 outdoor)', data: [12.5, -5.8, -3.2, -3.4] },
-      { label: 'after rotation (20:40)', data: [-3.3, -13.8, 11.8, 5.3] }
-    ] },
-  'hover output, deviation from mean (%)', 'motor');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "m1",
+      "m2",
+      "m3",
+      "m4"
+    ],
+    "datasets": [
+      {
+        "label": "before rotation (15:53 outdoor)",
+        "data": [
+          12.5,
+          -5.8,
+          -3.2,
+          -3.4
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "after rotation (20:40)",
+        "data": [
+          -3.3,
+          -13.8,
+          11.8,
+          5.3
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "hover output, deviation from mean (%)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "motor"
+        }
+      }
+    }
+  }
+}
+```
 
 Hardest-working motor moved from m1 to m3/m4, and m1's clipping went **0.812% → 0.000%**.
 **The rotation alone took the front/rear pair split from +9.5% to +3.6%.**
@@ -677,16 +1107,66 @@ mechanical A/B, which is rarer than it should be in this hobby.
 
 The dose-response that had defined the entire problem **collapsed**:
 
-<div style="height:360px"><canvas id="c6"></canvas></div>
-<script>
-snakeChart('c6', 'bar',
-  { labels: ['0', '2', '4'],
-    datasets: [
-      { label: 'before foam', data: [35, 52, 57] },
-      { label: 'after foam', data: [29, 33, 33] }
-    ] },
-  'vibration envelope (deg/s)', 'motors inside 325-365 Hz');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "0",
+      "2",
+      "4"
+    ],
+    "datasets": [
+      {
+        "label": "before foam",
+        "data": [
+          35,
+          52,
+          57
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "after foam",
+        "data": [
+          29,
+          33,
+          33
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "vibration envelope (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "motors inside 325-365 Hz"
+        }
+      }
+    }
+  }
+}
+```
 
 | | 0 motors in band | 2 in band | 4 in band |
 |---|---|---|---|
@@ -699,16 +1179,98 @@ smaller.
 
 The resonance curve says the same thing:
 
-<div style="height:380px"><canvas id="c8"></canvas></div>
-<script>
-snakeChart('c8', 'line',
-  { labels: [250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500],
-    datasets: [
-      { label: 'before foam (heavy pack)', data: [35, 43, 49, 39, 32, 26, 17, 15, 15, 9, 5] },
-      { label: 'after foam (heavy pack)', data: [30, 27, 26, 28, 25, 25, 27, 27, 22, 15, 12] }
-    ] },
-  'roll pre-filter HF RMS (deg/s)', 'mean prop 1x frequency (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      250,
+      275,
+      300,
+      325,
+      350,
+      375,
+      400,
+      425,
+      450,
+      475,
+      500
+    ],
+    "datasets": [
+      {
+        "label": "before foam (heavy pack)",
+        "data": [
+          35,
+          43,
+          49,
+          39,
+          32,
+          26,
+          17,
+          15,
+          15,
+          9,
+          5
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "after foam (heavy pack)",
+        "data": [
+          30,
+          27,
+          26,
+          28,
+          25,
+          25,
+          27,
+          27,
+          22,
+          15,
+          12
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "mean prop 1x frequency (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 | metric | before | after | change |
 |---|---|---|---|
@@ -732,16 +1294,69 @@ earlier in the post — same metric, different intervention, different session.
 
 And the energy did not vanish, it moved:
 
-<div style="height:360px"><canvas id="c7"></canvas></div>
-<script>
-snakeChart('c7', 'bar',
-  { labels: ['280-325', '325-365', '365-420', '420-500'],
-    datasets: [
-      { label: 'before foam', data: [714, 313, 20, 16] },
-      { label: 'after foam', data: [181, 135, 104, 77] }
-    ] },
-  'pre-filter roll energy', 'frequency band (Hz)');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "280-325",
+      "325-365",
+      "365-420",
+      "420-500"
+    ],
+    "datasets": [
+      {
+        "label": "before foam",
+        "data": [
+          714,
+          313,
+          20,
+          16
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "after foam",
+        "data": [
+          181,
+          135,
+          104,
+          77
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "pre-filter roll energy"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "frequency band (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 | band | before | after |
 |---|---|---|
@@ -782,16 +1397,63 @@ are both withdrawn.
 What I *can* show is a properly controlled comparison: light pack versus heavy pack, foam
 absent in both, only the pack swapped.
 
-<div style="height:340px"><canvas id="c14"></canvas></div>
-<script>
-snakeChart('c14', 'bar',
-  { labels: ['light pack', 'heavy pack'],
-    datasets: [
-      { label: 'hover RPM (forcing)', data: [327, 347] },
-      { label: 'structure-fixed feature', data: [302, 255] }
-    ] },
-  'Hz');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "light pack",
+      "heavy pack"
+    ],
+    "datasets": [
+      {
+        "label": "hover RPM (forcing)",
+        "data": [
+          327,
+          347
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "structure-fixed feature",
+        "data": [
+          302,
+          255
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "Hz"
+        }
+      },
+      "x": {
+        "title": {
+          "display": false,
+          "text": ""
+        }
+      }
+    }
+  }
+}
+```
 
 | | hover (forcing) | structure-fixed feature |
 |---|---|---|
@@ -825,17 +1487,97 @@ It was an artifact. **Shake versus wind is not proportional**, so a global ratio
 entirely on where in the wind range you happened to sample. Bin by instantaneous wind level
 instead, and compare only the bins both flights actually sampled:
 
-<div style="height:380px"><canvas id="c9"></canvas></div>
-<script>
-snakeChart('c9', 'line',
-  { labels: [3, 5, 7.5, 11, 16.5],
-    datasets: [
-      { label: 'original', data: [2.29, 4.47, 6.26, 8.74, 11.48] },
-      { label: 'heavy pack, no foam', data: [2.27, 3.89, 5.71, 8.18, 10.99] },
-      { label: 'heavy pack, + foam', data: [2.56, 3.66, 4.98, 6.72, 8.52] }
-    ] },
-  'shake envelope, 8-45 Hz (deg/s)', 'wind / disturbance level, 0.5-15 Hz envelope (deg/s)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      3,
+      5,
+      7.5,
+      11,
+      16.5
+    ],
+    "datasets": [
+      {
+        "label": "original",
+        "data": [
+          2.29,
+          4.47,
+          6.26,
+          8.74,
+          11.48
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "heavy pack, no foam",
+        "data": [
+          2.27,
+          3.89,
+          5.71,
+          8.18,
+          10.99
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "heavy pack, + foam",
+        "data": [
+          2.56,
+          3.66,
+          4.98,
+          6.72,
+          8.52
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "shake envelope, 8-45 Hz (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "wind / disturbance level, 0.5-15 Hz envelope (deg/s)"
+        }
+      }
+    }
+  }
+}
+```
 
 | | w 2–4 | w 4–6 | w 6–9 | w 9–13 | w 13–20 |
 |---|---|---|---|---|---|
@@ -859,7 +1601,9 @@ coming out unreliable.
 
 ## Where it stands — the trade I actually made
 
-{{< figure src="pro-ii-canopy-o4-narrow.jpg" alt="Front close-up of the assembled Meteor75 Pro II showing the narrow-FOV DJI O4 camera in the Pro II canopy" caption="The canopy the whole argument is about — drawn around the O4 Wide, carrying a narrow-FOV O4. It isolates the camera far better than the old one. It also gave the flight controller something to fight." >}}
+![Front close-up of the assembled Meteor75 Pro II showing the narrow-FOV DJI O4 camera in the Pro II canopy](pro-ii-canopy-o4-narrow.jpg)
+
+*The canopy the whole argument is about — drawn around the O4 Wide, carrying a narrow-FOV O4. It isolates the camera far better than the old one. It also gave the flight controller something to fight.*
 
 So here is the thesis, now that all the measurements are on the table.
 
@@ -896,7 +1640,9 @@ numbers below show, **I cannot split the credit between them.** That is a self-i
 attribution problem and the honest move is to label it rather than pick a winner. A cleaner
 experiment would have changed one at a time.
 
-{{< figure src="tpu-gummy-mod.jpg" alt="Meteor75 Pro II from the rear three-quarter, with a red circle marking one of the flight controller gummy grommets that has TPU filament inserted" caption="TPU filament pushed inside the rubber gummies. The red circle marks one of them. Two jobs, not one: stiffer coupling, and a canopy far less likely to part company with the frame." >}}
+![Meteor75 Pro II from the rear three-quarter, with a red circle marking one of the flight controller gummy grommets that has TPU filament inserted](tpu-gummy-mod.jpg)
+
+*TPU filament pushed inside the rubber gummies. The red circle marks one of them. Two jobs, not one: stiffer coupling, and a canopy far less likely to part company with the frame.*
 
 The TPU does two jobs. The second is immediate and needs no measurement: with filament inside
 them, the gummies are much less inclined to **separate** — which on a whoop that spends its
@@ -922,17 +1668,122 @@ Here is where it lands on the resonance curve. Only one bin is trustworthy — 7
 300–325 Hz, against 0.5–1.8 s everywhere else — so I am plotting **only that point** rather than
 drawing a line through noise:
 
-<div style="height:400px"><canvas id="c18"></canvas></div>
-<script>
-snakeChart('c18', 'line',
-  { labels: [250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500],
-    datasets: [
-      { label: 'no foam (outdoor)', data: [35, 43, 49, 39, 32, 26, 17, 15, 15, 9, 5] },
-      { label: '+ foam (outdoor)', data: [30, 27, 26, 28, 25, 25, 27, 27, 22, 15, 12] },
-      { label: 'grommets out + TPU (indoor, 79.6 s dwell)', data: [null, null, 39, null, null, null, null, null, null, null, null], pointRadius: 8, showLine: false }
-    ] },
-  'roll pre-filter HF RMS (deg/s)', 'mean prop 1x frequency (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      250,
+      275,
+      300,
+      325,
+      350,
+      375,
+      400,
+      425,
+      450,
+      475,
+      500
+    ],
+    "datasets": [
+      {
+        "label": "no foam (outdoor)",
+        "data": [
+          35,
+          43,
+          49,
+          39,
+          32,
+          26,
+          17,
+          15,
+          15,
+          9,
+          5
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "+ foam (outdoor)",
+        "data": [
+          30,
+          27,
+          26,
+          28,
+          25,
+          25,
+          27,
+          27,
+          22,
+          15,
+          12
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "grommets out + TPU (indoor, 79.6 s dwell)",
+        "data": [
+          null,
+          null,
+          39,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "pointRadius": 8,
+        "showLine": false,
+        "borderColor": "#bd9361",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "mean prop 1x frequency (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 39 °/s, between the 49 of no foam and the 26 of foam. Except the two curves were flown outdoors
 and that point was flown indoors, which — per the very first finding in this post — is the
@@ -944,17 +1795,85 @@ Which is exactly why the dose-response, not the curve, was the pre-registered cr
 compares the quad against *itself* at different RPMs within one flight, so it does not care
 about the weather.
 
-<div style="height:360px"><canvas id="c17"></canvas></div>
-<script>
-snakeChart('c17', 'bar',
-  { labels: ['0 motors', '1 motor', '2 motors', '3 motors', '4 motors'],
-    datasets: [
-      { label: 'rotated, NO foam', data: [35, 41, 52, 55, 57] },
-      { label: 'rotated, + foam', data: [29, 31, 33, 33, 33] },
-      { label: 'grommets out + TPU (indoor)', data: [49, 52, 52, null, null] }
-    ] },
-  'vibration envelope (deg/s)', 'motors inside the 325-365 Hz resonance window');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "0 motors",
+      "1 motor",
+      "2 motors",
+      "3 motors",
+      "4 motors"
+    ],
+    "datasets": [
+      {
+        "label": "rotated, NO foam",
+        "data": [
+          35,
+          41,
+          52,
+          55,
+          57
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "rotated, + foam",
+        "data": [
+          29,
+          31,
+          33,
+          33,
+          33
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      },
+      {
+        "label": "grommets out + TPU (indoor)",
+        "data": [
+          49,
+          52,
+          52,
+          null,
+          null
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "#bd9361",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "vibration envelope (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "motors inside the 325-365 Hz resonance window"
+        }
+      }
+    }
+  }
+}
+```
 
 Slope across the band, which is the number that matters:
 
@@ -1022,17 +1941,105 @@ place — stiffening moved that feature up by about 110 Hz, and it stayed moved.
 Outdoor against outdoor, at matched prop RPM, which is the fair comparison I have been waiting
 two days for:
 
-<div style="height:400px"><canvas id="c19"></canvas></div>
-<script>
-snakeChart('c19', 'line',
-  { labels: [275, 300, 325, 350, 375, 400, 425],
-    datasets: [
-      { label: 'no foam', data: [43, 49, 39, 32, 26, null, null] },
-      { label: '+ foam', data: [27, 26, 28, 25, 25, 27, 27] },
-      { label: 'grommets out + TPU', data: [44, 38, 35, 32, 31, 23, 21] }
-    ] },
-  'roll pre-filter HF RMS (deg/s)', 'mean prop 1x frequency (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      275,
+      300,
+      325,
+      350,
+      375,
+      400,
+      425
+    ],
+    "datasets": [
+      {
+        "label": "no foam",
+        "data": [
+          43,
+          49,
+          39,
+          32,
+          26,
+          null,
+          null
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "+ foam",
+        "data": [
+          27,
+          26,
+          28,
+          25,
+          25,
+          27,
+          27
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "grommets out + TPU",
+        "data": [
+          44,
+          38,
+          35,
+          32,
+          31,
+          23,
+          21
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "mean prop 1x frequency (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 Mean across reliable bins: **26.2 °/s for the foam, 33.0 for the TPU** — about 26% worse. And
 the curve is less flat: flatness 1.13 for the foam, **2.14** for the TPU, which is worse even
@@ -1089,18 +2096,129 @@ transmitting.
 This is the comparison the whole post has been building toward. Every curve is outdoor, binned by
 mean prop frequency, and only bins with **4 s or more of dwell** are plotted:
 
-<div style="height:420px"><canvas id="c20"></canvas></div>
-<script>
-snakeChart('c20', 'line',
-  { labels: [250, 275, 300, 325, 350, 375, 400, 425],
-    datasets: [
-      { label: 'original gummies, no foam', data: [null, 43, 49, 39, 32, 26, null, null] },
-      { label: 'stiff foam FC<->VTX', data: [null, 27, 26, 28, 25, 25, null, null] },
-      { label: 'all TPU in gummies', data: [40, 44, 38, 35, 32, 31, 23, 21] },
-      { label: 'front TPU removed', data: [null, 45, 31, 32, 28, 24, 22, null] }
-    ] },
-  'roll pre-filter HF RMS (deg/s)', 'mean prop 1x frequency (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      250,
+      275,
+      300,
+      325,
+      350,
+      375,
+      400,
+      425
+    ],
+    "datasets": [
+      {
+        "label": "original gummies, no foam",
+        "data": [
+          null,
+          43,
+          49,
+          39,
+          32,
+          26,
+          null,
+          null
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "stiff foam FC<->VTX",
+        "data": [
+          null,
+          27,
+          26,
+          28,
+          25,
+          25,
+          null,
+          null
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "all TPU in gummies",
+        "data": [
+          40,
+          44,
+          38,
+          35,
+          32,
+          31,
+          23,
+          21
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "front TPU removed",
+        "data": [
+          null,
+          45,
+          31,
+          32,
+          28,
+          24,
+          22,
+          null
+        ],
+        "borderColor": "#95b0c1",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "mean prop 1x frequency (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 And the two numbers that actually decide anything — what the camera sees, and whether the mode is
 being driven:
@@ -1154,7 +2272,9 @@ which killed the resonance in the gyro *and* left the footage clean.
 All TPU removed, back to the original gummies, and a small foam pad glued in near the connector —
 positioned so it damps without sitting over the hot side of the board.
 
-{{< figure src="canopy-foam-damper.jpg" alt="Side view of the Meteor75 Pro II on a cutting mat, showing a small pale foam block glued under the canopy near the connector" caption="Original gummies back in, plus one small foam pad near the connector. Note the size: the pad that actually killed the resonance was much larger and sat between the boards." >}}
+![Side view of the Meteor75 Pro II on a cutting mat, showing a small pale foam block glued under the canopy near the connector](canopy-foam-damper.jpg)
+
+*Original gummies back in, plus one small foam pad near the connector. Note the size: the pad that actually killed the resonance was much larger and sat between the boards.*
 
 Jello was the deciding factor, and that is the right call — it is the one symptom nothing
 downstream can fix. Gyroflow will not touch it, RockSteady will not touch it.
@@ -1239,19 +2359,137 @@ time under its 3000 RPM target and the longest continuous excursion lasting **4 
 
 The compromise did not work, and it is worth being blunt about how badly:
 
-<div style="height:420px"><canvas id="c21"></canvas></div>
-<script>
-snakeChart('c21', 'line',
-  { labels: [275, 300, 325, 350, 375, 400],
-    datasets: [
-      { label: 'original gummies, no treatment', data: [43, 49, 39, 32, 26, null] },
-      { label: 'LARGE foam between boards', data: [27, 26, 28, 25, 25, null] },
-      { label: 'all TPU in gummies', data: [44, 38, 35, 32, 31, 23] },
-      { label: 'front TPU removed', data: [45, 31, 32, 28, 24, 22] },
-      { label: 'SMALL foam pad, gummies stock', data: [48, 52, 48, 37, 37, 24] }
-    ] },
-  'roll pre-filter HF RMS (deg/s)', 'mean prop 1x frequency (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      275,
+      300,
+      325,
+      350,
+      375,
+      400
+    ],
+    "datasets": [
+      {
+        "label": "original gummies, no treatment",
+        "data": [
+          43,
+          49,
+          39,
+          32,
+          26,
+          null
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "LARGE foam between boards",
+        "data": [
+          27,
+          26,
+          28,
+          25,
+          25,
+          null
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "all TPU in gummies",
+        "data": [
+          44,
+          38,
+          35,
+          32,
+          31,
+          23
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "front TPU removed",
+        "data": [
+          45,
+          31,
+          32,
+          28,
+          24,
+          22
+        ],
+        "borderColor": "#95b0c1",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "SMALL foam pad, gummies stock",
+        "data": [
+          48,
+          52,
+          48,
+          37,
+          37,
+          24
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "mean prop 1x frequency (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 | mount | mean °/s | amplification | mode | **dominance** |
 |---|---|---|---|---|
@@ -1339,13 +2577,63 @@ and I talked past it for days.
 So I finally went and looked at where the uncommanded motion actually lives. Uncommanded meaning
 gyro minus setpoint — what the quad does that the pilot did not ask for:
 
-<div style="height:380px"><canvas id="c22"></canvas></div>
-<script>
-snakeChart('c22', 'bar',
-  { labels: ['1-4 Hz', '4-8 Hz', '8-15 Hz', '15-25 Hz', '25-40 Hz', '40-70 Hz', '70-120 Hz'],
-    datasets: [ { label: 'share of uncommanded motion power (%)', data: [58.6, 9.4, 16.5, 12.7, 2.2, 0.4, 0.1] } ] },
-  'share of uncommanded motion power (%)', 'band');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "1-4 Hz",
+      "4-8 Hz",
+      "8-15 Hz",
+      "15-25 Hz",
+      "25-40 Hz",
+      "40-70 Hz",
+      "70-120 Hz"
+    ],
+    "datasets": [
+      {
+        "label": "share of uncommanded motion power (%)",
+        "data": [
+          58.6,
+          9.4,
+          16.5,
+          12.7,
+          2.2,
+          0.4,
+          0.1
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "share of uncommanded motion power (%)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "band"
+        }
+      }
+    }
+  }
+}
+```
 
 **Ninety-seven percent of it is below 25 Hz.** My entire analysis lived at 80–780 Hz. I was
 measuring the band my tools were sharpest in, not the band the complaint was in.
@@ -1407,16 +2695,72 @@ much?** Foam does not add thrust. It does not widen the mixer range. It should b
 It is not irrelevant. Measured at matched conditions — steady flight, throttle 1380–1560, impacts
 excluded, so aggression differences are not driving it:
 
-<div style="height:400px"><canvas id="c23"></canvas></div>
-<script>
-snakeChart('c23', 'bar',
-  { labels: ['stock gummies', 'LARGE foam', 'all TPU', 'front TPU out', 'SMALL foam'],
-    datasets: [
-      { label: 'vibration, pre-filter 80-780 Hz (deg/s)', data: [38.3, 26.0, 31.0, 26.6, 42.5] },
-      { label: '1-8 Hz UNCOMMANDED motion (deg/s)', data: [4.81, 2.79, 2.97, 3.58, 6.10] }
-    ] },
-  'deg/s', 'mount configuration');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "stock gummies",
+      "LARGE foam",
+      "all TPU",
+      "front TPU out",
+      "SMALL foam"
+    ],
+    "datasets": [
+      {
+        "label": "vibration, pre-filter 80-780 Hz (deg/s)",
+        "data": [
+          38.3,
+          26.0,
+          31.0,
+          26.6,
+          42.5
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "1-8 Hz UNCOMMANDED motion (deg/s)",
+        "data": [
+          4.81,
+          2.79,
+          2.97,
+          3.58,
+          6.1
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "deg/s"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "mount configuration"
+        }
+      }
+    }
+  }
+}
+```
 
 | config | vibration | **1–8 Hz uncommanded** | mixer headroom |
 |---|---|---|---|
@@ -1490,8 +2834,6 @@ effect — consistent with a structural-dynamics explanation and inconsistent wi
 Practices that repeatedly changed the conclusion — not general advice, things that actually
 flipped an answer in this specific week:
 
-<div class="mermaid-wrap">
-
 ```mermaid
 flowchart LR
     A["Raw .BBL"] --> B["Decode EVERY log in the file<br/>including the truncated last one"]
@@ -1510,7 +2852,6 @@ flowchart LR
     style K fill:#244d68,color:#fff
 ```
 
-</div>
 
 - **Decode every log in the file**, and attempt the last one even if it is truncated. Battery
   pulls and crashes routinely truncate the final log, and that is often the interesting one.

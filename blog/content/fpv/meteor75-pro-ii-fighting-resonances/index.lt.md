@@ -38,44 +38,6 @@ Pilnas atvirų klausimų sąrašas (Hugo unsafe konfigas, pavadinimas, data,
 serija) — anglų versijos DRAFT NOTES bloke (index.md).
 -->
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
-<script>
-window.SNAKE_PALETTE = ['#244d68', '#915d52', '#bd9361', '#95b0c1'];
-function snakeChart(id, type, data, yLabel, xLabel) {
-  data.datasets.forEach(function (ds, i) {
-    var c = window.SNAKE_PALETTE[i % 4];
-    ds.borderColor = c;
-    ds.backgroundColor = (type === 'line') ? 'transparent' : c;
-    ds.borderWidth = (type === 'line') ? 2.5 : 0;
-    ds.pointRadius = (type === 'line') ? 3 : 0;
-    ds.tension = 0.25;
-    ds.spanGaps = true;
-  });
-  new Chart(document.getElementById(id), {
-    type: type,
-    data: data,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { display: data.datasets.length > 1, position: 'bottom' }
-      },
-      scales: {
-        y: {
-          title: { display: true, text: yLabel },
-          grid: { color: 'rgba(36,77,104,0.15)' }
-        },
-        x: {
-          title: { display: !!xLabel, text: xLabel || '' },
-          grid: { display: false }
-        }
-      }
-    }
-  });
-}
-</script>
-
 Craft name **Snake**. Pradžioje tai buvo Meteor75 Pro, dabar — Meteor75 Pro II: rėmas ir
 gaubtas iš AliExpress, viskas, kas kainuoja, perkelta be pakeitimų. Tas pats
 **Matrix 1S 3-in-1 FC**. Tas pats **narrow-FOV DJI O4** air unit. Naujas kiautas, seni vidūriai,
@@ -91,7 +53,9 @@ Atskirti ją *minkštai* — ne veltui.
 
 ## Konstrukcija ir neatitikimas, kuris pasirodė svarbus
 
-{{< figure src="meteor75-pro-vs-pro-ii.jpg" alt="Senas išmontuotas Meteor75 Pro rėmas ir gaubtas padėti šalia naujo Meteor75 Pro II rėmo su varikliais ir propeleriais" caption="Kairėje: senas Pro rėmas ir gaubtas, išmontuoti. Dešinėje: sumontuotas Pro II. Tas pats skraidymo valdiklis, tas pats oro modulis, tie patys varikliai — pasikeitė tik konstrukcija." >}}
+![Senas išmontuotas Meteor75 Pro rėmas ir gaubtas padėti šalia naujo Meteor75 Pro II rėmo su varikliais ir propeleriais](meteor75-pro-vs-pro-ii.jpg)
+
+*Kairėje: senas Pro rėmas ir gaubtas, išmontuoti. Dešinėje: sumontuotas Pro II. Tas pats skraidymo valdiklis, tas pats oro modulis, tie patys varikliai — pasikeitė tik konstrukcija.*
 
 - **Rėmas + gaubtas:** Meteor75 Pro II, dalys iš AliExpress
 - **Vidūriai:** perkelti iš Meteor75 Pro — tas pats Matrix 1S 3-in-1 FC, tas pats narrow-FOV
@@ -150,13 +114,62 @@ Visų, įskaitant mano, pirmoji nuojauta buvo, kad tai vėjo problema. Taip ir p
 skunde. Todėl lyginau atkarpas prie **suderintos propelerio frekvencijos** (330–350 Hz), kad
 rezonansas liktų fiksuotas, o kistų tik oras.
 
-<div style="height:360px"><canvas id="c1"></canvas></div>
-<script>
-snakeChart('c1', 'bar',
-  { labels: ['lauke, gūsingiausia\n(LF>18)', 'lauke, visa', 'lauke, ramiausia', 'vidus, švari atkarpa', 'vidus, ramiausias oras'],
-    datasets: [{ label: 'roll HF RMS', data: [54.9, 63.1, 67.7, 78.1, 80.9] }] },
-  'roll pre-filter HF RMS (°/s)');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      [
+        "lauke, gūsingiausia",
+        "(LF>18)"
+      ],
+      "lauke, visa",
+      "lauke, ramiausia",
+      "vidus, švari atkarpa",
+      "vidus, ramiausias oras"
+    ],
+    "datasets": [
+      {
+        "label": "roll HF RMS",
+        "data": [
+          54.9,
+          63.1,
+          67.7,
+          78.1,
+          80.9
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (°/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": false,
+          "text": ""
+        }
+      }
+    }
+  }
+}
+```
 
 | atkarpa | roll HF (°/s) | turbulencija | trukmė |
 |---|---|---|---|
@@ -205,13 +218,57 @@ set gyro_lpf1_dyn_min_hz = 250
 
 Išmatuota prie suderinto propelerio RPM:
 
-<div style="height:340px"><canvas id="c4"></canvas></div>
-<script>
-snakeChart('c4', 'bar',
-  { labels: ['post-filter roll HF', 'D-term roll RMS', 'D-term pitch RMS', 'motorų jitter'],
-    datasets: [{ label: 'pokytis (%)', data: [-70.6, -51.0, -49.0, -42.0] }] },
-  'pokytis (%)');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "post-filter roll HF",
+      "D-term roll RMS",
+      "D-term pitch RMS",
+      "motorų jitter"
+    ],
+    "datasets": [
+      {
+        "label": "pokytis (%)",
+        "data": [
+          -70.6,
+          -51.0,
+          -49.0,
+          -42.0
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "pokytis (%)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": false,
+          "text": ""
+        }
+      }
+    }
+  }
+}
+```
 
 | metrika | prieš | po | pokytis |
 |---|---|---|---|
@@ -260,16 +317,86 @@ vakaras:
 
 Lauke, pilnas RPM sweep'as, tas pats aparatas, taigi čia kinta *sužadinimas*:
 
-<div style="height:360px"><canvas id="c2"></canvas></div>
-<script>
-snakeChart('c2', 'line',
-  { labels: [275, 300, 325, 350, 375, 400, 425],
-    datasets: [
-      { label: 'seni propai', data: [42, 55, 62, 55, 43, 32, 25] },
-      { label: 'nauji propai', data: [42, 43, 34, 24, 25, 22, 15] }
-    ] },
-  'roll pre-filter HF RMS (°/s)', 'propelerio 1x frekvencija (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      275,
+      300,
+      325,
+      350,
+      375,
+      400,
+      425
+    ],
+    "datasets": [
+      {
+        "label": "seni propai",
+        "data": [
+          42,
+          55,
+          62,
+          55,
+          43,
+          32,
+          25
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "nauji propai",
+        "data": [
+          42,
+          43,
+          34,
+          24,
+          25,
+          22,
+          15
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (°/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "propelerio 1x frekvencija (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 | prop Hz | 275 | 300 | 325 | 350 | 375 | 400 | 425 |
 |---|---|---|---|---|---|---|---|
@@ -326,13 +453,59 @@ Tai, kas realiai prognozavo drebėjimą, buvo daug nuobodesnė idėja:
 
 Ir tada atsako dozė, kuri yra maždaug tokia vadovėlinė, kokia lauko duomenys tik gali būti:
 
-<div style="height:360px"><canvas id="c3"></canvas></div>
-<script>
-snakeChart('c3', 'bar',
-  { labels: ['0', '1', '2', '3', '4'],
-    datasets: [{ label: 'vibracijos gaubtinė', data: [55.46, 78.38, 95.41, 108.71, 111.64] }] },
-  'vibracijos gaubtinė (°/s)', 'motorų 325-365 Hz juostoje');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "datasets": [
+      {
+        "label": "vibracijos gaubtinė",
+        "data": [
+          55.46,
+          78.38,
+          95.41,
+          108.71,
+          111.64
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "vibracijos gaubtinė (°/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "motorų 325-365 Hz juostoje"
+        }
+      }
+    }
+  }
+}
+```
 
 | motorų 325–365 Hz juostoje | gaubtinė | % skrydžio |
 |---|---|---|
@@ -363,8 +536,6 @@ Seni propai kybo **tiesiai rezonanso juostoje** — trys hercai atsargos. Mažes
 buvo mažesnė pergalės dalis. Darbo taško patraukimas nuo rezonanso — didesnė. Atsitiktinai
 padariau teisingą dalyką dėl priežasties, kurios nesupratau.
 
-<div class="mermaid-wrap">
-
 ```mermaid
 flowchart TD
     A["Simptomas: didžiulės vibracijos vėjyje<br/>roll 68.5, pitch 8.0 — 8.6:1"] --> B{"Ar tai vėjas?"}
@@ -389,10 +560,10 @@ flowchart TD
     style P fill:#bd9361,color:#000
 ```
 
-</div>
 
+![Sumontuoto Meteor75 Pro II priekio stambus planas su siauro vaizdo kampo DJI O4 kamera Pro II gaubte](pro-ii-canopy-o4-narrow.jpg)
 
-{{< figure src="pro-ii-canopy-o4-narrow.jpg" alt="Sumontuoto Meteor75 Pro II priekio stambus planas su siauro vaizdo kampo DJI O4 kamera Pro II gaubte" caption="Gaubtas, apie kuri visas sis tekstas - suprojektuotas O4 Wide, bet nesa siauro vaizdo kampo O4. Kamera izoliuoja kur kas geriau nei senasis. Bet tuo paciu davė skraidymo valdikliui su kuo grumtis." >}}
+*Gaubtas, apie kuri visas sis tekstas - suprojektuotas O4 Wide, bet nesa siauro vaizdo kampo O4. Kamera izoliuoja kur kas geriau nei senasis. Bet tuo paciu davė skraidymo valdikliui su kuo grumtis.*
 ## Dvi atskiros problemos, ne viena — ir kodėl tai yra Gyroflow argumentas
 
 Šį atskyrimą prikalti užėmė didžiąją savaitės dalį, ir tai yra techninis viso, kas man čia
@@ -410,13 +581,55 @@ kai stabilizatorius apskritai pamato vaizdą.
 ciklas rodytų Q = 10–100; Q ≈ 2 yra silpnai slopinamas aparatas, kurį tikrai stumdo
 turbulentiškas oras. **Būtent šią juostą Gyroflow taiso gerai.**
 
-<div style="height:340px"><canvas id="c11"></canvas></div>
-<script>
-snakeChart('c11', 'bar',
-  { labels: ['vėjo drebėjimas, roll', 'vėjo drebėjimas, pitch', '48,5 Hz moda'],
-    datasets: [{ label: 'Q faktorius', data: [2.2, 2.2, 83.7] }] },
-  'Q faktorius');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "vėjo drebėjimas, roll",
+      "vėjo drebėjimas, pitch",
+      "48,5 Hz moda"
+    ],
+    "datasets": [
+      {
+        "label": "Q faktorius",
+        "data": [
+          2.2,
+          2.2,
+          83.7
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "Q faktorius"
+        }
+      },
+      "x": {
+        "title": {
+          "display": false,
+          "text": ""
+        }
+      }
+    }
+  }
+}
+```
 
 Dėl pilnumo: ten *yra* tikrai aštri moda, prie 48,5 Hz su **Q = 83,7**. Jos amplitudė —
 **0,24 °/s**, t. y. visiškai nereikšminga. Aukštas Q nėra tas pats kaip svarbus, ir tai bus
@@ -424,17 +637,81 @@ pavyzdys, į kurį parodysiu kitą kartą, kai mane sugundys aukšta plona smail
 
 Tai kur gyvena tas judesys, kurį realiai *matai*?
 
-<div style="height:380px"><canvas id="c10"></canvas></div>
-<script>
-snakeChart('c10', 'bar',
-  { labels: ['1-5 Hz', '5-10 Hz', '10-20 Hz', '200-790 Hz'],
-    datasets: [
-      { label: 'seni propai, seni filtrai', data: [3.84, 2.66, 1.45, 1.68] },
-      { label: 'seni propai, nauji filtrai', data: [1.92, 1.58, 1.05, 0.38] },
-      { label: 'nauji propai, nauji filtrai', data: [1.29, 0.93, 0.91, 0.26] }
-    ] },
-  'roll gyro RMS, post-filter (°/s)', 'juosta');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "1-5 Hz",
+      "5-10 Hz",
+      "10-20 Hz",
+      "200-790 Hz"
+    ],
+    "datasets": [
+      {
+        "label": "seni propai, seni filtrai",
+        "data": [
+          3.84,
+          2.66,
+          1.45,
+          1.68
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "seni propai, nauji filtrai",
+        "data": [
+          1.92,
+          1.58,
+          1.05,
+          0.38
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      },
+      {
+        "label": "nauji propai, nauji filtrai",
+        "data": [
+          1.29,
+          0.93,
+          0.91,
+          0.26
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "#bd9361",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll gyro RMS, post-filter (°/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "juosta"
+        }
+      }
+    }
+  }
+}
+```
 
 | | 1–5 Hz | 5–10 Hz | 10–20 Hz | 200–790 Hz |
 |---|---|---|---|---|
@@ -460,13 +737,59 @@ pinigai.
 
 Suderintas hover patalpoje, tie patys propai, 307 vs 309 Hz:
 
-<div style="height:340px"><canvas id="c5"></canvas></div>
-<script>
-snakeChart('c5', 'bar',
-  { labels: ['post-filter triukšmas', 'D-term RMS', 'D-term HF triukšmas', 'motorų jitter', '14 Hz virpesys'],
-    datasets: [{ label: 'pokytis (%)', data: [171, 242, 283, 370, 168] }] },
-  'pokytis (%)');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "post-filter triukšmas",
+      "D-term RMS",
+      "D-term HF triukšmas",
+      "motorų jitter",
+      "14 Hz virpesys"
+    ],
+    "datasets": [
+      {
+        "label": "pokytis (%)",
+        "data": [
+          171,
+          242,
+          283,
+          370,
+          168
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "pokytis (%)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": false,
+          "text": ""
+        }
+      }
+    }
+  }
+}
+```
 
 | | lpf1 = 75 | lpf1 = 90 | pokytis |
 |---|---|---|---|
@@ -529,16 +852,69 @@ pervargusį m1. Dvi aparatinės diagnozės, abi užtikrintos.
 
 Tada pasukau gaubtą 180° ir eiliškumas **apsivertė**:
 
-<div style="height:340px"><canvas id="c12"></canvas></div>
-<script>
-snakeChart('c12', 'bar',
-  { labels: ['m1', 'm2', 'm3', 'm4'],
-    datasets: [
-      { label: 'prieš gaubto pasukimą', data: [-0.1, -5.3, 5.0, 0.4] },
-      { label: 'po gaubto pasukimo', data: [3.1, 5.0, -3.4, -4.7] }
-    ] },
-  'RPM vienam išvesties vienetui, nuokrypis nuo vidurkio (%)', 'motoras');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "m1",
+      "m2",
+      "m3",
+      "m4"
+    ],
+    "datasets": [
+      {
+        "label": "prieš gaubto pasukimą",
+        "data": [
+          -0.1,
+          -5.3,
+          5.0,
+          0.4
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "po gaubto pasukimo",
+        "data": [
+          3.1,
+          5.0,
+          -3.4,
+          -4.7
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "RPM vienam išvesties vienetui, nuokrypis nuo vidurkio (%)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "motoras"
+        }
+      }
+    }
+  }
+}
+```
 
 ```
 prieš pasukimą:  m2 = -4,2% iki -6,1%   (blogiausias)
@@ -552,16 +928,69 @@ pakeičiau kažką nesusijusio ir vis tiek toliau mačiau.
 
 Pasukimas realiai padarė darbą su CoG:
 
-<div style="height:340px"><canvas id="c13"></canvas></div>
-<script>
-snakeChart('c13', 'bar',
-  { labels: ['m1', 'm2', 'm3', 'm4'],
-    datasets: [
-      { label: 'prieš pasukimą (15:53, lauke)', data: [12.5, -5.8, -3.2, -3.4] },
-      { label: 'po pasukimo (20:40)', data: [-3.3, -13.8, 11.8, 5.3] }
-    ] },
-  'hover išvestis, nuokrypis nuo vidurkio (%)', 'motoras');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "m1",
+      "m2",
+      "m3",
+      "m4"
+    ],
+    "datasets": [
+      {
+        "label": "prieš pasukimą (15:53, lauke)",
+        "data": [
+          12.5,
+          -5.8,
+          -3.2,
+          -3.4
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "po pasukimo (20:40)",
+        "data": [
+          -3.3,
+          -13.8,
+          11.8,
+          5.3
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "hover išvestis, nuokrypis nuo vidurkio (%)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "motoras"
+        }
+      }
+    }
+  }
+}
+```
 
 Sunkiausiai dirbantis motoras persikėlė iš m1 į m3/m4, o m1 clipping'as nukrito
 **0,812% → 0,000%**. **Vien pasukimas sumažino priekio/užpakalio poros skirtumą nuo +9,5% iki
@@ -610,16 +1039,66 @@ pakeitimų.** Švarus mechaninis A/B, kas šiame hobyje pasitaiko rečiau, nei t
 
 Atsako dozė, kuri apibrėžė visą problemą, **sugriuvo**:
 
-<div style="height:360px"><canvas id="c6"></canvas></div>
-<script>
-snakeChart('c6', 'bar',
-  { labels: ['0', '2', '4'],
-    datasets: [
-      { label: 'prieš putplastį', data: [35, 52, 57] },
-      { label: 'po putplasčio', data: [29, 33, 33] }
-    ] },
-  'vibracijos gaubtinė (°/s)', 'motorų 325-365 Hz juostoje');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "0",
+      "2",
+      "4"
+    ],
+    "datasets": [
+      {
+        "label": "prieš putplastį",
+        "data": [
+          35,
+          52,
+          57
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "po putplasčio",
+        "data": [
+          29,
+          33,
+          33
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "vibracijos gaubtinė (°/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "motorų 325-365 Hz juostoje"
+        }
+      }
+    }
+  }
+}
+```
 
 | | 0 motorų juostoje | 2 juostoje | 4 juostoje |
 |---|---|---|---|
@@ -632,16 +1111,98 @@ juos sumažinti.
 
 Rezonanso kreivė sako tą patį:
 
-<div style="height:380px"><canvas id="c8"></canvas></div>
-<script>
-snakeChart('c8', 'line',
-  { labels: [250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500],
-    datasets: [
-      { label: 'prieš putplastį (sunkus paketas)', data: [35, 43, 49, 39, 32, 26, 17, 15, 15, 9, 5] },
-      { label: 'po putplasčio (sunkus paketas)', data: [30, 27, 26, 28, 25, 25, 27, 27, 22, 15, 12] }
-    ] },
-  'roll pre-filter HF RMS (°/s)', 'vidutinė propelerio 1x frekvencija (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      250,
+      275,
+      300,
+      325,
+      350,
+      375,
+      400,
+      425,
+      450,
+      475,
+      500
+    ],
+    "datasets": [
+      {
+        "label": "prieš putplastį (sunkus paketas)",
+        "data": [
+          35,
+          43,
+          49,
+          39,
+          32,
+          26,
+          17,
+          15,
+          15,
+          9,
+          5
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "po putplasčio (sunkus paketas)",
+        "data": [
+          30,
+          27,
+          26,
+          28,
+          25,
+          25,
+          27,
+          27,
+          22,
+          15,
+          12
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (°/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "vidutinė propelerio 1x frekvencija (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 | metrika | prieš | po | pokytis |
 |---|---|---|---|
@@ -664,16 +1225,69 @@ rezultato ankstesnėje posto dalyje — ta pati metrika, kita intervencija, kita
 
 Ir energija neišnyko, ji persikėlė:
 
-<div style="height:360px"><canvas id="c7"></canvas></div>
-<script>
-snakeChart('c7', 'bar',
-  { labels: ['280-325', '325-365', '365-420', '420-500'],
-    datasets: [
-      { label: 'prieš putplastį', data: [714, 313, 20, 16] },
-      { label: 'po putplasčio', data: [181, 135, 104, 77] }
-    ] },
-  'pre-filter roll energija', 'frekvencijų juosta (Hz)');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "280-325",
+      "325-365",
+      "365-420",
+      "420-500"
+    ],
+    "datasets": [
+      {
+        "label": "prieš putplastį",
+        "data": [
+          714,
+          313,
+          20,
+          16
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "po putplasčio",
+        "data": [
+          181,
+          135,
+          104,
+          77
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "pre-filter roll energija"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "frekvencijų juosta (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 | juosta | prieš | po |
 |---|---|---|
@@ -715,16 +1329,63 @@ poslinkis ir 48% skaičius abu atšaukti.
 Ką *galiu* parodyti, tai tinkamai kontroliuotą palyginimą: lengvas paketas prieš sunkų,
 putplasčio nėra nei viename, pakeistas tik paketas.
 
-<div style="height:340px"><canvas id="c14"></canvas></div>
-<script>
-snakeChart('c14', 'bar',
-  { labels: ['lengvas paketas', 'sunkus paketas'],
-    datasets: [
-      { label: 'hover RPM (sužadinimas)', data: [327, 347] },
-      { label: 'struktūrai fiksuota ypatybė', data: [302, 255] }
-    ] },
-  'Hz');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "lengvas paketas",
+      "sunkus paketas"
+    ],
+    "datasets": [
+      {
+        "label": "hover RPM (sužadinimas)",
+        "data": [
+          327,
+          347
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "struktūrai fiksuota ypatybė",
+        "data": [
+          302,
+          255
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "Hz"
+        }
+      },
+      "x": {
+        "title": {
+          "display": false,
+          "text": ""
+        }
+      }
+    }
+  }
+}
+```
 
 | | hover (sužadinimas) | struktūrai fiksuota ypatybė |
 |---|---|---|
@@ -758,17 +1419,97 @@ visiškai priklauso nuo to, kurioje vėjo diapazono vietoje pasitaikė paimti du
 į dėžes pagal momentinį vėjo lygį ir lygink tik tas dėžes, kurias abu skrydžiai tikrai
 apėmė:
 
-<div style="height:380px"><canvas id="c9"></canvas></div>
-<script>
-snakeChart('c9', 'line',
-  { labels: [3, 5, 7.5, 11, 16.5],
-    datasets: [
-      { label: 'originalus', data: [2.29, 4.47, 6.26, 8.74, 11.48] },
-      { label: 'sunkus paketas, be putplasčio', data: [2.27, 3.89, 5.71, 8.18, 10.99] },
-      { label: 'sunkus paketas, + putplastis', data: [2.56, 3.66, 4.98, 6.72, 8.52] }
-    ] },
-  'drebėjimo gaubtinė, 8-45 Hz (°/s)', 'vėjo / trikdžio lygis, 0,5-15 Hz gaubtinė (°/s)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      3,
+      5,
+      7.5,
+      11,
+      16.5
+    ],
+    "datasets": [
+      {
+        "label": "originalus",
+        "data": [
+          2.29,
+          4.47,
+          6.26,
+          8.74,
+          11.48
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "sunkus paketas, be putplasčio",
+        "data": [
+          2.27,
+          3.89,
+          5.71,
+          8.18,
+          10.99
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "sunkus paketas, + putplastis",
+        "data": [
+          2.56,
+          3.66,
+          4.98,
+          6.72,
+          8.52
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "drebėjimo gaubtinė, 8-45 Hz (°/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "vėjo / trikdžio lygis, 0,5-15 Hz gaubtinė (°/s)"
+        }
+      }
+    }
+  }
+}
+```
 
 | | w 2–4 | w 4–6 | w 6–9 | w 9–13 | w 13–20 |
 |---|---|---|---|---|---|
@@ -831,7 +1572,9 @@ Planas: TPU filamentas įterptas gummy ball tvirtinimų vidun, kad gerokai pakel
 pakeičiant putplastį — kad FC ESC pusė vėl gautų oro pratekėjimą. Putplastis veikia, bet jis
 kartu yra ir antklodė ant karštos dalies.
 
-{{< figure src="tpu-gummy-mod.jpg" alt="Meteor75 Pro II is uzpakalio, raudonu apskritimu pazymeta viena is skraidymo valdiklio guminiu ivoriu su idetu TPU siulu" caption="TPU siulas, istumtas i guminius ivorius. Raudonas apskritimas zymi viena is ju. Du darbai, ne vienas: standesnis susietumas ir gaubtas, kuris kur kas maziau tikėtinai atsiskirs nuo remo." >}}
+![Meteor75 Pro II is uzpakalio, raudonu apskritimu pazymeta viena is skraidymo valdiklio guminiu ivoriu su idetu TPU siulu](tpu-gummy-mod.jpg)
+
+*TPU siulas, istumtas i guminius ivorius. Raudonas apskritimas zymi viena is ju. Du darbai, ne vienas: standesnis susietumas ir gaubtas, kuris kur kas maziau tikėtinai atsiskirs nuo remo.*
 
 Jis atlieka du darbus, ir tik vienas is ju nepatikrintas. **Standumo** efekto grafikas dar
 laukia duomenu. Bet antrasis darbas veikia is karto ir jam nereikia jokiu matavimu: su siulu
@@ -855,17 +1598,122 @@ konfigūracijos pakeitimų** — taigi tai grynai mechaniška, tik ne vieno kint
 Štai kur tai atsiduria rezonanso kreivėje. Tik viena juosta yra patikima — 79,6 s prie
 300–325 Hz, prieš 0,5–1,8 s visur kitur — todėl brėžiu **tik tą tašką**, o ne liniją per triukšmą:
 
-<div style="height:400px"><canvas id="c18"></canvas></div>
-<script>
-snakeChart('c18', 'line',
-  { labels: [250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500],
-    datasets: [
-      { label: 'be putplasčio (lauke)', data: [35, 43, 49, 39, 32, 26, 17, 15, 15, 9, 5] },
-      { label: '+ putplastis (lauke)', data: [30, 27, 26, 28, 25, 25, 27, 27, 22, 15, 12] },
-      { label: 'be įvorių + TPU (patalpoje, 79,6 s)', data: [null, null, 39, null, null, null, null, null, null, null, null], pointRadius: 8, showLine: false }
-    ] },
-  'roll pre-filter HF RMS (deg/s)', 'vidutinis propelerio 1x dažnis (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      250,
+      275,
+      300,
+      325,
+      350,
+      375,
+      400,
+      425,
+      450,
+      475,
+      500
+    ],
+    "datasets": [
+      {
+        "label": "be putplasčio (lauke)",
+        "data": [
+          35,
+          43,
+          49,
+          39,
+          32,
+          26,
+          17,
+          15,
+          15,
+          9,
+          5
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "+ putplastis (lauke)",
+        "data": [
+          30,
+          27,
+          26,
+          28,
+          25,
+          25,
+          27,
+          27,
+          22,
+          15,
+          12
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "be įvorių + TPU (patalpoje, 79,6 s)",
+        "data": [
+          null,
+          null,
+          39,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "pointRadius": 8,
+        "showLine": false,
+        "borderColor": "#bd9361",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "vidutinis propelerio 1x dažnis (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 39 °/s — tarp 49 be putplasčio ir 26 su putplasčiu. Tik kad tos dvi kreivės nuskraidytos lauke, o
 tas taškas — patalpoje, o tai, pagal patį pirmą šio teksto atradimą, yra **blogiausias** atvejis
@@ -875,17 +1723,85 @@ putplasčio kreivės yra padidintas nežinomu dydžiu, ir nesidėsiu, kad žinau
 Būtent todėl kriterijus buvo atsako kreivė, o ne rezonanso kreivė: ji lygina kvadrą su *pačiu
 savimi* prie skirtingų RPM viename skrydyje, tad jai oras nesvarbus.
 
-<div style="height:360px"><canvas id="c17"></canvas></div>
-<script>
-snakeChart('c17', 'bar',
-  { labels: ['0 variklių', '1 variklis', '2 varikliai', '3 varikliai', '4 varikliai'],
-    datasets: [
-      { label: 'pasuktas, BE putplasčio', data: [35, 41, 52, 55, 57] },
-      { label: 'pasuktas, + putplastis', data: [29, 31, 33, 33, 33] },
-      { label: 'be įvorių + TPU (patalpoje)', data: [49, 52, 52, null, null] }
-    ] },
-  'vibracijos gaubtinė (deg/s)', 'variklių 325-365 Hz rezonanso lange');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "0 variklių",
+      "1 variklis",
+      "2 varikliai",
+      "3 varikliai",
+      "4 varikliai"
+    ],
+    "datasets": [
+      {
+        "label": "pasuktas, BE putplasčio",
+        "data": [
+          35,
+          41,
+          52,
+          55,
+          57
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "pasuktas, + putplastis",
+        "data": [
+          29,
+          31,
+          33,
+          33,
+          33
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      },
+      {
+        "label": "be įvorių + TPU (patalpoje)",
+        "data": [
+          49,
+          52,
+          52,
+          null,
+          null
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "#bd9361",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "vibracijos gaubtinė (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "variklių 325-365 Hz rezonanso lange"
+        }
+      }
+    }
+  }
+}
+```
 
 | tvirtinimas | atsako nuolydis | verdiktas |
 |---|---|---|
@@ -948,17 +1864,105 @@ Struktūrai fiksuota ypatybė tam neprieštarauja: su TPU ji yra **363 Hz**, su 
 Lauke prieš lauką, prie sutapatinto propelerių RPM — sąžiningas palyginimas, kurio laukiau dvi
 dienas:
 
-<div style="height:400px"><canvas id="c19"></canvas></div>
-<script>
-snakeChart('c19', 'line',
-  { labels: [275, 300, 325, 350, 375, 400, 425],
-    datasets: [
-      { label: 'be putplasčio', data: [43, 49, 39, 32, 26, null, null] },
-      { label: '+ putplastis', data: [27, 26, 28, 25, 25, 27, 27] },
-      { label: 'be įvorių + TPU', data: [44, 38, 35, 32, 31, 23, 21] }
-    ] },
-  'roll pre-filter HF RMS (deg/s)', 'vidutinis propelerio 1x dažnis (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      275,
+      300,
+      325,
+      350,
+      375,
+      400,
+      425
+    ],
+    "datasets": [
+      {
+        "label": "be putplasčio",
+        "data": [
+          43,
+          49,
+          39,
+          32,
+          26,
+          null,
+          null
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "+ putplastis",
+        "data": [
+          27,
+          26,
+          28,
+          25,
+          25,
+          27,
+          27
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "be įvorių + TPU",
+        "data": [
+          44,
+          38,
+          35,
+          32,
+          31,
+          23,
+          21
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "vidutinis propelerio 1x dažnis (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 Vidurkis per patikimas juostas: **26,2 °/s putplasčiui, 33,0 TPU** — apie 26% blogiau. Ir kreivė
 mažiau plokščia: 1,13 putplasčiui, **2,14** TPU — blogiau net už 1,85 be jokio tvirtinimo
@@ -1015,18 +2019,129 @@ standesnio valdiklio tvirtinimo.
 Visos kreivės — lauke, suskirstytos pagal vidutinį propelerių dažnį, ir įtrauktos tik juostos su
 **4 s ar daugiau** išbūto laiko:
 
-<div style="height:420px"><canvas id="c20"></canvas></div>
-<script>
-snakeChart('c20', 'line',
-  { labels: [250, 275, 300, 325, 350, 375, 400, 425],
-    datasets: [
-      { label: 'originalūs gummy, be putplasčio', data: [null, 43, 49, 39, 32, 26, null, null] },
-      { label: 'standus putplastis FC<->VTX', data: [null, 27, 26, 28, 25, 25, null, null] },
-      { label: 'visi TPU gummy viduje', data: [40, 44, 38, 35, 32, 31, 23, 21] },
-      { label: 'priekinis TPU išimtas', data: [null, 45, 31, 32, 28, 24, 22, null] }
-    ] },
-  'roll pre-filter HF RMS (deg/s)', 'vidutinis propelerio 1x dažnis (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      250,
+      275,
+      300,
+      325,
+      350,
+      375,
+      400,
+      425
+    ],
+    "datasets": [
+      {
+        "label": "originalūs gummy, be putplasčio",
+        "data": [
+          null,
+          43,
+          49,
+          39,
+          32,
+          26,
+          null,
+          null
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "standus putplastis FC<->VTX",
+        "data": [
+          null,
+          27,
+          26,
+          28,
+          25,
+          25,
+          null,
+          null
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "visi TPU gummy viduje",
+        "data": [
+          40,
+          44,
+          38,
+          35,
+          32,
+          31,
+          23,
+          21
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "priekinis TPU išimtas",
+        "data": [
+          null,
+          45,
+          31,
+          32,
+          28,
+          24,
+          22,
+          null
+        ],
+        "borderColor": "#95b0c1",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "vidutinis propelerio 1x dažnis (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 | tvirtinimas | vidurkis °/s | FC išmatuota 250–450 Hz | **stiprinimo nuolydis** | struktūros ypatybė |
 |---|---|---|---|---|
@@ -1072,7 +2187,9 @@ gabalėlis — taip, kad slopintų, bet neuždengtų karštosios plokštės pus�
 plokščių, gerokai didesnis už šį. Dabartinis gabalėlis yra kompromisas, ir ar jo pakanka — kaip tik
 ir yra atviras klausimas.
 
-{{< figure src="canopy-foam-damper.jpg" alt="Meteor75 Pro II iš šono ant kilimėlio, po gaubtu matomas mažas šviesus putplasčio gabalėlis prie jungties" caption="Visi TPU išimti, vienas mažas putplasčio gabalėlis prie jungties. Lažybos: pakankamai slopinimo, kad nebūtų jello, ir pakankamai atviros vietos, kad ESC pusė kvėpuotų." >}}
+![Meteor75 Pro II iš šono ant kilimėlio, po gaubtu matomas mažas šviesus putplasčio gabalėlis prie jungties](canopy-foam-damper.jpg)
+
+*Visi TPU išimti, vienas mažas putplasčio gabalėlis prie jungties. Lažybos: pakankamai slopinimo, kad nebūtų jello, ir pakankamai atviros vietos, kad ESC pusė kvėpuotų.*
 
 Jello buvo sprendžiamasis faktorius, ir tai teisingas pasirinkimas — tai vienintelis simptomas,
 kurio niekas vėliau nebepataisys. Pagal lentelę aukščiau, vien gummy be nieko yra blogiausias
@@ -1125,19 +2242,137 @@ Visos išvados išmatuotos ant hibrido, ir negaliu tvirtinti, kad jos perkeliamo
 
 ## Mažas gabalėlis: blogiausias iš penkių
 
-<div style="height:420px"><canvas id="c21"></canvas></div>
-<script>
-snakeChart('c21', 'line',
-  { labels: [275, 300, 325, 350, 375, 400],
-    datasets: [
-      { label: 'originalūs gummy, be nieko', data: [43, 49, 39, 32, 26, null] },
-      { label: 'DIDELIS putplastis tarp plokščių', data: [27, 26, 28, 25, 25, null] },
-      { label: 'visi TPU gummy viduje', data: [44, 38, 35, 32, 31, 23] },
-      { label: 'priekinis TPU išimtas', data: [45, 31, 32, 28, 24, 22] },
-      { label: 'MAŽAS putplasčio gabalėlis', data: [48, 52, 48, 37, 37, 24] }
-    ] },
-  'roll pre-filter HF RMS (deg/s)', 'vidutinis propelerio 1x dažnis (Hz)');
-</script>
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      275,
+      300,
+      325,
+      350,
+      375,
+      400
+    ],
+    "datasets": [
+      {
+        "label": "originalūs gummy, be nieko",
+        "data": [
+          43,
+          49,
+          39,
+          32,
+          26,
+          null
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "DIDELIS putplastis tarp plokščių",
+        "data": [
+          27,
+          26,
+          28,
+          25,
+          25,
+          null
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "visi TPU gummy viduje",
+        "data": [
+          44,
+          38,
+          35,
+          32,
+          31,
+          23
+        ],
+        "borderColor": "#bd9361",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "priekinis TPU išimtas",
+        "data": [
+          45,
+          31,
+          32,
+          28,
+          24,
+          22
+        ],
+        "borderColor": "#95b0c1",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      },
+      {
+        "label": "MAŽAS putplasčio gabalėlis",
+        "data": [
+          48,
+          52,
+          48,
+          37,
+          37,
+          24
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "transparent",
+        "borderWidth": 2,
+        "pointRadius": 3,
+        "tension": 0.25,
+        "spanGaps": true,
+        "fill": false
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "roll pre-filter HF RMS (deg/s)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "vidutinis propelerio 1x dažnis (Hz)"
+        }
+      }
+    }
+  }
+}
+```
 
 | tvirtinimas | vidurkis °/s | stiprinimas | moda | **dominavimas** |
 |---|---|---|---|---|
@@ -1188,7 +2423,9 @@ atsitrenkimas į grindis buvo 9,8 G, o kritimas 9,6 G. Šis buvo stipresnis už 
 
 Viskas aukščiau — matavimai. Ši dalis paaiškina, kodėl man iš viso tai svarbu.
 
-{{< figure src="raw-gyro-noise-trace.jpg" alt="Betaflight blackbox peržiūros programa: neapdorotas giroskopo pjūvis kaip tolydi amplitudės moduliuota triukšmo juosta per visą skrydį, o žemiau filtruotas giroskopas, P, D ir PID sumos - plokščios" caption="Tai, su kuo iš tikrųjų kariauju. Viršuje neapdorotas giroskopas: tolydi juosta, kuri auga ir traukiasi, o ne švari linija. Viskas žemiau - filtruotas giroskopas, P, D, PID sumos - plokščia, t. y. filtrai dirba savo darbą. Kamerai iš to nieko." >}}
+![Betaflight blackbox peržiūros programa: neapdorotas giroskopo pjūvis kaip tolydi amplitudės moduliuota triukšmo juosta per visą skrydį, o žemiau filtruotas giroskopas, P, D ir PID sumos - plokščios](raw-gyro-noise-trace.jpg)
+
+*Tai, su kuo iš tikrųjų kariauju. Viršuje neapdorotas giroskopas: tolydi juosta, kuri auga ir traukiasi, o ne švari linija. Viskas žemiau - filtruotas giroskopas, P, D, PID sumos - plokščia, t. y. filtrai dirba savo darbą. Kamerai iš to nieko.*
 
 Tai, ko vaikausi, yra triukšmas, kurį matai tiesiai neapdorotame giroskopo pjūvyje — tolydi,
 amplitudės moduliuota juosta, kuri auga ir traukiasi, o ne stovi vienodame lygyje. Pati savaime tai
@@ -1237,13 +2474,63 @@ Skundas buvo: kvadras dreba, kartais, ilgai, ir tai daro skrisdamas tiesiai lygi
 posūkyje. Jei tai būtų rezonansas — drebėtų *visą laiką*. Tas prieštaravimas buvo teisingas, o aš
 kelias dienas kalbėjau ne apie tai.
 
-<div style="height:380px"><canvas id="c22"></canvas></div>
-<script>
-snakeChart('c22', 'bar',
-  { labels: ['1-4 Hz', '4-8 Hz', '8-15 Hz', '15-25 Hz', '25-40 Hz', '40-70 Hz', '70-120 Hz'],
-    datasets: [ { label: 'nekomanduoto judesio galios dalis (%)', data: [58.6, 9.4, 16.5, 12.7, 2.2, 0.4, 0.1] } ] },
-  'nekomanduoto judesio galios dalis (%)', 'juosta');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "1-4 Hz",
+      "4-8 Hz",
+      "8-15 Hz",
+      "15-25 Hz",
+      "25-40 Hz",
+      "40-70 Hz",
+      "70-120 Hz"
+    ],
+    "datasets": [
+      {
+        "label": "nekomanduoto judesio galios dalis (%)",
+        "data": [
+          58.6,
+          9.4,
+          16.5,
+          12.7,
+          2.2,
+          0.4,
+          0.1
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": false,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "nekomanduoto judesio galios dalis (%)"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "juosta"
+        }
+      }
+    }
+  }
+}
+```
 
 **Devyniasdešimt septyni procentai yra žemiau 25 Hz.** Visa mano analizė gyveno 80–780 Hz. Mačiau tą
 juostą, kurioje mano įrankiai aštriausi, o ne tą, kurioje buvo skundas.
@@ -1296,16 +2583,72 @@ Putplastis nepriduoda traukos. Neišplečia mikserio diapazono. Jis turėtų bū
 Nėra nesvarbus. Išmatuota sutapatintomis sąlygomis — stabilus skridimas, gazas 1380–1560, smūgiai
 išmesti:
 
-<div style="height:400px"><canvas id="c23"></canvas></div>
-<script>
-snakeChart('c23', 'bar',
-  { labels: ['originalūs gummy', 'DIDELIS putplastis', 'visi TPU', 'priekinis TPU išimtas', 'MAŽAS putplastis'],
-    datasets: [
-      { label: 'vibracija, prieš filtrus 80-780 Hz (deg/s)', data: [38.3, 26.0, 31.0, 26.6, 42.5] },
-      { label: '1-8 Hz NEKOMANDUOTAS judesys (deg/s)', data: [4.81, 2.79, 2.97, 3.58, 6.10] }
-    ] },
-  'deg/s', 'tvirtinimo konfigūracija');
-</script>
+```chart
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "originalūs gummy",
+      "DIDELIS putplastis",
+      "visi TPU",
+      "priekinis TPU išimtas",
+      "MAŽAS putplastis"
+    ],
+    "datasets": [
+      {
+        "label": "vibracija, prieš filtrus 80-780 Hz (deg/s)",
+        "data": [
+          38.3,
+          26.0,
+          31.0,
+          26.6,
+          42.5
+        ],
+        "borderColor": "#244d68",
+        "backgroundColor": "#244d68",
+        "borderWidth": 1
+      },
+      {
+        "label": "1-8 Hz NEKOMANDUOTAS judesys (deg/s)",
+        "data": [
+          4.81,
+          2.79,
+          2.97,
+          3.58,
+          6.1
+        ],
+        "borderColor": "#915d52",
+        "backgroundColor": "#915d52",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "maintainAspectRatio": false,
+    "plugins": {
+      "legend": {
+        "display": true,
+        "position": "bottom"
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "deg/s"
+        }
+      },
+      "x": {
+        "title": {
+          "display": true,
+          "text": "tvirtinimo konfigūracija"
+        }
+      }
+    }
+  }
+}
+```
 
 | konfigūracija | vibracija | **1–8 Hz nekomanduota** | mikserio atsarga |
 |---|---|---|---|
@@ -1365,8 +2708,6 @@ kad tai **konfigūracijos** savybė, o ne momentinis priežastingumas.
 Praktikos, kurios kartotinai pakeitė išvadą — ne bendri patarimai, o dalykai, kurie realiai
 apvertė atsakymą būtent šią savaitę:
 
-<div class="mermaid-wrap">
-
 ```mermaid
 flowchart LR
     A["Neapdorotas .BBL"] --> B["Dekoduoti KIEKVIENĄ logą faile<br/>įskaitant nukirstą paskutinį"]
@@ -1385,7 +2726,6 @@ flowchart LR
     style K fill:#244d68,color:#fff
 ```
 
-</div>
 
 - **Dekoduoti kiekvieną logą faile**, ir bandyti paskutinį net jei jis nukirstas. Baterijos
   atjungimai ir kritimai reguliariai nukerpa paskutinį logą, o jis dažnai ir yra
