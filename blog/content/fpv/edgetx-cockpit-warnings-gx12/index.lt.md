@@ -374,7 +374,7 @@ logicalSw:
    8:                              # = L9
       func: FUNC_VNEG
       def: "tele(14),38"           # RxBt < 3,8 V
-      andsw: "SE1"                 # <-- liekana, žr. „Kas čia nerangu“
+      andsw: "SE1"                 # SE vidurys -- prearm vartai, žr. žemiau
    9:                              # = L10
       func: FUNC_VPOS
       def: "tele(14),42"           # RxBt > 4,2 V
@@ -749,18 +749,52 @@ argumentuoja. Teisingas būdas — pasižiūrėti į savo juodosios dėžės įt
 kritimų trukmių pasiskirstymą ir pasirinkti trukmę, ilgesnę už ilgiausią savo
 akceleravimą. Tai matavimas, ir įrašus jam turiu.
 
-### 3. Užsilikęs jungtukas
+### 3. Jis ant manęs rėkia dar prieš pasisveikinimą
 
-L9 yra `RxBt < 3,8 V IR SE1` — tas pats slenkstis kaip L3, bet pririštas prie
-fizinio jungtuko SE, o ne prie gps mygtuko, ir paleidžia 2 sekundžių intervalu
-pasikartojančią sireną. Į trijų mygtukų schemą jis netelpa, ir nebeatsimenu,
-kam jis buvo. Tai ankstesnės iteracijos fosilija.
+Tai labiausiai kasdien trikdantis defektas ir tas, kurio dar neišsprendžiau.
 
-Paskelbtoje konfigūracijoje jį palieku, o ne tyliai išbraukiu, nes naudinga
-pamoka yra ta, kad **taip nutinka.** Loginių jungtukų konfigūracijos kaupiasi.
-Jei tokią sistemą susikursi — kur nors tekstiniame faile užsirašyk, *kam*
-kiekvienas jungtukas skirtas, nes EdgeTX tam vietos neturi, o po pusės metų ir
-tu neatsiminsi.
+**Kai įjungiu bateriją, pultas paskelbia įspėjimus ir „low battery“ garsą _prieš_
+tai, kai pasako „ready“.** Kiekvieną kartą. Skamba taip, tarsi aparatui būtų bėda
+tą pačią sekundę, kai jis pabunda.
+
+Priežastis yra `a<x` savybė, kuri atrodo akivaizdi po fakto ir yra nematoma tada,
+kai sistemą kuri: **lygio palyginimas negali atskirti „kritiškai žemai“ nuo
+„dar nėra duomenų“.**
+
+Užsimezgus ryšiui pultas jau turi jungtį, bet CRSF baterijos kadras dar
+neatkeliavo, tad `RxBt` sensorius vis dar sėdi ant savo pradinės reikšmės
+**0,0 V**. O `0,0` yra mažiau nei 4,0, ir mažiau nei 3,6, ir mažiau nei 3,5, ir —
+gražiausia dalis — mažiau nei **2,9**. Tad visi laiptai suveikia vienu metu,
+įskaitant žemiausią laiptelį: pultas džiugiai informuoja, kad sugadinau paketą —
+ant šviežios baterijos, dar prieš tai, kai atėjo pirmas tikras įtampos rodmuo.
+
+Tada atkeliauja baterijos kadras, `RxBt` šokteli į tikrą reikšmę, visi jungtukai
+tampa neteisingi, `L10` pamato `> 4,2 V` ir pasako „ready“ — ir viskas gerai. Bet
+pirmas dalykas, kurį išgirstu, yra signalas.
+
+Tai dar nemaloniai persidengia su kadrų greičiu iš ankstesnio skyriaus. Ta mirusi
+zona nėra milisekundės — ji tęsiasi tol, kol atkeliauja pirmas baterijos kadras, o
+tie kadrai nėra dažni.
+
+Sprendimas, kurio dar nepritaikiau, yra trivialus: **sujungti kiekvieną žemos
+įtampos jungtuką su galiojimo sąlyga** — kažkuo panašiu į `RxBt > 0,5` — kad
+„nėra telemetrijos“ būtų skaitoma kaip „nėra nuomonės“, o ne kaip „katastrofa“.
+Taip pat veiktų `Duration`, pakankamai ilgas, kad pergyventų paleidimo tarpą.
+
+Sprendimas, kurį jau *pradėjau*, yra įdomesnis, ir jis paaiškina jungtuką, kuris
+kitaip atrodytų kaip šiukšlė. **L9 yra `RxBt < 3,8 V IR SE-`**, pririštas prie
+3 pozicijų jungtuko SE vidurinės pozicijos, o ne prie žalio `bat` mygtuko. Tai
+sąmoninga: **aktyvavimą (arm) uždėjau ant SE**, o **įspėjimus ant SE vidurio**, kad
+visa įspėjimų sistema būtų aktyvi *prearm* momentu, o ne kol aparatas stovi ant
+žemės nieko neveikdamas. Prearm yra teisinga vieta priešskrydžio įtampos
+patikrinimui — tai momentas, kai jau ruošiesi įsipareigoti.
+
+**Prearm dar nesukonfigūravau.** Puikiai žinau, kada tai padarysiu: pirmą kartą,
+kai pakelsiu droną, pultas atsitrenks man į krūtinę ir arm jungtukas persivers.
+Esu gana tikras, kad tai bus pakankamai įsimintina pamoka, kad tą patį vakarą
+darbas būtų padarytas — su sąlyga, kad dar turėsiu visus pirštus rašyti.
+
+Kas yra blogas planas. Bet tai sąžiningas mano tikrojo plano aprašymas.
 
 ### 4. Jokio ryšio kokybės įspėjimo
 
@@ -919,9 +953,9 @@ nebūtų toje pačioje vietoje abiejose antenose vienu metu.
 
 ### Viena horizontaliai, viena vertikaliai
 
-Todėl naujausiame aparate — sulankstomame, kuris gaus savo atskirą įrašą, kai jį
-paskraidysiu tiek, kad galėčiau ką nors atvirai pasakyti — naudoju **tikro
-diversiteto imtuvą su dviem dviejų juostų antenomis: viena sumontuota
+Todėl naujausiame aparate — **sulankstomame 4 colių**, kuris gaus savo atskirą
+įrašą, kai jį paskraidysiu tiek, kad galėčiau ką nors atvirai pasakyti — naudoju
+**tikro diversiteto imtuvą su dviem dviejų juostų antenomis: viena sumontuota
 horizontaliai, kita vertikaliai.**
 
 Tas statmenas derinys yra visas triukas, ir iš vienos konstrukcijos jis nupirks
@@ -1028,8 +1062,9 @@ kampą, į kurį nežiūriu.
 Tai žemesnė riba, nei skamba, ir kartu tai didžioji dalis vertės. Mano
 konfigūracija nerangi bent keturiais konkrečiais būdais, kuriuos dabar
 užsirašiau ir galiu eiti tvarkyti. Slenksčiai sluoksniuojasi. Nėra atkirtimo
-laiko. Yra fosilinis jungtukas. Nėra ryšio kokybės įspėjimo — o būtent šis mane
-kada nors ir pagaus — ir nėra antenų balanso įspėjimo, pulte, kurį pirkau būtent
+laiko. Jis ant manęs rėkia dar prieš pasisveikinimą, nes lygio testas negali
+atskirti tuščio paketo nuo neatvykusio sensoriaus. Nėra ryšio kokybės įspėjimo —
+o būtent šis mane kada nors ir pagaus — ir nėra antenų balanso įspėjimo, pulte, kurį pirkau būtent
 dėl jo antenų, kai matavimas jau guli žurnalo faile.
 
 Ir du mano aparatai vis dar sako tiesą per vėlai, nes jų įtampos kalibracija yra

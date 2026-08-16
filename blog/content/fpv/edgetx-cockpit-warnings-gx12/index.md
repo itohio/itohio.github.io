@@ -373,7 +373,7 @@ logicalSw:
    8:                              # = L9
       func: FUNC_VNEG
       def: "tele(14),38"           # RxBt < 3.8 V
-      andsw: "SE1"                 # <-- leftover, see "what's clumsy"
+      andsw: "SE1"                 # SE middle -- prearm gate, see below
    9:                              # = L10
       func: FUNC_VPOS
       def: "tele(14),42"           # RxBt > 4.2 V
@@ -752,18 +752,52 @@ this whole post is arguing against. The right way to set them is to look at the
 sag duration distribution in your own blackbox and choose a duration longer than
 your longest punch. That is a measurement, and I have the logs to do it.
 
-### 3. A leftover switch
+### 3. It shouts at me before it says hello
 
-L9 is `RxBt < 3.8 V AND SE1` — the same threshold as L3, but gated on physical
-switch SE instead of the gps button, firing a 2-second repeating siren. It does
-not fit the three-button scheme and I no longer remember what it was for. It is
-a fossil from an earlier iteration.
+This is the most annoying flaw in daily use, and the one I have not solved.
 
-I am leaving it in the published config rather than quietly deleting it, because
-the useful lesson is that **this happens.** Logical switch configurations
-accumulate. If you build one of these, put a comment in a text file somewhere
-describing what each switch is _for_, because EdgeTX has nowhere to store that
-and in six months you will not remember either.
+**When I plug a battery in, the radio announces the warnings and the low-battery
+track _before_ it says "ready".** Every time. It sounds like the aircraft is in
+trouble the instant it wakes up.
+
+The cause is a property of `a<x` that is obvious in hindsight and invisible when
+you are building the thing: **a level comparison cannot tell "critically low" apart
+from "no data yet".**
+
+At link-up the radio has a connection, but the CRSF battery frame has not arrived
+yet, so the `RxBt` sensor is still sitting at its initialisation value of **0.0 V**.
+And `0.0` is less than 4.0, and less than 3.6, and less than 3.5, and — the good
+part — less than **2.9**. So the entire ladder fires at once, bottom rung included:
+the radio cheerfully informs me I have destroyed the pack, on a fresh battery,
+before the first real voltage reading has ever arrived.
+
+Then the battery frame lands, `RxBt` jumps to its true value, every switch goes
+false, `L10` sees `> 4.2 V` and says "ready" — and everything is fine. But the
+first thing I hear is an alarm.
+
+This interacts badly with the frame rate from the previous section, too. The dead
+window is not milliseconds — it lasts until the first battery frame arrives, and
+those frames are not frequent.
+
+The fix I have not yet applied is trivial: **AND every low-voltage switch with a
+validity condition** — something like `RxBt > 0.5` — so that "no telemetry" reads
+as "no opinion" instead of "catastrophe". A `Duration` long enough to outlast the
+startup gap would also work.
+
+The fix I have actually _started_ is more interesting, and it explains a switch
+that would otherwise look like junk. **L9 is `RxBt < 3.8 V AND SE-`**, gated on the
+middle position of the 3-position SE switch rather than on the green `bat` button.
+That is deliberate: I have put **arming on SE**, and **warnings on SE mid**, so that
+the whole warning system is armed at *prearm* rather than while the aircraft is
+sitting on the ground doing nothing. Prearm is the correct place for a preflight
+voltage check — it is the moment you are about to commit.
+
+**I have not configured prearm yet.** I know exactly when I will: the first time I
+pick up a drone, the radio bumps my chest, and the arm switch flips. I am fairly
+confident that will be a memorable enough lesson to get it done that same evening,
+assuming I still have all my fingers to type with.
+
+Which is a bad plan. It is, however, an honest description of my actual plan.
 
 ### 4. No link-quality warning at all
 
@@ -925,8 +959,8 @@ can only make sure the null is never in the same place on both antennas at once.
 
 ### One horizontal, one vertical
 
-So on my newest build — a foldable, which is getting its own post once I have
-flown it enough to say anything honest about it — I run a **true diversity
+So on my newest build — a **folding 4-inch**, which is getting its own post once I
+have flown it enough to say anything honest about it — I run a **true diversity
 receiver with two dual-band antennas, one mounted horizontal and one vertical.**
 
 That orthogonal pairing is the whole trick, and it buys two independent things
@@ -1035,10 +1069,12 @@ instead of into a corner of a screen I am not looking at.
 
 That is a lower bar than it sounds like, and it is also most of the value. My
 build is clumsy in at least four specific ways that I have now written down and
-can go fix. The thresholds stack. There is no debounce. There is a fossil
-switch. There is no link-quality warning, which is the one that will actually
-bite me — and no antenna-balance warning either, on a radio I specifically
-bought for its antennas, with the measurement already sitting in the log file.
+can go fix. The thresholds stack. There is no debounce. It shouts an alarm at me
+before it says hello, because a level test cannot tell an empty pack from an
+absent sensor. There is no link-quality warning, which is the one that will
+actually bite me — and no antenna-balance warning either, on a radio I
+specifically bought for its antennas, with the measurement already sitting in the
+log file.
 
 And two of my aircraft are still telling me the truth late, because their
 voltage calibration is wrong. A warning system is a measurement system with a
