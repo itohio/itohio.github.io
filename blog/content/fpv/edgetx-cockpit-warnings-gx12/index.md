@@ -2,7 +2,7 @@
 title: "Giving My Quad a Cockpit Voice: EdgeTX Battery and GPS Warnings on the RadioMaster GX12"
 date: 2026-08-16
 description: "How I turned a RadioMaster GX12 into something that talks to me — per-cell battery warnings, satellite-count callouts and an altitude alarm, built from EdgeTX logical switches and special functions. With the actual YAML, the parts that are clumsy, and the one number you still have to measure yourself."
-draft: true
+draft: false
 toc: true
 categories:
   - FPV
@@ -139,6 +139,89 @@ The trade-off is honest: doing it FC-side means every new aircraft needs that
 CLI line, and if you forget it, your warnings fire at absurd times. That has
 happened to me exactly once, which was enough to make it part of the setup
 checklist.
+
+## The whole ladder rests on a calibration you have probably skipped
+
+I need to put this immediately after the previous section, because everything
+that follows depends on it and I do not want anyone building this on a bad
+foundation.
+
+**Your battery warnings are exactly as good as your voltage calibration.**
+
+That sounds obvious written down. It is not obvious in practice, because a
+miscalibrated voltage reading does not look broken. It looks like a perfectly
+plausible number that happens to be wrong by 200 mV, and every threshold in the
+ladder above inherits that error silently.
+
+I have two aircraft that are miscalibrated right now, which means **my warnings
+on those two fire too late.** Not "slightly imprecisely" — too late, in the
+direction that costs you a pack. I know this and I have not fixed it yet, which
+is the kind of admission this blog exists for.
+
+The knob is `vbat_scale` in Betaflight. It corrects the ADC divider ratio for
+the actual resistors on your board, which vary between boards, and it is set to
+a generic default that is right for nobody in particular.
+
+### The 3S-to-4S trap
+
+The specific way this bit me is worth spelling out, because it is a natural
+thing to do and there is no warning.
+
+I had aircraft set up and flying on **3S**, then moved them to **4S** for
+testing. Nothing in that transition tells you your calibration is now costing
+you more. But it is, for a compounding reason.
+
+`report_cell_voltage = ON` means the FC divides pack voltage by its **detected**
+cell count. And that detection is itself derived from the measured pack voltage
+at power-on — the FC divides what it reads by a maximum-cell-voltage constant
+and rounds. So a voltage error propagates **twice**:
+
+1. Directly, into the reported per-cell figure.
+2. Potentially again, by pushing the detected cell count to the wrong integer.
+
+That second path is the nasty one, because it fails *silently and plausibly*. If
+a badly-scaled 4S pack reads low enough that the FC decides it is looking at 3S,
+then it divides by three instead of four — and hands the radio a per-cell number
+that sits comfortably in the normal range while being completely fictional. Every
+threshold in my ladder would then be measuring a quantity that does not exist,
+and the `ready` self-test would happily fire, because a wrong number above 4.2 V
+is still a number above 4.2 V.
+
+The self-test I was so pleased with earlier in this post checks that the signal
+path works. **It does not check that the number is true.** Those are different
+claims and I want to be clear about which one I have.
+
+### The regression in the new configurator
+
+Here is the practical annoyance, and it is the reason this is getting its own
+post rather than a paragraph.
+
+The way I used to calibrate was to spin the motors up to a modest load —
+something drawing on the order of 2 A from the pack — and then switch to the
+calibration tab **with the motors still running**, so I was calibrating at a
+realistic operating point rather than at idle. That matters: you want the reading
+trustworthy where you actually use it, under load, not just at rest on the bench.
+
+In the current Betaflight configurator you cannot do that any more. **Leaving the
+tab cuts the motors.** The workflow is simply gone.
+
+I have not yet worked out the right replacement procedure, so I am not going to
+invent one here. That is the next post: proper voltage calibration with the
+current configurator, what changed, and how to get a trustworthy reading under
+load without the old trick.
+
+### One honesty note about a number earlier in this post
+
+The 3.065 V/cell sag figure I quote further down — from an 83 A punch-out on my
+3-inch — carries this same dependency. It is what the flight controller
+*recorded*, and its accuracy rests on that aircraft's voltage calibration being
+sound. I have not independently verified that particular airframe's `vbat_scale`
+against a reference meter. Treat it as a strong indication of the shape of the
+problem rather than a metrologically clean measurement.
+
+If you build the warning system in this post and skip the calibration, you have
+built something that will confidently tell you the wrong thing in a calm voice.
+That is arguably worse than a number in the corner of the screen.
 
 ## Three buttons, three colours, three subsystems
 
@@ -875,6 +958,11 @@ can go fix. The thresholds stack. There is no debounce. There is a fossil
 switch. There is no link-quality warning, which is the one that will actually
 bite me — and no antenna-balance warning either, on a radio I specifically
 bought for its antennas, with the measurement already sitting in the log file.
+
+And two of my aircraft are still telling me the truth late, because their
+voltage calibration is wrong. A warning system is a measurement system with a
+voice bolted on. If the measurement is wrong, the voice just makes you confident
+about it.
 
 But the flight where the voltage quietly slid past the point of no return while
 I was busy enjoying myself — that one does not happen any more. Somewhere around
