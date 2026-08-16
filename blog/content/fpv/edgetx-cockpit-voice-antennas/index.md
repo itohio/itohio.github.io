@@ -72,9 +72,9 @@ true diversity receiver has two independent receive chains, one per antenna, and
 picks the better one **per packet**. It is not a passive combiner and it is not a
 single receiver with a switch it flips occasionally.
 
-The result, in the air: diving Norwegian waterfalls, where I am rotating through
-attitudes next to a large chunk of wet rock, it switches between antennas
-perfectly and I do not get the dropout that the geometry says I should.
+The result, in the air: diving Norwegian waterfalls, rotating through every
+attitude the airframe has, it switches between antennas cleanly and I do not get
+the dropout the geometry says I should.
 
 Notably this works **even when Gemini is not available on the aircraft.** ELRS
 Gemini mode transmits on both bands simultaneously and needs a Gemini-capable

@@ -146,16 +146,16 @@ kiekvienam iš jų, ir visiškai nenaudojami nė vieno loginio jungtuko.
 Turint galvoje, kad visas šis projektas egzistuoja tam, kad nebeprašvilptum ribos,
 į kurią nežiūrėjau, tai, kad nepritaikiau jo **ryšio kokybei**, ribai, kuri
 skrydžius realiai baigia, krūme, toli nuo mašinos, yra praleidimas, kurį
-pastebėjau rašydamas šį įrašą. `RQly < 70 → PLAY_TRACK "link"` yra maždaug
-keturios minutės darbo ir tai sekantis punktas sąraše.
+pastebėjau tai rašydamas. `RQly < 70 → PLAY_TRACK "link"` yra vienas loginis
+jungtukas ir viena specialioji funkcija, ir tai sekantis punktas sąraše.
 
 Ir yra dar blogiau, dėl to, kas būtent tie sensoriai yra. Žr. žemiau.
 
 Ironija manęs neaplenkia: būtent tuos pačius sensorius skaito mano
 [RX Blind-Spot Viewer](https://rxmap-viewer.sintra.site/rxmap/), kad sukurtų 3D
 antenos diagramą. Aš mielai praleisiu vakarą analizuodamas ryšio kokybę trimis
-dimensijomis po skrydžio, o keturių minučių tam, kad pultas skrydžio metu pasakytų
-„link“, dar neskyriau.
+dimensijomis po skrydžio, o vieno jungtuko, dėl kurio pultas skrydžio metu pasakytų
+„link“, dar neprijungiau.
 
 Keturi defektai, visi mano, visus galima sutvarkyti per vakarą. Jų užrašymas ir yra
 ta dalis, dėl kurios jie tampa sutvarkomi.

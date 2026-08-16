@@ -99,7 +99,7 @@ The ladder in descending voltage order, which is finally also numerical order.
 | **L10** | `RxBt < 2.9` | `L2` | `Alrm` |
 | **L11** | `\|Δ\|≥ RxBt- 0.1` | `L2` | **speaks the new minimum** |
 | **L12** | `RxBt < 3.8` | `L4` | preflight fail — `Sirn`, 2 s |
-| **L13** | `RxBt > 3.8` | `L4` | preflight pass — `checkok` |
+| **L13** | `RxBt > 3.8` | `L4` | preflight pass, spoken confirmation |
 
 **The `L7` gate is a deliberate exception.** It sits in the battery group because it
 is a voltage threshold, but it is gated on the *gps* helper rather than the battery
@@ -107,9 +107,9 @@ one, because "turn around" is a long-range warning. On a whoop in a hotel room i
 would be noise. Group by what a switch measures; gate by when you want to hear it.
 Those are different questions and it is fine for them to disagree.
 
-### L11, the one I actually wanted: minimum-voltage readout
+### L11: the minimum-voltage readout
 
-This is new and it is my favourite thing in the rebuild.
+This one is new, and it is the reason I started rebuilding rather than patching.
 
 EdgeTX tracks a running minimum for every telemetry sensor, exposed as a separate
 source — `RxBt-`. My telemetry screens already display it. What I have never done is
@@ -151,6 +151,29 @@ A 0.1 V step is the sensor's own quantisation, so this announces every single ne
 minimum. If that turns out chatty during freestyle, raise the step to 0.2 V, the
 threshold is the volume knob.
 
+### Why L13 exists: silence is not a pass
+
+`L12` and `L13` are a pair, and the second one matters more than it looks.
+
+The workflow I want is: flick SE to the middle, wait a moment, listen. If nothing
+complains, arm and fly. The problem is that **silence means two different things
+wearing the same costume**:
+
+1. the battery is fine, which is the answer I want
+2. telemetry has not arrived yet, so nothing has an opinion
+
+Those are indistinguishable by ear. Flick to middle and arm quickly and I hear
+nothing, conclude the pack is good, and take off on a battery no one has measured.
+The check passes hardest in exactly the case where it told me nothing at all.
+
+Aviation settled this long ago and the rule is worth stealing verbatim: **a
+preflight check must give a positive indication, not the absence of a negative
+one.** A test that passes by being quiet also passes when it is broken.
+
+So `L13` fires on `RxBt > 3.8` while staged, and says so out loud. Now flicking SE
+to the middle produces exactly one of two outcomes: a pass I can hear, or a
+warning. Nothing is no longer an answer. It means wait longer.
+
 ### Group 3 — GPS, L14 → L16
 
 | LS | Test | Gate | Sound |
@@ -191,7 +214,7 @@ The list finally reads in flight order: log, battery, GPS.
  7  L10   PLAY_SOUND   Alrm
  8  L11   PLAY_VALUE   tele(-14)     <- minimum voltage readout
  9  L12   PLAY_SOUND   Sirn    2s
-10  L13   PLAY_TRACK   checkok
+10  L13   PLAY_TRACK   <pass callout>
 11  L14   PLAY_VALUE   tele(22)      <- GPS, satellite count
 12  L15   PLAY_TRACK   gpsoff
 13  L16   PLAY_TRACK   warnng

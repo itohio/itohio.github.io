@@ -79,26 +79,53 @@ round-robining, `RxBt` would refresh about 31 times a second. Against that, a
 0.3 s log period is _massively_ undersampling. I would be logging one sample in
 ten and would miss every sag transient.
 
-**But I do not believe that number, and neither should you.** It is arithmetic
-from the frame structure, not a measurement. It ignores the fact that ELRS
-telemetry slots carry a small payload while a CRSF GPS frame is comparatively
-large, so a single frame is fragmented across multiple slots. The real
-per-sensor rate is lower than 31 Hz, possibly by a lot, and I have not
-established by how much.
+**Do not believe that number.** It is arithmetic from the frame structure, not a
+measurement, and it ignores that ELRS telemetry slots carry a small payload while a
+CRSF GPS frame is comparatively large, so one frame gets fragmented across several
+slots.
 
-Here is the thing though — **the measurement is sitting on my SD card already,
-and on yours.** The log period is 0.3 s. If a sensor is genuinely arriving
-faster than that, every row has a fresh value. If it is arriving slower, the CSV
-contains _runs of identical consecutive values_, and the mean run length is
-exactly the ratio between the true arrival interval and the log period.
+So I measured it instead, and the measurement was already sitting on the SD card.
+**The log period is 0.3 s.** If a sensor genuinely arrives faster than that, every
+row holds a fresh value. If it arrives slower, the CSV contains _runs of identical
+consecutive values_, and the mean run length is the ratio between the true arrival
+interval and the log period. Count the runs per column and you have the answer, with
+no assumptions in it.
 
-So: count the duplicate runs per column. That gives you the real update rate of
-every sensor, per aircraft, per telemetry ratio, with no assumptions. Then set
-your log period to match, and set your telemetry ratio deliberately, knowing
-that a low ratio buys you link robustness at the direct cost of log resolution.
+On a 3-inch build, one ten-minute flight, this is what came out:
 
-That is the next thing I am going to actually do, and it will get its own post
-with real numbers in it.
+| Tier | Sensors | Measured interval | Rate |
+|---|---|---|---|
+| **FC flight data**, over the air | `Ptch` `Roll` `Yaw` `RxBt` `Curr` `Capa` | **3.6 to 3.9 s** | **~0.26 Hz** |
+| **Radio-local link stats** | `TRSS` `TSNR` `1RSS` `RQly` | 0.30 s, every log row | **>= 3.33 Hz** |
+
+The quantum is clean rather than fuzzy. Of 110 runs of identical `Ptch` values, 76
+were exactly 13 log rows long and 21 were 12, and the longer runs land on exact
+multiples where an update went missing. Thirteen rows at 0.3 s is 3.9 seconds.
+
+**So the arithmetic was wrong by a factor of about 120, and wrong in the direction
+that matters.** A 0.3 s log period is not undersampling flight-controller data. It
+is oversampling it roughly thirteen times over. Every voltage reading gets written
+to the CSV about thirteen times before it changes.
+
+Method note: probe each frame with its **highest-entropy sensor**, `Curr` for the
+battery frame and `Ptch` for attitude. `RxBt` is quantised to 0.1 V, so it holds its
+value across several arrivals and reports a slower rate than its frame really has.
+
+Two consequences worth carrying out of this:
+
+- For flight-controller sensors a **1 to 2 second log period loses nothing**. Only
+  the link statistics justify 0.3 s.
+- **Any voltage-threshold alarm carries roughly four seconds of latency** before it
+  can even see a new number. Sag events shorter than that are invisible to EdgeTX
+  logical switches. They exist only in blackbox.
+
+`TRSS` is the tell for why the two tiers differ at all. It changed on 1384 of 1510
+runs, meaning essentially every log row. It is synthesised at the transmitter module
+and never waits for an air frame.
+
+These numbers are one aircraft on one configuration, and the telemetry ratio is not
+even in the model file. The method transfers though, and it costs one CSV you
+already have.
 
 ### I built a thing that reads these logs
 
@@ -192,8 +219,9 @@ through the ELRS Lua script. Which means **sharing a model YAML does not share
 your telemetry ratio.** If you copy my config and your logs look different to
 mine, that is the first place to look.
 
-So the honest state of this section is: I know the shape of the answer, I know
-exactly which measurement settles it, and I have not published the number yet. It
-is going to get its own post.
+So a section that started as arithmetic ends as a measurement, which is the only
+direction that trade should ever go. The number I guessed was out by two orders of
+magnitude, in the direction that would have had me logging ten times faster than I
+need to.
 
 **Next:** [Part 7, two antennas, two bands, and the quad I lost to polarisation](/fpv/edgetx-cockpit-voice-antennas/)

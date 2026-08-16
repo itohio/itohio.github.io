@@ -27,39 +27,42 @@ failai, ne integruoti garsai. Iš to seka du praktiniai dalykai: kur gyvena gars
 ir kodėl mano konfigūracijos failo perdavimas tau yra mažiau naudingas, nei
 atrodo.
 
-## Individualūs garso failai: rth, gpson, gpsoff, lowbat, warnng, ready
+## Pranešimai: rth, gpson, gpsoff, lowbat, warnng, ready
 
-Ištarti pranešimai yra individualūs WAV failai, ne integruoti garsai. Šiandien jų
-šeši: `rth`, `gpson`, `gpsoff`, `lowbat`, `warnng`, `ready`, ir septintas,
-`checkok`, kai sukursiu aukščiau aprašytą pergrupuotą konfigūraciją.
+Ištarti pranešimai yra iš **balso paketo, kuris atkeliauja su pultu**. Nieko
+neįrašinėjau ir nieko negeneravau. Šeši iš jų čia atlieka darbą: `rth`, `gpson`,
+`gpsoff`, `lowbat`, `warnng`, `ready`.
 
-Jie gyvena kalbai skirtame garsų kataloge SD kortelėje, kartu su balso paketu —
-angliškam pultui tai `/SOUNDS/en/`. Failo pavadinimas be `.wav` galūnės yra tai,
-ką renkiesi specialiojoje funkcijoje, ir būtent todėl visi jie sutrumpinti:
-**pavadinimas ribojamas iki šešių simbolių**, todėl `warnng`, o ne `warning`.
+Tai verta pasakyti atvirai, nes „pultas su manimi kalba“ skamba kaip atskiras
+projektas, o jis nėra. `PLAY_TRACK` paima failo pavadinimą iš kalbai skirto garsų
+katalogo SD kortelėje, angliškame pulte `/SOUNDS/en/`, ir standartinis paketas jau
+turi naudingą trumpų pranešimų žodyną. Visa ši serija yra slenksčių logika,
+nukreipta į failus, kurie jau buvo vietoje.
 
-Savuosius sugeneravau tekstą-į-kalbą įrankiu ir konvertavau į formatą, kurio
-EdgeTX reikalauja. Jei tavo failai groja, bet skamba ne taip, apkirpti,
-pagreitinti ar tylūs, pirmiausia tikrink formatą, nes EdgeTX groja WAV failus
-tiesiogiai, be perskaičiavimo.
+Kas yra pigiausia viso darbo dalis ir ta, kurios tikėjausi kaip sunkiausios.
 
-Vienas dalykas, kurį verta patikrinti `radio.yml` faile, jei pranešimai skamba
-apkirpti pradžioje, priežasties savajame pulte galutinai nepatvirtinau:
+Vienintelė vieta, kur tai riboja, yra tada, kai nori pranešimo, kurio pakete nėra.
+Perdaryta konfigūracija 9 dalyje nori ištarto „check ok“ priešskrydžio patikrai, o
+standartiniame žodyne tokio įrašo nėra. Du būdai apeiti: pasirinkti esamą paketo
+įrašą, kuris pakankamai artimas pagal reikšmę, arba įdėti savo WAV į `/SOUNDS/en/`
+ir pasirinkti jį. Man dar neteko dėti savo, tad formato vadovo iš spėjimų
+nerašysiu.
+
+Du garso nustatymai iš `radio.yml` verti žinojimo, nes jie keičia, kaip pranešimai
+skamba:
 
 ```yaml
-audioMuteEnable: 1      # stiprintuvas nutildomas tarp garsų
 wavVolume: 4
 beepVolume: 0
+audioMuteEnable: 1
 ```
 
-`audioMuteEnable: 1` tarp garsų išjungia stiprintuvą, kad būtų mažiau šnypštimo.
-Kaina ta, kad stiprintuvui reikia akimirkos atsigauti, o tai gali suvalgyti pirmą
-trumpo pranešimo skiemenį. Nustatymas į `0` yra testas. Minau tai kaip
-kandidatą, ne kaip diagnozę.
-
-Taip pat atkreipk dėmesį į `beepVolume: 0`, pypsėjimus nuleidau iki galo, o WAV
-garsą pakėliau. Jei jau viskas su manimi kalbės, nenoriu, kad tas pats dar ir
-pypsėtų.
+`beepVolume: 0` reiškia, kad pypsėjimai visiškai išjungti, o ištarti pranešimai
+lieka garsūs. `audioMuteEnable: 1` tarp garsų išjungia stiprintuvą, kas sumažina
+šnypštimą, bet stiprintuvui reikia akimirkos atsigauti. Jei kada pastebėsi, kad
+trumpi pranešimai pameta pirmą skiemenį, tą nustatymą pirmiausia išbandyk ties `0`.
+Mano skamba gerai, tad minau tai kaip dalyką, kurį verta žinoti, o ne kaip problemą,
+kurią turiu.
 
 ## Dalijimasis konfigūracija: kas perkeliama ir ką ištrinti
 

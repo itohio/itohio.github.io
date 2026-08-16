@@ -77,27 +77,54 @@ skrydžio duomenų kadrų tipus `RxBt` atsinaujintų maždaug 31 kartą per seku
 Tokiu atveju 0,3 s įrašymo periodas *stipriai* per retai imtų reikšmes — įrašyčiau
 vieną tašką iš dešimties ir praleisčiau kiekvieną įtampos kritimo momentą.
 
-**Bet aš tuo skaičiumi netikiu, ir tu irgi neturėtum.** Tai aritmetika iš kadrų
-struktūros, o ne matavimas. Ji ignoruoja tai, kad ELRS telemetrijos tarpai
-neveža daug duomenų, o CRSF GPS kadras yra palyginti didelis, tad vienas kadras
-suskaidomas per kelis tarpus. Realus vieno sensoriaus greitis yra mažesnis nei
-31 Hz, galbūt gerokai, ir kiek, nenustačiau.
+**Netikėk tuo skaičiumi.** Tai aritmetika iš kadrų struktūros, o ne matavimas, ir ji
+ignoruoja tai, kad ELRS telemetrijos tarpai neveža daug duomenų, o CRSF GPS kadras
+yra palyginti didelis, tad vienas kadras suskaidomas per kelis tarpus.
 
-Bet štai kas — **matavimas jau guli mano SD kortelėje, ir tavo taip pat.**
-Įrašymo periodas yra 0,3 s. Jei sensorius tikrai atkeliauja dažniau, kiekviena
-eilutė turi naują reikšmę. Jei rečiau. CSV faile bus *iš eilės pasikartojančių
-identiškų reikšmių serijos*, o vidutinis serijos ilgis yra būtent santykis tarp
-tikro atvykimo intervalo ir įrašymo periodo.
+Tad išmatavau, ir matavimas jau gulėjo SD kortelėje. **Įrašymo periodas yra 0,3 s.**
+Jei sensorius tikrai atkeliauja dažniau, kiekviena eilutė turi šviežią reikšmę. Jei
+rečiau, CSV faile bus *iš eilės pasikartojančių identiškų reikšmių serijos*, o
+vidutinis serijos ilgis yra santykis tarp tikro atvykimo intervalo ir įrašymo
+periodo. Suskaičiuok serijas kiekviename stulpelyje ir turi atsakymą be jokių
+prielaidų.
 
-Taigi: suskaičiuok pasikartojančių reikšmių serijas kiekviename stulpelyje. Tai
-duoda tikrą kiekvieno sensoriaus atsinaujinimo greitį, kiekvienam aparatui,
-kiekvienam telemetrijos santykiui, be jokių prielaidų. Tada nustatyk įrašymo
-periodą pagal tai, o telemetrijos santykį rinkis sąmoningai, žinodamas, kad
-mažas santykis nupirks ryšio tvirtumą tiesiogine įrašo skiriamosios gebos
-kaina.
+Trijų colių aparate, vienas dešimties minučių skrydis, gavosi taip:
 
-Būtent tai ir yra sekantis dalykas, kurį tikrai padarysiu, ir jis gaus atskirą
-įrašą su tikrais skaičiais.
+| Lygis | Sensoriai | Išmatuotas intervalas | Greitis |
+|---|---|---|---|
+| **Valdiklio skrydžio duomenys**, per orą | `Ptch` `Roll` `Yaw` `RxBt` `Curr` `Capa` | **3,6 iki 3,9 s** | **~0,26 Hz** |
+| **Pulte generuojama ryšio statistika** | `TRSS` `TSNR` `1RSS` `RQly` | 0,30 s, kiekviena eilutė | **>= 3,33 Hz** |
+
+Kvantas yra aiškus, o ne miglotas. Iš 110 identiškų `Ptch` reikšmių serijų 76 buvo
+lygiai 13 eilučių ilgio, 21 buvo 12, o ilgesnės serijos sutampa su tiksliais
+kartotiniais ten, kur atnaujinimas prapuolė. Trylika eilučių po 0,3 s yra 3,9
+sekundės.
+
+**Taigi aritmetika klydo maždaug 120 kartų, ir klydo ta kryptimi, kuri svarbi.**
+0,3 s įrašymo periodas ne per retai ima valdiklio duomenis. Jis ima juos maždaug
+trylika kartų per dažnai. Kiekviena įtampos reikšmė įrašoma į CSV apie trylika kartų
+prieš pasikeisdama.
+
+Metodo pastaba: kiekvieną kadrą tikrink jo **didžiausios entropijos sensoriumi**,
+`Curr` baterijos kadrui, `Ptch` orientacijai. `RxBt` kvantuotas iki 0,1 V, tad
+išlaiko reikšmę per kelis atvykimus ir rodo lėtesnį greitį, nei jo kadras turi.
+
+Dvi iš to sekančios išvados:
+
+- Valdiklio sensoriams **1 iki 2 sekundžių įrašymo periodas nieko nepraranda.** Tik
+  ryšio statistika pateisina 0,3 s.
+- **Bet kuris įtampos slenksčio signalas turi maždaug keturias sekundes vėlinimo**
+  prieš tai, kai apskritai gali pamatyti naują skaičių. Už tai trumpesni įtampos
+  kritimai EdgeTX loginiams jungtukams yra nematomi. Jie egzistuoja tik juodojoje
+  dėžėje.
+
+`TRSS` yra ženklas, kodėl tie du lygiai apskritai skiriasi. Jis pasikeitė 1384 iš
+1510 serijų, tai yra praktiškai kiekvienoje eilutėje. Jis generuojamas siųstuvo
+modulyje ir niekada nelaukia oro kadro.
+
+Šie skaičiai yra vienas aparatas vienoje konfigūracijoje, o telemetrijos santykio
+modelio faile net nėra. Bet metodas perkeliamas, ir jis kainuoja vieną CSV, kurį jau
+turi.
 
 ### Esu sukūręs įrankį, kuris skaito šiuos žurnalus
 
@@ -193,8 +220,9 @@ per ELRS Lua skriptą. Vadinasi, **dalinantis modelio YAML failu telemetrijos
 santykiu nepasidalinama.** Jei nusikopijuosi mano konfigūraciją, o įrašai
 atrodys kitaip nei mano, pirmiausia žiūrėk būtent čia.
 
-Tad atvira šio skyriaus būsena tokia: žinau atsakymo formą, žinau tiksliai, kuris
-matavimas jį išsprendžia, ir skaičiaus dar nepaskelbiau. Jis gaus savo atskirą
-įrašą.
+Tad skyrius, kuris pradėjo kaip aritmetika, baigiasi matavimu, o tai vienintelė
+kryptis, kuria toks apsikeitimas turėtų vykti. Skaičius, kurį spėjau, klydo dviem
+eilėmis, ta kryptimi, dėl kurios būčiau rašęs žurnalą dešimt kartų dažniau, nei
+reikia.
 
 **Toliau:** [7 dalis, dvi antenos, dvi juostos ir dronas, kurį praradau dėl poliarizacijos](/fpv/edgetx-cockpit-voice-antennas/)

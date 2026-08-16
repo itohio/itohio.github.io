@@ -71,8 +71,7 @@ Put together, the behaviour is this:
 | **< 3.5 V** | L8     | `lowbat` | 5 s    | Land, wherever you are                         |
 | **< 2.9 V** | L11    | `Alrm`   | once   | You have hurt the pack                         |
 
-The `ready` callout at > 4.2 V is my favourite small trick. It is not a warning
-— it is a **self-test**. When I plug a battery in and the radio says "ready", I
+The `ready` callout at > 4.2 V is not a warning at all. It is a **self-test**. When I plug a battery in and the radio says "ready", I
 have just confirmed, in one word, that: telemetry is flowing, the RxBt sensor is
 alive, `report_cell_voltage` is actually set on _this_ aircraft, and the audio
 path works. All four failure modes of the entire system, verified by one word,

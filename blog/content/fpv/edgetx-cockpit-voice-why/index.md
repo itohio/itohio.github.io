@@ -132,9 +132,8 @@ Two reasons for doing it on the aircraft instead:
    logic. Let the thing that knows do the maths.
 
 The trade-off is honest: doing it FC-side means every new aircraft needs that
-CLI line, and if you forget it, your warnings fire at absurd times. That has
-happened to me exactly once, which was enough to make it part of the setup
-checklist.
+CLI line, and if you forget it, your warnings fire at absurd times. So it belongs
+on the setup checklist for a new build, next to the things you cannot see either.
 
 One threshold ladder now means the same physical thing on every aircraft I own.
 Next: the three buttons that decide which warnings are allowed to speak, and the

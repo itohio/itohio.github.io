@@ -67,8 +67,7 @@ Bendra elgsena yra tokia:
 | **< 3,5 V** | L8 | `lowbat` | 5 s | Leiskis, kur bebūtum |
 | **< 2,9 V** | L11 | `Alrm` | vieną kartą | Paketą jau sugadinai |
 
-`ready` pranešimas prie > 4,2 V yra mano mėgstamiausias mažas triukas. Tai ne
-įspėjimas, tai **savitikra**. Kai įjungiu bateriją ir pultas pasako „ready“,
+`ready` pranešimas prie > 4,2 V visai nėra įspėjimas. Tai **savitikra**. Kai įjungiu bateriją ir pultas pasako „ready“,
 vienu žodžiu ką tik patvirtinau, kad: telemetrija teka, RxBt sensorius gyvas,
 `report_cell_voltage` tikrai nustatytas *šiame* aparate ir garso kelias veikia.
 Visi keturi visos sistemos gedimo scenarijai patikrinti vienu žodžiu, dar prieš

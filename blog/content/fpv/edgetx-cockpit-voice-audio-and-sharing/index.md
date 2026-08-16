@@ -26,40 +26,43 @@ The callouts in [Part 4](/fpv/edgetx-cockpit-voice-callouts/) are custom WAV fil
 not built-in sounds. Two practical things follow from that: where the audio lives,
 and why handing you my config file is less useful than it sounds.
 
-## Custom audio: rth, gpson, gpsoff, lowbat, warnng, ready
+## The callouts: rth, gpson, gpsoff, lowbat, warnng, ready
 
-The spoken callouts are custom WAV files, not built-in sounds. Six of them today:
-`rth`, `gpson`, `gpsoff`, `lowbat`, `warnng`, `ready`, and a seventh, `checkok`,
-once I build the regrouped config above.
+The spoken callouts come from the **voice pack that ships with the radio**. I did
+not record anything and I did not generate anything. Six of them do the work here:
+`rth`, `gpson`, `gpsoff`, `lowbat`, `warnng`, `ready`.
 
-They live in the language-specific sounds directory on the SD card, alongside
-the voice pack, for an English radio, `/SOUNDS/en/`. The filename minus the
-`.wav` extension is what you select in the special function, which is why they
-are all abbreviated: **the name is limited to six characters**, hence `warnng`
-rather than `warning`.
+That is worth saying plainly, because "the radio talks to me" sounds like a project
+in its own right and it is not. `PLAY_TRACK` takes a filename from the
+language-specific sounds directory on the SD card, `/SOUNDS/en/` on an English
+radio, and the stock pack already contains a usable vocabulary of short callouts.
+Everything in this series is threshold logic pointed at files that were already
+there.
 
-I generated mine with text-to-speech and converted them to the format EdgeTX
-expects. If your tracks play but sound wrong, clipped, sped up, or silent —
-the format is the first thing to check, because EdgeTX plays WAVs directly with
-no resampling.
+Which is the cheapest part of the whole build, and the part I would have expected
+to be the most work.
 
-One thing worth checking in `radio.yml` if your tracks sound truncated at the
-start, which I have not conclusively verified as the cause on mine:
+The one place it constrains you is when you want a callout the pack does not
+contain. The regrouped config in Part 9 wants a spoken "check ok" for the
+preflight pass, and there is no such track in the stock vocabulary. Two ways round
+it: pick an existing pack track that is close enough in meaning, or add your own
+WAV to `/SOUNDS/en/` and select that. I have not needed to add one yet, so I am not
+going to write a format guide from guesswork.
+
+Two audio settings from `radio.yml` are worth knowing about, because they change
+how the callouts land:
 
 ```yaml
-audioMuteEnable: 1      # amplifier muted between sounds
 wavVolume: 4
 beepVolume: 0
+audioMuteEnable: 1
 ```
 
-`audioMuteEnable: 1` powers the amplifier down between sounds to reduce hiss.
-The trade-off is that the amp needs a moment to come back up, which can eat the
-first syllable of a short track. Setting it to `0` is the test. I mention it as
-a candidate, not a diagnosis.
-
-Also note `beepVolume: 0`. I have the beeps turned all the way down and the
-WAV volume up. If everything is going to talk to me, I do not also want it
-beeping at me.
+`beepVolume: 0` means the beeps are off entirely while the spoken tracks stay up.
+`audioMuteEnable: 1` powers the amplifier down between sounds, which reduces hiss
+at the cost of the amp needing a moment to come back. If you ever find short tracks
+losing their first syllable, that setting is the first thing to try at `0`. Mine
+sound fine, so I am flagging it as a thing to know rather than a problem I have.
 
 ## Sharing the config: what is portable and what to scrub
 

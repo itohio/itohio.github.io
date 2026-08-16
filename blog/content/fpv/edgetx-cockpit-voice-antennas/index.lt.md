@@ -72,9 +72,9 @@ vieną kiekvienai antenai, ir renkasi geresnę **kiekvienam paketui**. Tai nėra
 pasyvus sumatorius ir tai nėra vienas imtuvas su jungtuku, kurį retkarčiais
 perverčia.
 
-Rezultatas ore: nardant Norvegijos vandenpuolius, kai rotuoju per orientacijas
-prie didelio šlapios uolos gabalo, jis tarp antenų perjungia nepriekaištingai, ir
-negaunu to ryšio nutrūkimo, kurį geometrija sako, kad turėčiau gauti.
+Rezultatas ore: nardant Norvegijos vandenpuolius, rotuojant per visas aparato
+orientacijas, jis tarp antenų perjungia tvarkingai, ir negaunu to ryšio nutrūkimo,
+kurį geometrija sako, kad turėčiau gauti.
 
 Pažymėtina, kad tai veikia **net kai aparate Gemini nėra.** ELRS Gemini režimas
 siunčia abiem juostomis vienu metu ir reikalauja Gemini gebančio imtuvo kitame

@@ -148,8 +148,8 @@ switch.
 Given that this whole project exists to stop me flying past a limit I was not
 looking at, the fact that I have not applied it to **link quality**, the limit
 that actually ends flights, in a hedge, a long way from the car, is an
-oversight I noticed while writing this post. `RQly < 70 → PLAY_TRACK "link"` is
-about four minutes of work and it is next on the list.
+oversight I noticed while writing this up. `RQly < 70 → PLAY_TRACK "link"` is one
+logical switch and one special function, and it is next on the list.
 
 And it is worse than that, because of what those particular sensors are. See
 below.
@@ -157,8 +157,8 @@ below.
 The irony is not lost on me: those same sensors are the ones my
 [RX Blind-Spot Viewer](https://rxmap-viewer.sintra.site/rxmap/) reads to build a
 3D antenna pattern. I will happily spend an evening analysing link quality in
-three dimensions after the flight, and I have not spent four minutes making the
-radio say "link" during it.
+three dimensions after the flight, and I have not wired up the one switch that
+would make the radio say "link" during it.
 
 Four flaws, all of them mine, all of them fixable in an evening. Writing them down
 is the part that makes them fixable.

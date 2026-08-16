@@ -102,7 +102,7 @@ Laiptai mažėjančia įtampos tvarka, kuri pagaliau yra ir skaitinė tvarka.
 | **L10** | `RxBt < 2,9` | `L2` | `Alrm` |
 | **L11** | `\|Δ\|≥ RxBt- 0,1` | `L2` | **įgarsina naują minimumą** |
 | **L12** | `RxBt < 3,8` | `L4` | priešskrydžio klaida — `Sirn`, 2 s |
-| **L13** | `RxBt > 3,8` | `L4` | priešskrydžio patikra gerai — `checkok` |
+| **L13** | `RxBt > 3,8` | `L4` | priešskrydžio patikra gerai, ištartas patvirtinimas |
 
 **`L7` vartai yra sąmoninga išimtis.** Jis yra baterijos grupėje, nes tai įtampos
 slenkstis, bet pririštas prie *gps* pagalbinio, o ne prie baterijos, nes
@@ -110,9 +110,9 @@ slenkstis, bet pririštas prie *gps* pagalbinio, o ne prie baterijos, nes
 triukšmas. Grupuok pagal tai, ką jungtukas matuoja; vartus dėk pagal tai, kada nori
 tai išgirsti. Tai skirtingi klausimai, ir jiems visiškai normalu nesutarti.
 
-### L11, tas, kurio iš tikrųjų norėjau: minimalios įtampos įgarsinimas
+### L11: minimalios įtampos įgarsinimas
 
-Tai naujas dalykas ir mano mėgstamiausias visame perdaryme.
+Šis naujas, ir būtent dėl jo pradėjau perdarinėti, o ne lopyti.
 
 EdgeTX seka einamąjį minimumą kiekvienam telemetrijos sensoriui ir pateikia jį kaip
 atskirą šaltinį — `RxBt-`. Mano telemetrijos ekranai jį jau rodo. Ko niekada
@@ -154,6 +154,29 @@ seklius, tad `RxBt-` dabar seka *šį* paketą. Vienas jungtukas, du darbai.
 0,1 V žingsnis yra paties sensoriaus kvantavimas, tad tai paskelbs kiekvieną naują
 minimumą. Jei freestyle metu tai pasirodys per daug kalbanti, pakelk žingsnį iki
 0,2 V, slenkstis yra garso reguliatorius.
+
+### Kodėl egzistuoja L13: tyla nėra išlaikyta patikra
+
+`L12` ir `L13` yra pora, ir antrasis svarbesnis, nei atrodo.
+
+Darbo seka, kurios noriu: perjungti SE į vidurį, truputį palaukti, klausytis. Jei
+niekas nesiskundžia, aktyvuoti ir skristi. Problema ta, kad **tyla reiškia du
+skirtingus dalykus tuo pačiu kostiumu**:
+
+1. baterija tvarkinga, o tai atsakymas, kurio noriu
+2. telemetrija dar neatkeliavo, tad niekas neturi nuomonės
+
+Ausimi jie neatskiriami. Perjungiu į vidurį, greitai aktyvuoju, negirdžiu nieko,
+nusprendžiu, kad paketas geras, ir pakylu su baterija, kurios niekas neišmatavo.
+Patikra „išlaikoma“ stipriausiai būtent tada, kai ji man nepasakė nieko.
+
+Aviacija tai išsprendė seniai, ir taisyklę verta nusižiūrėti tiesiogiai:
+**priešskrydžio patikra privalo duoti pozityvų rodmenį, o ne negatyvo nebuvimą.**
+Patikra, kuri išlaikoma tylėdama, išlaikoma ir tada, kai ji sugedusi.
+
+Tad `L13` suveikia prie `RxBt > 3,8` etape ir tai pasako balsu. Dabar perjungus SE į
+vidurį nutinka lygiai vienas iš dviejų dalykų: išlaikyta patikra, kurią girdžiu,
+arba įspėjimas. Tyla nebėra atsakymas. Ji reiškia „palauk ilgiau“.
 
 ### 3 grupė — GPS, L14 → L16
 
@@ -197,7 +220,7 @@ Sąrašas pagaliau skaitomas skrydžio tvarka: žurnalas, baterija, GPS.
  7  L10   PLAY_SOUND   Alrm
  8  L11   PLAY_VALUE   tele(-14)     <- minimalios įtampos įgarsinimas
  9  L12   PLAY_SOUND   Sirn    2s
-10  L13   PLAY_TRACK   checkok
+10  L13   PLAY_TRACK   <patikros pranešimas>
 11  L14   PLAY_VALUE   tele(22)      <- GPS, palydovų skaičius
 12  L15   PLAY_TRACK   gpsoff
 13  L16   PLAY_TRACK   warnng

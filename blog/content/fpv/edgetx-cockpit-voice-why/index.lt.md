@@ -135,9 +135,9 @@ Dvi priežastys daryti tai orlaivyje:
    jau žino iš tikros nustatymo logikos. Tegu skaičiuoja tas, kuris žino.
 
 Kompromisas atviras: darant tai valdiklio pusėje, kiekvienam naujam aparatui
-reikia tos CLI eilutės, ir jei pamirši, įspėjimai suveiks absurdišku momentu.
-Man taip nutiko lygiai vieną kartą, to pakako, kad tai atsirastų paruošimo
-sąraše.
+reikia tos CLI eilutės, ir jei pamirši, įspėjimai suveiks absurdišku momentu. Tad
+tai priklauso naujo aparato paruošimo sąrašui, kartu su tais dalykais, kurių irgi
+nesimato.
 
 Vienas slenksčių rinkinys dabar reiškia tą patį fizinį dalyką kiekvienam mano
 aparatui. Toliau: trys mygtukai, kurie nusprendžia, kuriems įspėjimams leidžiama
