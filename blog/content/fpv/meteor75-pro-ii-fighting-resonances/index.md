@@ -1,5 +1,5 @@
 ---
-title: "From Meteor75 Pro to Meteor75 Pro II: a week of fighting resonances"
+title: "BetaFPV Meteor75 Pro II: Fighting Resonances"
 date: 2026-08-13
 description: "I rebuilt a 75mm whoop around a new frame and canopy, kept the FC and the air unit, and spent a week finding out that the thing I fixed was also the thing I broke. Every number here came out of a blackbox log — including the ones I had to retract."
 toc: true

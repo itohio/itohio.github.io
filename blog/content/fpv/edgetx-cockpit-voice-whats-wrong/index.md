@@ -1,5 +1,5 @@
 ---
-title: "Part 8: Four Things Wrong With It"
+title: "EdgeTX Debounce and False Battery Alarms (Part 8)"
 date: 2026-08-16T16:00:00+03:00
 description: "Stacked thresholds that layer sirens, zero debounce against punch-out sag, an alarm that fires before the first telemetry frame arrives, and the link-quality warning I never wired up."
 summary: "Stacked thresholds that layer sirens, zero debounce against punch-out sag, an alarm that fires before the first telemetry frame arrives, and the link-quality warning I never wired up."

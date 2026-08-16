@@ -1,5 +1,5 @@
 ---
-title: "Part 3: Three Buttons, Three Colours, and the AND Gate That Ties Them Together"
+title: "EdgeTX Logical and Function Switches (Part 3)"
 date: 2026-08-16T11:00:00+03:00
 description: "How EdgeTX customisable function switches, an RGB colour per subsystem, and one AND slot per logical switch turn eleven threshold detectors into three things you can switch on and off."
 summary: "How EdgeTX customisable function switches, an RGB colour per subsystem, and one AND slot per logical switch turn eleven threshold detectors into three things you can switch on and off."

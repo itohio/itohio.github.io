@@ -1,6 +1,12 @@
 
 [en]
-  title = "ITOHI — Open-Source Hardware, Embedded Systems & DIY Builds"
+  # Short, because the theme appends " | {site title}" to every page title.
+  # The long form was 62 characters, so against a ~60 character SERP title it
+  # consumed the entire display width on all 449 content URLs and the brand
+  # itself never rendered. The descriptive long form now lives on the home page,
+  # in content/_index.md, which is the only page it actually describes.
+  # LT already used the short form, so this only aligns EN with it.
+  title = "ITOHI"
   label = "English"
   weight = 1
 
