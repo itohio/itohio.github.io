@@ -615,16 +615,22 @@ EdgeTX SD-Logs CSV and it renders your **control link** in 3D. It runs entirely 
 the browser: nothing is uploaded, there is no account, and the log never leaves
 your machine.
 
-[TODO: Screenshot — RX Blind-Spot Viewer, Sphere view with a real flight log loaded]
+![RX Blind-Spot Viewer — Sphere view in the airframe frame, RSSI plotted as an empirical antenna pattern](rxmap-sphere-airframe.png "RX Blind-Spot Viewer — Sphere view, airframe frame, RSSI (worst of 1RSS/2RSS)")
 
 Three views:
 
 - **Cloud** — true 3D flight positions, coloured by whatever link metric you pick
-- **Sphere** — samples projected by azimuth and elevation, in the **airframe's own
-  reference frame** (nose / starboard / tail / port). This is the one I actually
-  built it for: it is an empirically measured antenna pattern. Overlapping samples
-  read as coverage density, so a dent in the sphere is a real blind spot in a real
-  orientation.
+- **Sphere** — the one above, and the one I actually built the tool for. Every
+  sample is placed **in the direction of the transmitter as seen from the
+  aircraft**, so the axes are NOSE / STBD / TAIL / PORT rather than compass
+  directions. **Radius is signal strength.** That makes the result an
+  *empirically measured antenna pattern* for your specific airframe, and an
+  **inward dent is a real RX blind spot in a real orientation.** Rings mark 0°,
+  30° and 60° elevation. There is a frame toggle — *From TX* for the spatial view,
+  *Airframe frame* for the antenna-pattern view — and a render toggle: *Points*
+  for raw samples, *Surface* for a smoothed shell that goes grey where there is no
+  data. The white and green ticks along the track are heading markers, white for
+  nose and green for starboard.
 - **Path** — the trajectory, with marker size and colour inversely proportional to
   link quality, so bad moments are literally bigger and redder
 
@@ -649,6 +655,12 @@ viewer offers Auto / at-start / lowest / manual referencing, with an optional
 median filter for GPS altitude spikes, and it treats exact zeros in a `GAlt`
 column as "no fix" rather than as sea level. Same physics as the altitude warning
 problem, attacked from the other end.
+
+You can see that logic firing in the screenshot above — the amber note is the tool
+reporting that the log begins about 154 m above its own lowest point, so it took
+zero from the lowest 2 % of the flight instead of trusting the first sample. On a
+naive at-start reference, that one fresh-fix sample would have made the entire
+flight read as negative altitude.
 
 **It has a current-sensor correction factor** — which is the calibration section
 of this post, made actionable. If the FC current sensor is mis-scaled then every

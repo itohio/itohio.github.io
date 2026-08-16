@@ -609,16 +609,22 @@ SD-Logs CSV ir jis atvaizduos tavo **valdymo kanalą** trimatėje erdvėje. Visk
 veikia tik naršyklėje: niekas nėra įkeliama į serverį, paskyros nereikia, žurnalas
 niekada neišeina iš tavo kompiuterio.
 
-[TODO: Ekrano nuotrauka — RX Blind-Spot Viewer, Sphere vaizdas su įkeltu tikru skrydžio žurnalu]
+![RX Blind-Spot Viewer — Sphere vaizdas aparato atskaitos sistemoje, RSSI kaip empirinė antenos diagrama](rxmap-sphere-airframe.png "RX Blind-Spot Viewer — Sphere vaizdas, aparato atskaitos sistema, RSSI (blogiausias iš 1RSS/2RSS)")
 
 Trys vaizdai:
 
 - **Cloud** — tikros 3D skrydžio pozicijos, nuspalvintos pagal pasirinktą ryšio rodiklį
-- **Sphere** — mėginiai suprojektuoti pagal azimutą ir elevaciją **paties aparato
-  atskaitos sistemoje** (nosis / dešinys / uodega / kairys). Būtent dėl šio vaizdo
-  įrankį ir kūriau: tai empiriškai išmatuota antenos diagrama. Persidengiantys
-  mėginiai skaitomi kaip aprėpties tankis, tad įdubimas sferoje yra tikra akloji
-  zona tikroje orientacijoje.
+- **Sphere** — tas, kuris viršuje, ir tas, dėl kurio įrankį iš tikrųjų kūriau.
+  Kiekvienas mėginys dedamas **siųstuvo kryptimi, kaip ji matoma iš aparato**, tad
+  ašys yra NOSE / STBD / TAIL / PORT, o ne kompaso kryptys. **Radiusas yra signalo
+  stiprumas.** Dėl to rezultatas tampa *empiriškai išmatuota antenos diagrama*
+  konkrečiam tavo aparatui, o **įdubimas į vidų yra tikra imtuvo akloji zona
+  tikroje orientacijoje.** Ratai žymi 0°, 30° ir 60° elevaciją. Yra atskaitos
+  sistemos perjungimas — *From TX* erdviniam vaizdui, *Airframe frame* antenos
+  diagramos vaizdui — ir atvaizdavimo perjungimas: *Points* neapdorotiems
+  mėginiams, *Surface* glodintam kevalui, kuris pasidaro pilkas ten, kur duomenų
+  nėra. Balti ir žali brūkšneliai trajektorijoje yra kurso žymekliai: baltas —
+  nosis, žalias — dešinys bortas.
 - **Path** — trajektorija, kurioje žymeklio dydis ir spalva atvirkščiai
   proporcingi ryšio kokybei, tad blogos vietos tampa tiesiogiai didesnės ir
   raudonesnės
@@ -644,6 +650,12 @@ negatyvus. Todėl įrankis leidžia rinktis Auto / pagal pradžią / žemiausią
 atskaitos tašką, su pasirenkamu medianiniu filtru GPS aukščio išsišokimams, ir
 traktuoja tikslius nulius `GAlt` stulpelyje kaip „nėra fiksavimo“, o ne kaip jūros
 lygį. Ta pati fizika kaip aukščio įspėjimo problemoje, atakuojama iš kito galo.
+
+Tą logiką matai veikiant ekrano nuotraukoje aukščiau — gintaro spalvos pastaba yra
+įrankio pranešimas, kad žurnalas pradedamas maždaug 154 m virš savo žemiausio
+taško, tad nulis buvo paimtas iš žemiausių 2 % skrydžio, o ne pasitikint pirmuoju
+mėginiu. Naiviai imant atskaitą pagal pradžią, tas vienas šviežio fiksavimo
+mėginys būtų padaręs visą skrydį negatyvaus aukščio.
 
 **Jis turi srovės sensoriaus korekcijos koeficientą** — o tai yra šio įrašo
 kalibracijos skyrius, padarytas veiksmingu. Jei skrydžio valdiklio srovės
