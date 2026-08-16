@@ -125,7 +125,7 @@ above this log's **791 Hz Nyquist**, so blade-pass content could not be assessed
 ~682 Hz was in range, clean, and the diagnostic one — so the conclusion holds on 2×, not on a full
 harmonic picture.
 
-## The hook: more wind made it better
+## More wind made it better, which should be impossible
 
 My first instinct was that this was a wind problem. It said so right there in my own note. So
 I compared sections at **matched prop frequency** (330–350 Hz), to hold the resonance constant
@@ -138,7 +138,7 @@ and let only the air change.
     "labels": [
       [
         "outdoor gustiest",
-        "(LF>18)"
+        "(LF over 18)"
       ],
       "outdoor, all",
       "outdoor calmest",
@@ -422,7 +422,7 @@ the first hint that this was never really a prop-balance story.
 At this point I thought props and a notch config had solved it. I had not even correctly
 described what the problem *was*.
 
-## The mechanism — and a clean hypothesis that was wrong
+## Why it only shook sometimes — and a clean hypothesis that was wrong
 
 The observation that cracked it is one I nearly ignored, because I had written it down and
 then filed it as vague: *the shaking is not always present, only in some orientations relative
@@ -1783,7 +1783,7 @@ Every curve outdoor, binned by mean prop frequency, only bins with **4 s or more
         "fill": false
       },
       {
-        "label": "stiff foam FC<->VTX",
+        "label": "stiff foam FC to VTX",
         "data": [
           null,
           27,
@@ -2879,7 +2879,7 @@ of this week.
 I will post the numbers either way, including the ones that make me look silly. There have been
 plenty of those already.
 
-## The echo
+## What I actually bought
 
 The thing I set out to fix was jello, and I fixed it — by buying a frame whose canopy holds the
 camera away from the shaking. The thing I did not expect to buy along with it was a soft spring
