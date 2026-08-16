@@ -540,8 +540,8 @@ writing a CSV to the SD card. This is where I have to stop making claims and
 start pointing at homework, because the honest answer is that I have not
 measured the thing that matters.
 
-Log fidelity is not set by the log period. It is bounded by two things in
-series, and the log period is the _second_ one:
+Log fidelity is not set by the log period. It is bounded by three things in
+series, and the log period is only the _last_ one:
 
 1. **The ELRS telemetry ratio** — how often the RF link gives the downlink a
    slot at all.
@@ -836,6 +836,11 @@ radio say "link" during it.
 Everything above is what I actually fly today, mess included. This section is the
 rebuild I have designed but not yet flashed, written down partly so I actually do it.
 
+> **Note on numbering:** this section is a clean-sheet layout, so the `L` numbers
+> below do **not** mean what they mean earlier in the post. In the config I fly
+> today `L1` is `RxBt < 4.0 V`; in the rebuild `L1` is the validity helper. Read the
+> two layouts as separate documents.
+
 Because the honest problem with my current config is not any individual switch — it
 is that **it accreted.** I added battery set points as I thought of them, then
 wedged GPS and altitude in between, and the result is eleven switches in the order
@@ -1100,8 +1105,8 @@ once I build the regrouped config above.
 They live in the language-specific sounds directory on the SD card, alongside
 the voice pack — for an English radio, `/SOUNDS/en/`. The filename minus the
 `.wav` extension is what you select in the special function, which is why they
-are all abbreviated: **EdgeTX truncates the display to six characters**, hence
-`warnng` rather than `warning`.
+are all abbreviated: **the name is limited to six characters**, hence `warnng`
+rather than `warning`.
 
 I generated mine with text-to-speech and converted them to the format EdgeTX
 expects. If your tracks play but sound wrong — clipped, sped up, or silent —

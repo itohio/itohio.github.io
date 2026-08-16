@@ -533,8 +533,8 @@ Raudonas mygtukas valdo `LOGS` su `def: "3,1"` — **0,3 sekundės** įrašymo
 periodu, rašant CSV į SD kortelę. Čia turiu nustoti teigti ir pradėti rodyti
 namų darbus, nes atviras atsakymas yra tas, kad svarbiausio dalyko neišmatavau.
 
-Įrašo tikslumo nenustato įrašymo periodas. Jį riboja du dalykai iš eilės, ir
-įrašymo periodas yra *antrasis*:
+Įrašo tikslumo nenustato įrašymo periodas. Jį riboja trys dalykai iš eilės, ir
+įrašymo periodas yra tik *paskutinis*:
 
 1. **ELRS telemetrijos santykis** — kaip dažnai radijo kanalas apskritai skiria
    laiko tarpą atgaliniam ryšiui.
@@ -832,6 +832,11 @@ Viskas aukščiau yra tai, su kuo realiai skraidau šiandien, netvarką įskaita
 skyrius yra perdarymas, kurį suprojektavau, bet dar neįrašiau į pultą — užrašau jį
 dalinai tam, kad tikrai imčiausi.
 
+> **Pastaba apie numeraciją:** šis skyrius yra nuo nulio sudarytas išdėstymas, tad
+> `L` numeriai žemiau **nereiškia** to, ką jie reiškia anksčiau šiame įraše.
+> Konfigūracijoje, su kuria skraidau šiandien, `L1` yra `RxBt < 4,0 V`; perdaryme
+> `L1` yra galiojimo pagalbinis. Skaityk tuos du išdėstymus kaip atskirus dokumentus.
+
 Nes atvira mano dabartinės konfigūracijos problema nėra kuris nors vienas jungtukas
 — problema ta, kad ji **priaugo.** Įtampos taškus dėjau tada, kai apie juos
 pagalvodavau, tada tarp jų įsprausdavau GPS ir aukštį, ir rezultatas yra vienuolika
@@ -1102,8 +1107,7 @@ Ištarti pranešimai yra individualūs WAV failai, ne integruoti garsai. Šiandi
 Jie gyvena kalbai skirtame garsų kataloge SD kortelėje, kartu su balso paketu —
 angliškam pultui tai `/SOUNDS/en/`. Failo pavadinimas be `.wav` galūnės yra tai,
 ką renkiesi specialiojoje funkcijoje, ir būtent todėl visi jie sutrumpinti:
-**EdgeTX rodomą pavadinimą apkerpa iki šešių simbolių**, todėl `warnng`, o ne
-`warning`.
+**pavadinimas ribojamas iki šešių simbolių**, todėl `warnng`, o ne `warning`.
 
 Savuosius sugeneravau tekstą-į-kalbą įrankiu ir konvertavau į formatą, kurio
 EdgeTX reikalauja. Jei tavo failai groja, bet skamba ne taip — apkirpti,
