@@ -559,7 +559,7 @@ jie niekada negali būti nesinchronizuoti tarpusavyje. Bet `RxBt` gyvena visai
 kitame kadre, todėl atsinaujina nepriklausomai ir lėčiau nei grynas telemetrijos
 tarpų greitis.
 
-```wavedrom
+```wave
 { "signal": [
   { "name": "RF paketai",        "wave": "p................" },
   { "name": "telem. tarpas 1:4", "wave": "0..10..10..10..10" },

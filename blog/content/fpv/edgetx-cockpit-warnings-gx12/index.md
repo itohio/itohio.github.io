@@ -566,7 +566,7 @@ never be out of sync with each other. But `RxBt` lives in a different frame
 entirely, so it updates independently, and slower than the raw telemetry slot
 rate.
 
-```wavedrom
+```wave
 { "signal": [
   { "name": "RF packets",        "wave": "p................" },
   { "name": "downlink slot 1:4", "wave": "0..10..10..10..10" },
