@@ -831,127 +831,199 @@ The irony is not lost on me: those same sensors are the ones my
 three dimensions after the flight, and I have not spent four minutes making the
 radio say "link" during it.
 
-## I'll try this one next
+## I'll try this one next: a full regroup
 
-Everything above is what I actually fly today. This section is the fix I have
-designed but not yet built, written down partly so I actually do it.
+Everything above is what I actually fly today, mess included. This section is the
+rebuild I have designed but not yet flashed, written down partly so I actually do it.
 
-### The three-position idea
+Because the honest problem with my current config is not any individual switch — it
+is that **it accreted.** I added battery set points as I thought of them, then
+wedged GPS and altitude in between, and the result is eleven switches in the order
+I happened to invent them. Nothing is wrong. Nothing is findable either.
 
-SE is a 3-position switch and I am using all three as **stages**, not as modes:
+So: three groups, in the order I use them in real life. **Recording, then battery,
+then GPS.** That is the sequence of a flight — start the log, check the pack, wait
+for a fix.
 
-| SE position | Meaning |
-|---|---|
-| **Down** | Disarmed. Nothing armed, nothing talking. |
-| **Middle** | **Preflight check.** Telemetry warnings enabled, aircraft still disarmed. |
-| **Up** | Armed. Flying. |
+### Helpers first, at the bottom of the range
 
-The workflow is: switch to middle, wait a moment for telemetry, listen. If nothing
-complains, go up and fly. An automated preflight check that costs me one switch
-movement and a few seconds of patience — specifically so I stop taking off on a
-pack that is already half gone, which is a mistake I have made.
-
-This is what `L9` was the beginning of.
-
-### The flaw in that workflow, which I only noticed writing this
-
-**Silence is not a pass.** It is two different things wearing the same costume:
-
-1. "The battery is fine" — the outcome I want
-2. "Telemetry has not arrived yet, so nothing has an opinion" — indistinguishable
-   by ear
-
-If I flick to middle and arm too quickly, I hear nothing, conclude the pack is
-good, and take off — on a battery no one has measured. The check passes *hardest*
-in exactly the case where it has told me nothing at all.
-
-Aviation solved this a long time ago and the rule is worth stealing verbatim: **a
-preflight check must produce a positive indication, not an absence of a negative
-one.** A test that passes by being quiet is a test that also passes when it is
-broken.
-
-So the design needs two things: a **validity gate** so no warning can fire on
-absent data, and a **positive confirmation** so a pass makes a sound of its own.
-
-### The build
-
-The trick is that a logical switch's AND slot accepts **another logical switch**,
-not just a physical one. So instead of duplicating conditions across eleven
-switches, one helper does the work and everything points at it.
+Renumbering gives me something for free. Last time I sketched these helpers at
+L12–L16 and had to warn that they would lag their consumers by one evaluation
+cycle. Putting them at **L1–L4** removes that caveat entirely: EdgeTX walks L1 → L64
+once per cycle, so a helper at L1 is always fresh by the time L5 reads it.
 
 ```yaml
-# --- helpers ---
-11:                              # = L12  "telemetry is actually present"
+0:                               # = L1  "telemetry is actually present"
    func: FUNC_VPOS
    def: "tele(14),5"             # RxBt > 0.5   (prec:1, so 5 = 0.5 V)
    andsw: "NONE"
 
-12:                              # = L13  in-flight warnings armed AND valid
+1:                               # = L2  battery warnings armed AND valid
    func: FUNC_AND
-   def: "SW52,L12"               # green bat button + validity
+   def: "SW52,L1"                # green bat button + validity
 
-13:                              # = L14  GPS callouts armed AND valid
+2:                               # = L3  GPS callouts armed AND valid
    func: FUNC_AND
-   def: "SW62,L12"               # blue gps button + validity
+   def: "SW62,L1"                # blue gps button + validity
 
-14:                              # = L15  PREFLIGHT staged AND valid
+3:                               # = L4  preflight staged AND valid
    func: FUNC_AND
-   def: "SE1,L12"                # SE middle + validity
-
-# --- the positive confirmation that makes silence unnecessary ---
-15:                              # = L16
-   func: FUNC_VPOS
-   def: "tele(14),38"            # RxBt > 3.8 V
-   andsw: "L15"                  # only while staged, only with real data
+   def: "SE1,L1"                 # SE middle + validity
 ```
 
-Then rewire every existing switch's `andsw` to the matching helper:
+`L1` is the one that matters most. It is what stops the whole ladder shouting at me
+on a fresh battery, because `RxBt` sitting at its `0.0` initialisation value fails
+`RxBt > 0.5`, so every gate downstream is false until real data arrives.
 
-| Switches | Old `andsw` | New `andsw` |
-|---|---|---|
-| L1, L2, L8, L11 (voltage ladder) | `SW52` | **`L13`** |
-| L3, L4, L5, L7 (rth + GPS callouts) | `SW62` | **`L14`** |
-| L9 (preflight voltage check) | `SE1` | **`L15`** |
-| L10 (`ready` self-test) | `SW52` | **`L13`** |
+### Group 1 — Recording
 
-And one new special function: `L16 → PLAY_TRACK "checkok"`, play once.
+Recording needs no logical switch at all; it is a special function driven straight
+off the red button. It goes **first** in the special function list purely so the
+list reads in flight order.
 
-Now the preflight reads properly. Flick SE to middle and one of exactly two things
-happens: either **"check ok"** — telemetry is present *and* the pack is above
-3.8 V/cell — or a warning. Nothing is no longer an answer; it means *wait longer*.
+| Trigger | Function |
+|---|---|
+| `SW42` (red `log`) | `LOGS` 0.3 s |
 
-The same helper fixes the startup alarm from the previous section for free, on
-every rung at once. `RxBt` sitting at `0.0` fails `RxBt > 0.5`, so `L12` is false,
-so every gate is false, so the 2.9 V "you have destroyed the pack" alarm cannot
-speak on a fresh battery. One switch, two bugs.
+### Group 2 — Battery, L5 → L13
 
-### Why it is worth the helper indirection
+The ladder in descending voltage order, which is finally also numerical order.
 
-Because the gating policy now lives in **one place per subsystem** instead of being
-copy-pasted into eleven. When I get round to configuring a proper prearm switch —
-`SA`, most likely — staging moves off SE with a single edit: `L15`'s second operand
-changes from `SE1` to the SA position, and all the preflight behaviour follows. No
-touching the thresholds at all.
+| LS | Test | Gate | Sound |
+|---|---|---|---|
+| **L5** | `RxBt > 4.2` | `L2` | `ready` — fresh pack self-test |
+| **L6** | `RxBt < 4.0` | `L2` | `Wrn1` |
+| **L7** | `RxBt < 3.8` | **`L3`** | `rth` — see note |
+| **L8** | `RxBt < 3.6` | `L2` | `Sirn`, 1 s |
+| **L9** | `RxBt < 3.5` | `L2` | `lowbat`, 5 s |
+| **L10** | `RxBt < 2.9` | `L2` | `Alrm` |
+| **L11** | `\|Δ\|≥ RxBt- 0.1` | `L2` | **speaks the new minimum** |
+| **L12** | `RxBt < 3.8` | `L4` | preflight fail — `Sirn`, 2 s |
+| **L13** | `RxBt > 3.8` | `L4` | preflight pass — `checkok` |
 
-That is the same separation the three coloured buttons already gave me, applied one
-level deeper. Threshold logic, arming logic, and validity logic each get their own
-layer, and none of them know about each other.
+**The `L7` gate is a deliberate exception.** It sits in the battery group because it
+is a voltage threshold, but it is gated on the *gps* helper rather than the battery
+one, because "turn around" is a long-range warning. On a whoop in a hotel room it
+would be noise. Group by what a switch measures; gate by when you want to hear it.
+Those are different questions and it is fine for them to disagree.
 
-### Two caveats
+### L11, the one I actually wanted: minimum-voltage readout
 
-**Evaluation order.** EdgeTX walks logical switches L1 → L64 once per cycle. A
-switch reading a *lower*-numbered one sees this cycle's value; reading a
-*higher*-numbered one sees last cycle's. My helpers sit above the switches using
-them, so those reads lag by one cycle — around 10 ms. Against a battery frame that
-arrives every few seconds, that is nothing. If you build fast logic, put the
-helpers at the low numbers instead.
+This is new and it is my favourite thing in the rebuild.
 
-**Verify the YAML rather than trusting mine.** I am confident about the structure
-and about `L<n>` being the reference form — my own `customFn` block already uses
-`swtch: "L3"`. But I am *predicting* the exact spelling of `FUNC_AND` and its
-two-operand `def`, because my current config contains no AND-type switch to copy
-from. Build it in the radio UI, export the model, and read what EdgeTX actually
-wrote. Then trust that.
+EdgeTX tracks a running minimum for every telemetry sensor, exposed as a separate
+source — `RxBt-`. My telemetry screens already display it. What I have never done is
+make it *talk*.
+
+```yaml
+10:                              # = L11
+   func: FUNC_ADIFFEGREATER      # |Δ| >= x
+   def: "tele(-14),1"            # RxBt MINIMUM, step 0.1 V
+   andsw: "L2"
+```
+
+Paired with `PLAY_VALUE` on `tele(-14)`, that means: **every time the flight
+records a new lowest cell voltage, the radio speaks it.** Not a threshold, not a
+warning — a measurement, read out loud, at the moment it happens.
+
+Which gives me sag data from punch-outs while I am flying, instead of afterwards in
+blackbox. A hard punch drops the pack, `RxBt-` drops with it, and I hear "three
+point four". That is the number I care about most and have never had in the air.
+
+Two details make it work properly:
+
+**Use `|Δ|`, not `Δ`.** A minimum only ever decreases, so the delta is always
+negative — `Δ≥x` would never fire. The absolute-value form catches it.
+
+**Reset the tracker per pack, or it is useless.** A running minimum that never
+resets just remembers the worst moment of the day. So `L5` — the fresh-pack
+detector — gets a *second* special function alongside `ready`:
+
+| Trigger | Function |
+|---|---|
+| `L5` | `PLAY_TRACK ready` |
+| `L5` | `RESET Telemetry` |
+
+Plug in a fresh battery, the radio says "ready" and simultaneously wipes the min/max
+trackers, so `RxBt-` now tracks *this* pack. One switch, two jobs.
+
+A 0.1 V step is the sensor's own quantisation, so this announces every single new
+minimum. If that turns out chatty during freestyle, raise the step to 0.2 V — the
+threshold is the volume knob.
+
+### Group 3 — GPS, L14 → L16
+
+| LS | Test | Gate | Sound |
+|---|---|---|---|
+| **L14** | `Sats > 10` | `L3` | **speaks the satellite count** |
+| **L15** | `Sats < 6` | `L3` | `gpsoff` — fix degraded |
+| **L16** | `\|Δ\|≥ GAlt 120` | `NONE` | `warnng` — altitude |
+
+**Acquire at 10, warn at 6 — the gap is deliberate.** Ten satellites is "solid
+enough to launch on". Six is "GPS Rescue is no longer something I would trust".
+Setting both to the same number would make it chatter every time the count wobbled
+across the boundary; a four-satellite deadband means each announcement is a real
+state change. Set the lower number to match your own `gps_rescue_min_sats`.
+
+`L14` replaces the old pair of Sats switches. Announcing the count at 10 rather
+than 6 is the change I wanted: below ten I do not want a running commentary while
+I wait, I want to know when it is *ready*.
+
+If you would rather have a continuous count as satellites come and go, that is a
+`|Δ|≥1` on `Sats` gated behind a `Sats > 10` helper — one more switch, and rather
+more talking.
+
+`L16` stays ungated on purpose. The altitude limit applies on every aircraft on
+every flight, so it is the one warning that should not have an off switch.
+
+### Special function order
+
+The list finally reads in flight order: log, battery, GPS.
+
+```text
+ 0  SW42  LOGS         0.3s          <- recording
+ 1  L5    PLAY_TRACK   ready         <- battery
+ 2  L5    RESET        Telemetry
+ 3  L6    PLAY_SOUND   Wrn1
+ 4  L7    PLAY_TRACK   rth
+ 5  L8    PLAY_SOUND   Sirn    1s
+ 6  L9    PLAY_TRACK   lowbat  5s
+ 7  L10   PLAY_SOUND   Alrm
+ 8  L11   PLAY_VALUE   tele(-14)     <- minimum voltage readout
+ 9  L12   PLAY_SOUND   Sirn    2s
+10  L13   PLAY_TRACK   checkok
+11  L14   PLAY_VALUE   tele(22)      <- GPS, satellite count
+12  L15   PLAY_TRACK   gpsoff
+13  L16   PLAY_TRACK   warnng
+```
+
+### Why the helper indirection is worth it
+
+The gating policy now lives in **one place per subsystem** instead of being
+copy-pasted into eleven switches. When I get round to a proper prearm switch —
+`SA`, most likely — staging moves off SE with a single edit: `L4`'s second operand
+changes from `SE1` to the SA position, and every preflight behaviour follows. No
+threshold gets touched.
+
+That is the same separation the three coloured buttons gave me, applied one level
+deeper. Threshold logic, arming logic and validity logic each get their own layer,
+and none of them know about each other.
+
+### What to verify rather than trust
+
+I am confident about the structure, and about `L<n>` being the reference form — my
+existing `customFn` block already uses `swtch: "L3"`. Three things in here are
+predictions:
+
+- the exact YAML spelling of `FUNC_AND` and its two-operand `def`, since my current
+  config contains no AND-type switch to copy from
+- that `tele(-14)` is selectable as a logical switch operand. It definitely exists
+  as a *source* — my telemetry screens use it — but I have not yet confirmed the
+  picker offers min/max variants inside a logical switch
+- the `RESET Telemetry` special function's `def` format
+
+Build it in the radio UI, export the model, and read back what EdgeTX actually
+wrote. Then trust that, not this.
 
 ## Sharing the config: what is portable and what to scrub
 
@@ -1021,8 +1093,9 @@ So my honest advice, in order of preference:
 
 ## Custom audio: rth, gpson, gpsoff, lowbat, warnng, ready
 
-The spoken callouts are custom WAV files, not built-in sounds. Six of them:
-`rth`, `gpson`, `gpsoff`, `lowbat`, `warnng`, `ready`.
+The spoken callouts are custom WAV files, not built-in sounds. Six of them today:
+`rth`, `gpson`, `gpsoff`, `lowbat`, `warnng`, `ready` — and a seventh, `checkok`,
+once I build the regrouped config above.
 
 They live in the language-specific sounds directory on the SD card, alongside
 the voice pack — for an English radio, `/SOUNDS/en/`. The filename minus the

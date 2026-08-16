@@ -826,134 +826,206 @@ antenos diagramą. Aš mielai praleisiu vakarą analizuodamas ryšio kokybę tri
 dimensijomis po skrydžio, o keturių minučių tam, kad pultas skrydžio metu pasakytų
 „link“, dar neskyriau.
 
-## Šitą išbandysiu kaip sekantį
+## Šitą išbandysiu kaip sekantį: pilnas pergrupavimas
 
-Viskas aukščiau yra tai, su kuo realiai skraidau šiandien. Šis skyrius yra
-sprendimas, kurį suprojektavau, bet dar nesukūriau — užrašau jį dalinai tam, kad
-tikrai imčiausi.
+Viskas aukščiau yra tai, su kuo realiai skraidau šiandien, netvarką įskaitant. Šis
+skyrius yra perdarymas, kurį suprojektavau, bet dar neįrašiau į pultą — užrašau jį
+dalinai tam, kad tikrai imčiausi.
 
-### Trijų pozicijų idėja
+Nes atvira mano dabartinės konfigūracijos problema nėra kuris nors vienas jungtukas
+— problema ta, kad ji **priaugo.** Įtampos taškus dėjau tada, kai apie juos
+pagalvodavau, tada tarp jų įsprausdavau GPS ir aukštį, ir rezultatas yra vienuolika
+jungtukų ta tvarka, kuria juos atsitiktinai sugalvojau. Niekas nėra blogai. Bet ir
+nieko nerasi.
 
-SE yra 3 pozicijų jungtukas, ir visas tris naudoju kaip **etapus**, o ne kaip
-režimus:
+Tad: trys grupės, ta tvarka, kuria jas naudoju realiame gyvenime. **Įrašymas, tada
+baterija, tada GPS.** Tai yra skrydžio seka — paleisk žurnalą, patikrink paketą,
+palauk fiksavimo.
 
-| SE pozicija | Reikšmė |
-|---|---|
-| **Apačia** | Neaktyvuota. Niekas neaktyvu, niekas nekalba. |
-| **Vidurys** | **Priešskrydžio patikra.** Telemetrijos įspėjimai įjungti, aparatas vis dar neaktyvuotas. |
-| **Viršus** | Aktyvuota. Skrendama. |
+### Pagalbiniai pirmiausia, diapazono apačioje
 
-Darbo seka: perjungiu į vidurį, truputį palaukiu telemetrijos, klausausi. Jei
-niekas nesiskundžia — perjungiu į viršų ir skrendu. Automatinė priešskrydžio
-patikra, kainuojanti vieną jungtuko judesį ir kelias sekundes kantrybės — būtent
-tam, kad nustočiau kilti su paketu, kuris jau pusiau tuščias. Tokią klaidą esu
-padaręs.
-
-Būtent nuo to `L9` ir buvo pradžia.
-
-### Tos darbo sekos defektas, kurį pastebėjau tik rašydamas šį įrašą
-
-**Tyla nėra išlaikyta patikra.** Tai du skirtingi dalykai tuo pačiu kostiumu:
-
-1. „Baterija tvarkinga“ — rezultatas, kurio noriu
-2. „Telemetrija dar neatkeliavo, tad niekas neturi nuomonės“ — ausimi neatskiriama
-
-Jei perjungiu į vidurį ir aktyvuoju per greitai, negirdžiu nieko, nusprendžiu, kad
-paketas geras, ir pakylu — su baterija, kurios niekas neišmatavo. Patikra
-„išlaikoma“ *stipriausiai* būtent tuo atveju, kai ji man nepasakė absoliučiai
-nieko.
-
-Aviacija tai išsprendė seniai, ir taisyklę verta nusižiūrėti tiesiogiai:
-**priešskrydžio patikra privalo duoti pozityvų rodmenį, o ne negatyvo nebuvimą.**
-Patikra, kuri išlaikoma tylėdama, yra patikra, kuri išlaikoma ir tada, kai ji
-sugedusi.
-
-Tad projektui reikia dviejų dalykų: **galiojimo vartų**, kad nė vienas įspėjimas
-negalėtų suveikti ant nesamų duomenų, ir **pozityvaus patvirtinimo**, kad
-išlaikyta patikra pati skleistų garsą.
-
-### Konstrukcija
-
-Triukas tas, kad loginio jungtuko AND laukas priima **kitą loginį jungtuką**, ne
-tik fizinį. Tad užuot dubliavus sąlygas vienuolikoje jungtukų, darbą atlieka vienas
-pagalbinis, o visi kiti rodo į jį.
+Numeracijos perdarymas duoda vieną dalyką dovanų. Praeitą kartą tuos pagalbinius
+buvau nubraižęs L12–L16, ir turėjau įspėti, kad jie vėluos vienu vykdymo ciklu
+prieš tuos, kurie juos naudoja. Padėjus juos į **L1–L4**, ta išlyga išnyksta
+visiškai: EdgeTX pereina L1 → L64 kartą per ciklą, tad pagalbinis L1 pozicijoje
+visada yra šviežias, kai jį perskaito L5.
 
 ```yaml
-# --- pagalbiniai ---
-11:                              # = L12  „telemetrija realiai yra“
+0:                               # = L1  „telemetrija realiai yra“
    func: FUNC_VPOS
    def: "tele(14),5"             # RxBt > 0,5   (prec:1, tad 5 = 0,5 V)
    andsw: "NONE"
 
-12:                              # = L13  skrydžio įspėjimai aktyvūs IR galioja
+1:                               # = L2  baterijos įspėjimai aktyvūs IR galioja
    func: FUNC_AND
-   def: "SW52,L12"               # žalias bat mygtukas + galiojimas
+   def: "SW52,L1"                # žalias bat mygtukas + galiojimas
 
-13:                              # = L14  GPS pranešimai aktyvūs IR galioja
+2:                               # = L3  GPS pranešimai aktyvūs IR galioja
    func: FUNC_AND
-   def: "SW62,L12"               # mėlynas gps mygtukas + galiojimas
+   def: "SW62,L1"                # mėlynas gps mygtukas + galiojimas
 
-14:                              # = L15  PRIEŠSKRYDŽIO etapas IR galiojimas
+3:                               # = L4  priešskrydžio etapas IR galiojimas
    func: FUNC_AND
-   def: "SE1,L12"                # SE vidurys + galiojimas
-
-# --- pozityvus patvirtinimas, dėl kurio tyla tampa nebereikalinga ---
-15:                              # = L16
-   func: FUNC_VPOS
-   def: "tele(14),38"            # RxBt > 3,8 V
-   andsw: "L15"                  # tik etape, tik su tikrais duomenimis
+   def: "SE1,L1"                 # SE vidurys + galiojimas
 ```
 
-Tada perjungiam kiekvieno esamo jungtuko `andsw` į atitinkamą pagalbinį:
+`L1` yra pats svarbiausias. Būtent jis sustabdo visų laiptų rėkimą ant šviežios
+baterijos, nes `RxBt`, sėdintis ant savo pradinės `0,0` reikšmės, neišlaiko
+`RxBt > 0,5`, tad visi tolesni vartai yra neteisingi, kol neatkeliauja tikri
+duomenys.
 
-| Jungtukai | Senas `andsw` | Naujas `andsw` |
-|---|---|---|
-| L1, L2, L8, L11 (įtampos laiptai) | `SW52` | **`L13`** |
-| L3, L4, L5, L7 (rth + GPS pranešimai) | `SW62` | **`L14`** |
-| L9 (priešskrydžio įtampos patikra) | `SE1` | **`L15`** |
-| L10 (`ready` savitikra) | `SW52` | **`L13`** |
+### 1 grupė — Įrašymas
 
-Ir viena nauja specialioji funkcija: `L16 → PLAY_TRACK "checkok"`, paleisti vieną
-kartą.
+Įrašymui loginio jungtuko nereikia visai; tai specialioji funkcija, valdoma
+tiesiogiai raudonu mygtuku. Ji eina **pirma** specialiųjų funkcijų sąraše vien tam,
+kad sąrašas būtų skaitomas skrydžio tvarka.
 
-Dabar priešskrydžio patikra skaitoma teisingai. Perjungiu SE į vidurį ir nutinka
-lygiai vienas iš dviejų dalykų: arba **„check ok“** — telemetrija yra *ir* paketas
-virš 3,8 V celei — arba įspėjimas. Niekas nebėra atsakymas; jis reiškia *palauk
-ilgiau*.
+| Paleidėjas | Funkcija |
+|---|---|
+| `SW42` (raudonas `log`) | `LOGS` 0,3 s |
 
-Tas pats pagalbinis jungtukas dovanų ištaiso ir paleidimo signalą iš ankstesnio
-skyriaus — iš karto visiems laipteliams. `RxBt`, sėdintis ant `0,0`, neišlaiko
-`RxBt > 0,5`, tad `L12` yra neteisingas, tad visi vartai neteisingi, tad 2,9 V
-„sugadinai paketą“ signalas negali prabilti ant šviežios baterijos. Vienas
-jungtukas, dvi klaidos.
+### 2 grupė — Baterija, L5 → L13
+
+Laiptai mažėjančia įtampos tvarka, kuri pagaliau yra ir skaitinė tvarka.
+
+| LS | Testas | Vartai | Garsas |
+|---|---|---|---|
+| **L5** | `RxBt > 4,2` | `L2` | `ready` — šviežio paketo savitikra |
+| **L6** | `RxBt < 4,0` | `L2` | `Wrn1` |
+| **L7** | `RxBt < 3,8` | **`L3`** | `rth` — žr. pastabą |
+| **L8** | `RxBt < 3,6` | `L2` | `Sirn`, 1 s |
+| **L9** | `RxBt < 3,5` | `L2` | `lowbat`, 5 s |
+| **L10** | `RxBt < 2,9` | `L2` | `Alrm` |
+| **L11** | `\|Δ\|≥ RxBt- 0,1` | `L2` | **įgarsina naują minimumą** |
+| **L12** | `RxBt < 3,8` | `L4` | priešskrydžio klaida — `Sirn`, 2 s |
+| **L13** | `RxBt > 3,8` | `L4` | priešskrydžio patikra gerai — `checkok` |
+
+**`L7` vartai yra sąmoninga išimtis.** Jis yra baterijos grupėje, nes tai įtampos
+slenkstis, bet pririštas prie *gps* pagalbinio, o ne prie baterijos, nes
+„apsisuk“ yra tolimo skrydžio įspėjimas. Ant whoop'o viešbučio kambaryje jis būtų
+triukšmas. Grupuok pagal tai, ką jungtukas matuoja; vartus dėk pagal tai, kada nori
+tai išgirsti. Tai skirtingi klausimai, ir jiems visiškai normalu nesutarti.
+
+### L11, tas, kurio iš tikrųjų norėjau: minimalios įtampos įgarsinimas
+
+Tai naujas dalykas ir mano mėgstamiausias visame perdaryme.
+
+EdgeTX seka einamąjį minimumą kiekvienam telemetrijos sensoriui ir pateikia jį kaip
+atskirą šaltinį — `RxBt-`. Mano telemetrijos ekranai jį jau rodo. Ko niekada
+nepadariau — nepriverčiau jo *kalbėti*.
+
+```yaml
+10:                              # = L11
+   func: FUNC_ADIFFEGREATER      # |Δ| >= x
+   def: "tele(-14),1"            # RxBt MINIMUMAS, žingsnis 0,1 V
+   andsw: "L2"
+```
+
+Sujungus su `PLAY_VALUE` ant `tele(-14)`, tai reiškia: **kiekvieną kartą, kai
+skrydis užfiksuoja naują žemiausią celės įtampą, pultas ją ištaria.** Ne slenkstis,
+ne įspėjimas — matavimas, perskaitytas balsu tą pačią akimirką.
+
+Dėl to gaunu įtampos kritimo duomenis iš akceleravimų dar skrisdamas, o ne po to
+juodojoje dėžėje. Stiprus akceleravimas nuleidžia paketą, `RxBt-` nusileidžia su
+juo, ir aš išgirstu „trys taškas keturi“. Tai skaičius, kuris man rūpi labiausiai ir
+kurio ore niekada neturėjau.
+
+Dvi detalės, dėl kurių tai veikia teisingai:
+
+**Naudok `|Δ|`, ne `Δ`.** Minimumas tik mažėja, tad skirtumas visada negatyvus —
+`Δ≥x` niekada nesuveiktų. Absoliučios reikšmės forma jį pagauna.
+
+**Nunulink seklį kiekvienam paketui, kitaip jis nenaudingas.** Einamasis minimumas,
+kuris niekada nenusinulina, tiesiog atsimena blogiausią dienos momentą. Tad `L5` —
+šviežio paketo detektorius — gauna *antrą* specialiąją funkciją kartu su `ready`:
+
+| Paleidėjas | Funkcija |
+|---|---|
+| `L5` | `PLAY_TRACK ready` |
+| `L5` | `RESET Telemetry` |
+
+Įjungi šviežią bateriją, pultas pasako „ready“ ir tuo pačiu metu ištrina min/max
+seklius, tad `RxBt-` dabar seka *šį* paketą. Vienas jungtukas, du darbai.
+
+0,1 V žingsnis yra paties sensoriaus kvantavimas, tad tai paskelbs kiekvieną naują
+minimumą. Jei freestyle metu tai pasirodys per daug kalbanti, pakelk žingsnį iki
+0,2 V — slenkstis yra garso reguliatorius.
+
+### 3 grupė — GPS, L14 → L16
+
+| LS | Testas | Vartai | Garsas |
+|---|---|---|---|
+| **L14** | `Sats > 10` | `L3` | **įgarsina palydovų skaičių** |
+| **L15** | `Sats < 6` | `L3` | `gpsoff` — fiksavimas pablogėjo |
+| **L16** | `\|Δ\|≥ GAlt 120` | `NONE` | `warnng` — aukštis |
+
+**Įsigyti prie 10, įspėti prie 6 — tarpas yra sąmoningas.** Dešimt palydovų yra
+„pakankamai tvirta, kad kiltum“. Šeši yra „GPS Rescue nebėra tai, kuo pasitikėčiau“.
+Nustačius abu į tą patį skaičių, jis kalbėtų kiekvieną kartą, kai skaičius
+supleveniuotų per ribą; keturių palydovų neveiklumo zona reiškia, kad kiekvienas
+pranešimas yra tikra būsenos kaita. Žemesnį skaičių nustatyk pagal savo
+`gps_rescue_min_sats`.
+
+`L14` pakeičia senąją Sats jungtukų porą. Skaičiaus skelbimas prie 10, o ne prie 6,
+yra tas pakeitimas, kurio norėjau: žemiau dešimties nenoriu nuolatinio komentaro,
+kol laukiu — noriu žinoti, kada *paruošta*.
+
+Jei mieliau turėtum nuolatinį skaičių, kai palydovai atsiranda ir išnyksta — tai
+`|Δ|≥1` ant `Sats`, pririštas už `Sats > 10` pagalbinio: dar vienas jungtukas ir
+gerokai daugiau kalbėjimo.
+
+`L16` sąmoningai lieka be vartų. Aukščio riba taikoma kiekvienam aparatui kiekvieno
+skrydžio metu, tad tai vienintelis įspėjimas, kuris neturėtų turėti išjungimo
+mygtuko.
+
+### Specialiųjų funkcijų tvarka
+
+Sąrašas pagaliau skaitomas skrydžio tvarka: žurnalas, baterija, GPS.
+
+```text
+ 0  SW42  LOGS         0.3s          <- įrašymas
+ 1  L5    PLAY_TRACK   ready         <- baterija
+ 2  L5    RESET        Telemetry
+ 3  L6    PLAY_SOUND   Wrn1
+ 4  L7    PLAY_TRACK   rth
+ 5  L8    PLAY_SOUND   Sirn    1s
+ 6  L9    PLAY_TRACK   lowbat  5s
+ 7  L10   PLAY_SOUND   Alrm
+ 8  L11   PLAY_VALUE   tele(-14)     <- minimalios įtampos įgarsinimas
+ 9  L12   PLAY_SOUND   Sirn    2s
+10  L13   PLAY_TRACK   checkok
+11  L14   PLAY_VALUE   tele(22)      <- GPS, palydovų skaičius
+12  L15   PLAY_TRACK   gpsoff
+13  L16   PLAY_TRACK   warnng
+```
 
 ### Kodėl pagalbinių netiesiškumas to vertas
 
-Nes vartų politika dabar gyvena **vienoje vietoje kiekvienai posistemei**, o ne
+Vartų politika dabar gyvena **vienoje vietoje kiekvienai posistemei**, o ne
 nukopijuota vienuolika kartų. Kai imsiuosi normalaus prearm jungtuko — greičiausiai
-`SA` — etapavimas nuo SE nukels vienu pakeitimu: `L15` antrasis operandas pasikeis
-iš `SE1` į SA poziciją, ir visa priešskrydžio elgsena nuseks paskui. Slenksčių
-visiškai neteks liesti.
+`SA` — etapavimas nuo SE nukels vienu pakeitimu: `L4` antrasis operandas pasikeis iš
+`SE1` į SA poziciją, ir visa priešskrydžio elgsena nuseks paskui. Nė vienas
+slenkstis nebus paliestas.
 
-Tai tas pats atskyrimas, kurį jau davė trys spalvoti mygtukai, pritaikytas vienu
-lygiu giliau. Slenksčių logika, aktyvavimo logika ir galiojimo logika kiekviena
-gauna savo sluoksnį, ir nė viena nieko nežino apie kitas.
+Tai tas pats atskyrimas, kurį davė trys spalvoti mygtukai, pritaikytas vienu lygiu
+giliau. Slenksčių logika, aktyvavimo logika ir galiojimo logika kiekviena gauna savo
+sluoksnį, ir nė viena nieko nežino apie kitas.
 
-### Dvi išlygos
+### Ką tikrinti, o ne tikėti
 
-**Vykdymo tvarka.** EdgeTX pereina loginius jungtukus L1 → L64 kartą per ciklą.
-Jungtukas, skaitantis *mažesnio* numerio jungtuką, mato šio ciklo reikšmę;
-skaitantis *didesnio* numerio — praėjusio ciklo. Mano pagalbiniai yra virš tų
-jungtukų, kurie juos naudoja, tad tie skaitymai vėluoja vienu ciklu — apie 10 ms.
-Prieš baterijos kadrą, atkeliaujantį kas kelias sekundes, tai niekas. Jei kuri
-greitą logiką — pagalbinius dėk į mažus numerius.
+Esu tikras dėl struktūros ir dėl to, kad `L<n>` yra kreipimosi forma — mano esamas
+`customFn` blokas jau naudoja `swtch: "L3"`. Trys dalykai čia yra spėjimai:
 
-**Tikrink YAML, o ne tikėk manuoju.** Esu tikras dėl struktūros ir dėl to, kad
-`L<n>` yra kreipimosi forma — mano paties `customFn` blokas jau naudoja
-`swtch: "L3"`. Bet aš *spėju* tikslią `FUNC_AND` rašybą ir jo dviejų operandų
-`def` formatą, nes mano dabartinėje konfigūracijoje nėra AND tipo jungtuko, iš
-kurio būtų galima nusikopijuoti. Sukurk tai pulto sąsajoje, eksportuok modelį ir
-perskaityk, ką EdgeTX realiai užrašė. Tada tuo tikėk.
+- tiksli `FUNC_AND` rašyba ir jo dviejų operandų `def` formatas, nes dabartinėje
+  konfigūracijoje nėra AND tipo jungtuko, iš kurio būtų galima nusikopijuoti
+- kad `tele(-14)` yra pasirenkamas kaip loginio jungtuko operandas. Kaip *šaltinis*
+  jis tikrai egzistuoja — mano telemetrijos ekranai jį naudoja — bet dar
+  nepatvirtinau, ar pasirinkimo sąrašas siūlo min/max variantus loginio jungtuko
+  viduje
+- `RESET Telemetry` specialiosios funkcijos `def` formatas
+
+Sukurk tai pulto sąsajoje, eksportuok modelį ir perskaityk, ką EdgeTX realiai
+užrašė. Tada tikėk tuo, ne šiuo.
 
 ## Dalijimasis konfigūracija: kas perkeliama ir ką ištrinti
 
@@ -1023,8 +1095,9 @@ Tad atviras patarimas, pageidaujamumo tvarka:
 
 ## Individualūs garso failai: rth, gpson, gpsoff, lowbat, warnng, ready
 
-Ištarti pranešimai yra individualūs WAV failai, ne integruoti garsai. Jų šeši:
-`rth`, `gpson`, `gpsoff`, `lowbat`, `warnng`, `ready`.
+Ištarti pranešimai yra individualūs WAV failai, ne integruoti garsai. Šiandien jų
+šeši: `rth`, `gpson`, `gpsoff`, `lowbat`, `warnng`, `ready` — ir septintas,
+`checkok`, kai sukursiu aukščiau aprašytą pergrupuotą konfigūraciją.
 
 Jie gyvena kalbai skirtame garsų kataloge SD kortelėje, kartu su balso paketu —
 angliškam pultui tai `/SOUNDS/en/`. Failo pavadinimas be `.wav` galūnės yra tai,
