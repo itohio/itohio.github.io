@@ -1,0 +1,36 @@
+{{- /*
+  Sitemap override: keep tag archives out of the sitemap.
+
+  Reason: tag term pages were 916 of 1392 URLs (66%) in the EN sitemap, against
+  449 real content URLs. On a site with ~93 referring domains that spends most of
+  Googlebot's crawl allowance re-reading near-empty archives instead of finding
+  new posts. Categories (22) and series (5) are curated and stay listed.
+
+  Tags remain crawlable and indexable, they are only dropped from the sitemap,
+  so any tag page that already earns traffic keeps it.
+
+  Everything else matches Hugo's embedded sitemap template, including the
+  xhtml:link hreflang alternates, which are currently the site's ONLY hreflang
+  signal. Do not drop them.
+*/ -}}
+{{- $excludedTaxonomies := slice "tags" -}}
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  {{- range .Pages }}
+    {{- $skip := false -}}
+    {{- if in (slice "taxonomy" "term") .Kind -}}
+      {{- if in $excludedTaxonomies .Data.Plural -}}
+        {{- $skip = true -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if not $skip }}
+  <url>
+    <loc>{{ .Permalink }}</loc>{{ if not .Lastmod.IsZero }}
+    <lastmod>{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}</lastmod>{{ end }}{{ with .Sitemap.ChangeFreq }}
+    <changefreq>{{ . }}</changefreq>{{ end }}{{ if ge .Sitemap.Priority 0.0 }}
+    <priority>{{ .Sitemap.Priority }}</priority>{{ end }}{{ if .IsTranslated }}{{ range .AllTranslations }}
+    <xhtml:link rel="alternate" hreflang="{{ .Language.Locale }}" href="{{ .Permalink }}"/>{{ end }}{{ end }}
+  </url>
+    {{- end }}
+  {{- end }}
+</urlset>
