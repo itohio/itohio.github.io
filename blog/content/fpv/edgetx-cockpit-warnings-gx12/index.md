@@ -831,6 +831,128 @@ The irony is not lost on me: those same sensors are the ones my
 three dimensions after the flight, and I have not spent four minutes making the
 radio say "link" during it.
 
+## I'll try this one next
+
+Everything above is what I actually fly today. This section is the fix I have
+designed but not yet built, written down partly so I actually do it.
+
+### The three-position idea
+
+SE is a 3-position switch and I am using all three as **stages**, not as modes:
+
+| SE position | Meaning |
+|---|---|
+| **Down** | Disarmed. Nothing armed, nothing talking. |
+| **Middle** | **Preflight check.** Telemetry warnings enabled, aircraft still disarmed. |
+| **Up** | Armed. Flying. |
+
+The workflow is: switch to middle, wait a moment for telemetry, listen. If nothing
+complains, go up and fly. An automated preflight check that costs me one switch
+movement and a few seconds of patience — specifically so I stop taking off on a
+pack that is already half gone, which is a mistake I have made.
+
+This is what `L9` was the beginning of.
+
+### The flaw in that workflow, which I only noticed writing this
+
+**Silence is not a pass.** It is two different things wearing the same costume:
+
+1. "The battery is fine" — the outcome I want
+2. "Telemetry has not arrived yet, so nothing has an opinion" — indistinguishable
+   by ear
+
+If I flick to middle and arm too quickly, I hear nothing, conclude the pack is
+good, and take off — on a battery no one has measured. The check passes *hardest*
+in exactly the case where it has told me nothing at all.
+
+Aviation solved this a long time ago and the rule is worth stealing verbatim: **a
+preflight check must produce a positive indication, not an absence of a negative
+one.** A test that passes by being quiet is a test that also passes when it is
+broken.
+
+So the design needs two things: a **validity gate** so no warning can fire on
+absent data, and a **positive confirmation** so a pass makes a sound of its own.
+
+### The build
+
+The trick is that a logical switch's AND slot accepts **another logical switch**,
+not just a physical one. So instead of duplicating conditions across eleven
+switches, one helper does the work and everything points at it.
+
+```yaml
+# --- helpers ---
+11:                              # = L12  "telemetry is actually present"
+   func: FUNC_VPOS
+   def: "tele(14),5"             # RxBt > 0.5   (prec:1, so 5 = 0.5 V)
+   andsw: "NONE"
+
+12:                              # = L13  in-flight warnings armed AND valid
+   func: FUNC_AND
+   def: "SW52,L12"               # green bat button + validity
+
+13:                              # = L14  GPS callouts armed AND valid
+   func: FUNC_AND
+   def: "SW62,L12"               # blue gps button + validity
+
+14:                              # = L15  PREFLIGHT staged AND valid
+   func: FUNC_AND
+   def: "SE1,L12"                # SE middle + validity
+
+# --- the positive confirmation that makes silence unnecessary ---
+15:                              # = L16
+   func: FUNC_VPOS
+   def: "tele(14),38"            # RxBt > 3.8 V
+   andsw: "L15"                  # only while staged, only with real data
+```
+
+Then rewire every existing switch's `andsw` to the matching helper:
+
+| Switches | Old `andsw` | New `andsw` |
+|---|---|---|
+| L1, L2, L8, L11 (voltage ladder) | `SW52` | **`L13`** |
+| L3, L4, L5, L7 (rth + GPS callouts) | `SW62` | **`L14`** |
+| L9 (preflight voltage check) | `SE1` | **`L15`** |
+| L10 (`ready` self-test) | `SW52` | **`L13`** |
+
+And one new special function: `L16 → PLAY_TRACK "checkok"`, play once.
+
+Now the preflight reads properly. Flick SE to middle and one of exactly two things
+happens: either **"check ok"** — telemetry is present *and* the pack is above
+3.8 V/cell — or a warning. Nothing is no longer an answer; it means *wait longer*.
+
+The same helper fixes the startup alarm from the previous section for free, on
+every rung at once. `RxBt` sitting at `0.0` fails `RxBt > 0.5`, so `L12` is false,
+so every gate is false, so the 2.9 V "you have destroyed the pack" alarm cannot
+speak on a fresh battery. One switch, two bugs.
+
+### Why it is worth the helper indirection
+
+Because the gating policy now lives in **one place per subsystem** instead of being
+copy-pasted into eleven. When I get round to configuring a proper prearm switch —
+`SA`, most likely — staging moves off SE with a single edit: `L15`'s second operand
+changes from `SE1` to the SA position, and all the preflight behaviour follows. No
+touching the thresholds at all.
+
+That is the same separation the three coloured buttons already gave me, applied one
+level deeper. Threshold logic, arming logic, and validity logic each get their own
+layer, and none of them know about each other.
+
+### Two caveats
+
+**Evaluation order.** EdgeTX walks logical switches L1 → L64 once per cycle. A
+switch reading a *lower*-numbered one sees this cycle's value; reading a
+*higher*-numbered one sees last cycle's. My helpers sit above the switches using
+them, so those reads lag by one cycle — around 10 ms. Against a battery frame that
+arrives every few seconds, that is nothing. If you build fast logic, put the
+helpers at the low numbers instead.
+
+**Verify the YAML rather than trusting mine.** I am confident about the structure
+and about `L<n>` being the reference form — my own `customFn` block already uses
+`swtch: "L3"`. But I am *predicting* the exact spelling of `FUNC_AND` and its
+two-operand `def`, because my current config contains no AND-type switch to copy
+from. Build it in the radio UI, export the model, and read what EdgeTX actually
+wrote. Then trust that.
+
 ## Sharing the config: what is portable and what to scrub
 
 I want to make this replicable, so: yes, publish your YAML. But two warnings.

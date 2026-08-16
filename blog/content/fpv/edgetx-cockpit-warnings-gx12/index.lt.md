@@ -826,6 +826,135 @@ antenos diagramą. Aš mielai praleisiu vakarą analizuodamas ryšio kokybę tri
 dimensijomis po skrydžio, o keturių minučių tam, kad pultas skrydžio metu pasakytų
 „link“, dar neskyriau.
 
+## Šitą išbandysiu kaip sekantį
+
+Viskas aukščiau yra tai, su kuo realiai skraidau šiandien. Šis skyrius yra
+sprendimas, kurį suprojektavau, bet dar nesukūriau — užrašau jį dalinai tam, kad
+tikrai imčiausi.
+
+### Trijų pozicijų idėja
+
+SE yra 3 pozicijų jungtukas, ir visas tris naudoju kaip **etapus**, o ne kaip
+režimus:
+
+| SE pozicija | Reikšmė |
+|---|---|
+| **Apačia** | Neaktyvuota. Niekas neaktyvu, niekas nekalba. |
+| **Vidurys** | **Priešskrydžio patikra.** Telemetrijos įspėjimai įjungti, aparatas vis dar neaktyvuotas. |
+| **Viršus** | Aktyvuota. Skrendama. |
+
+Darbo seka: perjungiu į vidurį, truputį palaukiu telemetrijos, klausausi. Jei
+niekas nesiskundžia — perjungiu į viršų ir skrendu. Automatinė priešskrydžio
+patikra, kainuojanti vieną jungtuko judesį ir kelias sekundes kantrybės — būtent
+tam, kad nustočiau kilti su paketu, kuris jau pusiau tuščias. Tokią klaidą esu
+padaręs.
+
+Būtent nuo to `L9` ir buvo pradžia.
+
+### Tos darbo sekos defektas, kurį pastebėjau tik rašydamas šį įrašą
+
+**Tyla nėra išlaikyta patikra.** Tai du skirtingi dalykai tuo pačiu kostiumu:
+
+1. „Baterija tvarkinga“ — rezultatas, kurio noriu
+2. „Telemetrija dar neatkeliavo, tad niekas neturi nuomonės“ — ausimi neatskiriama
+
+Jei perjungiu į vidurį ir aktyvuoju per greitai, negirdžiu nieko, nusprendžiu, kad
+paketas geras, ir pakylu — su baterija, kurios niekas neišmatavo. Patikra
+„išlaikoma“ *stipriausiai* būtent tuo atveju, kai ji man nepasakė absoliučiai
+nieko.
+
+Aviacija tai išsprendė seniai, ir taisyklę verta nusižiūrėti tiesiogiai:
+**priešskrydžio patikra privalo duoti pozityvų rodmenį, o ne negatyvo nebuvimą.**
+Patikra, kuri išlaikoma tylėdama, yra patikra, kuri išlaikoma ir tada, kai ji
+sugedusi.
+
+Tad projektui reikia dviejų dalykų: **galiojimo vartų**, kad nė vienas įspėjimas
+negalėtų suveikti ant nesamų duomenų, ir **pozityvaus patvirtinimo**, kad
+išlaikyta patikra pati skleistų garsą.
+
+### Konstrukcija
+
+Triukas tas, kad loginio jungtuko AND laukas priima **kitą loginį jungtuką**, ne
+tik fizinį. Tad užuot dubliavus sąlygas vienuolikoje jungtukų, darbą atlieka vienas
+pagalbinis, o visi kiti rodo į jį.
+
+```yaml
+# --- pagalbiniai ---
+11:                              # = L12  „telemetrija realiai yra“
+   func: FUNC_VPOS
+   def: "tele(14),5"             # RxBt > 0,5   (prec:1, tad 5 = 0,5 V)
+   andsw: "NONE"
+
+12:                              # = L13  skrydžio įspėjimai aktyvūs IR galioja
+   func: FUNC_AND
+   def: "SW52,L12"               # žalias bat mygtukas + galiojimas
+
+13:                              # = L14  GPS pranešimai aktyvūs IR galioja
+   func: FUNC_AND
+   def: "SW62,L12"               # mėlynas gps mygtukas + galiojimas
+
+14:                              # = L15  PRIEŠSKRYDŽIO etapas IR galiojimas
+   func: FUNC_AND
+   def: "SE1,L12"                # SE vidurys + galiojimas
+
+# --- pozityvus patvirtinimas, dėl kurio tyla tampa nebereikalinga ---
+15:                              # = L16
+   func: FUNC_VPOS
+   def: "tele(14),38"            # RxBt > 3,8 V
+   andsw: "L15"                  # tik etape, tik su tikrais duomenimis
+```
+
+Tada perjungiam kiekvieno esamo jungtuko `andsw` į atitinkamą pagalbinį:
+
+| Jungtukai | Senas `andsw` | Naujas `andsw` |
+|---|---|---|
+| L1, L2, L8, L11 (įtampos laiptai) | `SW52` | **`L13`** |
+| L3, L4, L5, L7 (rth + GPS pranešimai) | `SW62` | **`L14`** |
+| L9 (priešskrydžio įtampos patikra) | `SE1` | **`L15`** |
+| L10 (`ready` savitikra) | `SW52` | **`L13`** |
+
+Ir viena nauja specialioji funkcija: `L16 → PLAY_TRACK "checkok"`, paleisti vieną
+kartą.
+
+Dabar priešskrydžio patikra skaitoma teisingai. Perjungiu SE į vidurį ir nutinka
+lygiai vienas iš dviejų dalykų: arba **„check ok“** — telemetrija yra *ir* paketas
+virš 3,8 V celei — arba įspėjimas. Niekas nebėra atsakymas; jis reiškia *palauk
+ilgiau*.
+
+Tas pats pagalbinis jungtukas dovanų ištaiso ir paleidimo signalą iš ankstesnio
+skyriaus — iš karto visiems laipteliams. `RxBt`, sėdintis ant `0,0`, neišlaiko
+`RxBt > 0,5`, tad `L12` yra neteisingas, tad visi vartai neteisingi, tad 2,9 V
+„sugadinai paketą“ signalas negali prabilti ant šviežios baterijos. Vienas
+jungtukas, dvi klaidos.
+
+### Kodėl pagalbinių netiesiškumas to vertas
+
+Nes vartų politika dabar gyvena **vienoje vietoje kiekvienai posistemei**, o ne
+nukopijuota vienuolika kartų. Kai imsiuosi normalaus prearm jungtuko — greičiausiai
+`SA` — etapavimas nuo SE nukels vienu pakeitimu: `L15` antrasis operandas pasikeis
+iš `SE1` į SA poziciją, ir visa priešskrydžio elgsena nuseks paskui. Slenksčių
+visiškai neteks liesti.
+
+Tai tas pats atskyrimas, kurį jau davė trys spalvoti mygtukai, pritaikytas vienu
+lygiu giliau. Slenksčių logika, aktyvavimo logika ir galiojimo logika kiekviena
+gauna savo sluoksnį, ir nė viena nieko nežino apie kitas.
+
+### Dvi išlygos
+
+**Vykdymo tvarka.** EdgeTX pereina loginius jungtukus L1 → L64 kartą per ciklą.
+Jungtukas, skaitantis *mažesnio* numerio jungtuką, mato šio ciklo reikšmę;
+skaitantis *didesnio* numerio — praėjusio ciklo. Mano pagalbiniai yra virš tų
+jungtukų, kurie juos naudoja, tad tie skaitymai vėluoja vienu ciklu — apie 10 ms.
+Prieš baterijos kadrą, atkeliaujantį kas kelias sekundes, tai niekas. Jei kuri
+greitą logiką — pagalbinius dėk į mažus numerius.
+
+**Tikrink YAML, o ne tikėk manuoju.** Esu tikras dėl struktūros ir dėl to, kad
+`L<n>` yra kreipimosi forma — mano paties `customFn` blokas jau naudoja
+`swtch: "L3"`. Bet aš *spėju* tikslią `FUNC_AND` rašybą ir jo dviejų operandų
+`def` formatą, nes mano dabartinėje konfigūracijoje nėra AND tipo jungtuko, iš
+kurio būtų galima nusikopijuoti. Sukurk tai pulto sąsajoje, eksportuok modelį ir
+perskaityk, ką EdgeTX realiai užrašė. Tada tuo tikėk.
+
 ## Dalijimasis konfigūracija: kas perkeliama ir ką ištrinti
 
 Noriu, kad tai būtų atkartojama, tad: taip, skelbk savo YAML. Bet du įspėjimai.
