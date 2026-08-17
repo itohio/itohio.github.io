@@ -19,28 +19,6 @@ series:
 thumbnail: "meteor75-pro-vs-pro-ii.jpg"
 ---
 
-<!--
-VERTIMO PASTABA / DRAFT NOTE — pašalinti prieš publikavimą.
-Tai vertimo juodraštis. Betaflight parametrų pavadinimai, FPV terminai ir
-matavimų žymėjimai palikti angliškai — jie tokie ir naudojami (sąmoningas
-sprendimas, ne apsileidimas).
-
-ANDRIUI PERŽIŪRĖTI — penki terminai, kurių negaliu patvirtinti:
-  1. "vibracijos gaubtinė"          <- vibration envelope
-  2. "struktūrinė moda"             <- structural mode
-  3. "atsako dozė"                  <- dose-response
-  4. "prisukta masė"                <- sprung mass
-  5. "struktūrai fiksuota ypatybė"  <- structure-fixed feature
-Jei kuris nors iš jų lietuviškame FPV/virpesių žargone skamba ne taip —
-pakeisk, ir aš atnaujinsiu visus pasikartojimus abiejose versijose.
-
-series ir thumbnail dabar sutampa su anglų versija: [FPV Builds] ir
-meteor75-pro-vs-pro-ii.jpg (anksčiau čia buvo [Snake] ir jokio thumbnail).
-
-Skaičiai, kurie tekste pasakyti dviem skirtingais būdais, surašyti anglų
-versijos DRAFT NOTES bloke (index.md) — nesprendžiau nė vieno, palikta tau.
--->
-
 Craft name **Snake**. Pradžioje tai buvo Meteor75 Pro, dabar — Meteor75 Pro II: rėmas ir
 gaubtas iš AliExpress, viskas, kas kainuoja, perkelta be pakeitimų. Tas pats
 **Matrix 1S 3-in-1 FC**. Tas pats **narrow-FOV DJI O4** air unit. Naujas kiautas, seni vidūriai,

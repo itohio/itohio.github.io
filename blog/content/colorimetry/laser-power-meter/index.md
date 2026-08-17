@@ -137,8 +137,6 @@ $$
 P_{cal} = \frac{V^2}{R}
 $$
 
-<!-- TODO: Add board.jpg - photo of RP2040 board with wires and trim potentiometers -->
-
 ### The Circuit
 
 I use a [Wheatstone bridge](https://en.wikipedia.org/wiki/Wheatstone_bridge) configuration with the two thermistors as variable resistors. The bridge converts the resistance difference (temperature difference) into a voltage difference.
@@ -259,7 +257,6 @@ Where $s$ is the measured slope. The quadratic term accounts for nonlinearities 
 
 I connected the RP2040 to my computer via USB serial. A Go application displays the differential signal in real-time and lets me trigger calibration measurements.
 
-<!-- TODO: Add software-ui.jpg - screenshot of Go application interface -->
 ![Software interface showing the measurement signal](software-ui.jpg)
 
 The software:

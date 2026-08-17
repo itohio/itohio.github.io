@@ -20,44 +20,6 @@ series:
 thumbnail: "meteor75-pro-vs-pro-ii.jpg"
 ---
 
-<!--
-DRAFT NOTES FOR ANDRIUS — delete this comment block before publishing.
-
-1. TITLE / DATE — still yours to confirm. series is [FPV Builds] to match the
-   other FPV posts, thumbnail is meteor75-pro-vs-pro-ii.jpg. Both language
-   files match on series and thumbnail.
-2. LITHUANIAN TERMINOLOGY — needs your review. Five coinages I could not
-   validate, all in index.lt.md:
-     - "vibracijos gaubtinė"          (vibration envelope)
-     - "struktūrinė moda"             (structural mode)
-     - "atsako dozė"                  (dose-response)
-     - "prisukta masė"                (sprung mass)
-     - "struktūrai fiksuota ypatybė"  (structure-fixed feature)
-   Betaflight parameter names and metric labels are deliberately left in
-   English throughout — intentional, not an oversight.
-3. NUMBERS STATED TWO WAYS — RESOLVED. Rather than silently picking one value,
-   the opening of "Method notes worth keeping" now names the two analysis
-   windows and explains every apparent disagreement:
-     - 34.8/24.6 vs 34.5/24.5, +66% vs +65%, 0.789% vs 0.812%, 0.04% vs 0.076%
-       -> different impact-exclusion pad or a different log, not a correction
-     - foam post-filter roll 0.50 vs 0.67 deg/s -> two different metrics
-       (Welch above 60 Hz vs an 80-780 Hz bandpass RMS)
-     - the two five-mount sets (37.7/26.2/33.0/30.1/41.0 and
-       38.3/26.0/31.0/26.6/42.5) -> outdoor RPM-binned vs steady-flight
-       throttle-banded windows
-   The intro now says "seven of them, itemised later" and matches the seven H3s
-   under "Everything I got wrong". The stray "wrong for the fifth time" is gone.
-4. chart8 in snake-chart-data.json (outside this folder) had a stale
-   "Peak 48.8 -> 28.0 deg/s (-43%)" annotation. Already corrected there; the
-   retired figure survives only in a _retracted metadata field as an audit
-   trail, so regenerating from the JSON will not reintroduce it.
-5. EXIF — GPS IFD removed from all five photos, remaining tags kept per the
-   GPS-only rule. Verified before committing.
-6. TONE — all four photographs were rebuilt from the originals with anchored
-   monotone L-channel curves, not brightness multiplication. Every one passes
-   the verification gate. The screenshot is deliberately uncurved.
--->
-
 Craft name **Snake**. It started life as a Meteor75 Pro, and it is now a Meteor75 Pro II —
 frame and canopy ordered off AliExpress, everything expensive carried straight over. Same
 **Matrix 1S 3-in-1 FC**. Same **narrow-FOV DJI O4** air unit. New shell, old guts, and by the
@@ -2743,7 +2705,6 @@ for m1 clipping, 0.04% against 0.076% under the dyn_idle target — the differen
 impact-exclusion pad or the log being different, not a correction. Post-filter roll noise appears
 as both 0.50 and 0.67 °/s for the foam because one is a Welch integration above 60 Hz and the
 other an 80–780 Hz bandpass RMS; they are two metrics, not two answers.
-
 
 Practices that repeatedly changed the conclusion — not general advice, things that actually
 flipped an answer in this specific week:
