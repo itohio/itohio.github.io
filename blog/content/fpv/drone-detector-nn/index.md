@@ -204,12 +204,6 @@ The minimum clamp at `NUM_CLASSES` (10) prevents near-zero weights for majority 
 
 ## Results and Per-Class Analysis
 
-<!-- IMAGE: Chart.js training curve — loss and macro F1 across staggered P1↔P2 cycles, phase transitions annotated -->
-*[TODO: Training curve — loss and macro F1 across cycles, phase transitions annotated]*
-
-<!-- IMAGE: 10×10 confusion matrix heatmap -->
-*[TODO: 10×10 confusion matrix]*
-
 ### Per-Class F1
 
 | Class | F1 | Note |

@@ -187,7 +187,7 @@ Perkrauk, ir ratukas daro tai, ką siūlo fizinis pasukimas: apačia = žema, vi
 
 Sutvarkyk indeksavimą, ir 400 mW *turėtų* pasirodyti ratuko viršuje. Jei vis tiek nepasirodo, gali būti, kad juos laiko pats VTX. Daugelis SmartAudio VTX — tarp jų ir TH3 — parduodami su **apribotu (regionui užrakintu) režimu**, ribojančiu išvestį dėl reglamentų. Tokioje būsenoje aukštos galios įrašai tavo `vtxtable` yra apibrėžti teisingai, išrenkami teisingai — ir tiesiog atmetami aparatinės įrangos.
 
-Apribotas režimas gyvena VTX'e, ne Betaflight'e, tad jokie CLI pakeitimai jo nepašalins. Jį išjungi ant paties įrenginio — paprastai palaikant VTX mygtuką (arba atitinkama SmartAudio „unlock" komanda), kad išeitum iš regionui užrakinto profilio. [TODO: prieš publikaciją patikrinti tikslią TH3 V02 atrakinimo seką.]
+Apribotas režimas gyvena VTX'e, ne Betaflight'e, tad jokie CLI pakeitimai jo nepašalins. Jį išjungi ant paties įrenginio — paprastai palaikant VTX mygtuką (arba atitinkama SmartAudio „unlock" komanda), kad išeitum iš regionui užrakinto profilio. Tikslios atblokavimo sekos savo TH3 V02 nepatikrinau, tad mygtuko palaikymą vertink kaip bendrą principą, o ne kaip receptą, ir konkrečią seką tikrink savo VTX dokumentacijoje.
 
 Požymis diagnostinis: jei žema ir vidutinė galia išrenkamos teisingai, bet vien viršutinis lygis lieka miręs po indekso pataisymo, įtark apribojimą, ne konfigūraciją.
 

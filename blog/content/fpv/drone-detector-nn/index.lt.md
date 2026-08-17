@@ -186,10 +186,6 @@ pos_weight = (n_neg / n_pos).clamp(min=NUM_CLASSES, max=30.0)
 
 ## Rezultatai ir kiekvienos klasės analizė
 
-*[TODO: Mokymo kreivė — nuostoliai ir makro F1 per ciklus]*
-
-*[TODO: 10×10 painiavos matrica]*
-
 ### Kiekvienos klasės F1
 
 | Klasė | F1 | Pastaba |

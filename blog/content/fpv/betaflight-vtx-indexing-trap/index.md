@@ -187,7 +187,7 @@ Reload, and the wheel does what the physical rotation implies: bottom = low, mid
 
 Fix the indexing and 400 mW *should* appear at the top of the wheel. If it still doesn't, the VTX itself may be holding it back. Many SmartAudio VTX — the TH3 included — ship with a **restricted (region-locked) mode** that caps output for regulatory compliance. In that state the high-power entries in your `vtxtable` are defined correctly, selected correctly, and simply refused by the hardware.
 
-Restricted mode lives on the VTX, not in Betaflight, so no amount of CLI editing clears it. You disable it on the unit itself — typically a button hold on the VTX (or the matching SmartAudio "unlock") to drop out of the region-locked profile. [TODO: confirm the exact TH3 V02 unlock sequence before publish.]
+Restricted mode lives on the VTX, not in Betaflight, so no amount of CLI editing clears it. You disable it on the unit itself — typically a button hold on the VTX (or the matching SmartAudio "unlock") to drop out of the region-locked profile. I have not confirmed the exact unlock sequence on my own TH3 V02, so treat the button-hold as the general pattern rather than a recipe, and check your VTX documentation for the specific one.
 
 The tell is diagnostic: if low and mid power select correctly but the top level alone stays dead after the index fix, suspect restriction, not configuration.
 
