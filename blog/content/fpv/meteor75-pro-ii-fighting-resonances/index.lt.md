@@ -756,7 +756,7 @@ Tai nupirko **1,9 ms** vėlinimo už 370% didesnį motorų jitter'į, o spektras
 *kiekviename* dažnyje nuo 2 iki 400 Hz. Atsukta.
 
 Airmode buvo įjungtas tą pačią sesiją (logas patvirtina: feature mask delta lygiai 4194304) ir
-liko — 3,3 s žemiau 1250 throttle su minimalia motorų išvestimi 201, jokio valdymo autoriteto praradimo.
+liko — 3,3 s žemiau 1250 throttle su minimalia motorų išvestimi 201, jokio valdymo autoriteto (angl. *control authority*) praradimo.
 **Confound'as:** pasikeitė du kintamieji vienu metu, todėl 14 Hz augimo negalima aiškiai
 priskirti nei filtrui, nei airmode. Kitos keturios eilutės pakankamai didelės, kad tai išgyventų;
 14 Hz skaičius nėra švarus.
