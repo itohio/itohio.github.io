@@ -756,7 +756,7 @@ Tai nupirko **1,9 ms** vėlinimo už 370% didesnį motorų jitter'į, o spektras
 *kiekviename* dažnyje nuo 2 iki 400 Hz. Atsukta.
 
 Airmode buvo įjungtas tą pačią sesiją (logas patvirtina: feature mask delta lygiai 4194304) ir
-liko — 3,3 s žemiau 1250 throttle su minimalia motorų išvestimi 201, jokio valdymo praradimo.
+liko — 3,3 s žemiau 1250 throttle su minimalia motorų išvestimi 201, jokio valdymo autoriteto praradimo.
 **Confound'as:** pasikeitė du kintamieji vienu metu, todėl 14 Hz augimo negalima aiškiai
 priskirti nei filtrui, nei airmode. Kitos keturios eilutės pakankamai didelės, kad tai išgyventų;
 14 Hz skaičius nėra švarus.
@@ -2001,10 +2001,10 @@ Kas realiai nutiko, prie t = 86,2–86,5 s:
 ```
 
 Intervale 85,5–87,0 s **17,6% kadrų turėjo variklį prie lubų, o 30,4% — prie apatinės ribos.**
-Mikseriui *vienu metu abiejuose galuose* neliko atsargos, tad diferencinės valdžios atsakyti
+Mikseriui *vienu metu abiejuose galuose* neliko atsargos, tad diferencinio valdymo autoriteto atsakyti
 pagaliukams nebeliko. Komanduotas yaw p99 buvo 19 °/s; kvadras atidavė 370. Priežastis:
 didelio gazo split-S ant krentančio 1S paketo, kai yaw I narys jau prispaustas prie ribos ir
-kovoja su anksčiau išmatuotu pastoviu yaw disbalansu. Trauka ir valdžia pasibaigė tą pačią
+kovoja su anksčiau išmatuotu pastoviu yaw disbalansu. Trauka ir valdymo autoritetas pasibaigė tą pačią
 sekundę.
 
 **Blogo kontakto teorija, patikrinta.** Pirma mintis buvo trumpai atsijungęs baterijos kontaktas.
@@ -2047,7 +2047,7 @@ išeina iki 86 °/s prieš roll komandą 47 ir jokios yaw komandos. Tada varikli
 turi variklį prie lubų, ir beveik viską tai daro varikliai 3 ir 4 (1,60% ir 1,30%).
 
 Vienas su tune susijęs radinys tikras: **yaw I narys svyruoja tarp −255 ir +271**, atsitrenkdamas
-į ribą abiem kryptimis. Tai pastovus yaw disbalansas, suvartojantis valdžią dar prieš manevrą, o
+į ribą abiem kryptimis. Tai pastovus yaw disbalansas, suvartojantis valdymo autoritetą dar prieš manevrą, o
 jo pataisymas atlaisvina daugiau atsargos nei bet koks koeficiento pakeitimas. dyn_idle problemos
 ir čia nėra — **0,076%** skrydžio laiko žemiau 3000 RPM tikslo, ilgiausias epizodas **4 ms**.
 
@@ -2431,7 +2431,7 @@ Būtent čia klydau, bandydamas visą laiką sulipdyti vieną istoriją:
 | režimas | kas vyksta | įrodymas |
 |---|---|---|
 | **didelis poreikis, atsargos nebeliko** | mikseris įsisotina, kilpa negali pateikti komanduoto momento, 1–4 Hz ciklas ir stiprūs trūktelėjimai | įsisotinimas **aplenkia** drebėjimą 63–419 ms trijuose skrydžiuose; drebėjimas **7,5× stipresnis**, kai atsargos mažiau nei 150 |
-| **stabilus greitas skridimas, atsargos yra** | 10–20 Hz nekomanduotas judesys, be įsisotinimo, tiesiog nepakanka trikdžių atmetimo toje juostoje | 77× giro/setpoint, 0,00% įsisotinimo, identiška prieš ir po filtrų |
+| **stabilus greitas skridimas, atsargos yra** | 10–20 Hz nekomanduotas judesys, be įsisotinimo, trikdžių atmetimui tiesiog nebeužtenka valdymo autoriteto toje juostoje | 77× giro/setpoint, 0,00% įsisotinimo, identiška prieš ir po filtrų |
 
 Trūktelėjimai ir tęstinis drebėjimas susiję, bet nėra tas pats: trūktelėjimas yra įsisotinimo
 atvejis blogiausiu variantu, o kasdienis drebėjimas greitame skridime yra atmetimo problema, kai
@@ -2447,7 +2447,7 @@ skaičiau jį nuolat. Atsakymas visą laiką buvo po juo.
 
 ## Kodėl putplastis vis dėlto padėjo
 
-Lieka vienas nepaaiškintas dalykas: **jei drebėjimas yra žemų dažnių valdymo galios problema,
+Lieka vienas nepaaiškintas dalykas: **jei drebėjimas yra žemų dažnių valdymo autoriteto problema,
 kodėl putplasčio gabalas tarp dviejų plokščių taip padėjo?** Putplastis nepriduoda traukos.
 Neišplečia mikserio diapazono. Jis turėtų būti nesvarbus.
 
@@ -2536,7 +2536,7 @@ svarbu — tik ne taip, kaip maniau.
 Ne per variklių virpėjimą, kuris buvo pirmas mano spėjimas: vibracija patenka į D narį, varikliai
 virpa, virpėjimas suvartoja mikserio diapazoną. Išmatavau — neatlaiko. Variklių virpėjimas yra
 **5,3–7,1 vienetai RMS, maždaug 1,6–2,1% diapazono** — tikras, ir gerokai per mažas, kad
-paaiškintų valdžios praradimą.
+paaiškintų valdymo autoriteto praradimą.
 
 Paaiškinimas, kuris tinka: O4 ir gaubtas yra nemaža masė, o ant lanksčių gummy ta masė gali judėti
 **rėmo atžvilgiu.** Tai padaro aparatą dviejų kūnų sistema — kilpa komanduoja rėmui, o gaubtas
