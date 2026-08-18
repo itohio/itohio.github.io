@@ -1258,7 +1258,7 @@ ankstesnėje įrašo dalyje.
 Putplastis veikė, bet jis yra antklodė ant karščiausios plokštės vietos, todėl išėmiau. Jį
 pakeitė **du** pakeitimai toje pačioje sesijoje:
 
-1. **VTX dabar tvirtinamas tiesiai prie gaubto, silikoninius įvorius išėmiau.** Tai pašalina
+1. **VTX dabar tvirtinamas tiesiai prie gaubto, silikonines įvores išėmiau.** Tai pašalina
    lankstų elementą kelyje tarp oro modulio masės ir gaubto — gaubtas ir VTX dabar faktiškai
    vienas kūnas.
 2. **TPU siūlas įdėtas į gummy ball'us**, gerokai padidinant jų standumą ir sustandinant kelią
@@ -1270,9 +1270,9 @@ problema, ir sąžininga ją pažymėti, o ne pasirinkti laimėtoją.
 
 ![Meteor75 Pro II iš užpakalio, raudonu apskritimu pažymėta viena iš skraidymo valdiklio guminių įvorių su įdėtu TPU siūlu](tpu-gummy-mod.jpg)
 
-*TPU siūlas, įstumtas į guminius įvorius. Raudonas apskritimas žymi vieną iš jų. Du darbai, ne vienas: standesnis susietumas ir gaubtas, kuris kur kas mažiau tikėtinai atsiskirs nuo rėmo.*
+*TPU siūlas, įstumtas į gumines įvores. Raudonas apskritimas žymi vieną iš jų. Du darbai, ne vienas: standesnis susietumas ir gaubtas, kuris kur kas mažiau tikėtinai atsiskirs nuo rėmo.*
 
-Antrajam TPU darbui matavimų nereikia: su siūlu viduje guminiai įvoriai kur kas mažiau linkę
+Antrajam TPU darbui matavimų nereikia: su siūlu viduje guminės įvorės kur kas mažiau linkusios
 **atsiskirti** — o whoop'ui, kuris gyvena atsimušdamas į durų staktas, vien to jau verta. Oscar
 Liang naudoja klijus; aš panaudojau siūlą, nes klijai yra vienpusės durys, o siūlą galima
 ištraukti — ir tai svarbu, kai visa esmė yra A/B testuoti patį tvirtinimą.
@@ -1653,7 +1653,7 @@ abu teisingi.
 
 **Ir pirmasis mano paaiškinimas buvo neteisingas.** Parašiau, kad VTX įvorių išėmimas „standžiai
 sujungė kamerą su gaubtu". Nesujungė: VTX yra plika plokštė, o **kamera tvirtinama ant gaubto**, ne
-ant VTX. Tie įvoriai kabino plokštę, ant kurios nieko nėra — negyva masė ir dar viena pakabinta
+ant VTX. Tos įvorės kabino plokštę, ant kurios nieko nėra — negyva masė ir dar viena pakabinta
 masė, laisva rezonuoti. Jų išėmimas nebuvo jello mechanizmas.
 
 Mechanizmas yra **gaubto–rėmo** kelias, nes būtent ant jo jojasi kamera. TPU tuose gummy jį
@@ -1673,7 +1673,7 @@ blogesnis rėmas. Šių dviejų negaliu atskirti giroskopu, kuris pats yra ekspe
 
 ### Keturi ir penki: visos ant vienos diagramos, ir mažas gabalėlis
 
-Akivaizdus kitas žingsnis buvo VTX įvorius **grąžinti**, o TPU gummy viduje palikti —
+Akivaizdus kitas žingsnis buvo VTX įvores **grąžinti**, o TPU gummy viduje palikti —
 skirtingi keliai, skirtingi simptomai, ir nėra priežasties aukoti kameros izoliatoriaus dėl
 standesnio valdiklio tvirtinimo. Išėmus tik **priekinį** TPU — tą vieną gummy, kuris priekyje
 sieja gaubtą su rėmu — struktūrai fiksuota ypatybė nusileido nuo 363 Hz iki 280 Hz, o
