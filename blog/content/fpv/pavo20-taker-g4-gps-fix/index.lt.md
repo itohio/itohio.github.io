@@ -27,9 +27,9 @@ thumbnail: "pavo20-front-ducts.jpg"
 
 > Tęsinys po [Pavo20 Pro II GPS taisymo bandymų: BEC perjungimo triukšmas 1575 MHz](/fpv/pavo20-gps-struggles/), kur išmatavau trukdžius ir baigiau be sprendimo. Šis įrašas sprendimą turi. Jis tau nepatiks, ir man irgi nepatiko.
 
-Trys palydovai gerą dieną. Nulis po penkiolikos minučių blogą dieną, atviroje aikštėje, kai 1S whoop'as ant tos pačios žolės randa dvidešimt ar daugiau. Išmatavau triukšmą su TinySA, radau smailes, pasklidusias nuo 1,2 iki 1,6 GHz, viską surašiau, o paskui savaites bandžiau sutvarkyti kaip reikia.
+Trys palydovai gerą dieną. Nulis po penkiolikos minučių blogą dieną, atviroje aikštėje, kai 1S whoop'as ant tos pačios žolės randa dvidešimt ar daugiau. Išmatavau triukšmą su TinySA, radau smailes, pasklidusias nuo 1,2 iki 1,6 GHz, viską surašiau, o paskui kelias savaites bandžiau tai išspręsti iš esmės.
 
-Kaip reikia nesutvarkiau. Pakeičiau skrydžio valdiklį.
+Iš esmės ir neišsprendžiau. Pakeičiau skrydžio valdiklį.
 
 ## Hipotezė išsiplėtė ir dabar ji apie ritę
 
