@@ -27,7 +27,7 @@ thumbnail: "pavo20-front-ducts.jpg"
 
 > Tęsinys po [Pavo20 Pro II GPS taisymo bandymų: BEC perjungimo triukšmas 1575 MHz](/fpv/pavo20-gps-struggles/), kur išmatavau trukdžius ir baigiau be sprendimo. Šis įrašas sprendimą turi. Jis tau nepatiks, ir man irgi nepatiko.
 
-Trys palydovai gerą dieną. Nulis po penkiolikos minučių blogą dieną, atviroje aikštėje, kai 1S whoop'as ant tos pačios žolės randa dvidešimt ar daugiau. Išmatavau triukšmą su TinySA, radau smaigalius, pasklidusius nuo 1,2 iki 1,6 GHz, viską surašiau, o paskui savaites bandžiau sutvarkyti kaip reikia.
+Trys palydovai gerą dieną. Nulis po penkiolikos minučių blogą dieną, atviroje aikštėje, kai 1S whoop dronas ant tos pačios žolės randa dvidešimt ar daugiau. Išmatavau triukšmą su TinySA, radau smailes, pasklidusias nuo 1,2 iki 1,6 GHz, viską surašiau, o paskui savaites bandžiau sutvarkyti kaip reikia.
 
 Kaip reikia nesutvarkiau. Pakeičiau skrydžio valdiklį.
 
@@ -90,7 +90,7 @@ digraph hotloop {
 
 TI taip pat turi taikymo aprašą apie šią problemų klasę, [SLVAEP5](https://www.ti.com/lit/pdf/SLVAEP5), kur lyginamas spinduliuojamas EMI tarp standartinio Webench išdėstymo ir optimizuoto keturių sluoksnių, su kelių dB skirtumu vien nuo išdėstymo.
 
-Skaitant jį, reikia dviejų išlygų, ir viena iš jų prieš mane. Matavimai baigiasi ties 1 GHz, o GPS L1 sėdi ties 1575 MHz, tad jis paremia mechanizmą, ne mano dažnį. Ekstrapoliuojant kreivę aukščiau, ji akivaizdžiai ties 1 GHz nesibaigia, ir ten gali būti dar smaigalių ties L1, ypač jei kas nors plokštėje toje srityje rezonuoja. Bet **rezonansiniai smaigaliai yra būtent tai, ko ekstrapoliuoti negalima**, tad tai lieka spėjimas, o ne išvada. Aš vis tiek kaltinu ritę, kad prateka.
+Skaitant jį, reikia dviejų išlygų, ir viena iš jų prieš mane. Matavimai baigiasi ties 1 GHz, o GPS L1 sėdi ties 1575 MHz, tad jis paremia mechanizmą, ne mano dažnį. Ekstrapoliuojant kreivę aukščiau, ji akivaizdžiai ties 1 GHz nesibaigia, ir ten gali būti dar smailių ties L1, ypač jei kas nors plokštėje toje srityje rezonuoja. Bet **rezonansinės smailės yra būtent tai, ko ekstrapoliuoti negalima**, tad tai lieka spėjimas, o ne išvada. Aš vis tiek kaltinu ritę, kad prateka.
 
 Noriu būti tiesus dėl to, kas tai yra: **apžiūra, zondavimas ir logika, ne kontroliuojamas matavimas.** Ritės lauko nuo MCU lauko neatskyriau ir negaliu to padaryti nesugriaudamas integruotos plokštės. Ginčą išspręstų tinkamas H zondo skenavimas tiesiai virš ritės ir virš MCU, įjungus plokštę ir atjungus GPS. To nepadariau.
 
@@ -148,13 +148,13 @@ Tą lentelę galima skaityti į dvi puses.
 
 Perėjimas nuo nulio palydovų per penkiolika minučių prie aštuonių per dvi yra didžiulis pagerinimas, o penkiolika idealiomis sąlygomis su šiuo rėmu man yra tikras pasiekimas.
 
-Bet Pavo20 vis dar toli gražu ne 4 colių lygyje. Jam pasiseka, jei atviroje aikštėje pamato 10, kai sulankstomas laikosi ties 17 ir vieną kartą pasiekė 30. **Tad skrydžio valdiklis buvo dominuojantis gedimas, bet ne vienintelis.** GPS pasodinimas taip arti DJI O4 Pro modulio ir kameros, be jokio anglies pluošto tarp jų, kuris veiktų kaip barjeras, vis tiek pastebimai blogina priėmimą. Plokštės pakeitimas pašalino didžiausią prisidedantį veiksnį. Jis nepadarė whoop'o geru GPS aparatu.
+Bet Pavo20 vis dar toli gražu ne 4 colių lygyje. Jam pasiseka, jei atviroje aikštėje pamato 10, kai sulankstomas laikosi ties 17 ir vieną kartą pasiekė 30. **Tad skrydžio valdiklis buvo dominuojantis gedimas, bet ne vienintelis.** GPS pasodinimas taip arti DJI O4 Pro modulio ir kameros, be jokio anglies pluošto tarp jų, kuris veiktų kaip barjeras, vis tiek pastebimai blogina priėmimą. Plokštės pakeitimas pašalino didžiausią prisidedantį veiksnį. Jis nepadarė whoop drono geru GPS aparatu.
 
 ## Kas dar pasikeitė po keitimo
 
 Ėjau dėl palydovų, o išėjau su kitu aparatu.
 
-**Jis palaiko 4S.** Plokštės dėl to nepirkau ir nežinojau, kad taip bus. Su 4S dronas skrieja daugiau nei 100 km/h, kas šio dydžio whoop'ui yra šiek tiek absurdiška.
+**Jis palaiko 4S.** Plokštės dėl to nepirkau ir nežinojau, kad taip bus. Su 4S dronas skrieja daugiau nei 100 km/h, kas šio dydžio whoop dronui yra šiek tiek absurdiška.
 
 **Nėra integruoto ELRS.** Tikroji keitimo kaina. BetaFPV plokštėje imtuvas buvo integruotas, Taker jo neturi, tad reikėjo mažiausio išorinio RX, kokį galėjau rasti, ir vietos jam. Esant 17 mW telemetrijos galiai, ryšys vis tiek laiko. Tinkamų nuotolio testų nedariau, tad nuotolio skaičiaus, kurio neišmatavau, tau nesakysiu. Pliusas tas, kad imtuvas dabar yra atskirai keičiamas komponentas, ko anksčiau nebuvo.
 
@@ -166,11 +166,11 @@ Ta vieta atitinka ir tai, kaip blogas skrydis realiai vystosi. Kai aparatas skre
 
 **Varikliai prilituoti tiesiai prie plokštės.** Jungčių nukirpti nesivarginau, tiesiog prilitavau metalą tiesiai prie FC kontaktų. Ore skirtumo nuo jungčių nejaučiu, bet mechaniškai turėtų būti tvirčiau, o po to, kas nutiko toliau, tai man svarbu labiau nei anksčiau.
 
-**Jis įsitenka tarp kameros ir O4 Pro.** Vietos kaip tik, dar lieka zumeriui ir GPS laidams. Buvau pasiruošęs jello efektui, nes sandvičas ankštas, o plokštė sėdi arti kameros. Nėra jokio. Nei jello, nei matomos vibracijos vaizde, net ir prie didelio gazo.
+**Jis įsitenka tarp kameros ir O4 Pro.** Vietos kaip tik, dar lieka zumeriui ir GPS laidams. Buvau pasiruošęs jello efektui, nes sandvičas ankštas, o plokštė sėdi arti kameros. Nėra jokio. Nei jello, nei matomos vibracijos vaizde, net ir esant didelei traukai.
 
 ![Stekas iš šono](stack-gap-side.jpg "Tarpas, kuriame gyvena plokštė, tarp kameros ir O4 Pro modulio.")
 
-**USB-C, šone.** Vienu metu ir minusas, ir upgrade'as. Vieta nepatogi, bet tai USB-C, o ne micro, ir tokį keitimą imsiu visada. Ten, kur jis sėdi, kaupiasi žolė, tad nešioja guminį gaubtelį.
+**USB-C, šone.** Vienu metu ir minusas, ir patobulinimas. Vieta nepatogi, bet tai USB-C, o ne micro, ir tokį keitimą imsiu visada. Ten, kur jis sėdi, kaupiasi žolė, tad nešioja guminį gaubtelį.
 
 **Apsauga nuo vandens.** Flywoo ant plokštės, DJI modulio ir kameros jungties, plius šiek tiek B7000 ant pačios kameros. Kameros prieš tai neišrinkau, kitaip nei vaizdo įrašuose, kur tai daroma kaip reikia. GPS ir zumeris priklijuoti B7000 viršuje.
 
@@ -204,9 +204,9 @@ Patogi atsarga iki 250 g net ir uždėjus bateriją, o tai man dabar svarbu labi
 
 Skrydžio metu variklio laidai atsijungė ir dronas nukrito tiesiai į ką tik suartą lauką, kuris yra švelniausias paviršius, kokį galėjo pasirinkti, ir kartu priežastis, kodėl žemės yra beveik visose šiose nuotraukose.
 
-Noriu būti atsargus dėl priežasties, nes graži istorija būtų „4S jį užmušė“, o nemanau, kad taip nutiko. Buvau gazavęs iki galo, ieškodamas maksimalaus greičio, tad galia tikrai buvo pakelta. Bet tai nebuvo sudegęs variklis ir nebuvo elektrinis gedimas. **Trys laidai fiziškai nutrūko.** Klijai jų prie variklio pado nelaikė kaip reikia, ir tas variklis jau kurį laiką klibėjo pastebimai labiau nei kiti trys, kol galiausiai atsileido. Laidų fiksavimo gedimas, kurį galėjau numatyti, bet į jį nesureagavau.
+Noriu būti atsargus dėl priežasties, nes graži istorija būtų „4S jį užmušė“, o nemanau, kad taip nutiko. Buvau iki galo atidaręs trauką, ieškodamas maksimalaus greičio, tad galia tikrai buvo pakelta. Bet tai nebuvo sudegęs variklis ir nebuvo elektrinis gedimas. **Trys laidai fiziškai nutrūko.** Klijai jų prie variklio pado nelaikė kaip reikia, ir tas variklis jau kurį laiką klibėjo pastebimai labiau nei kiti trys, kol galiausiai atsileido. Laidų fiksavimo gedimas, kurį galėjau numatyti, bet į jį nesureagavau.
 
-Buvau tikras, kad skrydžio valdiklis miręs. Nepanašu. MOSFET'ai atrodo tvarkingi ir plokštė vis dar veikia, bet prieš tvirtinti galutinai laukiu naujo variklio, nes kol visi išėjimai vėl nebus apkrauti, aš tiesiog nežinau, o „įsijungia“ nėra tas pats kaip „veikia“.
+Buvau tikras, kad skrydžio valdiklis miręs. Nepanašu. MOSFET tranzistoriai atrodo tvarkingi ir plokštė vis dar veikia, bet prieš tvirtinti galutinai laukiu naujo variklio, nes kol visi išėjimai vėl nebus apkrauti, aš tiesiog nežinau, o „įsijungia“ nėra tas pats kaip „veikia“.
 
 Su šiuo variklių rinkiniu vis tiek lieku prie **3S**. Šešių minučių atsargaus skraidymo pakanka tam, kam šį aparatą naudoju, o 4S galimybė niekur nedingsta, tik laukia variklių rinkinio, kuris jos norės.
 
