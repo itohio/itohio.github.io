@@ -16,7 +16,7 @@ tags:
  - Python
 ---
 
-Vieną dieną mano DS420+ tiesiog numirė - nebeįsijungė. Na, ne visiškai mirė - jis įsijungė, ventiliatoriai suktėsi, diskai taip pat sukinėjosi ir įprastai urzgė, mėlyna lemputė mirksėjo... bet tiek. Jokio tinklo, jokių pyptelėjimų, nieko.
+Vieną dieną mano DS420+ tiesiog numirė - nebeįsijungė. Na, ne visiškai mirė - jis įsijungė, ventiliatoriai sukosi, diskai taip pat sukinėjosi ir įprastai urzgė, mėlyna lemputė mirksėjo... bet tiek. Jokio tinklo, jokių pyptelėjimų, nieko. Tiesiog brangus popieriaus prispaudėjas su mano duomenimis viduje.
 
 ![Miręs DS420+ su mirksančia mėlyna šviesele](ds420_dead.jpg)
 
@@ -30,7 +30,7 @@ Ištraukiau M.2 SSD cache. Atspėjote - vis tiek mirksi.
 
 Laikas patikrinti maitinimo šaltinį. Prijungiau multimetrą ir patvirtinau, kad jis duoda 12V. Maitinimo blokas tikriausiai veikia... Tuo metu nežinojau, kad PSU yra dažna gedimų vieta Synology įrenginiuose, bet esu peržiūrėjęs per daug laptopų remonto vaizdo įrašų, todėl nusprendžiau išardyti ir pažiūrėti, kaip atrodo pagrindinė plokštė.
 
-Mano mintis buvo, kad kažkas negerai su RAM arba spartinančiąja atmintimi dėl dulkių (kai kurie kaimynai atliko remontą gana neatsakingai, todėl prieš kelis mėnesius mano laptopo ventiliatoriai mirė dėl visų statybinių dulkių - jau nekalbu apie sudirgusias akis, galvos skausmą ir pan.) kažką užtrumpinančių viduje. Taigi, jei nepastebėsiu nieko akivaizdžiai nudegusio, bent jau išvalysiu vidų nuo dulkių. Be to, dulkės (ypač statybinės) gali pakeisti signalo linijos impedansą, kas pabloginana signalus ten, kur tai svarbiausia (pvz., didelės spartos PCIE), todėl gera mintis palaikyti grandynus švarius.
+Mano mintis buvo, kad kažkas negerai su RAM arba spartinančiąja atmintimi dėl dulkių (kai kurie kaimynai atliko remontą gana neatsakingai, todėl prieš kelis mėnesius mano laptopo ventiliatoriai mirė dėl visų statybinių dulkių - jau nekalbu apie sudirgusias akis, galvos skausmą ir pan.) kažką užtrumpinančių viduje. Taigi, jei nepastebėsiu nieko akivaizdžiai nudegusio, bent jau išvalysiu vidų nuo dulkių. Be to, dulkės (ypač statybinės) gali pakeisti signalo linijos impedansą, kas pablogina signalus ten, kur tai svarbiausia (pvz., didelės spartos PCIE), todėl gera mintis palaikyti grandynus švarius.
 
 ## Laikas imtis ardymo
 
@@ -52,12 +52,12 @@ Ir voila - turite pagrindinę plokštę. Atkreipkite dėmesį į varžtus, tvirt
 
 ![DS420+ pagrindinė plokštė](motherboard.jpg)
 
-Patikrinau kondensatorius paprastu LCR zondu - jokių trumpųjų jungčių, talpos atrodo pakankamai didelės, viskas gerai. CMOS baterija gera(3.25V).
-Prijungiau PSU ir atsargiai išmatavau įtampas plokštėje prie kiekvieno kondensatoriaus "+" kontakto - 12V, 5V, 3.3V, 1.2V, 1V magistralės visos yra. CPU turėtų gauti maitinimą. Jis šyla, bet ne per daug. Mano paties pagaminta šiluminė kamera nemato jokių karštų taškų - tai reiškia, kad greičiausiai niekur netrumpina.
+Patikrinau kondensatorius paprastu LCR zondu - jokių trumpųjų jungčių, talpos atrodo pakankamai didelės, viskas gerai. CMOS baterija gera (3,25 V).
+Prijungiau PSU ir atsargiai išmatavau įtampas plokštėje prie kiekvieno kondensatoriaus „+“ kontakto - 12 V, 5 V, 3,3 V, 1,2 V, 1 V magistralės visos yra. CPU turėtų gauti maitinimą. Jis šyla, bet ne per daug. Mano paties pagaminta šiluminė kamera nemato jokių karštų taškų - tai reiškia, kad greičiausiai niekur netrumpina.
 
 Taigi, trumpinimai ir akivaizdžiai sugedusios dalys atmestos. PSU turi veikti, nes visos įtampos yra. Nuoga pagrindinė plokštė neturėtų reikalauti daug srovės, todėl vien įtampos nėra rodiklis - bet sakykim viskas čia gerai.
 
-Skaičiau forumuose ir reddit, kad įprastas įtariamasis gali būti DOM USB Flash valdymo mikroschema(Prisukta plokštelė su NAND FLASH čipu). Tačiau paprastai kalba apie USBest gamintoją - kontrolerio pakeitimas paprastai išsprendžia krovimosi problemas, bet mano yra kitoks - PHISON, ir neaišku, ar jo perlitavimas padėtų. Pirmiausia turėčiau jį prijungti prie laptopo ir patikrinti skaitymo spartas bei patikrinti ar yra skaitymo klaidų.
+Skaičiau forumuose ir reddit, kad įprastas įtariamasis gali būti DOM USB Flash valdymo mikroschema (prisukta plokštelė su NAND FLASH čipu). Tačiau paprastai kalba apie USBest gamintoją - kontrolerio pakeitimas paprastai išsprendžia krovimosi problemas, bet mano yra kitoks - PHISON, ir neaišku, ar jo perlitavimas padėtų. Pirmiausia turėčiau jį prijungti prie laptopo ir patikrinti skaitymo spartas bei patikrinti ar yra skaitymo klaidų.
 Bet tas žingsnis turėtų būti atliktas patvirtinus jo kaltę (aš tiesiog tingiu lituot USB adapterį jam)! Taigi, prisijunkime prie pagrindinės plokštės Serial Debug Port ir pažiūrėkime, kuo ji iš tiesų nepatenkinta.
 
 ![UART ryšio jungtis](serial.jpg)
@@ -72,7 +72,7 @@ DS420+ naudoja Winbond W25Q128JWSIQ - 16MB (128Mbit) 1.8V SPI flash mikroschemą
 
 ![W25Q128JWSIQ. Kitą flash galima matyti bokeh fone](bios.jpg)
 
-Kažkas vyksta MISO/MOSI/CLK kontaktuose maždaug 2-3 sekundes, tada sustoja. Greičiausiai CPU bando skaityti flash, užkliumpa už sugadintų duomenų ir pasiduoda. Klasikinis sugadintas BIOS. Forumai patvirtino, kad tai gali būti atvejis. Greičiausiai nutrauktas arba sugadintas firmware atnaujinimas (matyt, bios įrašomas su kiekvienu firmware atnaujinimu ir kai kuriems žmonėms kai kuriuose modeliuose - kiekvieno mašinos paleidimo metu!).
+Kažkas vyksta MISO/MOSI/CLK kontaktuose maždaug 2-3 sekundes, tada sustoja. Greičiausiai CPU bando skaityti flash, užkliūva už sugadintų duomenų ir pasiduoda. Klasikinis sugadintas BIOS. Forumai patvirtino, kad tai gali būti atvejis. Greičiausiai nutrauktas arba sugadintas firmware atnaujinimas (matyt, bios įrašomas su kiekvienu firmware atnaujinimu ir kai kuriems žmonėms kai kuriuose modeliuose - kiekvieno mašinos paleidimo metu!).
 
 ## BIOS ištraukimas ir taisymas
 
@@ -185,10 +185,10 @@ Padding: 8388608 bytes (8.00 MB)
 
 ## BIOS įrašymas
 
-PASTABA: Įsitikinkite, kad nuskaitėte flash ir išsaugojote - tik tam atvejui! Atsarginės kopijos niekada nekenkia. Be to, gal jum smalsu, kokie gi baitai jūsų biose buvo sugadinti! Mano turėjo kelių baitų skirtumus
+PASTABA: Įsitikinkite, kad nuskaitėte flash ir išsaugojote - tik tam atvejui! Atsarginės kopijos niekada nekenkia. Be to, gal jums smalsu, kokie gi baitai jūsų biose buvo sugadinti! Mano turėjo kelių baitų skirtumus
 pradžioje ir atsitiktinėse vietose. Jei ši problema pasikartos, greičiausiai teks pakeisti mikroschemą.
 
-Naudojau AsProgrammer su CH341A, bet iš tikrųjų bet kuris flash programuotojas turėtų tikti. Aptiko mikroschemą kaip W25Q128JWSIQ (tai įsitikina, kad ryšys su mikroschema yra užmegztas), įkėliau `flash.bin` ir paspaudžiau įrašyti.
+Naudojau AsProgrammer su CH341A, bet iš tikrųjų bet kuris flash programuotojas turėtų tikti. Aptiko mikroschemą kaip W25Q128JWSIQ (tai patvirtina, kad ryšys su mikroschema užmegztas), įkėliau `flash.bin` ir paspaudžiau įrašyti.
 
 ![Prisegta prie flash mikroschemos - įsitikinkite, kad ryšys yra tvirtas ir bet koks maitinimas iš pagrindinės plokštės yra atjungtas!](clip.jpg)
 
@@ -200,7 +200,7 @@ Jis užsibootino! Mėlyna švieselė nustojo mirksėti, išgirdau pyptelėjimą,
 
 DS420+ gyvas! Būtų gerai ir DOM atsarginę kopiją pasidaryti. Skaičiau, kad galima naudoti įprastą USB flash - tik reikia perprogramuoti gamintojo informaciją. Gal kitą kartą...
 
-Jei jūsų Synology užstrigo su mirksančia mėlyna lempa ir be neparodo kitų gyvybės ženklų, yra vilties. Aparatinė įranga tikriausiai tvarkoje - tai tik sugadintas firmware, arba blogas maitinimo šaltinis. Nors internetuose mačiau keletą bjauriai susprogusių keramikinių...
+Jei jūsų Synology užstrigo su mirksančia mėlyna lempa ir neparodo kitų gyvybės ženklų, yra vilties. Aparatinė įranga tikriausiai tvarkoje - tai tik sugadintas firmware, arba blogas maitinimo šaltinis. Nors internetuose mačiau keletą bjauriai susprogusių keramikinių...
 Ir beje, panašus metodas gali būti taikomas beveik bet kuriam DS serijos NAS.
 
 ## Nuorodos ir naudingi puslapiai
