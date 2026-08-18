@@ -51,7 +51,7 @@ Ir tai perrėmina visą problemą. Jei perjungimo energija yra **induktyviai įv
 
 Ankstesnis pastebėjimas apie šuntavimą vis dar galioja ir naują paaiškinimą papildo, o ne su juo konkuruoja: BEC išėjimo kondensatorius yra vienas didelis keraminis, be mažesnės vertės kondensatorių šalia, o maži kondensatoriai sutelkti aplink MCU. Didelis keraminis pats vienas nustoja veikti kaip kondensatorius gerokai žemiau 1,5 GHz, tokia pati klaida, kokią po minutės padarysiu su savo filtrais.
 
-**Ir rekomenduojamo išdėstymo šioje plokštėje nėra.** TPS63070 dokumentacijoje yra EVM išdėstymas, kuriame du kondensatoriai, C1 ir C4, sėdi tiesiai prie ritės ir lusto, ten, kur perjungimo kilpa ankščiausia. Tai ne dekoratyvinė detalė, o būtent ta rekomendacijos dalis, kuri skirta aukštų frekvencijų kilpos plotui mažinti.
+**Ir rekomenduojamo išdėstymo šioje plokštėje nėra.** TPS63070 dokumentacijoje yra EVM išdėstymas, kuriame du kondensatoriai, C1 ir C4, sėdi tiesiai prie ritės ir lusto, ten, kur perjungimo kilpa ankščiausia. Tai ne dekoratyvinė detalė, o būtent ta rekomendacijos dalis, kuri skirta aukštų dažnių kilpos plotui mažinti.
 
 Realioje plokštėje **C1 ir C4 visai nėra.** Kiti kondensatoriai galbūt yra, per lupą tikrai sunku pasakyti, bet jie toliau, atstumti dėl vietos apribojimų. Tad detalės, sudėtos būtent tam, kad kilpa liktų maža, yra tos, kurių atsisakyta.
 
