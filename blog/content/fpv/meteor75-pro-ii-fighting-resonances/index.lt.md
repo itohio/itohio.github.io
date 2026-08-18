@@ -1673,7 +1673,7 @@ blogesnis rėmas. Šių dviejų negaliu atskirti giroskopu, kuris pats yra ekspe
 
 ### Keturi ir penki: visos ant vienos diagramos, ir mažas gabalėlis
 
-Akivaizdus sekantis žingsnis buvo VTX įvorius **grąžinti**, o TPU gummy viduje palikti —
+Akivaizdus kitas žingsnis buvo VTX įvorius **grąžinti**, o TPU gummy viduje palikti —
 skirtingi keliai, skirtingi simptomai, ir nėra priežasties aukoti kameros izoliatoriaus dėl
 standesnio valdiklio tvirtinimo. Išėmus tik **priekinį** TPU — tą vieną gummy, kuris priekyje
 sieja gaubtą su rėmu — struktūrai fiksuota ypatybė nusileido nuo 363 Hz iki 280 Hz, o
@@ -2142,7 +2142,7 @@ pašalina reliatyvų laisvės laipsnį, o ne vien pastumia spyruoklės konstant�
 pat gerai pagrįstas kaip standumo aiškinimas, o masės pusėje — geriau pagrįstas.
 
 Praktinė pasekmė: gummy ball'ai sujungia *FC su rėmu*, o putplastis sujungė *gaubtą su FC ir
-rėmu*. Vien standesni ball'ai to neatkurtų — būtent todėl sekantis eksperimentas standino
+rėmu*. Vien standesni ball'ai to neatkurtų — būtent todėl kitas eksperimentas standino
 gummy'us iš vidaus, o ne tiesiog keitė durometrą.
 
 ### 325 → 395 Hz poslinkis ir 48% skaičius atšaukiami

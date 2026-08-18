@@ -15,7 +15,7 @@ tags:
   - loginiai-jungtukai
   - crsf
   - telemetrija
-keywords: ["EdgeTX konfiguruojami funkciniai jungtukai", "EdgeTX loginiai jungtukai", "GX12 CFS spalvos"]
+keywords: ["EdgeTX konfigūruojami funkciniai jungtukai", "EdgeTX loginiai jungtukai", "GX12 CFS spalvos"]
 series:
   - EdgeTX Cockpit Voice
 thumbnail: "cfs-buttons-lit.jpg"
@@ -23,7 +23,7 @@ thumbnail: "cfs-buttons-lit.jpg"
 
 > **EdgeTX Cockpit Voice**, 3 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 2 dalis: Kalibracija, ant kurios stovi kiekvienas įspėjimas](/fpv/edgetx-cockpit-voice-calibration/)  ·  [4 dalis: Ką pultas iš tikrųjų pasako ›](/fpv/edgetx-cockpit-voice-callouts/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 2 dalis: kalibracija, ant kurios stovi kiekvienas baterijos įspėjimas](/fpv/edgetx-cockpit-voice-calibration/)  ·  [4 dalis: ką pultas iš tikrųjų pasako ›](/fpv/edgetx-cockpit-voice-callouts/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 [1 dalis](/fpv/edgetx-cockpit-voice-why/) nustatė tikslą ir vieną skrydžio
 valdiklio nustatymą, ant kurio viskas stovi. Ši dalis yra mechanizmas: kaip pultas
@@ -55,7 +55,7 @@ riperių GNSS modulio nėra visai, ir nenoriu „GPS pamestas“ sirenos kiekvie
 skrydžio metu. Įrašymas išjungtas, nes jis pripildo SD kortelę.
 
 Štai dalis, kurią teko išsiaiškinti: **GX12 pulte modeliui priklausantis CFS
-blokas viršija pulto lygio jungtukų konfigūraciją.** Abiejuose failuose yra
+blokas turi viršenybę prieš pulto lygio jungtukų konfigūraciją.** Abiejuose failuose yra
 SW4/5/6 įrašai. Pulto lygio įrašas `radio.yml` faile yra atsarginis; realiai
 veikia modelio YAML esantis `customSwitches` blokas.
 
@@ -191,12 +191,11 @@ logicalSw:
 Kiekvienas iš jų turi `delay: 0` ir `duration: 0`. Įsidėmėk tai.
 
 Tokia visa struktūra. Vienuolika slenksčio detektorių, trys perjungiamos
-posistemės, vienas AND laukas, kuris juos atskiria. Ko visa tai dar nedaro, tai
-neskleidžia garso.
+posistemės, vienas AND laukas, kuris juos atskiria. Tik vieno visa tai dar nedaro: neskleidžia garso.
 
 
 ---
 
-> **Series:** EdgeTX Cockpit Voice, 3 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+> **Serija:** EdgeTX Cockpit Voice, 3 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 2 dalis: Kalibracija, ant kurios stovi kiekvienas įspėjimas](/fpv/edgetx-cockpit-voice-calibration/)  ·  [4 dalis: Ką pultas iš tikrųjų pasako ›](/fpv/edgetx-cockpit-voice-callouts/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 2 dalis: kalibracija, ant kurios stovi kiekvienas baterijos įspėjimas](/fpv/edgetx-cockpit-voice-calibration/)  ·  [4 dalis: ką pultas iš tikrųjų pasako ›](/fpv/edgetx-cockpit-voice-callouts/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

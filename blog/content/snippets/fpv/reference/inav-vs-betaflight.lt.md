@@ -67,7 +67,7 @@ Betaflight GPS Rescue veikia ir per 4.3/4.4 versijas ženkliai pagerėjo — bet
 
 ## GPS pridėjimas prie Pavo20
 
-Pavo20 (Pro / Pro II) — tai **2.2" ducted skaitmeninis cinewhoop'as**: 3S maitinimas (LAVA 1104 7200 KV motorai ant Gemfan 2218 tri-blade propų), DJI O3/O4/O4 Pro arba Walksnail HD air unit, ir **jokio GPS iš gamyklos**. Jokio analogo, jokio 1S, jokios integruotos navigacijos. Kas nori GPS Rescue — patys prisukа micro GPS modulį (ir dažniausiai buzzerį). Būtent nuo to prasideda vargas:
+Pavo20 (Pro / Pro II) — tai **2.2" ducted skaitmeninis cinewhoop'as**: 3S maitinimas (LAVA 1104 7200 KV motorai ant Gemfan 2218 tri-blade propų), DJI O3/O4/O4 Pro arba Walksnail HD air unit, ir **jokio GPS iš gamyklos**. Jokio analogo, jokio 1S, jokios integruotos navigacijos. Kas nori GPS Rescue — patys prisuka micro GPS modulį (ir dažniausiai buzzerį). Būtent nuo to prasideda vargas:
 
 ```mermaid
 flowchart TD

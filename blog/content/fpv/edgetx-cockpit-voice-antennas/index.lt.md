@@ -23,7 +23,7 @@ series:
 
 > **EdgeTX Cockpit Voice**, 7 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 6 dalis: Telemetrijos įrašymas ir skaičius, kurį turi išmatuoti](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [8 dalis: Keturi dalykai, kurie negerai ›](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 6 dalis: telemetrijos įrašymas ir vienas skaičius, kurį turi išmatuoti pats](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [8 dalis: keturi dalykai, kurie čia negerai ›](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 Papildomi mygtukai yra tai, dėl ko šis projektas buvo malonus. Bet ne dėl jų pirkau
 pultą. Tas sprendimas atsirado praradus aparatą, ir jis vertas atskiros dalies, nes
@@ -31,9 +31,8 @@ fizika ta pati, ant kurios pastatyti įspėjimai.
 
 ## Kita priežastis, kodėl pirkau šį pultą: dvi antenos, dvi juostos
 
-Papildomi mygtukai yra tai, dėl ko šis projektas buvo malonus. Bet ne dėl jų
-pirkau pultą. Pirkau jį dėl **dviejų juostų veikimo su dviem antenomis**, ir tas
-sprendimas atsirado praradus aparatą.
+Pirkau jį dėl **dviejų juostų veikimo su dviem antenomis**, ir tas sprendimas
+atsirado praradus aparatą.
 
 ### Dronas, nukritęs į žolę
 
@@ -50,7 +49,7 @@ yra kryžminės poliarizacijos, o tai yra tos pačios brutalios eilės nuostolis
 Tiesinės antenos turi antrą problemą, kurią turi ir apskritiminės, bet kurią
 lengviau užmiršti: dipolis spinduliuoja toru su **giliais nuliais išilgai savo
 ašies**. Nukreipk antenos galą į kitą stotį, ir ten praktiškai nieko nebus. Ant
-žemės to lengva išvengti. Nardymo viduryje, kai aparatas rotuoja per visas
+žemės to lengva išvengti. Nardymo viduryje, kai aparatas vartosi per visas
 įmanomas orientacijas, išvengti negali, gali tik pasiekti, kad nulis niekada
 nebūtų toje pačioje vietoje abiejose antenose vienu metu.
 
@@ -76,7 +75,7 @@ vieną kiekvienai antenai, ir renkasi geresnę **kiekvienam paketui**. Tai nėra
 pasyvus sumatorius ir tai nėra vienas imtuvas su jungtuku, kurį retkarčiais
 perverčia.
 
-Rezultatas ore: nardant Norvegijos vandenpuolius, rotuojant per visas aparato
+Rezultatas ore: nardant Norvegijos krioklius, vartantis per visas aparato
 orientacijas, jis tarp antenų perjungia tvarkingai, ir negaunu to ryšio nutrūkimo,
 kurį geometrija sako, kad turėčiau gauti.
 
@@ -99,7 +98,7 @@ instrumentacija:
 | `2RSS` | RSSI **imtuvo antenoje 2** |
 | `ANT`  | Kurią anteną imtuvas šiuo metu **naudoja** |
 
-Būk tikslus, kieno tai antenos: `1RSS`, `2RSS` ir `ANT` ateina iš CRSF ryšio
+Kad būtų tikslu, kieno tai antenos: `1RSS`, `2RSS` ir `ANT` ateina iš CRSF ryšio
 statistikos kadro ir aprašo **diversiteto imtuvą aparate**, o ne dvi pulto
 antenas. Aukščiau aprašyta pulto pusės nauda yra atskiras mechanizmas, ir jo
 neinstrumentavau, turimi atgalinio kanalo rodikliai (`TRSS`, `TQly`, `TSNR`)
@@ -129,7 +128,7 @@ neklausė.
 
 ## Trumpa pastaba apie patį pultą
 
-GX12 yra mano trečias pultas, ir pastraipą būsiu neprofesionaliai entuziastingas.
+GX12 yra mano trečias pultas, ir vieną pastraipą būsiu neprofesionaliai entuziastingas.
 
 Įsimylėjau jį tą pačią akimirką, kai pamačiau. Jis yra tarp RadioMaster Pocket ir
 Boxer, ne toks kompaktiškas kaip Pocket, bet *gerokai* ergonomiškesnis, ir
@@ -139,8 +138,8 @@ malonus, o ne varginantis.
 
 Trumpai paskraidžiau kolegos 5 colių aparatą su Boxer, ir Boxer yra geresnis.
 Geresni gimbalai, geresnė ergonomika, čia nėra ko diskutuoti. Mano pirmas
-skrydis su juo baigėsi iškart, tiesiai ir vertikaliai medyje, jo savininkui
-gerokai pralinksminus. Vėliau kiek atsipirkau keliais power loop'ais per vartus,
+skrydis su juo baigėsi iškart, tiesiai ir vertikaliai medyje, smarkiai pralinksminęs jo
+savininką. Vėliau kiek atsipirkau keliais power loop'ais per vartus,
 bet medis yra ta dalis, kurią jis atsimena.
 
 Priežastis, kodėl Boxer neturiu, yra proziška: jis netelpa. Didžioji dalis mano
@@ -152,13 +151,13 @@ dydžio pultas yra būtent neteisinga kryptis.
 
 GX12 yra tas kompromisas, kuris nustojo jaustis kaip kompromisas.
 
-Informacija jau atkeliaudavo. Tik niekas jos neklausė. Kas, daugiau ar mažiau, yra
-visos šios serijos tezė, ir tai vedа tiesiai į dalį, kurioje audituoju savo paties
+Informacija jau atkeliaudavo. Tik niekas jos neklausė. Tai, daugiau ar mažiau, ir yra
+visos šios serijos tezė, ir tai veda tiesiai į dalį, kurioje audituoju savo paties
 darbą.
 
 
 ---
 
-> **Series:** EdgeTX Cockpit Voice, 7 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+> **Serija:** EdgeTX Cockpit Voice, 7 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 6 dalis: Telemetrijos įrašymas ir skaičius, kurį turi išmatuoti](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [8 dalis: Keturi dalykai, kurie negerai ›](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 6 dalis: telemetrijos įrašymas ir vienas skaičius, kurį turi išmatuoti pats](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [8 dalis: keturi dalykai, kurie čia negerai ›](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
