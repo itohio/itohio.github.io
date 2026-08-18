@@ -29,7 +29,7 @@ thumbnail: "pavo20-front-ducts.jpg"
 
 Trys palydovai gerą dieną. Nulis po penkiolikos minučių blogą dieną, atviroje aikštėje, kai 1S whoop'as ant tos pačios žolės randa dvidešimt ar daugiau. Išmatavau triukšmą su TinySA, radau smailes, pasklidusias nuo 1,2 iki 1,6 GHz, viską surašiau, o paskui kelias savaites bandžiau tai išspręsti iš esmės.
 
-Iš esmės ir neišsprendžiau. Pakeičiau skrydžio valdiklį.
+Iš esmės ir išsprendžiau. Tiesiog pakeičiau skrydžio valdiklį. Vat taip vat...
 
 ## Hipotezė išsiplėtė ir dabar ji apie ritę
 
