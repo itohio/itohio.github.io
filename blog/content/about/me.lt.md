@@ -15,7 +15,7 @@ ITOHI — Invent This, Invent That, Open Hardware Inventions (Išradinėk tai, i
 
 Mano vardas Andrius. Mano pagrindinė stiprybė — sujungti sudėtingų techninių sričių taškus taip, kad taptų įmanoma tai, ką dauguma laiko per sunkiu, per brangiu arba reikalaujančiu didesnės komandos.
 
-Turiu fizikos laipsnį telekomunikacijų ir elektronikos srityje, ir per pastaruosius du dešimtmečius kūriau projektus hardware, firmware ir mašininio mokymosi sankirtoje. Mane labiausiai domina tai, kas gyvena techniškai įgyvendinamo riboje — problemos, kur atsakymui reikia vienu metu sujungti tris nesusijusias sritis.
+Turiu fizikos laipsnį telekomunikacijų ir elektronikos srityje, ir per pastaruosius du dešimtmečius kūriau projektus hardware, firmware ir mašininio mokymosi sankirtoje. Mane labiausiai domina tai, kas gyvena ties techninio įgyvendinamumo riba — problemos, kur atsakymui reikia vienu metu sujungti tris nesusijusias sritis.
 
 Keletas pavyzdžių:
 
@@ -39,7 +39,7 @@ Taip pat kuriu AI asistentų darbo eigas techninių konsultacijų paslaugoms per
 
 Projektai mane suranda dažniau nei aš juos. Geriausiai dirbu su sudėtingomis techninėmis problemomis, kur reikia 0→1 kūrėjo — žmogaus, kuris išsiaiškina, ar tai apskritai įmanoma, o tada sukuria.
 
-Dirbu su nepriklausomais tyrėjais, kuriems reikia kažko, kas realiai pastatytų sistemą; startuolių įkūrėjais su neįprastomis hardware problemomis; ir visais, kurių projektai atmetami įprastų rangovų, nes esą "per daug nestandartiniai."
+Dirbu su nepriklausomais tyrėjais, kuriems reikia kažko, kas realiai pastatytų sistemą; startuolių įkūrėjais su neįprastomis hardware problemomis; ir visais, kurių projektai atmetami įprastų rangovų, nes esą „per daug nestandartiniai“.
 
 → [CV](/lt/about/cv) — formaliai  
 → [GitHub](https://github.com/itohio) — darbai  
