@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "pid", "tuning", "p-term", "i-term", "d-term", "feedforward"]
 ---
 
-PID kontroleris — tai pati skrydžio kontrolerio veikimo esmė. Suprasti, ką daro kiekvienas terminas ir kaip atrodo, kai jį sugadini, yra būtina sąlyga bet kokiam prasmingam derinimui. Beje, „sugadini“ čia nėra teorinė sąvoka — aš kiekvieną iš šitų simptomų atpažinau ne iš vadovėlio, o iš savo paties dronų.
+PID kontroleris — tai pati skrydžio kontrolerio veikimo esmė. Suprasti, ką daro kiekvienas terminas ir kaip atrodo, kai jį sugadini, yra būtina sąlyga bet kokiam prasmingam derinimui.
 
 ---
 
@@ -39,29 +39,29 @@ Kontroleris mato **error** (setpoint − faktinė reikšmė), tada reaguoja ketu
 
 Reaguoja į dabartinį error. Didesnis error → didesnė korekcija.
 
-- **Per mažas:** dronas jaučiasi minkštas ir neatsakingas, prastai seka stick'us, klaidžioja darant greitus krypties pokyčius.
-- **Per didelis:** oscilacijos darant aštrius manevrus ir keičiant gazą. Aukšto tono zyzimas varikliuose. Propwash pablogėja.
+- **Per mažas:** dronas jaučiasi minkštas ir vangus, prastai seka stick'us, klaidžioja darant greitus krypties pokyčius.
+- **Per didelis:** osciliacijos darant aštrius manevrus ir keičiant gazą. Aukšto tono zyzimas varikliuose. Propwash pablogėja.
 
 ### I — Integral
 
-Kaupia error laike. Koreguoja nuolatinį nuokrypį (vėjas, variklių disbalansas, netolygus propelleris).
+Kaupia error laike. Koreguoja nuolatinį nuokrypį (vėjas, variklių disbalansas, nesubalansuotas propelleris).
 
 - **Per mažas:** dronas lėtai dreifuoja į vieną pusę be stick'o įvesties; negali išlaikyti aukščio ar kurso vėjyje.
-- **Per didelis:** atšokimas po staigaus sustojimo; lėta, „vata“ dvelkianti oscilacija, kuri nurimsta per kelias sekundes (I-term windup).
+- **Per didelis:** atšokimas po staigaus sustojimo; lėta, vatiška osciliacija, kuri nurimsta per kelias sekundes (I-term windup).
 
 ### D — Derivative
 
 Reaguoja į tai, kaip greitai keičiasi error (pokyčio greitis). Slopina P-term atsaką ir apsaugo nuo overshoot.
 
-- **Per mažas:** propwash, atšokimas paleidus stick'ą, oscilacija po flip'ų.
-- **Per didelis:** aukšto dažnio oscilacijos (varikliai kaista), dronas zyzia/vibruoja tam tikrose gazo pozicijose, D-term triukšmą sustiprina filtravimas.
+- **Per mažas:** propwash, atšokimas paleidus stick'ą, osciliacija po flip'ų.
+- **Per didelis:** aukšto dažnio osciliacijos (varikliai kaista), dronas zyzia/vibruoja tam tikrose gazo pozicijose, D-term triukšmą sustiprina filtravimas.
 
 ### Feedforward (FF)
 
-Ne klasikinės PID kilpos dalis — jis skaito stick'o judėjimą tiesiogiai ir stumia variklius *prieš* susikaupiant error. Sumažina įgimtą vėlinimą grįžtamojo ryšio kontroleryje.
+Ne klasikinės PID kilpos dalis — jis skaito stick'o judėjimą tiesiogiai ir stumia variklius *prieš* susikaupiant error. Sumažina grįžtamojo ryšio kontroleriui būdingą vėlinimą.
 
-- **Per mažas:** sekimo vėlinimas; dronas jaučiasi šiek tiek atsiliekantis nuo stick'ų; „vata“ darant greitus krypties pokyčius.
-- **Per didelis:** overshoot į stick'o įvestis; aštru, bet nervinga. Sustiprina RC linijos jitter'į.
+- **Per mažas:** sekimo vėlinimas; dronas jaučiasi šiek tiek atsiliekantis nuo stick'ų; vatiškas pojūtis darant greitus krypties pokyčius.
+- **Per didelis:** overshoot reaguojant į stick'o įvestis; aštru, bet nervinga. Sustiprina RC linijos jitter'į.
 
 ---
 
@@ -185,4 +185,4 @@ set tpa_mode = PD        # apply to P and D
 save
 ```
 
-Be TPA: dronas gali oscilliuoti esant dideliam gazui, bet jaustis minkštas kabant vietoje. Su tinkamai nustatytu TPA: nuoseklus pojūtis per visą gazo diapazoną — ir, tiesą sakant, būtent TPA man kadaise „išgydė“ tą punch-out zyzimą, kurį pusę dienos gaudžiau kaltindamas viską, tik ne gazą.
+Be TPA: dronas gali osciliuoti esant dideliam gazui, bet jaustis minkštas kabant vietoje. Su tinkamai nustatytu TPA: nuoseklus pojūtis per visą gazo diapazoną.

@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "modes", "acro", "angle", "horizon", "turtle", "arm", "switch"]
 ---
 
-Betaflight mode'ai — tai sąlygos, priskirtos AUX kanalų ruožams. Kai jungiklio padėtis įvykdo sąlygą, FC įjungia tą mode'ą. Vieni mode'ai vienas kitą išjungia, kiti veikia kartu — o kartais tave nustebina lauke, kai supainioji, kuris jungiklis ką daro (klausk manęs, iš kur žinau).
+Betaflight mode'ai — tai sąlygos, priskirtos AUX kanalų ruožams. Kai jungiklio padėtis įvykdo sąlygą, FC įjungia tą mode'ą. Vieni mode'ai vienas kitą išjungia, kiti veikia kartu.
 
 ---
 
@@ -88,7 +88,7 @@ flowchart LR
 
 ## Air Mode
 
-Air Mode palaiko PID kilpą aktyvią, kai throttle yra nulyje. Be jo FC nukerpa PID išvestį prie nulinio throttle ir dronas nevaldomai vartaliojasi darant apverstus praskridimus ar manevrus be galios.
+Air Mode palaiko PID kilpą aktyvią, kai throttle yra nulyje. Be jo FC nukerpa PID išvestį esant nuliniam throttle ir dronas nevaldomai vartaliojasi darant apverstus praskridimus ar manevrus be galios.
 
 ```
 # Enable permanently (recommended for acro flying)
@@ -99,13 +99,13 @@ save
 # Or assign to a switch in Modes tab → AIR MODE
 ```
 
-Bet kokiam freestyle skraidymui įjunk Air Mode visam laikui. Vienintelis atvejis, kada verta jį išjungti: absoliutūs pradedantieji ant angle mode, kuriems naudinga, kad dronas iškart sustoja nukirtus throttle.
+Bet kokiam freestyle skraidymui įjunk Air Mode visam laikui. Vienintelis atvejis, kada verta jį išjungti: absoliutūs pradedantieji, skraidantys angle mode, kuriems naudinga, kad dronas iškart sustoja nukirtus throttle.
 
 ---
 
 ## Turtle Mode (apsivertimas po kritimo)
 
-Po kritimo, kai dronas lieka gulėti apverstas, Turtle Mode suka propus atbuline kryptimi ant įstrižai išsidėsčiusių motorų porų, kad jį apverstų — nereikia eiti jo pasiimti.
+Po kritimo, kai dronas lieka gulėti apverstas, Turtle Mode suka propus atbuline kryptimi paeiliui keisdamas įstrižas motorų poras, kad jį apverstų — nereikia eiti jo pasiimti.
 
 **Kaip įjungti:**
 1. Disarm (arm jungiklį į disarm)
@@ -120,7 +120,7 @@ Po kritimo, kai dronas lieka gulėti apverstas, Turtle Mode suka propus atbuline
 set beeper_dshot_beacon_tone = 1  # optional: beacon beeps while turtle active
 ```
 
-Turtle Mode yra sunkus propams ir motorams — atbulinio sukimo jėga apkrauna guolius. Naudok saikingai; nevartaliok kelis kartus per tą patį kritimą (guoliai tau to neatleis).
+Turtle Mode stipriai apkrauna propus ir motorus — atbulinio sukimo momentas vargina guolius. Naudok saikingai; nevartaliok kelis kartus per tą patį kritimą.
 
 ---
 

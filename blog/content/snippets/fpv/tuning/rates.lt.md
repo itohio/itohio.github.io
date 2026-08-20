@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "rates", "tuning", "freestyle"]
 ---
 
-Rates nusako, kaip greitai dronas sukasi reaguodamas į stick'ų judesį. Didesni rates = greitesnis sukimasis = agresyvesnis pojūtis. Rate profilį formuoja trys parametrai — **RC Rate**, **Super Rate** ir **Expo** — plius pasirinkta rate *sistema* (Betaflight, Actual ir t. t.). Beje, nesikankink versdamas viską mintinai — aš pats tiesiog atsidarau Rates Preview skirtuką ir stumdau slankiklius, kol pojūtis pataiko.
+Rates nusako, kaip greitai dronas sukasi reaguodamas į stick'ų judesį. Didesni rates = greitesnis sukimasis = agresyvesnis pojūtis. Rate profilį formuoja trys parametrai — **RC Rate**, **Super Rate** ir **Expo** — plius pasirinkta rate *sistema* (Betaflight, Actual ir t. t.).
 
 ---
 
@@ -75,7 +75,7 @@ Betaflight palaiko kelis rate stilius — kiekvienas naudoja tuos pačius tris s
 - Mokydamasis pradėk nuo **533**; žemesnis maks. rate laiko sukimąsi lėtą ir kontroliuojamą.
 - Pereik prie **633** ar **733**, kai nori greitesnių flip'ų ir gyvesnio centro.
 - Pridėk truputį **Expo** (0.10–0.20), jei centras jaučiasi trūkčiojantis — jis suminkština smulkią kontrolę nekeisdamas maks. rate. Virš ~0.5 pradeda jaustis „lagas“ ties centru.
-- Rates nustatomi kiekvienai ašiai atskirai. Dauguma pilotų kopijuoja tą patį profilį Roll, Pitch ir Yaw — bet yaw dažnai nustatomas šiek tiek žemesnis, kad spin'ai būtų švaresni (aš yaw laikau ramesnį — greitesnis man tik verčia galvą sukti :)).
+- Rates nustatomi kiekvienai ašiai atskirai. Dauguma pilotų kopijuoja tą patį profilį Roll, Pitch ir Yaw — bet yaw dažnai nustatomas šiek tiek žemesnis, kad spin'ai būtų švaresni.
 
 ---
 

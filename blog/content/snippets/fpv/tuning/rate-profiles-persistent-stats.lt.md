@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "rates", "osd", "persistent-stats", "switch"]
 ---
 
-Rate profilių perjungimas vidury sesijos per siųstuvo jungiklį ir asmeninių rekordų statistikos saugojimas į OSD — abi naudingos funkcijos, bet jos sąveikauja netikėtu būdu. Hmm, „netikėtu“ — švelniai pasakius; aš kurį laiką rimtai galvojau, kad man sugedo FC.
+Rate profilių perjungimas vidury sesijos per siųstuvo jungiklį ir asmeninių rekordų statistikos saugojimas į OSD — abi naudingos funkcijos, bet jos sąveikauja netikėtu būdu.
 
 ---
 
@@ -21,7 +21,7 @@ Betaflight gali sekti skrydžio statistiką per maitinimo ciklus ir rodyti ją O
 
 ### Persistent Stats įjungimas
 
-Betaflight Configurator → **OSD** skirtukas → nusileisk iki Stats sekcijos, įjunk norimą statistiką. Ji pasirodo po-skrydžio statistikos ekrane po disarm.
+Betaflight Configurator → **OSD** skirtukas → nuslink iki Stats sekcijos, įjunk norimą statistiką. Ji pasirodo po-skrydžio statistikos ekrane po disarm.
 
 Per CLI:
 ```
@@ -49,7 +49,7 @@ Tipinis setup'as: 3 pozicijų jungiklis → po vieną rate profilį kiekvienai p
 
 Štai kodėl: rate profilio perjungimas modifikuoja skrydžio kontrolerio konfigūraciją (tai config keitimas, o ne tiesiog runtime reikšmė). Kad tas keitimas išliktų po perkrovimo, Betaflight turėtų įrašyti config į flash. Betaflight **nedaro** automatinio config išsaugojimo po disarm — sąmoningai, kad išvengtų flash dėvėjimosi ir atsitiktinių perrašymų vidury sesijos.
 
-Kadangi tas pats saugojimo mechanizmas dalinamas tarp „kuris rate profilis aktyvus“ ir „dabartiniai statistikos skaitikliai“, ir kadangi joks auto-save nepasileidžia po disarm, tavo statistikos skaitikliai atsistato per kitą maitinimo ciklą.
+Kadangi tuo pačiu saugojimo mechanizmu naudojasi ir „kuris rate profilis aktyvus“, ir „dabartiniai statistikos skaitikliai“, o joks auto-save po disarm nepasileidžia, kitą maitinimo ciklą tavo statistikos skaitikliai prasideda iš naujo.
 
 ---
 
@@ -57,7 +57,7 @@ Kadangi tas pats saugojimo mechanizmas dalinamas tarp „kuris rate profilis akt
 
 ### 1 variantas — Išsaugoti config rankiniu būdu po nusileidimo
 
-Paleisk `save` komandą iš Betaflight Configurator ar per OSD stick komandą iškart po nusileidimo, prieš išimant bateriją. Tai įrašo dabartinį config (įskaitant, kuris rate profilis aktyvus, ir naujausius statistikos skaitiklius) į flash. Taip, tai reiškia — atsimink tą `save`; aš pusę savo rekordų praradau būtent todėl, kad neatsiminiau.
+Paleisk `save` komandą iš Betaflight Configurator ar per OSD stick komandą iškart po nusileidimo, prieš išimant bateriją. Tai įrašo dabartinį config (įskaitant, kuris rate profilis aktyvus, ir naujausius statistikos skaitiklius) į flash.
 
 ```
 # In CLI after each session
