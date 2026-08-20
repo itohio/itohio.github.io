@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "esc", "motor", "timing", "advance", "efficiency", "blheli"]
 ---
 
-Motor timing advance pastumia ESC komutacijos tašką pirmyn elektriniame cikle motoro rotoriaus pozicijos atžvilgiu. Aukštesnis advance = daugiau galios efektyvumo ir karščio sąskaita. Na, o jei degimo timing degimo variklyje kada nors tau atrodė juoda magija — čia lygiai tas pats, tik be alyvos kvapo.
+Motor timing advance pastumia ESC komutacijos tašką pirmyn elektriniame cikle motoro rotoriaus pozicijos atžvilgiu. Aukštesnis advance = daugiau galios efektyvumo ir karščio sąskaita.
 
 ---
 
@@ -25,9 +25,9 @@ Brushless motoro ESC perjungia fazių galią pagal rotoriaus poziciją. „On ti
 | **15°** | Aukštesnis | Mažesnė | Žemesnis | Efektyvumas, long range, cruising |
 | **22°** | Vidutinis  | Didesnė | Aukštesnis | Freestyle, racing, punchy build'ai |
 
-**15° advance** yra termiškai efektyvesnis — ESC perjungia taške, kuris minimizuoja geležies nuostolius motoro stator. Mažiau karščio reiškia mažiau iššvaistytos energijos, o tai tiesiogiai virsta ilgesniais skrydžio laikais.
+**15° advance** yra termiškai efektyvesnis — ESC perjungia taške, kuris minimizuoja geležies nuostolius motoro statoriuje. Mažiau karščio reiškia mažiau iššvaistytos energijos, o tai tiesiogiai virsta ilgesniais skrydžio laikais.
 
-**22°** (ir aukščiau, iki ~30°) išspaudžia daugiau galios ir RPM iš tos pačios motoro/prop kombinacijos, bet didina motoro ir ESC temperatūrą, ypač prie ilgai laikomo aukšto throttle.
+**22°** (ir aukščiau, iki ~30°) išspaudžia daugiau galios ir RPM iš tos pačios motoro/prop kombinacijos, bet didina motoro ir ESC temperatūrą, ypač esant ilgai laikomam aukštam throttle.
 
 ---
 
@@ -35,10 +35,10 @@ Brushless motoro ESC perjungia fazių galią pagal rotoriaus poziciją. „On ti
 
 - Long-range build'ai, kur svarbus skrydžio laikas
 - Efektyvumui orientuoti 5" cruising setup'ai
-- Motorai su griežtomis tolerancijomis (per dideli stator'iai), kurie kaista ant 22°
+- Motorai su griežtomis tolerancijomis (per dideli stator'iai), kurie kaista naudojant 22°
 - Bet koks build'as, kur motoro temperatūra nusileidus atrodo aukšta
 
-**Nykščio taisyklė:** jei tavo motorai šilti liesti (gali laikyti pirštą > 3 sekundes) po full-throttle punch sesijos, žemesnis timing advance yra viena svirtis karščiui sumažinti prieš griebiant didesnį ESC.
+**Nykščio taisyklė:** jei tavo motorai šilti prisilietus (gali laikyti pirštą > 3 sekundes) po full-throttle punch sesijos, žemesnis timing advance yra viena svirtis karščiui sumažinti prieš griebiant didesnį ESC.
 
 ---
 
@@ -74,11 +74,11 @@ Efektyvumui: rink **Low**. Freestyle: **Medium**.
 
 BLHeli_32 ir AM32 taip pat turi **Demag Compensation** nustatymą. Demag tvarko back-EMF šuolį, kai fazė išsijungia. Aukštesnė demag kompensacija gali padėti išvengti desync prie staigių RPM pokyčių.
 
-Jei suki 15° timing dėl efektyvumo, poruok jį su normaliais ar vidutiniais demag nustatymais. Agresyvus demag su žemu timing kartais gali sukelti dvejonę prie greito throttle-up.
+Jei suki 15° timing dėl efektyvumo, derink jį su normaliais ar vidutiniais demag nustatymais. Agresyvus demag su žemu timing kartais gali sukelti nedidelį strigimą esant greitam throttle-up.
 
 ---
 
 ## Pastabos
 
-- Timing advance sąveikauja su motoro KV ir prop apkrova. High-KV motoras ant mažo prop'o, dažnai pasiekiantis piko RPM, gauna mažiau naudos iš advance timing nei mid-KV motoras ant didesnio prop'o.
-- Visada paleisk full-throttle punch sesiją ir patikrink motorų temperatūras pakeitęs timing. Pagauk šilumines problemas, kol jos neiškepė motoro apvijų — pirštas ant variklio nusileidus kainuoja nieko, naujas motoras kainuoja gerokai daugiau.
+- Timing advance sąveikauja su motoro KV ir prop apkrova. High-KV motoras su mažu prop'u, dažnai pasiekiantis piko RPM, gauna mažiau naudos iš advance timing nei mid-KV motoras su didesniu prop'u.
+- Visada paleisk full-throttle punch sesiją ir patikrink motorų temperatūras pakeitęs timing. Pagauk šilumines problemas, kol jos neiškepė motoro apvijų.

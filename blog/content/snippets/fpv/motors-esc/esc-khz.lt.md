@@ -28,7 +28,7 @@ ESC naudoja PWM, kad moduliuotų įtampą, paduodamą kiekvienai motoro fazei. D
 - **48 kHz** — subalansuotas; default ant daugumos modernių ESC; sklandi kontrolė, vidutinis karštis
 - **96 kHz** — smulkiausias perjungimas, geriausias motoro sklandumas, aukštesnis ESC karštis
 
-Aukštesnis dažnis sumažina „zvimbimo“ jausmą motoruose per hover ir duoda skrydžio kontroleriui detalesnę motoro kontrolę, o tai padeda filtravimui ir PID stabilumui.
+Aukštesnis dažnis sumažina „zvimbimo“ jausmą motoruose kabant ir duoda skrydžio kontroleriui detalesnę motoro kontrolę, o tai padeda filtravimui ir PID stabilumui.
 
 ---
 
@@ -42,7 +42,7 @@ Aukštesnis dažnis sumažina „zvimbimo“ jausmą motoruose per hover ir duod
 
 - **24 kHz** labiau tinka long-range / efektyvumo build'ams, kur svarbus skrydžio laikas, o tune yra konservatyvus.
 - **48 kHz** yra default daugumai freestyle ir 5" racing kvadrų.
-- **96 kHz** populiarus 5" freestyle, kur sklandesnis motoro atsakas padeda su propwash, bet įsitikink, kad tavo ESC jį palaiko (ne visi BLHeli_32 ESC stabilūs ant 96 kHz prie full throttle).
+- **96 kHz** populiarus 5" freestyle, kur sklandesnis motoro atsakas padeda su propwash, bet įsitikink, kad tavo ESC jį palaiko (ne visi BLHeli_32 ESC stabilūs ties 96 kHz esant full throttle).
 
 ---
 
@@ -74,7 +74,7 @@ AM32 (atviro kodo alternatyva BLHeli_32) atveria PWM dažnį tiesiogiai:
 
 Jei naudoji RPM filter, ESC turi palaikyti bidirectional DSHOT. Dauguma BLHeli_32 ESC palaiko.
 
-**RPM filter + 48 kHz** yra standartinė pora moderniems freestyle build'ams. Ėjimas į 96 kHz su RPM filter duoda tik nežymų papildomą pagerinimą ir didina ESC karštį — ne visada vertas (skirtumo pirštais tikrai nepajusi, o ESC — pajus).
+**RPM filter + 48 kHz** yra standartinė pora moderniems freestyle build'ams. Perėjimas prie 96 kHz su RPM filter duoda tik nežymų papildomą pagerinimą ir didina ESC karštį — ne visada vertas.
 
 Betaflight CLI:
 ```
@@ -89,6 +89,6 @@ save
 
 ## Pastabos
 
-- Kai kurie ESC teigia palaikantys 96 kHz, bet tampa nestabilūs prie didelės apkrovos. Testuok su agresyviais throttle punch'ais prieš skrisdamas virš ko nors brangaus (arba, sakykim, virš kaimyno automobilio — klausiu ne šiaip sau).
+- Kai kurie ESC teigia palaikantys 96 kHz, bet tampa nestabilūs esant didelei apkrovai. Testuok su agresyviais throttle punch'ais prieš skrisdamas virš ko nors brangaus.
 - PWM dažnio keitimas ant daugumos ESC reikalauja power cycle.
-- PWM dažnis yra atskiras nuo DSHOT protokolo — DSHOT yra skaitmeninis protokolas; PWM dažnio nustatymas veikia analoginį fazių perjungimą motoro apvijose.
+- PWM dažnis yra atskiras nuo DSHOT protokolo — DSHOT yra skaitmeninis protokolas; PWM dažnio nustatymas turi įtakos analoginiam fazių perjungimui motoro apvijose.
