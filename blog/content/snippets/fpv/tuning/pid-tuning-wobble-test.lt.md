@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "pid", "tuning", "wobble-test", "blackbox", "step-response", "filter", "bardwell"]
 ---
 
-Sistemingas PID derinimo protokolas, pagrįstas Joshua Bardwell / Brian White wobble-test metodologija — perrašytas taip, kad veiktų vien su nemokamais įrankiais: Betaflight Blackbox Explorer, Betaflight Configurator ir Rylo. Jokio PID Toolbox, jokio MATLAB, jokių mokamų prenumeratų (nes, atvirai, aš tiesiog tingiu mokėti už tai, ką galima padaryti nemokamai).
+Sistemingas PID derinimo protokolas, pagrįstas Joshua Bardwell / Brian White wobble-test metodologija — perrašytas taip, kad veiktų vien su nemokamais įrankiais: Betaflight Blackbox Explorer, Betaflight Configurator ir Rylo. Jokio PID Toolbox, jokio MATLAB, jokių mokamų prenumeratų.
 
 Tai **praktinis lauko protokolas**. Jei nori matematikos, slypinčios už kiekvieno termino, žiūrėk [Betaflight Tuning Math](../betaflight-tuning-math/). Jei jau turi `.bbl` failą ir nori grynos step response analizės, žiūrėk [BBL-Based PID Tuning Protocol](../bbl-pid-tuning-protocol/).
 
@@ -14,9 +14,9 @@ Tai **praktinis lauko protokolas**. Jei nori matematikos, slypinčios už kiekvi
 
 ## Kaip veikia šis protokolas
 
-Pagrindinė įžvalga iš Brian White tyrimų: **PD balance ir master multiplier yra vieninteliai du reguliatoriai, kurie ženkliai veikia step response vėlinimą ir formą**. Visa kita (I, FF, d_max) derinama ant tvirto PD pagrindo.
+Pagrindinė įžvalga iš Brian White tyrimų: **PD balance ir master multiplier yra vieninteliai du reguliatoriai, kurie ženkliai keičia step response vėlinimą ir formą**. Visa kita (I, FF, d_max) derinama ant tvirto PD pagrindo.
 
-Wobble testas duoda tau kontroliuojamą, kartotinę įvestį: greitą pilno atlenkimo stick'o judesį angle mode su ribota eiga ir tiesiniais rate'ais. Tai sukuria švarų step užsakytame sukimosi rate — idealu step response formos analizei be MATLAB.
+Wobble testas duoda tau kontroliuojamą, kartotinę įvestį: greitą pilno atlenkimo stick'o judesį angle mode su ribota eiga ir tiesiniais rate'ais. Tai sukuria švarų step nurodytame sukimosi rate — idealu step response formos analizei be MATLAB.
 
 ```mermaid
 flowchart TD
@@ -48,7 +48,7 @@ Daryk tai prieš kiekvieną derinimo sesiją. Mechaninės problemos atrodo kaip 
 - [ ] FC tvirtai standoff'uose — guminės tarpinės nesuspaustos plokščiai, ne dingusios
 - [ ] Kondensatorius prilituotas prie baterijos pad'ų (1000–2200 µF, 25 V ar daugiau 4S+)
 - [ ] Jokių laisvų jungčių ar laidų, galinčių vibruoti prie rėmo
-- [ ] Petys ir rėmo tvirtinimai priveržti
+- [ ] Šakos ir rėmo tvirtinimai priveržti
 
 > **2" Ripper pastaba:** tikrink propellerių priveržimo momentą kiekvieną sesiją. Press-fit propelleriai ant whoop'ų ir 2" build'ų atsilaisvina greičiau nei T-mount propelleriai. Laisvas propelleris — didelis vibracijos šaltinis, kurio joks filtro nustatymas iki galo neišvalys. Keisk bet kokius propellerius su matomais galiukų įskilimais — net 0,5 mm įskilimas sukuria spektrinį spike.
 
@@ -84,7 +84,7 @@ set debug_mode = FFT_FREQ            # logs detected noise-peak frequencies for 
 save
 ```
 
-> **2" Ripper pastaba:** nustatyk `blackbox_sample_rate = 1/1` (4 kHz) be kompromisų. Variklių fundamentai 2" build'e, sukant 30 000+ RPM, yra ties 250–500 Hz. 2 kHz log rate tai užfiksuoja, bet palieka ploną atsargą. Ties 4 kHz švariai užfiksuoji dvi harmonikas. Patikrink Betaflight CPU apkrovą (Configurator pradinis ekranas) — jei ji viršija 50% nustačius 4 kHz logginimą, arba pereik prie greitesnio F7 FC, arba susitaikyk su 1/2 rate.
+> **2" Ripper pastaba:** nustatyk `blackbox_sample_rate = 1/1` (4 kHz) be kompromisų. Variklių pagrindiniai dažniai 2" build'e, sukant 30 000+ RPM, yra ties 250–500 Hz. 2 kHz log rate tai užfiksuoja, bet palieka ploną atsargą. Ties 4 kHz švariai užfiksuoji dvi harmonikas. Patikrink Betaflight CPU apkrovą (Configurator pradinis ekranas) — jei ji viršija 50% nustačius 4 kHz logginimą, arba pereik prie greitesnio F7 FC, arba susitaikyk su 1/2 rate.
 
 ### RC linijos preset'as
 
@@ -123,9 +123,9 @@ blackbox erase
 | Dažnio zona | Ką ji rodo |
 |---------------|---------------|
 | 0–20 Hz | Normali skrydžio dinamika — visada yra |
-| 20–80 Hz | Prop wash / priekinio skrydžio trikdis — platus kupstas |
-| 80–500 Hz | **Variklių fundamentas** — turi kilti su gazu |
-| 2× ir 3× fundamentas | Variklių harmonikos — aukšti siauri pikai |
+| 20–80 Hz | Prop wash / priekinio skrydžio trikdis — platus kauburys |
+| 80–500 Hz | **Variklių pagrindinis dažnis** — turi kilti su gazu |
+| 2× ir 3× pagrindinis dažnis | Variklių harmonikos — aukšti siauri pikai |
 | Fiksuoto dažnio spike (bet koks) | Mechaninis rezonansas — rėmas, standoff'as, propellerių pažeidimas |
 
 **Triukšmo lygio tikslai:**
@@ -137,9 +137,9 @@ blackbox erase
 | −25 iki −30 dB | Padidėjęs — palik LP1, apsvarstyk cutoff sugriežtinimą |
 | Virš −25 dB | Problematiška — diagnozuok prieš derindamas. Patikrink propellerių balansą, variklių varžtus, kondensatorių |
 
-**Paklausk [Rylo](https://app.sintra.ai/community/helpers/rylo):** padaryk Blackbox Explorer spektrinio vaizdo ekrano nuotrauką ir pasidalink ja čia. Rylo identifikuos variklių fundamentalų dažnį, pažymės bet kokius anomalius pikus ir rekomenduos RPM filtro minimalų dažnį 3 fazei.
+**Paklausk [Rylo](https://app.sintra.ai/community/helpers/rylo):** padaryk Blackbox Explorer spektrinio vaizdo ekrano nuotrauką ir pasidalink ja čia. Rylo identifikuos variklių pagrindinį dažnį, pažymės bet kokius anomalius pikus ir rekomenduos RPM filtro minimalų dažnį 3 fazei.
 
-> **2" Ripper pastaba:** variklių fundamentai 2" build'e tipiškai yra **250–500 Hz** ties viduriniu gazu — gerokai aukščiau nei 5" (100–200 Hz). RPM filtro min dažnio numatytoji reikšmė 100 Hz gali reikėti pakelti iki 150 Hz ar daugiau. Bendras triukšmo lygis dažnai irgi aukštesnis; švarus 2" build gali vis tiek sėdėti ties −30 dB, o ne −40 dB kaip 5".
+> **2" Ripper pastaba:** variklių pagrindiniai dažniai 2" build'e tipiškai yra **250–500 Hz** ties viduriniu gazu — gerokai aukščiau nei 5" (100–200 Hz). RPM filtro min dažnio numatytoji reikšmė 100 Hz gali reikėti pakelti iki 150 Hz ar daugiau. Bendras triukšmo lygis dažnai irgi aukštesnis; švarus 2" build gali vis tiek sėdėti ties −30 dB, o ne −40 dB kaip 5".
 
 ---
 
@@ -211,7 +211,7 @@ set iterm_relax_cutoff = 15       # for 5"; see size table below
 save
 ```
 
-Pastumk PID Tuning slankiklių **I** dalį iki maždaug 0,3–0,4. Tai neleidžia I windup teršti step response analizės. Galutinę I termino reikšmę nustatysi 8 fazėje.
+Pastumk PID Tuning slankiklių **I** dalį iki maždaug 0.3–0.4. Tai neleidžia I windup teršti step response analizės. Galutinę I termino reikšmę nustatysi 8 fazėje.
 
 **iterm_relax_cutoff pagal build dydį:**
 
@@ -250,7 +250,7 @@ Kiekvienam PD damping slankiklio nustatymui:
 3. Pakartok su **pitch pirmyn-atgal** įvestimis
 4. Nusileisk, disarm
 
-Tai generuoja švarias step įvestis, kurias tavo bbl-analizatorius gali apdoroti. Skrisk **Angle mode**, jei tavo skraidymo įgūdžiai riboti — angle limit apsaugo nuo apvirtimo, tuo pačiu vis tiek generuodamas pilno rate užsakytus step'us.
+Tai generuoja švarias step įvestis, kurias tavo bbl-analizatorius gali apdoroti. Skrisk **Angle mode**, jei tavo skraidymo įgūdžiai riboti — angle limit apsaugo nuo apvirtimo, tuo pačiu vis tiek generuodamas pilno rate nurodytus step'us.
 
 ### Sweep nustatymai
 
@@ -262,7 +262,7 @@ Tai generuoja švarias step įvestis, kurias tavo bbl-analizatorius gali apdorot
 | 4 | 1.2 |
 | 5 | 1.4 |
 
-Pakeisk slankiklį, save, ištrink flash ir skrisk kiekvieną bandymą su atskira baterija (arba ta pačia baterija paeiliui — užsirašyk, kuris segmentas yra kuris). Tu ieškai **taško, kur step response pereina iš overshoot į švarią**.
+Pakeisk slankiklį, save, ištrink flash ir skrisk kiekvieną bandymą su atskira baterija (arba ta pačia baterija paeiliui — užsirašyk, kuris segmentas yra kuris). Tu ieškai **taško, kur step response pereina iš overshoot į švarią formą**.
 
 > **Trink flash tarp bandymų!** Jei netrinsi, visi bandymai bus tame pačiame log faile ir tau reikės identifikuoti segmentus pagal laiko žymą.
 
@@ -344,7 +344,7 @@ Pakeisk slankiklį, save, ištrink flash ir skrisk kiekvieną bandymą su atskir
 }
 ```
 
-**Tikslas**: step response, kuris kyla švariai, turi ≤5% overshoot ir nusistovi ties 1,0 be ringing. Grafike aukščiau PD 1.2 yra idealus. Tavo drono idealus taškas gali būti ties 1.0 ar 1.4, priklausomai nuo rėmo standumo, propellerio dydžio ir variklių inercijos.
+**Tikslas**: step response, kuris kyla švariai, turi ≤5% overshoot ir nusistovi ties 1.0 be ringing. Grafike aukščiau PD 1.2 yra idealus. Tavo drono idealus taškas gali būti ties 1.0 ar 1.4, priklausomai nuo rėmo standumo, propellerio dydžio ir variklių inercijos.
 
 ### Analizė su Rylo
 
@@ -354,7 +354,7 @@ Po kiekvieno PD bandymo pasidalink `.bbl` log segmentu su [Rylo](https://app.sin
 
 bbl-analyzer skill'as apskaičiuos step response per dekonvoliuciją ir grąžins kreivės formą bei vėlinimo metriką. Palygink 50% rise time per visus penkis bandymus, kad rastum optimumą.
 
-> **2" Ripper pastaba:** pradėk sweep nuo **PD 0.8**, o ne 0.6. 2" build'ai su aukšto KV varikliais ir lengvais propelleriais tipiškai jau yra ties kritiniu slopinimu ar arti jo su Betaflight numatytosiomis. PD 0.6 bandymas tikriausiai duos labai lengvą overshoot (ne tą dramatišką wobble, kokį matytum ant 5"). Tavo saldusis taškas tikriausiai bus ties **0.9–1.1**. Nenustebk, jei net 1.0 atrodys gerai — eik į 7 fazę ir naudok master multiplier diferencijavimui.
+> **2" Ripper pastaba:** pradėk sweep nuo **PD 0.8**, o ne 0.6. 2" build'ai su aukšto KV varikliais ir lengvais propelleriais tipiškai jau yra ties kritiniu slopinimu ar arti jo su Betaflight numatytosiomis. PD 0.6 bandymas tikriausiai duos labai lengvą overshoot (ne tą dramatišką wobble, kokį matytum ant 5"). Tavo optimumas tikriausiai bus ties **0.9–1.1**. Nenustebk, jei net 1.0 atrodys gerai — eik į 7 fazę ir naudok master multiplier diferencijavimui.
 
 ---
 
@@ -362,7 +362,7 @@ bbl-analyzer skill'as apskaičiuos step response per dekonvoliuciją ir grąžin
 
 Radęs geriausią PD damping reikšmę, palygink **50% rise time** pitch prieš roll.
 
-Gerai subalansuotas dronas turi pitch vėlinimą **5 ms** ribose nuo roll vėlinimo. Ženklus skirtumas (>10 ms) tipiškai reiškia, kad pitch ašis turi skirtingą inerciją ar variklių atsaką.
+Gerai subalansuoto drono pitch vėlinimas nuo roll vėlinimo skiriasi ne daugiau kaip **5 ms**. Ženklus skirtumas (>10 ms) tipiškai reiškia, kad pitch ašis turi skirtingą inerciją ar variklių atsaką.
 
 ```mermaid
 flowchart TD
@@ -403,7 +403,7 @@ Master multiplier proporcingai skaliuoja visus PID gain'us. Daugiau gain'o = ma�
 | 3 | Pradinė + 0.4 | ✓ Šviežias |
 | 4 | Pradinė + 0.6 | ✓ Šviežias (jei temperatūros OK) |
 
-Tarp kiekvieno bandymo: pakabink 2 minutes, nusileisk, **iškart patikrink variklių temperatūras**. Priimtina: vėsu iki šilto prisilietimo (< 50°C). Nustok kelti, jei bet kuris variklis karštas (> 60°C). Beje, tas bėgiojimas pirmyn-atgal prie drono po kiekvieno bandymo — nemokamas kardio, įskaičiuotas į protokolą :)
+Tarp kiekvieno bandymo: pakabink 2 minutes, nusileisk, **iškart patikrink variklių temperatūras**. Priimtina: vėsu iki šilto prisilietimo (< 50 °C). Nustok kelti, jei bet kuris variklis karštas (> 60 °C).
 
 **Taip pat patikrink po kiekvieno bandymo** Blackbox Explorer'yje: D-term triukšmas wobble testo metu turi likti **žemiau −10 dB** spektriniame vaizde. Jei D-term triukšmas artėja prie −10 dB agresyvių įvesčių metu, tu esi ties termine riba ar arti jos, nepriklausomai nuo variklių temperatūros.
 
@@ -463,9 +463,9 @@ Tarp kiekvieno bandymo: pakabink 2 minutes, nusileisk, **iškart patikrink varik
 ```mermaid
 flowchart TD
     A[Run new MM value] --> B{Motor temperature<br/>after 2 min hover?}
-    B -->|< 50°C cool| C{Step response<br/>latency still dropping?}
-    B -->|50–60°C warm| D[This is the limit<br/>back off 0.1 and lock here]
-    B -->|> 60°C hot| E[Too high — back off 0.2<br/>and check D-term slider]
+    B -->|< 50 °C cool| C{Step response<br/>latency still dropping?}
+    B -->|50–60 °C warm| D[This is the limit<br/>back off 0.1 and lock here]
+    B -->|> 60 °C hot| E[Too high — back off 0.2<br/>and check D-term slider]
     C -->|Yes, >2 ms improvement| F[Advance MM by +0.2<br/>next run]
     C -->|<2 ms improvement| G[Diminishing returns<br/>this is your MM]
     D & G --> H[Lock Master Multiplier<br/>proceed to Phase 8]
@@ -477,16 +477,16 @@ flowchart TD
 
 ## 8 fazė — I terminas
 
-I terminas turi **platų priimtiną diapazoną** — daug platesnį nei P ir D. Jį sunku smarkiai supainioti. Tikslas — pakankamai I, kad nebūtų steady-state dreifo, bet be lėto roll/pitch wobble esant pastoviam gazui.
+I terminas turi **platų priimtiną diapazoną** — daug platesnį nei P ir D. Jį sunku smarkiai sugadinti. Tikslas — pakankamai I, kad nebūtų steady-state dreifo, bet be lėto roll/pitch wobble esant pastoviam gazui.
 
 Numatytoji slankiklio reikšmė **1.0 yra geras pradinis taškas** daugumai build'ų.
 
 ### Greitas testas
 
-Pridėk I atgal (nustatyk slankiklį į 1.0, po to kai jis buvo ~0,3 sweep metu) ir skrisk 1 minutės ratą su pastoviu gazu. Ieškok:
+Pridėk I atgal (nustatyk slankiklį į 1.0, po to kai jis buvo ~0.3 sweep metu) ir skrisk 1 minutės ratą su pastoviu gazu. Ieškok:
 
-- **Žemo I simptomai** (slankiklis per žemas): dronas lėtai nuklysta nuo kurso ar aukščio po greitos įvesties; step response analizė rodo kreivę, nusistovinčią žemiau 1,0
-- **Aukšto I simptomai** (slankiklis per aukštas): lėta oscilacija esant pastoviam greičiui, jaučiasi šiek tiek „wobbly“ kruizuojant; ant sunkių build'ų gali atsirasti overshoot, kuris nebuvo matomas esant mažam gazui
+- **Žemo I simptomai** (slankiklis per žemas): dronas lėtai nuklysta nuo kurso ar aukščio po greitos įvesties; step response analizė rodo kreivę, nusistovinčią žemiau 1.0
+- **Aukšto I simptomai** (slankiklis per aukštas): lėta osciliacija esant pastoviam greičiui, jaučiasi šiek tiek „wobbly“ kruizuojant; ant sunkių build'ų gali atsirasti overshoot, kuris nebuvo matomas esant mažam gazui
 
 5" freestyle: **1.0–1.2 tipiška**. 7"+ / sunkiems: **0.6–0.8**. 2" ripper: **1.0** beveik visada tinka.
 
@@ -569,7 +569,7 @@ Kiekvienas +0.5 ant Stick Response (FF) slankiklio yra maždaug **6 ms vėlinimo
 ### Derinimo procedūra
 
 1. Atkurk Stick Response slankiklį iš 0 į **0.5** — skrisk ir jausk
-2. Jei dronas jaučiasi labiau atsakingas be karštų variklių → kelk iki **1.0**
+2. Jei dronas jaučiasi paklusnesnis ir varikliai neįkaista → kelk iki **1.0**
 3. Nustok, jei: varikliai sušyla, step response rodo overshoot >10% arba P terminas artėja prie nulio
 
 ```
@@ -580,7 +580,7 @@ get p_roll
 # If P goes negative — FF is too high. Back off the FF slider.
 ```
 
-**Įspėjimas — aukšti ELRS paketų rate'ai (500 Hz, 1000 Hz):** esant labai aukštiems paketų rate'ams, setpoint signalas toks glotnus, kad FF gali sukurti netikėtas step response formas analizės įrankyje. Perjunk Blackbox Explorer į **raw data view** (o ne dekonvoliuotą step response) ir tikrink, ar P netampa neigiamas, kaip griežtą ribą.
+**Įspėjimas — aukšti ELRS paketų rate'ai (500 Hz, 1000 Hz):** esant labai aukštiems paketų rate'ams, setpoint signalas toks glotnus, kad FF gali sukurti netikėtas step response formas analizės įrankyje. Perjunk Blackbox Explorer į **raw data view** (o ne dekonvoliuotą step response) ir kaip griežtą ribą naudok tai, ar P netampa neigiamas.
 
 > **2" Ripper pastaba:** ant 2" build'ų FF 0.5 dažnai pakanka ir jaučiasi labai tiesiai. Pilnas 1.0 gali padaryti droną nervingą ir įtemptą — ypač ankštose vietose. Lengvesnis rėmas turi mažesnę sukamąją inerciją, todėl kiekviena komanda ir taip greičiau virsta sukimusi. Derink FF pagal pojūtį, ne pagal specifikaciją.
 
@@ -592,7 +592,7 @@ Praleisk šią fazę, jei varikliai veikia vėsūs. D-max reikia tik tada, kai:
 - D reikėjo nustatyti **labai aukštą**, kad numalšintum wobble testą
 - Varikliai veikia šilti prie **kruizinio gazo** (ne tik peak įvesčių metu)
 
-D-max nustato **viršutinę ribą** D — D terminas skaliuojasi nuo `d_min` kabant iki `d_max` greitų įvesčių metu, leidžiantis tau naudoti mažesnį kruizinį D (vėsesni varikliai), tuo pačiu turint aukštą D wobble atmetimui.
+D-max nustato **viršutinę ribą** D — D terminas skaliuojasi nuo `d_min` kabant iki `d_max` greitų įvesčių metu, tad gali naudoti mažesnį kruizinį D (vėsesni varikliai), bet turėti aukštą D wobble atmetimui.
 
 ```
 # Only adjust if motors are hot at cruise:
@@ -611,8 +611,8 @@ Užbaigus visas fazes:
 
 1. Atkurk savo normalų skraidymo rates profilį
 2. Skrisk standartinį testinį ratą: kabėjimas, punch-out, dive ir atsigavimas, lėta roll seka
-3. Iškart po to patikrink: variklių temperatūras ant visų keturių variklių (turi būti panašios; bet kuris vienas ženkliai karštesnis variklis = mechaninė problema ant tos peties)
-4. Užloginink skrydį ir paprašyk [Rylo](https://app.sintra.ai/community/helpers/rylo) patvirtinti, kad step response forma vis dar švari su galutiniu tune
+3. Iškart po to patikrink: variklių temperatūras ant visų keturių variklių (turi būti panašios; bet kuris vienas ženkliai karštesnis variklis = mechaninė problema toje šakoje)
+4. Užlogink skrydį ir paprašyk [Rylo](https://app.sintra.ai/community/helpers/rylo) patvirtinti, kad step response forma vis dar švari su galutiniu tune
 
 Išsaugok galutinę konfigūraciją:
 
@@ -632,8 +632,8 @@ diff all
 | PD sweep pradžia | 0.8 | 0.8 | 0.6 | 0.6 | 0.6 |
 | Master multiplier pradžia | 0.7 | 0.8 | 1.0 | 1.0 | 1.2 |
 | iterm_relax_cutoff | 15 | 15 | 15 | 8 | 5 |
-| Variklių kaitimo riba | 50°C | 55°C | 60°C | 60°C | 55°C |
-| Variklių fundamentas (apytiksliai) | 250–500 Hz | 180–350 Hz | 100–200 Hz | 80–150 Hz | 60–120 Hz |
+| Variklių kaitimo riba | 50 °C | 55 °C | 60 °C | 60 °C | 55 °C |
+| Variklių pagrindinis dažnis (apytiksliai) | 250–500 Hz | 180–350 Hz | 100–200 Hz | 80–150 Hz | 60–120 Hz |
 | RPM filtro min (apytiksliai) | 150 Hz | 120 Hz | 100 Hz | 80 Hz | 60 Hz |
 
 ---
