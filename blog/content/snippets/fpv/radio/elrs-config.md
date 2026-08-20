@@ -1,5 +1,5 @@
 ---
-title: "ELRS Configuration — Bind Phrase, FCC vs CECC"
+title: "ELRS Configuration — Bind Phrase, FCC vs LBT"
 date: 2026-07-13
 draft: false
 category: "fpv"

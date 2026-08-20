@@ -72,7 +72,7 @@ RC frame'as sugrūda **16 kanalų po 11 bitų** į lygiai **22 baitus** (16 × 1
 }
 ```
 
-*(0-inis bitas dešinėje. Bitų liniuotė aiškiai parodo nesutapimą — `ch2` prasideda baito viduryje, `ch3` persilieja į kitą baitą.)* 11 bitų = 2048 žingsniai, atitinka RC rezoliuciją, kurią ELRS neša nuo galo iki galo. Visas RC frame'as yra `1 + 1 + 1 + 22 + 1 = 26 baitai` → 260 bit-times → **~620 µs** prie 420 kbaud, todėl 1000 Hz packet rate reikalauja aukštesnio CRSF baud.
+*(0-inis bitas dešinėje. Bitų liniuotė aiškiai parodo nesutapimą — `ch2` prasideda baito viduryje, `ch3` persilieja į kitą baitą.)* 11 bitų = 2048 žingsniai, atitinka RC rezoliuciją, kurią ELRS neša nuo galo iki galo. Visas RC frame'as yra `1 + 1 + 1 + 22 + 1 = 26 baitai` → 260 bit-times → **~620 µs**, esant 420 kbaud, todėl 1000 Hz packet rate reikalauja aukštesnio CRSF baud.
 
 ### Link Statistics (0x14) payload
 
@@ -90,7 +90,7 @@ downlink RSSI, downlink LQ, downlink SNR
 
 ## RF air protokolas — packet rate
 
-Ore **packet rate** yra tai, kiek valdymo paket'ų per sekundę siunčia TX. Tai vienas svarbiausių ELRS nustatymų, nes vienu metu nustato ir vėlinimo grindis, ir range lubas.
+Ore **packet rate** yra tai, kiek valdymo paket'ų per sekundę siunčia TX. Tai vienas svarbiausių ELRS nustatymų, nes vienu metu nustato ir mažiausią įmanomą vėlinimą, ir didžiausią range.
 
 ### 2,4 GHz
 
@@ -113,11 +113,11 @@ Maksimumas — **200 Hz**, bet žemo rate režimai pasiekia daug giliau: 25 Hz s
 
 Žemesnis packet rate → kiekvienas paket'as ilgiau būna ore, naudodamas aukštesnį LoRa **spreading factor**. Daugiau energijos vienam bitui reiškia, kad imtuvas gali iškapstyti signalą toliau iš triukšmo:
 
-- **Jautrumas → range.** Kas ~6 dB papildomo jautrumo maždaug **padvigubina** laisvos erdvės range (path loss auga kaip atstumas²). 50 Hz (−115 dBm) yra ~10 dB žemiau nei 500 Hz (−105 dBm) — maždaug **3× didesnis range** prie tos pačios TX galios.
+- **Jautrumas → range.** Kas ~6 dB papildomo jautrumo maždaug **padvigubina** laisvos erdvės range (path loss auga kaip atstumas²). 50 Hz (−115 dBm) yra ~10 dB žemiau nei 500 Hz (−105 dBm) — maždaug **3× didesnis range** esant tai pačiai TX galiai.
 - **Jautrumas → prasiskverbimas.** Medžiai, sienos ir tavo paties kūnas slopina signalą keliais dB. Būtent papildoma jautrumo atsarga leidžia žemam rate „prasimušti“ pro kliūtį, dėl kurios aukštas rate nueitų į failsafe.
 - **Rate → atsakas.** Atsakas — tai tiesiog tarpas tarp atnaujinimų: 1000 Hz = švieža komanda kas 1 ms; 50 Hz = kas 20 ms. Racer'iai jaučia skirtumą tarp 2 ms ir 6,7 ms kaip glaudesnį stick-to-quad ryšį; žemiau ~150 Hz vėlinimas tampa juntamas.
 
-Visų trijų vienu metu turėti negali — fizika, deja, nesiderina. Greiti paket'ai atsakūs, bet trapūs; lėti paket'ai atsparūs, bet vėluoja. Teisingas atsakymas — **dinaminis**: įjunk *Dynamic Power* ir leisk linkui nusileisti į žemesnį rate ties range riba (nustatoma vieną kartą ELRS LUA skripte).
+Visų trijų vienu metu turėti negali. Greiti paket'ai reaguoja greitai, bet yra trapūs; lėti yra atsparūs, bet vėluoja. Teisingas atsakymas — **dinaminis**: įjunk *Dynamic Power* ir leisk linkui nusileisti į žemesnį rate ties range riba (nustatoma vieną kartą ELRS LUA skripte).
 
 ```mermaid
 flowchart TD
@@ -134,9 +134,9 @@ Downlink telemetrija (RX → pultas) pasiskolina laiko tarpsnius iš uplink'o. *
 
 - **Tankesnis** ratio (`1:2`) duoda greitą telemetriją, bet vagia tarpsnius iš valdymo.
 - **Retesnis** ratio (`1:64`, „Std“) beveik visą pralaidumą palieka RC.
-- Prie žemo packet rate visas vamzdis labai siauras — net `1:2` prie 50 Hz duoda tik ~25 telemetrijos atnaujinimų/s, per mažai sklandžiam MAVLink HUD. Norint daugiau telemetrijos pralaidumo, reikia kelti packet rate, o ne vien ratio.
+- Esant žemam packet rate visas vamzdis labai siauras — net `1:2` ties 50 Hz duoda tik ~25 telemetrijos atnaujinimų/s, per mažai sklandžiam MAVLink HUD. Norint daugiau telemetrijos pralaidumo, reikia kelti packet rate, o ne vien ratio.
 
-Daugumai skraidymo tinka `Std` arba `1:8`–`1:16`; GPS/HUD darbui varyk 250 Hz+ su `1:2`.
+Daugeliu atvejų tinka `Std` arba `1:8`–`1:16`; GPS/HUD darbui varyk 250 Hz+ su `1:2`.
 
 ---
 

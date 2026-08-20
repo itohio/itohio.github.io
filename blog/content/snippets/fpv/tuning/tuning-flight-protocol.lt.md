@@ -146,7 +146,7 @@ Atlik greitas, **pilno atlenkimo kairė-dešinė roll įvestis** su trumpomis pa
 
 **Ką tai užfiksuoja:** švarius roll step response. Gyro kreivė parodys, kaip faktinis sukimosi rate seka (ar peršoka/atsilieka) nurodytą rate kiekviename step.
 
-> **Jei naudoji Betaflight CHIRP mode:** perjunk chirp ant roll ašies ir leisk FC vykdyti automatiškai. Jis autonomiškai atliks dažnio sweep nuo ~1 Hz iki ~600 Hz. Palauk, kol OSD parodys **"chirp execution finished"**, prieš eidamas toliau.
+> **Jei naudoji Betaflight CHIRP mode:** perjunk chirp ant roll ašies ir leisk FC vykdyti automatiškai. Jis autonomiškai atliks dažnio sweep nuo ~1 Hz iki ~600 Hz. Palauk, kol OSD parodys **„chirp execution finished“**, prieš eidamas toliau.
 
 ---
 
@@ -217,7 +217,7 @@ Jei naudoji Betaflight CHIRP autotune (reikalauja firmware su įjungta CHIRP fun
 | Vienos ašies flip'ai (rankinis) | Aukšto rate duomenys + propwash | ~30 s |
 | **Nusileisk ir disarm** | | |
 
-Kad CHIRP veiktų, turi būti nustatytas `debug_mode = CHIRP` ir CHIRP mode turi būti ant jungiklio. OSD rodys **"chirp execution finished"**, kai kiekvienos ašies sweep bus baigtas.
+Kad CHIRP veiktų, turi būti nustatytas `debug_mode = CHIRP` ir CHIRP mode turi būti ant jungiklio. OSD rodys **„chirp execution finished“**, kai kiekvienos ašies sweep bus baigtas.
 
 **Koherencijos patikra po skrydžio:** įkėlus log'ą į Betaflight autotune analizatorių, ieškok „Petrova linijos“ — ryškaus, tęstinio įstrižo pėdsako spektrogramoje nuo žemo iki aukšto dažnio. Jei ši linija blanki ar jos nėra, chirp signalas nebuvo užfiksuotas teisingai. Dažnos priežastys: neteisingas debug mode, per žemas blackbox sample rate arba perteklinis vėjas. Išmesk ir perskrisk.
 

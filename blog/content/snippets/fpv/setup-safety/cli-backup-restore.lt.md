@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "cli", "backup", "restore", "diff", "tuning", "configuration"]
 ---
 
-Betaflight CLI — vienintelis tiesos šaltinis pilnai buildo konfigūracijai. Konfigūratoriaus tab'ai rodo daugumą nustatymų, bet CLI parodo viską — įskaitant numatytuosius, kuriuos GUI slepia. Prieš bet kokį derinimo eksperimentą pasidaryk atsarginę kopiją su `diff all`. Po sesijos — pasidaryk vėl. Patikėk — vieną kartą praradus gerą derinimą, šio žingsnio nebepamirši niekada.
+Betaflight CLI — vienintelis tiesos šaltinis pilnai buildo konfigūracijai. Konfigūratoriaus tab'ai rodo daugumą nustatymų, bet CLI parodo viską — įskaitant numatytuosius, kuriuos GUI slepia. Prieš bet kokį derinimo eksperimentą pasidaryk atsarginę kopiją su `diff all`. Po sesijos — pasidaryk vėl.
 
 ---
 
@@ -128,7 +128,7 @@ save
 
 ## Konfigūracijų laikymas Git'e
 
-Rimtiems buildams laikyk savo `diff all` failus git repozitorijoje (taip, dronų konfigai git'e — kam gi ne :)):
+Rimtiems buildams laikyk savo `diff all` failus git repozitorijoje:
 
 ```bash
 mkdir quad-configs && cd quad-configs

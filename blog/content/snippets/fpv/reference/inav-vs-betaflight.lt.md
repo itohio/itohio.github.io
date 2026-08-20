@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "inav", "betaflight", "gps", "autonomous", "firmware", "navigation", "pavo20"]
 ---
 
-Betaflight ir INAV — abu atviro kodo skrydžio kontrolerio firmware. Jie turi bendrą kodo istoriją, bet išsišakojo į skirtingus įrankius su skirtingomis stiprybėmis. Netinkamas pasirinkimas GPS dronui baigiasi arba erzinančia patirtimi, arba nepanaudotomis galimybėmis. (Spėkit, iš kurios pusės aš mokiausi.)
+Betaflight ir INAV — abu atviro kodo skrydžio kontrolerio firmware. Jie turi bendrą kodo istoriją, bet išsišakojo į skirtingus įrankius su skirtingomis stiprybėmis. Netinkamas pasirinkimas GPS dronui baigiasi arba erzinančia patirtimi, arba nepanaudotomis galimybėmis.
 
 ---
 
@@ -57,7 +57,7 @@ Betaflight GPS Rescue veikia ir per 4.3/4.4 versijas ženkliai pagerėjo — bet
 
 ## Kada naudoti INAV
 
-- **GPS tyrinėtojams / long-range dronams**, kur nori, kad dronas realiai navigatų pats
+- **GPS tyrinėtojams / long-range dronams**, kur nori, kad dronas realiai pats skristų pagal navigaciją
 - **Waypoint misijoms** — INAV gali skristi iš anksto suprogramuotu maršrutu, laikyti aukštį ir grįžti namo be RC valdymo
 - **Fiksuoto sparno hibridams** — INAV palaiko stabilizuotą fiksuoto sparno skrydį ir maišymą (mixing)
 - **Dronams, kur nori POSHOLD** — galimybė paleisti stick'us ir kad dronas kabotų vietoje 3D erdvėje be dreifo
@@ -67,7 +67,7 @@ Betaflight GPS Rescue veikia ir per 4.3/4.4 versijas ženkliai pagerėjo — bet
 
 ## GPS pridėjimas prie Pavo20
 
-Pavo20 (Pro / Pro II) — tai **2.2" ducted skaitmeninis cinewhoop'as**: 3S maitinimas (LAVA 1104 7200 KV motorai ant Gemfan 2218 tri-blade propų), DJI O3/O4/O4 Pro arba Walksnail HD air unit, ir **jokio GPS iš gamyklos**. Jokio analogo, jokio 1S, jokios integruotos navigacijos. Kas nori GPS Rescue — patys prisuka micro GPS modulį (ir dažniausiai buzzerį). Būtent nuo to prasideda vargas:
+Pavo20 (Pro / Pro II) — tai **2,2" ducted skaitmeninis cinewhoop'as**: 3S maitinimas (LAVA 1104 7200 KV motorai su Gemfan 2218 tri-blade propais), DJI O3/O4/O4 Pro arba Walksnail HD air unit, ir **jokio GPS iš gamyklos**. Jokio analogo, jokio 1S, jokios integruotos navigacijos. Kas nori GPS Rescue — patys prisuka micro GPS modulį (ir dažniausiai buzzerį). Būtent nuo to prasideda vargas:
 
 ```mermaid
 flowchart TD
@@ -77,18 +77,18 @@ flowchart TD
     P4[ESC BEC harmonics<br/>on the 5V rail] -->|Noise couples into<br/>the GPS module| C4[Fix drops out<br/>under throttle]
 ```
 
-Ta, kurią visi praleidžia — **P4**: AIO BEC'as perjunginėja tokiu dažniu, kurio harmonikos pataiko tiesiai į GPS modulio maitinimo liniją ir prasiskverbia į jo RF įėjimą, tad fix'as sugenda kaip tik tada, kai užsuki motorus. (Pats gaudau šitą triukšmą savo Pavo20 — bus atskiras rašinys, kaip jį susekti ir užmušti.)
+Tas, kurį visi praleidžia — **P4**: AIO BEC'as perjunginėja tokiu dažniu, kurio harmonikos pataiko tiesiai į GPS modulio maitinimo liniją ir prasiskverbia į jo RF įėjimą, tad fix'as sugenda kaip tik tada, kai užsuki motorus. (Pats gaudau šitą triukšmą savo Pavo20 — bus atskiras rašinys, kaip jį susekti ir užmušti.)
 
 INAV navigacijos „stackas“ patį *skrydį* per rescue tvarko geriau, nes naudoja tikrą pozicijos kontrolerį (o ne grubų avarinį režimą), o jo RTH seka apima lėtėjimą ir stabdymą. INAV taip pat turi geresnę barometro integraciją aukščiui laikyti dronuose be tvirtos GPS aukščio fiksacijos — bet nei viena iš šitų funkcijų neišgydys triukšmingo GPS fix'o; tai aparatūros problema (žr. žemiau).
 
 **Pavo20 migravimas į INAV:**
 - Pavo20 F4 2-3S AIO turi turėti INAV target'ą — patikrink [INAV target sąraše](https://github.com/iNavFlight/inav/blob/master/docs/Boards.md)
 - Tikėkis, kad PID reikės derinti iš naujo — INAV numatytieji nustatymai suderinti sunkesniems GPS dronams
-- Pirmiausia sutvarkyk GPS maitinimo triukšmą — INAV nenavigatuos ant fix'o, kuris dingsta užsukus motorus
+- Pirmiausia sutvarkyk GPS maitinimo triukšmą — INAV nenaviguos su fix'u, kuris dingsta užsukus motorus
 
 ---
 
-## Signalo kokybė veikia abu firmware
+## Signalo kokybė svarbi abiem firmware
 
 Nepriklausomai nuo firmware, GPS veikimas mažuose dronuose kenčia dėl:
 
@@ -124,10 +124,10 @@ Nepriklausomai nuo firmware, GPS veikimas mažuose dronuose kenčia dėl:
 }
 ```
 
-Kompaktiškame builde pagrindinė problema — **maitinimo linijos triukšmas**, ne vien antenos aplinka. AIO ESC BEC'as (perjungiamasis reguliatorius, gaminantis 5V) meta harmonikas, kurios prasiskverbia tiesiai į tą pačią liniją dalinantį GPS modulį — tad fix'as silpsta arba dingsta vos užsukus motorus. O centimetrus greta stovintis 5,8 GHz skaitmeninis air unit'as dar prideda RF desense. Nei vieno iš jų firmware neišspręs — abu aparatūros problemos.
+Kompaktiškame builde pagrindinė problema — **maitinimo linijos triukšmas**, ne vien antenos aplinka. AIO ESC BEC'as (perjungiamasis reguliatorius, gaminantis 5 V) meta harmonikas, kurios prasiskverbia tiesiai į tą pačią liniją naudojantį GPS modulį — tad fix'as silpsta arba dingsta vos užsukus motorus. O centimetrus greta stovintis 5,8 GHz skaitmeninis air unit'as dar prideda RF desense. Nei vieno iš jų firmware neišspręs — abu aparatūros problemos.
 
 **Aparatūriniai sprendimai:**
-- Maitink GPS iš švarios/filtruotos 5V linijos, o ne tiesiai iš triukšmingo ESC BEC — LC filtras arba atskiras mažo triukšmo reguliatorius duoda didžiausią efektą
+- Maitink GPS iš švarios/filtruotos 5 V linijos, o ne tiesiai iš triukšmingo ESC BEC — LC filtras arba atskiras mažo triukšmo reguliatorius duoda didžiausią efektą
 - Laikyk GPS anteną kuo toliau nuo air unit'o antenos, kiek rėmas leidžia
 - Naudok ekranuotą GPS modulį (metalinis „dangtelis“ virš modulio)
 - Tikrink fix'ą ant stalo *užsukęs motorus*, ne tik tuščiąja eiga — triukšmas išlenda tik po apkrova

@@ -181,6 +181,6 @@ Statoriaus dydis lemia maksimalią galią: didesnis statorius → daugiau sukimo
 |-----------|--------------|-------------|---------|
 | 5" freestyle | 2306–2407, 1700–2450 KV | 5145–5148 tri | 4S–6S |
 | 5" racing | 2204–2306, 2400–2600 KV | 5040–5140 bi | 4S–6S |
-| 3.5" / Cinelog | 1404–1507, 3600–4000 KV | 3540–3545 | 3S–4S |
+| 3,5" / Cinelog | 1404–1507, 3600–4000 KV | 3540–3545 | 3S–4S |
 | Tinywhoop 75mm | 0802–0803, 19000–25000 KV | 40mm ducted | 1S |
 | Pavo20 / Meteor | 1102–1103, 8700–11000 KV | 2" ducted | 1S |

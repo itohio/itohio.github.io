@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "video", "analog", "digital", "dji", "walksnail", "hdzero", "vtx", "latency"]
 ---
 
-Vaizdo sistemos pasirinkimas nulemia vaizdo kokybę, latency, atstumą ir kainą. Universalaus geriausio nėra — kiekviena sistema turi savo vietą (ir kiekvienas pilotas turi nuomonę, kurią gina kaip futbolo komandą).
+Vaizdo sistemos pasirinkimas nulemia vaizdo kokybę, latency, atstumą ir kainą. Universalaus geriausio nėra — kiekviena sistema turi savo vietą.
 
 ---
 
@@ -23,7 +23,7 @@ Vaizdo sistemos pasirinkimas nulemia vaizdo kokybę, latency, atstumą ir kainą
 **Trūkumai:**
 - Prasta vaizdo kokybė (720×480 NTSC arba 720×576 PAL)
 - Nėra įrašyto HD vaizdo be atskiros HD kameros
-- Dažnių grūstis, kai skraidote grupėje
+- Dažnių grūstis, kai skraidai grupėje
 
 **Tipiniai komponentai:** Foxeer/Runcam kamera, RushFPV/Hglrc/Tramp VTX, Furious FPV/ImmersionRC VRx, Fatshark/Skyzone goggle'ai su analog moduliu.
 
@@ -37,7 +37,7 @@ Vaizdo sistemos pasirinkimas nulemia vaizdo kokybę, latency, atstumą ir kainą
 - HD vaizdas (1080p/60fps įrašas, ~810p live feed'as)
 - Integruotas DVR ir OSD
 - Švarus, lag'ą atlaikantis link'as švariose RF aplinkose
-- Puikus atstumas prie 700 mW
+- Puikus atstumas esant 700 mW
 
 **Trūkumai:**
 - Didesnis latency (~22–28 ms vs analog ~3–7 ms glass-to-glass — daugumai nepastebima)
@@ -45,7 +45,7 @@ Vaizdo sistemos pasirinkimas nulemia vaizdo kokybę, latency, atstumą ir kainą
 - Sunkesnis air unit'as
 - Link'as blogėja kitaip nei analog — „digital wall“: staigus nutrūkimas vietoj palaipsnio „snow“
 
-**Latency:** ~22 ms Normal režime, ~28 ms High Quality režime. Priimtina freestyle ir kinematografijai; racing'o konkurentai kartais renkasi analog.
+**Latency:** ~22 ms Normal režime, ~28 ms High Quality režime. Priimtina freestyle ir kinematografijai; varžybų lenktynininkai kartais renkasi analog.
 
 ---
 
@@ -56,7 +56,7 @@ Vaizdo sistemos pasirinkimas nulemia vaizdo kokybę, latency, atstumą ir kainą
 **Privalumai:**
 - Gera HD vaizdo kokybė
 - Atviresnė ekosistema nei DJI
-- Palaikomi custom goggle'ų displėjai
+- Palaikomi custom goggle'ų display'ai
 
 **Trūkumai:**
 - Šiek tiek prastesnė vaizdo kokybė nei DJI O3
@@ -74,7 +74,7 @@ Vaizdo sistemos pasirinkimas nulemia vaizdo kokybę, latency, atstumą ir kainą
 - Gera vaizdo kokybė
 
 **Trūkumai:**
-- Trumpesnis atstumas nei DJI O3 prie tos pačios galios
+- Trumpesnis atstumas nei DJI O3 esant tai pačiai galiai
 - Mažesnė bendruomenė
 
 **Geriausias panaudojimas:** racing'o pilotai, kuriems reikia digital kokybės, bet netoleruoja DJI O3 latency.
