@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "cinematic", "tune", "presets", "pid", "filters"]
 ---
 
-Betaflight ateina su Presets biblioteka, kurioje yra paruošti cinematic tune'ai. Jie mažina agresyvumą, suminkština filtrus ir sumažina propwash artefaktus, kad kadrai būtų sklandūs ir „plaukiantys“. Na, o gera žinia ta, kad nereikia nieko išrasti iš naujo — kažkas jau padirbėjo už mus.
+Betaflight turi Presets biblioteką, kurioje yra paruošti cinematic tune'ai. Jie mažina agresyvumą, suminkština filtrus ir sumažina propwash artefaktus, kad kadrai būtų sklandūs ir „plaukiantys“.
 
 ---
 
@@ -64,15 +64,15 @@ Preset'ai — tai atspirties taškas. Pritaikius:
 ## Blackbox patikra
 
 Po pirmo cinematic skrydžio ištrauk blackbox logą ir ieškok:
-- Švarios giroskopo trajektorijos be aukšto dažnio šuolių
-- Mažo variklio išvesties svyravimo (jokių osciliacijų)
+- Švarios giroskopo kreivės be aukšto dažnio šuolių
+- Mažo variklių išvesties svyravimo (jokių osciliacijų)
 - Sklandaus setpoint vs. giroskopo sekimo per lėtus judesius
 
-Propwash per greitus krypties keitimus yra normalu ir jį sunkiau pašalinti vien filtravimu — throttle valdymas ir skraidymo technika cinematic darbui svarbesni (kitaip tariant, dalį darbo vis tiek teks atlikti nykščiais, ne CLI).
+Propwash per greitus krypties keitimus yra normalu ir jį sunkiau pašalinti vien filtravimu — throttle valdymas ir skraidymo technika cinematic darbui svarbesni.
 
 ---
 
 ## Pastabos
 
-- RPM filter yra privalomas moderniems cinematic tune'ams — be jo reikės daug sunkesnio lowpass filtravimo, kuris prideda vėlinimo ir fazės delsos.
+- RPM filter yra privalomas moderniems cinematic tune'ams — be jo reikės daug sunkesnio lowpass filtravimo, kuris prideda delsos ir fazės vėlinimo.
 - Preset tune'ai priklauso nuo versijos. Prieš pritaikydamas visada patikrink, kuriai Betaflight versijai preset'as skirtas.

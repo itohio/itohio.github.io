@@ -1,12 +1,12 @@
 ---
-title: "ELRS konfigūracija — bind phrase, FCC vs CECC"
+title: "ELRS konfigūracija — bind phrase, FCC vs LBT"
 date: 2026-07-13
 draft: false
 category: "fpv"
 tags: ["fpv", "elrs", "expressLRS", "radio", "link", "bind", "fcc", "lbt"]
 ---
 
-ExpressLRS (ELRS) — atviro kodo RC linko protokolas, žinomas dėl itin mažo vėlinimo ir didelio range. Du kritiniai nustatymai turi sutapti tarp siųstuvo modulio (TX) ir imtuvo (RX): **regulatory domain** ir **bind phrase**. Sumaišyk bent vieną — ir sėdėsi kraipydamas galvą, kodėl kvadras tarsi negyvas.
+ExpressLRS (ELRS) — atviro kodo RC linko protokolas, žinomas dėl itin mažo vėlinimo ir didelio range. Du kritiniai nustatymai turi sutapti tarp siųstuvo modulio (TX) ir imtuvo (RX): **regulatory domain** ir **bind phrase**.
 
 ---
 
@@ -62,7 +62,7 @@ Bind phrase — tai vartotojo pasirinkta slaptažodinė frazė, sukompiliuojama 
 MY_UNIQUE_PHRASE_2024
 ```
 
-Frazė yra hashinama — jai nereikia būti slaptai, tik nuosekliai vienodai. (Ne, tavo `MY_UNIQUE_PHRASE_2024` niekam neįdomus — svarbu tik, kad TX ir RX ją rašytum identiškai.)
+Frazė yra hashinama — jai nereikia būti slaptai, tik nuosekliai vienodai.
 
 ---
 
@@ -99,4 +99,4 @@ set serialrx_provider = CRSF
 set serialrx_inverted = OFF
 save
 ```
-Ports tabe priskirk prie ELRS RX prijungtą UART kaip `Serial RX`.
+Ports tab'e priskirk prie ELRS RX prijungtą UART kaip `Serial RX`.

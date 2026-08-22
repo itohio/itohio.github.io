@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "dshot", "rpm-filter", "bidirectional", "noise", "filtering"]
 ---
 
-DSHOT yra skaitmeninis ESC protokolas. Naudojamas bidirectional režime, jis grąžina motoro RPM atgal į skrydžio kontrolerį, įgalindamas RPM filter — didžiausią atskirą motoro triukšmo slopinimo pagerinimą moderniuose Betaflight tune'uose. Na, jei ir įsijungsi tik vieną dalyką iš viso šio sąrašo, tegul tai būna šis. Apie byte lygio vaizdą, kaip freimai ir eRPM telemetrija koduojami laide, žr. [DSHOT on the Wire](../dshot-protocol/).
+DSHOT yra skaitmeninis ESC protokolas. Naudojamas bidirectional režime, jis grąžina motoro RPM atgal į skrydžio kontrolerį, įgalindamas RPM filter — didžiausią atskirą motoro triukšmo slopinimo pagerinimą moderniuose Betaflight tune'uose. Apie byte lygio vaizdą, kaip freimai ir eRPM telemetrija koduojami laide, žr. [DSHOT on the Wire](../dshot-protocol/).
 
 ---
 
@@ -54,7 +54,7 @@ Filtras automatiškai seka pagrindinį motoro dažnį ir jo harmonikas (paprasta
 **Poveikis tune'ui:**
 - Ženkliai sumažina motoro triukšmą gyro signale
 - Leidžia aukštesnius P/D gain'us be osciliacijų
-- Įgalina mažesnę statinio notch filtro naštą (dynamic notch galima sumažinti)
+- Leidžia sumažinti statinio notch filtro naštą (dynamic notch galima sumažinti)
 - Padaro tune'ą nuoseklesnį per visą throttle diapazoną
 
 ---
@@ -65,11 +65,11 @@ Filtras automatiškai seka pagrindinį motoro dažnį ir jo harmonikas (paprasta
 - **BF 4.2+**: Pagerintas sekimas; multi-harmonic palaikymas
 - **BF 4.3+**: Veikia kartu su Dynamic Notch v2 (platesnis, protingesnis notch)
 
-Nesuk RPM filter ant BF versijų žemiau 4.1.
+Nenaudok RPM filter senesnėse nei 4.1 BF versijose.
 
 ---
 
-## Dynamic Notch Filter (kompanionas)
+## Dynamic Notch Filter (pagalbinis)
 
 Net su RPM filter, dynamic notch filter tvarko ne-motoro triukšmą (rėmo rezonansą, propwash, guolių triukšmą). Palik jį įjungtą:
 
@@ -111,4 +111,4 @@ Betaflight cinematic ir freestyle preset'ai nustato juos automatiškai, kai juos
 | Osciliacijos blogesnės po įjungimo | RPM filter Q per aukštas; per daug harmonikų |
 | ESC keistai pypsi po įjungimo      | Kai kuriems ESC reikia reflash, kad įjungtų bidir režimą |
 
-Prieš darydamas prielaidą, kad tai aparatūros gedimas, patikrink ESC firmware changelog dėl bidirectional DSHOT palaikymo — dažniausiai kaltas ne lituoklis, o praleista eilutė changelog'e.
+Prieš darydamas prielaidą, kad tai aparatūros gedimas, patikrink ESC firmware changelog dėl bidirectional DSHOT palaikymo.

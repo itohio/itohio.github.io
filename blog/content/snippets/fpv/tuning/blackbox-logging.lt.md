@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "blackbox", "logging", "debug", "tuning"]
 ---
 
-Blackbox įrašo kiekvieną jutiklio rodmenį, RC įvestį, PID išvestį ir variklio komandą dideliu dažniu. Tai pats galingiausias diagnostikos įrankis, koks tik yra — be jo derinimas tėra spėliojimas (o spėliojau aš ilgai, kol pagaliau įsijungiau log'us).
+Blackbox įrašo kiekvieną jutiklio rodmenį, RC įvestį, PID išvestį ir variklio komandą dideliu dažniu. Tai pats galingiausias diagnostikos įrankis, koks tik yra — be jo derinimas tėra spėliojimas.
 
 ---
 
@@ -21,7 +21,7 @@ flowchart LR
     E --> F([Gyro trace<br/>FFT / Step response<br/>Motor outputs])
 ```
 
-Logger'is ima mėginius tavo sukonfigūruotu log rate greičiu (tipiškai 1–4 kHz) ir rašo suspaustus kadrus arba į onboard flash, arba į microSD kortelės lizdą ant FC.
+Logger'is registruoja duomenis tavo sukonfigūruotu log rate dažniu (tipiškai 1–4 kHz) ir rašo suspaustus kadrus arba į onboard flash, arba į microSD kortelės lizdą ant FC.
 
 ---
 
@@ -38,7 +38,7 @@ save
 
 `blackbox_sample_rate`: mažesnė trupmena (`1/4`, `1/8`) = mažesnis log rate = ilgesnis įrašymas, kol prisipildys flash.
 
-| Loop rate | sample_rate | Efektyvus log rate | ~Minutės 16MB flash |
+| Loop rate | sample_rate | Efektyvus log rate | ~Minutės su 16 MB flash |
 |-----------|-------------|-------------------|------------------------|
 | 8 kHz     | 1/1         | 8 kHz             | ~4 min                 |
 | 8 kHz     | 1/2         | 4 kHz             | ~8 min                 |
@@ -95,7 +95,7 @@ save
 }
 ```
 
-**axisP/I/D/F** — atskiros PID terminų išvestys. Vienintelis būdas sužinoti, kuris terminas oscilliuoja.
+**axisP/I/D/F** — atskiros PID terminų išvestys. Vienintelis būdas sužinoti, kuris terminas osciliuoja.
 
 **motor[0–3]** — galutinės variklių komandos po viso PID ir filtravimo. Įsisotinimas (pasiekiamas 0 arba 2047) rodo sukimo momento ribojimą. Skirtumai tarp variklių rodo rėmo/variklių disbalansą.
 
@@ -112,7 +112,7 @@ save
 3. Naudok **I/O klavišus**, kad slinktum pirmyn/atgal
 4. Įjunk **FFT** (viršuje dešinėje), kad matytum dažnių srities triukšmo spektrą
 5. Ieškok:
-   - Gyro kreivių, kurios oscilliuoja be stick'o įvesties → filtro ar tune problema
+   - Gyro kreivių, kurios osciliuoja be stick'o įvesties → filtro ar tune problema
    - Variklių kreivių, pasiekiančių max/min → sukimo momento įsisotinimas ar desync
    - P-term spike'ų ant roll → P per didelis arba nepakankamas filtravimas
 
@@ -126,13 +126,13 @@ blackbox erase
 # Wait for the confirmation beep / "Done" message, then save
 ```
 
-Arba naudok Konfigūratorius → Blackbox skirtukas → **Erase Flash** mygtukas.
+Arba Konfigūratoriuje → Blackbox skirtuke → **Erase Flash** mygtukas.
 
 ---
 
 ## Pastabos
 
-- Logginimas išmatuojamai neveikia skrydžio našumo.
+- Logginimas neturi išmatuojamo poveikio skrydžio našumui.
 - Kai kurie FC turi tik 1–2 MB flash — pakanka vienam trumpam skrydžiui ties 4 kHz. Patikrink savo FC specifikacijas.
 - SD kortelės logginimas suteikia neribotą talpą; flash yra patikimesnis (kortelės gali atsijungti skrydžio metu dėl vibracijos).
-- Visada ištrink log'ą prieš derinimo sesiją, kad nereikėtų naršyti po senas sesijas. Klausiu iš patirties: nieko nėra smagiau, nei rasti tris savaites senų kabėjimų ir bandyti atspėti, kuris segmentas — šiandienos.
+- Visada ištrink log'ą prieš derinimo sesiją, kad nereikėtų naršyti po senas sesijas.

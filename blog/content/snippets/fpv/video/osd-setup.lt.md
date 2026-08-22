@@ -27,7 +27,7 @@ MAX7456 čipas, esantis daugumoje FC stack'ų, tvarko OSD overlay ant analog vai
 
 GPS elementus dėk tik tada, jei sumontuotas GPS modulis.
 
-**Nesigriozdink su:** dirbtinis horizontas, crosshair'ai, throttle juosta, G-force, heading juosta — jie retai padeda po skrydžio analizei ir tik ryja ekrano vietą. (Taip, pradžioje irgi buvau prikabinęs viską — atrodė kaip lėktuvo kokpitas, o naudos jokios.)
+**Nesigriozdink su:** dirbtinis horizontas, crosshair'ai, throttle juosta, G-force, heading juosta — jie retai padeda po skrydžio analizei ir tik ryja ekrano vietą.
 
 Configurator → **OSD** tab'as → tempk elementus į kampus. Centrinį kadrą laikyk švarų.
 

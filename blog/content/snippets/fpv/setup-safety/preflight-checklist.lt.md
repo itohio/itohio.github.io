@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "safety", "checklist", "preflight", "betaflight", "arming", "motors", "props"]
 ---
 
-Metodiškas priešskrydžio patikrinimas užkerta kelią dažniausioms kritimų priežastims: neteisingai motorų krypčiai, atsilaisvinusiems propams, negyvam imtuvo ryšiui ir arm vėliavoms. Penkios minutės prieš kiekvieną sesiją, o ne tik prieš pirmą buildo skrydį — nuobodu, žinau, bet daug nuobodžiau vaikščioti ieškant nuolaužų.
+Metodiškas priešskrydžio patikrinimas užkerta kelią dažniausioms kritimų priežastims: neteisingai motorų krypčiai, atsilaisvinusiems propams, negyvam imtuvo ryšiui ir arm vėliavoms. Penkios minutės prieš kiekvieną sesiją, o ne tik prieš pirmą buildo skrydį.
 
 ---
 
@@ -14,8 +14,8 @@ Metodiškas priešskrydžio patikrinimas užkerta kelią dažniausioms kritimų 
 
 ### 1 — Baterija ir maitinimas
 
-- [ ] Celių įtampos subalansuotos (viena nuo kitos ne daugiau kaip 0.05V skirtumas be apkrovos)
-- [ ] Pakas įkrautas iki tikslinės įtampos (4.20V/celei pilnas, 4.35V/celei HV pakams)
+- [ ] Celių įtampos subalansuotos (viena nuo kitos ne daugiau kaip 0,05 V skirtumas be apkrovos)
+- [ ] Pakas įkrautas iki tikslinės įtampos (4,20 V/celei pilnas, 4,35 V/celei HV pakams)
 - [ ] XT60/XT30 jungtis švari — jokių apdegusių ar korozuotų kontaktų
 - [ ] Baterijos dirželis įtemptas; pakas negali pasislinkti nuo skrydžio apkrovų
 - [ ] Jokio pūtimosi pake (matomai išsipūtusios celės = išimk iš naudojimo)
@@ -23,8 +23,8 @@ Metodiškas priešskrydžio patikrinimas užkerta kelią dažniausioms kritimų 
 ### 2 — Rėmas ir aparatūra
 
 - [ ] Visi varžtai priveržti — motorų varžtai, šakų varžtai, standoff'ai, stack'o varžtai
-- [ ] Propai priveržti ir iki galo užsėdę ant veleno
-- [ ] Teisinga propų rotacija: **Props In** (vidinė briauna priekyje) arba **Props Out** — atitinka tavo motorų krypties nustatymą
+- [ ] Propai priveržti ir iki galo užspausti ant veleno
+- [ ] Teisinga propų sukimosi kryptis: **Props In** (vidinė briauna priekyje) arba **Props Out** — atitinka tavo motorų krypties nustatymą
 - [ ] Jokių įtrūkimų šakose ar rėmo plokštėse (patikrink po bet kokio kritimo)
 - [ ] Kameros kampas fiksuotas; jokio atsilaisvinusio pasukimo varžto
 
@@ -57,7 +57,7 @@ flowchart TD
 ### 4 — RC ryšys
 
 - [ ] Siųstuvas įjungtas PRIEŠ prijungiant bateriją
-- [ ] ELRS/imtuvo LED dega pastoviai (susietas) — ne mirksi (ieško)
+- [ ] ELRS/imtuvo LED šviečia nuolat (susietas), o ne mirksi (ieško)
 - [ ] Pajudink visus stick'us ir jungiklius; patikrink atsaką Betaflight Receiver tab'e
 - [ ] Throttle nulyje prieš arm
 - [ ] ARM jungiklis disarm padėtyje įjungiant maitinimą
@@ -79,21 +79,21 @@ status
 # ARMSWITCH → ARM switch not in disarm position
 ```
 
-Jei neturi USB prieigos, stebėk motorus ir OSD. Dauguma arm vėliavų rodomos OSD, jei sukonfigūruota.
+Jei neturi USB prieigos, stebėk motorus ir OSD. Dauguma arm vėliavų rodoma OSD ekrane, jei sukonfigūruota.
 
 ### 6 — OSD ir vaizdas
 
 - [ ] FPV akiniai gauna signalą; OSD matomas
-- [ ] Baterijos įtampa rodoma OSD (sveiko proto patikra — turi atitikti paką)
+- [ ] Baterijos įtampa rodoma OSD (turi atitikti realią pako įtampą)
 - [ ] GPS palydovų skaičius (jei yra) — palauk pakankamos fiksacijos
 - [ ] VTX ant teisingo kanalo šiai sesijai (venk konfliktų su kitais pilotais)
 
 ### 7 — Galutinis patikrinimas
 
-- [ ] Skrydžio vieta legali: oro erdvė leidžiama, jokių ribojamų zonų virš galvos
+- [ ] Skrydžio vieta legali: oro erdvė leidžiama, jokių apribotų zonų virš galvos
 - [ ] Žmonės pasitraukę nuo pakilimo zonos
-- [ ] Rankinė propų patikra: pasuk kiekvieną propą ranka, patikrink, ar priveržti ir teisingos rotacijos
-- [ ] Pirmas pasukimas: arm ant mažo throttle, patikrink, ar dronas pakyla lygiai — ne apsiverčia, ne pasvyra
+- [ ] Rankinė propų patikra: pasuk kiekvieną propą ranka, patikrink, ar priveržti ir ar teisinga sukimosi kryptis
+- [ ] Pirmas motorų pasileidimas: arm esant mažam throttle, patikrink, ar dronas pakyla lygiai, o ne apsiverčia ar pasvyra
 
 ---
 
@@ -112,7 +112,7 @@ flowchart TD
     FRAME -->|No| ARM_CHECK[Check motor screws<br/>and rerun checklist]
 ```
 
-Kritimas, kuris pasirodė nekaltas ant didelio throttle, gali nematomai sulenkti motoro veleną. Pasuk kiekvieną motorą ranka ir pajusk, ar nėra šiurkštaus guolio ar liuftavimo, prieš vėl skrisdamas (tą patyriau — atrodė gerai, kol antrą kartą nepakilo).
+Kritimas, kuris pasirodė nekaltas esant dideliam throttle, gali nematomai sulenkti motoro veleną. Pasuk kiekvieną motorą ranka ir pajusk, ar nėra šiurkštaus guolio ar liuftavimo, prieš vėl skrisdamas.
 
 ---
 

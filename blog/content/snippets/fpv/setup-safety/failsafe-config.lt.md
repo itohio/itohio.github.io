@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "failsafe", "safety", "rx", "gps-rescue", "link-loss"]
 ---
 
-Failsafe — tai kas nutinka, kai RC ryšys nutrūksta skrydžio metu (o jis nutrūks — anksčiau ar vėliau). Be teisingos konfigūracijos ryšio praradimo įvykis nuvaro droną tolyn pilnu throttle arba numeta jį kaip akmenį. Nei viena, nei kita nėra gerai.
+Failsafe — tai kas nutinka, kai RC ryšys nutrūksta skrydžio metu. Be teisingos konfigūracijos ryšio praradimo įvykis nuvaro droną tolyn pilnu throttle arba numeta jį kaip akmenį. Nei viena, nei kita nėra gerai.
 
 ---
 
@@ -27,7 +27,7 @@ flowchart TD
     F -->|GPS RESCUE| I([Climb, turn to home<br/>fly back, land])
 ```
 
-**Stage 1** sugeria trumpalaikius trikčius. Stage 1 metu FC laiko paskutines žinomas stick'ų padėtis — dronas skrenda taip, kaip skrido. Tai perka laiko ryšiui atsigauti.
+**Stage 1** sugeria trumpalaikes triktis. Stage 1 metu FC laiko paskutines žinomas stick'ų padėtis — dronas skrenda taip, kaip skrido. Tai duoda laiko ryšiui atsigauti.
 
 **Stage 2** įsijungia po ilgesnio ryšio dingimo ir įvykdo sukonfigūruotą procedūrą.
 
@@ -136,8 +136,8 @@ status
 - [ ] Arm jungiklis DISARM padėtyje prieš įjungiant maitinimą
 - [ ] Skrisk pakankamai toli, kad turėtum kelias sekundes įspėjimo prieš Stage 2 suveikimą
 - [ ] Žinok, kur yra „namai“ — GPS Rescue skrenda arm taško link
-- [ ] Išbandyk Stage 1 ant žemės: nukirsk TX maitinimą 300ms, dronas turi laikyti poziciją; grąžink maitinimą
-- [ ] Niekada nepasitikėk failsafe žemiau nei 10m aukštyje — net GPS Rescue reikia laiko pakilti
+- [ ] Išbandyk Stage 1 ant žemės: nukirsk TX maitinimą 300 ms, dronas turi laikyti poziciją; grąžink maitinimą
+- [ ] Niekada nepasitikėk failsafe žemiau nei 10 m aukštyje — net GPS Rescue reikia laiko pakilti
 
 ---
 
@@ -145,4 +145,4 @@ status
 
 - ELRS pagal nutylėjimą, nutrūkus ryšiui, išveda failsafe reikšmes, jei tai nustatyta bind metu. Patikrink nukirsdamas TX ir įsitikindamas, kad Receiver tab'as Konfigūratoriuje rodo kanalų reikšmes, pasikeičiančias į failsafe padėtį.
 - „No pulses“ failsafe išvestis yra geresnė už „hold“ — ji garantuoja, kad Betaflight aptiks praradimą per Stage 1 guard langą.
-- Failsafe nėra pakaitalas neišskristi už ryšio ribų. Tai kraštutinė priemonė.
+- Failsafe neatstoja taisyklės neišskristi už ryšio ribų. Tai kraštutinė priemonė.

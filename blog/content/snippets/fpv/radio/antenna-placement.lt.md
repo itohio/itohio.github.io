@@ -6,13 +6,13 @@ category: "fpv"
 tags: ["fpv", "elrs", "antenna", "rf", "placement", "range", "vtx", "diversity"]
 ---
 
-Antenų išdėstymas — vienas labiausiai nuvertinamų range faktorių. Puikiai suderintas ELRS linkas praranda 10–20 dB, kai antena nukreipta blogai — tai tolygu TX galios sumažinimui 90%. Na, aš pats kadaise kaltinau modulį, kol paaiškėjo, kad kalta tik prie karbono priplota antena.
+Antenų išdėstymas — vienas labiausiai nuvertinamų range faktorių. Puikiai suderintas ELRS linkas praranda 10–20 dB, kai antena nukreipta blogai — tai tolygu TX galios sumažinimui 90%.
 
 ---
 
 ## Kodėl antenos orientacija svarbi
 
-Visakryptės (omnidirectional) antenos (dipoliai, linijinės, RHCP/LHCP) turi spinduliavimo diagramą, panašią į spurgą — stipri ties „pusiauju“, beveik nulinė ties galiukais (tas „null“).
+Visakryptės (omnidirectional) antenos (dipoliai, linijinės, RHCP/LHCP) turi spinduliavimo diagramą, panašią į spurgą — stiprią ties pusiauju, beveik nulinę ties galiukais (tas „null“).
 
 ```mermaid
 flowchart LR
@@ -34,7 +34,7 @@ Jei TX antenos galiukas nukreiptas tiesiai į RX, arba RX antenos galiukas tiesi
 
 ### Taisyklė 1 — statmenai rėmui
 
-Montuok RX anteną(-as) taip, kad elementas eitų **statmenai pagrindinei skrydžio ašiai** (o ne į priekį/uodegą). Ekvatorinis gain'o žiedas turi būti nukreiptas į priekį/atgal/į šonus.
+Montuok RX anteną(-as) taip, kad elementas eitų **statmenai pagrindinei skrydžio ašiai** (o ne į priekį/uodegą). Pusiaujo gain'o žiedas turi būti nukreiptas į priekį/atgal/į šonus.
 
 ```
 Good:                   Bad:
@@ -47,7 +47,7 @@ Good:                   Bad:
 
 ### Taisyklė 2 — atokiau nuo karbono
 
-Karbonas laidus ir slopina RF. Laikyk aktyvųjį elementą (dipolio galiuko dalį arba visą elementą linijiniuose dipoliuose) ne rėmo „šešėlyje“.
+Karbonas yra laidus ir slopina RF. Laikyk aktyvųjį elementą (dipolio galiuko dalį arba visą elementą linijiniuose dipoliuose) ne rėmo „šešėlyje“.
 
 Pravesk anteną pro mažą skylutę galinėje šakoje arba naudok 3D spausdintą antenos laikiklį, kuris atlenkia ją 45° nuo rėmo.
 
@@ -101,7 +101,7 @@ flowchart TD
 | 900 MHz  | ~166 mm                | Ilgas; ant 5" reikia atidžiai pravesti |
 | 433 MHz  | ~345 mm                | Labai ilgas; daugiausia fiksuoto sparno |
 
-900 MHz antenos ant 5" kvadro yra fiziškai didelės — ilgą elementą reikia vesti išilgai šakos arba atlenkti į šoną (taip, atrodo kaip vabalo ūsas, bet range kalba pati už save). Ant micro kvadro 2,4 GHz beveik visada geresnis pasirinkimas dėl antenos dydžio apribojimų.
+900 MHz antenos ant 5" kvadro yra fiziškai didelės — ilgą elementą reikia vesti išilgai šakos arba atlenkti į šoną. Ant micro kvadro 2,4 GHz beveik visada geresnis pasirinkimas dėl antenos dydžio apribojimų.
 
 ---
 
@@ -111,4 +111,4 @@ flowchart TD
 - [ ] Diversity antenos 90° viena kitos atžvilgiu
 - [ ] VTX antena neliečia rėmo
 - [ ] VTX ir akiniai naudoja suderintą poliarizaciją (abu RHCP arba abu LHCP)
-- [ ] Jokia antenos jungtis nesuveržiama iki galo, kol kvadras maitinamas (SMA momentas gali įtrūkinti VTX PCB kontaktą)
+- [ ] Nesuveržk antenos jungties iki galo, kol kvadras maitinamas (SMA momentas gali įtrūkinti VTX PCB kontaktą)

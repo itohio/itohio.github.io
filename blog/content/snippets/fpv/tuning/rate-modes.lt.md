@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "rates", "actual-rates", "kiss-rates", "quickrates", "rc-rate", "expo", "tuning"]
 ---
 
-Betaflight palaiko keturias rate režimų formules. Visos daro tą patį darbą — susieja stick'o nuspaudimą (0 iki ±1) su komanduojamu sukimosi greičiu (°/s) — bet kreivę parametrizuoja skirtingai. Režimo perjungimas keičia tai, ką reiškia slankikliai, o ne tai, kaip dronas jaučiasi, jei nustatysi ekvivalentiškus parametrus. Na, o jei tave nuo mažens gąsdina matematika — ramiai, apačioje yra grafikas, kuris viską pasako be formulių.
+Betaflight palaiko keturias rate režimų formules. Visos daro tą patį darbą — susieja stick'o nuspaudimą (0 iki ±1) su komanduojamu sukimosi greičiu (°/s) — bet kreivę parametrizuoja skirtingai. Režimo perjungimas keičia tai, ką reiškia slankikliai, o ne tai, kaip dronas jaučiasi, jei nustatysi ekvivalentiškus parametrus.
 
 ---
 
@@ -70,14 +70,14 @@ Tai vienu metu tenkina dvi nepriklausomas sąlygas:
 - Nuolydis ties stick = 0: lygus `center` (centro jautrumas, °/s vienetui)
 - Reikšmė ties stick = 1: lygi `max_rate`
 
-Kai expo > 0, vidurinė kreivės dalis palinksta link sinuso formos kreivės, sukurdama švelnesnį vidurio diapazono perėjimą.
+Kai expo > 0, vidurinė kreivės dalis linksta į sinusinę formą, sukurdama švelnesnį vidurio diapazono perėjimą.
 
 **Privalumas:** Kiekvienas parametras valdo tiksliai vieną dalyką. Gali keisti centro pojūtį neliesdamas maks. rate, ir atvirkščiai. Todėl Actual rates lengviau derinti iki konkretaus pojūčio.
 
 | Parametras | Poveikis |
 |-----------|--------|
 | Center Sensitivity | Laipsniai/s vienam stick'o vienetui ties centru. 70–120 įprasta. |
-| Max Rate | Kietoji lubos ties pilnu nuspaudimu. 600–900 °/s tipiška freestyle. |
+| Max Rate | Kietosios lubos ties pilnu nuspaudimu. 600–900 °/s tipiška freestyle. |
 | Expo | 0 = gryna kvadratinė kreivė; didesnis = švelnesnis vidurio perėjimas |
 
 ---
@@ -110,7 +110,7 @@ KISS rates pavadinti pagal KISS ESC/FC ekosistemą, kur ši formulė ir atsirado
 output = sign(rcCommand) × maxRate × |rcCommand|
 ```
 
-Idealiai tiesinis. Vienas parametras, viena kreivė. Quickrates yra arčiausiai, kiek Betaflight gali priartėti prie tiesioginio „stick'o pozicija → sukimosi greitis“ susiejimo be jokio formavimo.
+Idealiai tiesinis. Vienas parametras, viena kreivė. Quickrates — tai artimiausia, ką Betaflight gali pasiūlyti tiesioginiam „stick'o pozicija → sukimosi greitis“ susiejimui be jokio kreivės formavimo.
 
 **Kada naudoti:**
 - Kinematografijai ir slow-motion buildams, kur nori nuspėjamos, tiesinės kontrolės
@@ -188,9 +188,9 @@ Tipiniai nustatymai, suderinti maždaug panašiam pojūčiui:
 ```
 
 **Pagrindiniai pastebėjimai:**
-- **BF (raudona)**: prasideda švelniai (žemas centro jautrumas su šiais nustatymais), bet stipriai pagreitėja ties kraštais — hockey stick matoma virš 0.7 stick'o
-- **Actual (žalia)**: apibrėžta kvadratinė — švarus, nuspėjamas nuolydis nuo centro iki maks.
-- **KISS (violetinė)**: forma panaši į BF, bet parametrizuota vienu skaičiumi; vidurio stick'o pojūtis kiek tiesiškesnis nei BF
+- **BF (raudona)**: prasideda švelniai (žemas centro jautrumas su šiais nustatymais), bet stipriai pagreitėja ties kraštais — hockey-stick forma matoma virš 0.7 stick'o
+- **Actual (žalia)**: apibrėžta kvadratinė kreivė — švarus, nuspėjamas nuolydis nuo centro iki maks.
+- **KISS (violetinė)**: forma panaši į BF, bet parametrizuota vienu skaičiumi; vidurio stick'o pojūtis kiek labiau tiesinis nei BF
 - **Quickrates (oranžinė punktyrinė)**: tikrai tiesinis — vienodi tarpai tarp visų taškų
 
 ---
@@ -232,13 +232,13 @@ Suskaičiavęs atsidaryk konfigūratorių ir vizualiai palygink abi kreives Rate
 | Sklandus / cinematic | RC=0.8, SR=0.40, E=0.20 | Center=50, Max=350, E=0.40 | Rate=0.15 |
 | 2" ripper | RC=1.2, SR=0.65, E=0 | Center=90, Max=650, E=0.30 | Rate=0.24 |
 
-Tai atspirties taškai — koreguok pagal skonį (raktinis žodis čia — *tavo* skonį, ne mano). Konfigūratoriaus Rate grafikas atsinaujina gyvai, tad palygink vizualiai, o ne pasikliauk skaičiais tiksliai.
+Tai atspirties taškai — koreguok pagal skonį. Konfigūratoriaus Rate grafikas atsinaujina gyvai, tad palygink vizualiai, o ne pasikliauk skaičiais tiksliai.
 
 ---
 
 ## Kurį režimą man naudoti?
 
-**Naudok Betaflight (legacy)**, jei kelí bendruomenės preset'us ar seki tune gidą, kuris nurodo RC Rate ir Super Rate reikšmes. Didžioji dauguma paskelbtų preset'ų remiasi šiuo režimu.
+**Naudok Betaflight (legacy)**, jei įkeli bendruomenės preset'us ar seki tune gidą, kuris nurodo RC Rate ir Super Rate reikšmes. Didžioji dauguma paskelbtų preset'ų remiasi šiuo režimu.
 
 **Naudok Actual**, jei nori nepriklausomai valdyti „koks aštrus centras“ ir „kaip greitai eina pilnas stick'as“. Ypač naudinga perkeliant ankstesnio buildo pojūtį į naują su kitokiais varikliais/propeleriais — gali suderinti centro jautrumą ir maks. rate nepriklausomai.
 

@@ -32,16 +32,16 @@ Laidų induktyvumas (net kelių centimetrų laidas) priešinasi momentiniams sro
 ## Kokį kondensatorių naudoti
 
 **5" freestyle / racing quad'ui (4S):**
-- **35V, 1000–2200 µF elektrolitinis** (low ESR tipo, pvz. Panasonic FM ar Nichicon HE serija)
-- Arba **2–4× 50V 470 µF** lygiagrečiai
+- **35 V, 1000–2200 µF elektrolitinis** (low ESR tipo, pvz. Panasonic FM ar Nichicon HE serija)
+- Arba **2–4× 50 V 470 µF** lygiagrečiai
 
 **6S buildams:**
-- Minimum **35V** (dėl saugos maržos naudok 50V)
+- Minimum **35 V** (dėl saugos maržos naudok 50 V)
 - Ta pati talpos riba
 
-**Niekada nenaudok kondensatoriaus, kurio įtampa mažesnė už maksimalią baterijos įtampą.** Pilnai įkrautas 4S pakas yra 16.8V. Naudok minimum 25V; 35V labiau pageidautina dėl atsargos.
+**Niekada nenaudok kondensatoriaus, kurio įtampa mažesnė už maksimalią baterijos įtampą.** Pilnai įkrautas 4S pakas yra 16,8 V. Naudok minimum 25 V; 35 V labiau pageidautina dėl atsargos.
 
-**Low ESR yra kritiškai svarbu.** Pigūs generic kondensatoriai turi didelę serijinę varžą — jie vis dar sugeria DC ripple, bet per lėti greitiems pereinamiesiems procesams slopinti. Ieškok "low ESR" ar "audio grade" žymėjimų arba pasitikrink datasheet'ą.
+**Low ESR yra kritiškai svarbu.** Pigūs generic kondensatoriai turi didelę serijinę varžą — jie vis dar sugeria DC ripple, bet per lėti greitiems pereinamiesiems procesams slopinti. Ieškok „low ESR“ ar „audio grade“ žymėjimų arba pasitikrink datasheet'ą.
 
 ---
 
@@ -100,20 +100,20 @@ Labiausiai matomas kondensatoriaus pridėjimo rezultatas daugelyje buildų — d
 }
 ```
 
-Jei vaizdo triukšmas išlieka net pridėjus didelį kondensatorių, triukšmo šaltinis gali būti BEC (5V reguliatorius) arba VTX maitinimo linija — tokiu atveju pridėk mažą LC filtrą (droselis + kondensatorius) būtent ant VTX maitinimo linijos.
+Jei vaizdo triukšmas išlieka net pridėjus didelį kondensatorių, triukšmo šaltinis gali būti BEC (5V reguliatorius) arba VTX maitinimo linija — tokiu atveju pridėk mažą LC filtrą (ritė + kondensatorius) būtent ant VTX maitinimo linijos.
 
 ---
 
 ## Papildomi kondensatoriai stack'e
 
 Buildams su atskiru PDB ar maitinimo paskirstymu:
-- Pridėk **100 µF / 25V** prie VTX maitinimo įėjimo, jei 5V BEC triukšmauja
-- Pridėk **10 µF / 16V** keraminį prie FC 3.3V ir 5V įėjimų (daugumoje FC jau būna)
+- Pridėk **100 µF / 25 V** prie VTX maitinimo įėjimo, jei 5V BEC triukšmauja
+- Pridėk **10 µF / 16 V** keraminį prie FC 3,3 V ir 5 V įėjimų (daugumoje FC jau būna)
 
 ---
 
 ## Pastabos
 
 - Kondensatoriai degraduoja. Jei builde atsiranda anksčiau nebuvęs vaizdo triukšmas, pirmiausia patikrink kondensatorių — išsipūtęs ar tekantis kondensatorius = keisk nedelsiant.
-- Prieš dirbdamas su buildu, visada iškrauk didelį kondensatorių. Trumpai sujungus įkrautą 2200 µF kondensatorių prie 16V, prilituos lydymo įrankius — klausk manęs, iš kur žinau :)
+- Prieš dirbdamas su buildu, visada iškrauk didelį kondensatorių. Trumpai sujungus įkrautą 2200 µF kondensatorių, esant 16 V, kibirkštis suvirins litavimo įrankius.
 - MLCC (keraminiai) kondensatoriai µF diapazone taip pat tinka ir geriau tvarkosi su aukštais dažniais, bet už tokią pačią talpą kainuoja brangiau.

@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "motor", "kv", "voltage", "rpm", "efficiency", "selection"]
 ---
 
-KV yra labiausiai nesuprasta motoro specifikacija FPV pasaulyje. Tai **ne** motoro kokybės ar galios matas — tai santykis, kuris nulemia, kiek RPM gauni vienam voltui. (Ir ne, didesnis skaičius nereiškia „geresnis motoras“, kad ir kaip parduotuvės aprašymas norėtų, jog taip pagalvotum.)
+KV yra labiausiai nesuprasta motoro specifikacija FPV pasaulyje. Tai **ne** motoro kokybės ar galios matas — tai santykis, kuris nulemia, kiek RPM gauni vienam voltui.
 
 ---
 
@@ -14,7 +14,7 @@ KV yra labiausiai nesuprasta motoro specifikacija FPV pasaulyje. Tai **ne** moto
 
 **KV = RPM voltui (be apkrovos)**
 
-Motoras, kurio reitingas 2400 KV, besisukantis ant 16.8 V (4S pilnai įkrautas), suksis:
+Motoras, kurio reitingas 2400 KV, veikiantis esant 16,8 V (4S pilnai įkrautas), suksis:
 
 ```
 RPM = KV × Voltage
@@ -25,7 +25,7 @@ Su apkrova (su prop'u) RPM bus mažesnis — paprastai 65–85% no-load RPM, pri
 
 ---
 
-## Ką KV veikia
+## Kam KV turi įtakos
 
 | Aukštesnis KV           | Žemesnis KV                 |
 |-------------------------|-----------------------------|
@@ -35,7 +35,7 @@ Su apkrova (su prop'u) RPM bus mažesnis — paprastai 65–85% no-load RPM, pri
 | Kaista labiau su apkrova | Kaista mažiau su apkrova    |
 | Reikia žemesnės įtampos (2S, 3S) | Reikia aukštesnės įtampos (4S, 6S) |
 
-Stator apvijos nulemia KV: mažiau, storesnės apvijos = aukštesnis KV; daugiau, plonesnės apvijos = žemesnis KV.
+Statoriaus apvijos nulemia KV: mažiau, storesnės apvijos = aukštesnis KV; daugiau, plonesnės apvijos = žemesnis KV.
 
 ---
 
@@ -56,12 +56,12 @@ Abu setup'ai duoda panašų RPM — bet 6S motoras turi daugiau torque, kad efek
 
 | Rėmo dydis | Dažna įtampa   | Tipinis KV diapazonas | Prop dydis     |
 |------------|---------------|-----------------|----------------|
-| 1" whoop   | 1S (3.7 V)    | 15,000–20,000 KV| 31 mm          |
-| 2.5" micro | 2S–3S         | 5,000–8,000 KV  | 2.5"           |
-| 3" toothpick | 3S–4S       | 3,000–5,000 KV  | 3"             |
-| 5" freestyle | 4S–6S       | 1,700–2,500 KV  | 5"             |
-| 7" long range| 4S–6S       | 1,300–1,800 KV  | 7"             |
-| 10" cinematic| 4S–6S       | 700–1,000 KV    | 9"–10"         |
+| 1" whoop   | 1S (3,7 V)    | 15 000–20 000 KV| 31 mm          |
+| 2,5" micro | 2S–3S         | 5000–8000 KV  | 2,5"           |
+| 3" toothpick | 3S–4S       | 3000–5000 KV  | 3"             |
+| 5" freestyle | 4S–6S       | 1700–2500 KV  | 5"             |
+| 7" long range| 4S–6S       | 1300–1800 KV  | 7"             |
+| 10" cinematic| 4S–6S       | 700–1000 KV    | 9"–10"         |
 
 ---
 
@@ -82,24 +82,24 @@ KV = Target RPM ÷ Voltage
 Loaded RPM ≈ KV × Voltage × 0.75
 ```
 
-Pavyzdys: nori ~25,000 apkrauto RPM ant 4S (14.8 V nominal):
+Pavyzdys: nori ~25 000 apkrauto RPM su 4S (14,8 V nominal):
 ```
 KV ≈ 25,000 ÷ (14.8 × 0.75) ≈ 25,000 ÷ 11.1 ≈ 2,250 KV
 ```
-→ 2300–2450 KV motoras ant 4S yra protingas taikinys.
+→ 2300–2450 KV motoras su 4S yra protingas taikinys.
 
 ---
 
 ## KV ir efektyvumas
 
-Žemesnio KV motorai, veikiantys prie aukštesnės įtampos, paprastai efektyvesni tokiai pačiai išeinamai galiai. Motoro varinės apvijos turi tą pačią varžą nepriklausomai nuo KV, bet aukštesnės įtampos ir žemesnės srovės darbas sumažina I²R nuostolius (karštį apvijose).
+Žemesnio KV motorai, veikiantys esant aukštesnei įtampai, paprastai efektyvesni tai pačiai atiduodamai galiai. Motoro varinės apvijos turi tą pačią varžą nepriklausomai nuo KV, bet aukštesnės įtampos ir žemesnės srovės darbas sumažina I²R nuostolius (karštį apvijose).
 
-Būtent todėl 6S build'ai ant 5" rėmo pasiekia geresnius skrydžio laikus, nepaisant panašaus fizinio dydžio — žemesnio KV motoras ant 6S kaista mažiau ir mažiau energijos švaisto kaip karštį.
+Būtent todėl 6S build'ai ant 5" rėmo pasiekia geresnius skrydžio laikus, nepaisant panašaus fizinio dydžio — žemesnio KV motoras su 6S kaista mažiau ir mažiau energijos švaisto kaip karštį.
 
 ---
 
 ## Pastabos
 
 - KV yra no-load specifikacija. Realaus pasaulio RPM priklauso nuo prop pitch, prop skersmens, throttle ir oro tankio.
-- Stator matmenys (pvz., 2306 = 23 mm skersmuo × 6 mm aukštis) nulemia torque talpą ir šilumos sklaidą, nepriklausomai nuo KV.
-- Du motorai su tuo pačiu stator ir tuo pačiu KV iš skirtingų gamintojų gali elgtis labai skirtingai — apvijų kokybė, magnetų stiprumas ir guolių tikslumas visi turi reikšmės. Taigi popierius popieriumi, o pajusi tik tada, kai užsuksi.
+- Statoriaus matmenys (pvz., 2306 = 23 mm skersmuo × 6 mm aukštis) nulemia sukimo momento galimybes ir šilumos sklaidą, nepriklausomai nuo KV.
+- Du motorai su tuo pačiu stator ir tuo pačiu KV iš skirtingų gamintojų gali elgtis labai skirtingai — apvijų kokybė, magnetų stiprumas ir guolių tikslumas visi turi reikšmės.

@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "dshot", "esc", "protocol", "bluejay", "blheli", "bidirectional", "gcr", "erpm"]
 ---
 
-DSHOT yra skaitmeninis FC-į-ESC protokolas. Kiekvieną PID kilpą skrydžio kontroleris siunčia fiksuoto ilgio freimą su throttle verte plius checksum'a; bidirectional režime ESC atsako tuo *pačiu* laidu savo elektriniu RPM. Čia — byte lygio vaizdas, kas realiai keliauja signalo laidu (taip, žinau, skristi jam nereikia, bet man buvo per daug įdomu, kad neišsiaiškinčiau). Apie tuning pusę (RPM filter, notch'ai) žr. [DSHOT and RPM Filter](../dshot-rpm-filter/).
+DSHOT yra skaitmeninis FC-į-ESC protokolas. Kiekvieną PID kilpą skrydžio kontroleris siunčia fiksuoto ilgio freimą su throttle verte plius checksum'a; bidirectional režime ESC atsako tuo *pačiu* laidu savo elektriniu RPM. Čia — byte lygio vaizdas, kas realiai keliauja signalo laidu. Apie tuning pusę (RPM filter, notch'ai) žr. [DSHOT and RPM Filter](../dshot-rpm-filter/).
 
 ---
 
@@ -27,10 +27,10 @@ Kadangi kiekvienas bito slotas yra to paties pločio, freimas visada yra tikslia
 
 | Protocol | Bitrate     | T1H (µs) | T0H (µs) | Bit (µs) | Frame (µs) |
 |----------|-------------|----------|----------|----------|------------|
-| DSHOT150 | 150 kbit/s  | 5.00     | 2.50     | 6.67     | 106.72     |
-| DSHOT300 | 300 kbit/s  | 2.50     | 1.25     | 3.33     | 53.28      |
-| DSHOT600 | 600 kbit/s  | 1.25     | 0.625    | 1.67     | 26.72      |
-| DSHOT1200| 1200 kbit/s | 0.625    | 0.313    | 0.83     | 13.28      |
+| DSHOT150 | 150 kbit/s  | 5,00     | 2,50     | 6,67     | 106,72     |
+| DSHOT300 | 300 kbit/s  | 2,50     | 1,25     | 3,33     | 53,28      |
+| DSHOT600 | 600 kbit/s  | 1,25     | 0,625    | 1,67     | 26,72      |
+| DSHOT1200| 1200 kbit/s | 0,625    | 0,313    | 0,83     | 13,28      |
 
 `T1H` yra high laikas, skaitomas kaip `1`; `T0H` — high laikas, skaitomas kaip `0`. Skaičius pavadinime yra grynas bitrate.
 
@@ -107,7 +107,7 @@ ESC nepriims realaus throttle, kol nepamatys eilės disarm freimų. Bluejay, pav
 FC nespamina freimų; jis išleidžia tiksliai po vieną per PID kilpos iteraciją, užrakintą prie kilpos dažnio. Tad kilpos dažnis nustato *reikalingą* DSHOT greitį, o ne atvirkščiai:
 
 - 8 kHz kilpa → freimas kas 125 µs → DSHOT300 (53 µs/freimas) su kaupu užtenka.
-- 32 kHz kilpa → freimas kas 31.25 µs → reikia DSHOT600, kad freimas tilptų.
+- 32 kHz kilpa → freimas kas 31,25 µs → reikia DSHOT600, kad freimas tilptų.
 
 Sukti greitesnį DSHOT nei tavo kilpai reikia savaime nieko neduoda.
 
@@ -169,13 +169,13 @@ eRPM       = 60,000,000 / eperiod_us
 RPM        = eRPM / pole_pairs        # 14-pole motor → 7 pairs
 ```
 
-Pavyzdys — `eperiod = 500 µs` → `eRPM = 120,000` → ant 14-pole motoro `≈ 17,140 RPM`. Betaflight būtent tai daro kiekvienam motorui, tada stato RPM-filter notch'us ant `RPM / 60` Hz ir jų harmonikų.
+Pavyzdys — `eperiod = 500 µs` → `eRPM = 120 000` → ant 14-pole motoro `≈ 17 140 RPM`. Betaflight būtent tai daro kiekvienam motorui, tada stato RPM-filter notch'us ant `RPM / 60` Hz ir jų harmonikų.
 
 ---
 
 ## Kodėl atsakas yra GCR koduotas
 
-ESC **nesiunčia** tų 16 bitų žaliavos. Siųsti juos kaip DSHOT stiliaus impulsus atgal pasirodė per daug jittery, tad atsakas yra **GCR (Group-Coded Recording) koduotas** — tas pats triukas, naudojamas floppy/tape įrenginių, kad garantuotų dažnus perėjimus patikimam clock atkūrimui.
+ESC **nesiunčia** tų 16 bitų žaliavos. Siųsti juos kaip DSHOT stiliaus impulsus atgal pasirodė per daug jittery, tad atsakas yra **GCR (Group-Coded Recording) koduotas** — tas pats triukas, naudojamas floppy/tape įrenginiuose, kad garantuotų dažnus perėjimus patikimam clock atkūrimui.
 
 **1 žingsnis — nibble mapping (16 → 20 bitų).** Kiekvienas 4 bitų nibble mapinamas į 5 bitų kodą:
 
@@ -212,7 +212,7 @@ eRPM float turi perteklinių koduočių (tas pats periodas gali būti užrašyta
 pppp mmmmmmmm      # 4-bit type, 8-bit value
 ```
 
-Tipai apima temperatūrą (0x02), įtampą (0x04, 0.25 V/žingsnis), srovę (0x06) ir debug/state laukus. Tai grąžina temperatūrą, įtampą ir srovę atgal **be jokio papildomo laido**, retkarčiais įterpta taip, kad netrukdytų RPM filtravimui. Įjunk jį specialiomis komandomis 13/14.
+Tipai apima temperatūrą (0x02), įtampą (0x04, 0,25 V/žingsnis), srovę (0x06) ir debug/state laukus. Tai grąžina temperatūrą, įtampą ir srovę atgal **be jokio papildomo laido**, retkarčiais įterpta taip, kad netrukdytų RPM filtravimui. Įjunk jį specialiomis komandomis 13/14.
 
 ---
 
@@ -220,4 +220,4 @@ Tipai apima temperatūrą (0x02), įtampą (0x04, 0.25 V/žingsnis), srovę (0x0
 
 - **Kiekvienas throttle atnaujinimas turi checksum'ą** — triukšmas laide aptinkamas, o ne tyliai nuskraidinamas.
 - **Bidirectional DSHOT yra request/response vienu laidu** — tas 30 µs apsisukimas plius atsakas yra kodėl freimų dažnis maždaug perpus sumažėja, tad aukšti kilpos dažniai nori DSHOT600.
-- **eRPM yra periodas, ne RPM** — FC jį apverčia ir dalija iš pole pairs; supainiok pole skaičių, ir RPM filter seks ne tą dažnį (nekaltink filtro — jis tik daro, ką liepei). Žr. [Betaflight Tuning Math](../../tuning/betaflight-tuning-math/) dėl notch išdėstymo ir [FPV Terminology](../../reference/fpv-terminology/) dėl akronimų.
+- **eRPM yra periodas, ne RPM** — FC jį apverčia ir dalija iš pole pairs; supainiok pole skaičių, ir RPM filter seks ne tą dažnį. Žr. [Betaflight Tuning Math](../../tuning/betaflight-tuning-math/) dėl notch išdėstymo ir [FPV Terminology](../../reference/fpv-terminology/) dėl akronimų.

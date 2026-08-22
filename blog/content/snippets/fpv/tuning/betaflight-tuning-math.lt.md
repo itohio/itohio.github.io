@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "pid", "math", "tuning", "feedforward", "tpa", "iterm", "rpm-filter", "d-term"]
 ---
 
-Kas vyksta Betaflight viduje, kai pastumi slankiklį. Čia pateiktos formulės išvestos iš `pid.c` Betaflight šaltinio kode. Suprasti matematiką reiškia, kad konfigūratoriaus slankikliai tampa nuspėjami, o ne mistiniai (o iki tol aš juos stumdydavau maždaug kaip radijo imtuvo rankenėles — kol nuskamba).
+Kas vyksta Betaflight viduje, kai pastumi slankiklį. Čia pateiktos formulės išvestos iš `pid.c` Betaflight šaltinio kode. Suprasti matematiką reiškia, kad konfigūratoriaus slankikliai tampa nuspėjami, o ne mistiniai.
 
 ---
 
@@ -23,7 +23,7 @@ flowchart LR
     P & I & D & FF --> SUM([sum → motor mix → ESC])
 ```
 
-Kilpa sukasi gyro sample rate greičiu (tipiškai 8 kHz su ICM-42688-P). Kiekvienas terminas skaičiuojamas laipsnių-per-sekundę erdvėje ir susumuojamas prieš paverčiant jį variklių komandomis per mixer'į.
+Kilpa vykdoma gyro sample rate dažniu (tipiškai 8 kHz su ICM-42688-P). Kiekvienas terminas skaičiuojamas laipsnių-per-sekundę erdvėje ir susumuojamas prieš paverčiant jį variklių komandomis per mixer'į.
 
 ---
 
@@ -39,9 +39,9 @@ P reaguoja į dabartinį error. Pastumus P slankiklį, tiesiogiai skaliuojamas `
 
 | P reikšmė | Efektas |
 |---------|--------|
-| Per didelė | Greita ataka, bet oscilacija po nusistovėjimo — variklių „buzz“ |
+| Per didelė | Greitas atsakas, bet osciliacija po nusistovėjimo — variklių „buzz“ |
 | Teisinga | Aštrus atsakas, švariai nusistovi |
-| Per maža | Vangu — dronas niekada nepasiekia užsakyto rate |
+| Per maža | Vangu — dronas niekada nepasiekia nurodyto rate |
 
 P taikomas error (setpoint − gyro). Kadangi **setpoint yra įtrauktas**, P sukuria „derivative kick“, kai setpoint šokteli. Būtent todėl D terminas sąmoningai taikomas vien gyro, o ne error — žr. žemiau.
 
@@ -54,13 +54,13 @@ P taikomas error (setpoint − gyro). Kadangi **setpoint yra įtrauktas**, P suk
 D = −Kd × d(gyro_rate)/dt
 ```
 
-D — tai **vien gyro matavimo išvestinė**, o ne error. Tai daroma sąmoningai. Jei D būtų taikomas error, kiekviena stick'o įvestis sukeltų didelį D spike, nes setpoint keičiasi akimirksniu, o gyro — ne. Taikant D tik gyro, D reaguoja tik į realų sukimosi pagreitį, o ne į užsakytus šuolius.
+D — tai **vien gyro matavimo išvestinė**, o ne error. Tai daroma sąmoningai. Jei D būtų taikomas error, kiekviena stick'o įvestis sukeltų didelį D spike, nes setpoint keičiasi akimirksniu, o gyro — ne. Taikant D tik gyro, D reaguoja tik į realų sukimosi pagreitį, o ne į nurodytus šuolius.
 
 Minuso ženklas atsiranda todėl, kad D priešinasi gyro rate pokyčiams: kai dronas greitėja link setpoint, D jį stabdo; kai jis peršoka, D stabdo grįžimą atgal.
 
-> **D yra slopinimo terminas.** Jis neleidžia P terminui peršokti ir oscilliuoti. P/D balansas nulemia uždaros kilpos atsako slopinimo koeficientą.
+> **D yra slopinimo terminas.** Jis neleidžia P terminui peršokti ir osciliuoti. P/D balansas nulemia uždaros kilpos atsako slopinimo koeficientą.
 
-D yra low-pass filtruojamas (dviejų pakopų, konfigūruojamas per `dterm_lpf1_hz` ir `dterm_lpf2_hz`), kad nebūtų sustiprintas gyro triukšmas. Per didelis D be tinkamo filtravimo sukuria būdingą aukšto dažnio oscilaciją ir variklių kaitimą.
+D yra low-pass filtruojamas (dviejų pakopų, konfigūruojamas per `dterm_lpf1_hz` ir `dterm_lpf2_hz`), kad nebūtų sustiprintas gyro triukšmas. Per didelis D be tinkamo filtravimo sukuria būdingą aukšto dažnio osciliaciją ir variklių kaitimą.
 
 ---
 
@@ -71,7 +71,7 @@ D yra low-pass filtruojamas (dviejų pakopų, konfigūruojamas per `dterm_lpf1_h
 I += Ki × error × dt
 ```
 
-I kaupia error laike. Jei dronas turi nuolatinį error (pvz., nosį pučia vėjas ir ji niekada nepasiekia užsakyto rate), I galiausiai tampa pakankamai didelis, kad jį įveiktų. I koreguoja **steady-state error** — vien P ir D terminai visada turės kažkiek liekamojo error, nes error artėjant prie nulio, grąžinamoji jėga irgi artėja prie nulio.
+I kaupia error laike. Jei dronas turi nuolatinį error (pvz., nosį pučia vėjas ir ji niekada nepasiekia nurodyto rate), I galiausiai tampa pakankamai didelis, kad jį įveiktų. I koreguoja **steady-state error** — vien P ir D terminai visada turės kažkiek liekamojo error, nes, error artėjant prie nulio, grąžinamoji jėga irgi artėja prie nulio.
 
 ### Anti-windup
 
@@ -79,7 +79,7 @@ I yra apribojamas iki `±PID_MAX_I`, kad būtų išvengta „windup“ — situa
 
 ### iterm_relax
 
-Darant greitas stick'o įvestis, I terminas gali „prisikrauti“, nes gyro reikia laiko pasiekti užsakytą rate flip'o metu. Šis papildomas krūvis sukelia **bounce-back** manevro pabaigoje. `iterm_relax` slopina I integravimą greitų įvesčių metu:
+Darant greitas stick'o įvestis, I terminas gali „prisikrauti“, nes gyro reikia laiko pasiekti nurodytą rate flip'o metu. Šis papildomas krūvis sukelia **bounce-back** manevro pabaigoje. `iterm_relax` slopina I integravimą greitų įvesčių metu:
 
 ```
 setpoint_hf   = |setpoint − low_pass_filtered(setpoint)|
@@ -103,7 +103,7 @@ Staigiai numetus gazą, dronas linkęs šiek tiek pasukti pitch/roll, nes keliam
 I_boost = I × (1 + anti_gravity_gain × |throttle_delta|)
 ```
 
-Taikoma visada, kai `|d(throttle)/dt|` viršija jautrumo slenkstį. Tai laiko nosį lygią įvažiuojant į split-S ir išeinant iš dive'ų.
+Taikoma visada, kai `|d(throttle)/dt|` viršija jautrumo slenkstį. Tai laiko nosį lygią įskrendant į split-S ir išeinant iš dive'ų.
 
 ---
 
@@ -116,7 +116,7 @@ FF = Kf × d(setpoint)/dt
 
 FF yra proporcingas tam, **kaip greitai juda stick'as**, o ne kur jis yra. Jis numato, kokio variklių atsako reikės stick'o įvesčiai, ir įleidžia jį iškart, prieš P terminui spėjant sureaguoti į susidariusį error.
 
-**Efektas:** FF pašalina vėlinimą tarp stick'o įvesties ir pradinio drono atsako. Aukštas FF = dronas reaguoja dar prieš atsiliekant — aštresnis pojūtis. Per daug FF = nervinga, spike'ai paleidus stick'ą.
+**Efektas:** FF pašalina vėlinimą tarp stick'o įvesties ir pradinio drono atsako. Aukštas FF = dronas sureaguoja dar nespėjęs atsilikti — aštresnis pojūtis. Per daug FF = nervinga, spike'ai paleidus stick'ą.
 
 > Nustatyk FF į 0 visiems derinimo duomenų skrydžiams. FF įleidžia savo laiko artefaktą į step response kreivę, todėl P/D analizė tampa nepatikima.
 
@@ -211,7 +211,7 @@ Neapdorotos reikšmės vis dar pasiekiamos per CLI (`set roll_p`, `set roll_i`, 
 
 ## TPA — Throttle PID Attenuation
 
-Esant dideliam gazui, varikliai gamina gerokai daugiau sukimo momento vienam komandos vienetui nei kabant vietoje. Be kompensacijos, PID'ai, kurie jaučiasi teisingi kabant, bus per daug atsakingi esant pilnam gazui — sukels oscilaciją ir variklių kaitimą greituose skrydžiuose.
+Esant dideliam gazui, varikliai gamina gerokai daugiau sukimo momento vienam komandos vienetui nei kabant vietoje. Be kompensacijos, PID'ai, kurie jaučiasi teisingi kabant, bus per daug jautrūs esant pilnam gazui — sukels osciliaciją ir variklių kaitimą greituose skrydžiuose.
 
 **Formulė:**
 ```
@@ -293,7 +293,7 @@ D_effective    = d_min + (d_max − d_min) × d_boost
 - **Kabant vietoje / esant pastoviam rate**: stick_velocity ≈ 0 → `D_effective = d_min` (mažesnis D → mažiau variklių kaitimo)
 - **Greito manevro metu**: stick_velocity aukštas → `D_effective` kyla link `d_max` (daugiau slopinimo įvesčiai)
 
-Taip gauni geriausią iš abiejų pusių: sumažintą D triukšmą ir kaitimą kruizuojant, bet pilną D slopinimą agresyvių įvesčių metu.
+Taip gauni geriausia iš abiejų: sumažintą D triukšmą ir kaitimą kruizuojant, bet pilną D slopinimą agresyvių įvesčių metu.
 
 **CLI komandos:**
 ```
@@ -301,7 +301,7 @@ set d_min_roll = 20    # base D (applied at rest)
 set d_roll = 30        # D_max — the peak D reached at high stick velocity
 ```
 
-Nustatyk `d_min_roll` lygų `d_roll` (abu = tavo D reikšmei), kad išjungtum dinaminį D diapazoną ir skristum su fiksuotu D — būtina švariems derinimo duomenų skrydžiams. Taip, tai reiškia, kad prieš loginant reikės tą fiksuotą D vėl atsukti atgal; pamiršti šitą žingsnį — tradicija, kurią atlieku maždaug kas antrą sesiją.
+Nustatyk `d_min_roll` lygų `d_roll` (abu = tavo D reikšmei), kad išjungtum dinaminį D diapazoną ir skristum su fiksuotu D — būtina švariems derinimo duomenų skrydžiams.
 
 ---
 
@@ -317,7 +317,7 @@ notch_n        = fundamental_hz × n         # n = 1, 2, 3 — harmonics
 
 (`eRPM`, pranešamas per dvikryptį DSHOT, yra *elektrinis* RPM; padalijus iš polių porų skaičiaus, gaunamas mechaninis sukimosi dažnis, kurį seka notch'ai.)
 
-Filtras seka realiu laiku, naudodamas eRPM telemetriją iš dvikrypčio DSHOT. Tai pašalina variklių triukšmą, kuris kitaip prasiskverbtų į D terminą ir pasireikštų kaip oscilacija.
+Filtras seka realiu laiku, naudodamas eRPM telemetriją iš dvikrypčio DSHOT. Tai pašalina variklių triukšmą, kuris kitaip prasiskverbtų į D terminą ir pasireikštų kaip osciliacija.
 
 **Minimalaus dažnio apsauga:**
 ```
@@ -328,9 +328,9 @@ set rpm_filter_min_hz = lowest_expected_motor_Hz − 25
 
 | Build | Minimalus Hz | Priežastis |
 |-------|-----------|-----------|
-| 2" | 150 | Variklių fundamentai kabant ~200 Hz |
-| 3" | 100 | Variklių fundamentai kabant ~150 Hz |
-| 5" | 80 | Variklių fundamentai kabant ~120 Hz |
+| 2" | 150 | Variklių pagrindiniai dažniai kabant ~200 Hz |
+| 3" | 100 | Variklių pagrindiniai dažniai kabant ~150 Hz |
+| 5" | 80 | Variklių pagrindiniai dažniai kabant ~120 Hz |
 | 7"+ | 60 | Didesni propelleriai, mažesnis RPM |
 
 **Reikalauja:** įjungto dvikrypčio DSHOT, ESC firmware, palaikančio RPM telemetriją (BLHELI_32, AM32, BLHELI_S su BlueJay).
@@ -341,13 +341,13 @@ set rpm_filter_min_hz = lowest_expected_motor_Hz − 25
 
 | Terminas | Ką pataiso | Ką daro perteklius |
 |------|--------------|-------------------|
-| P | Vangumą, steady-state error | Oscilaciją po įvesčių |
+| P | Vangumą, steady-state error | Osciliaciją po įvesčių |
 | I | Ilgalaikį dreifą, vėjo korekciją | Žemo dažnio wobble, pogo keičiant gazą |
 | D | Overshoot, per silpną slopinimą | Variklių kaitimą, aukšto dažnio buzz |
 | FF | Stick-follow vėlinimą | Nervingą pojūtį, spike'us paleidus stick'ą |
 | iterm_relax | Bounce-back po flip'ų | Lėtesnį I atsaką į ilgalaikius trikdžius |
 | anti_gravity | Aukščio kritimą numetus gazą | Nedidelį per didelį koregavimą numetant gazą |
-| TPA | Oscilaciją esant dideliam gazui | Vangumą esant dideliam gazui |
+| TPA | Osciliaciją esant dideliam gazui | Vangumą esant dideliam gazui |
 | d_min | Variklių kaitimą kabant | Mažiau slopinimo esant mažiems stick rate |
 | d_max | Slopinimą greitų įvesčių metu | Variklių kaitimą ir triukšmą manevrų metu |
 | RPM filtras | Variklių harmonikų triukšmą D | Fazės vėlinimą, jei nustatyta per agresyviai |

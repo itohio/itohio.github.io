@@ -1652,7 +1652,7 @@ abu teisingi.
 Žemų dažnių drebėjimas ore dabar beveik nejuntamas, o jello grįžo į vaizdą.
 
 **Ir pirmasis mano paaiškinimas buvo neteisingas.** Parašiau, kad VTX įvorių išėmimas „standžiai
-sujungė kamerą su gaubtu". Nesujungė: VTX yra plika plokštė, o **kamera tvirtinama ant gaubto**, ne
+sujungė kamerą su gaubtu“. Nesujungė: VTX yra plika plokštė, o **kamera tvirtinama ant gaubto**, ne
 ant VTX. Tos įvorės kabino plokštę, ant kurios nieko nėra — negyva masė ir dar viena pakabinta
 masė, laisva rezonuoti. Jų išėmimas nebuvo jello mechanizmas.
 
@@ -2160,7 +2160,7 @@ lokalizavimo. Putplastis davė didelį, tikrą sumažėjimą — tai niekada neb
 
 Kelias iteracijas vėjo drebėjimo verdiktą vertinau vienu globaliu santykiu `drebėjimas / vėjas`
 ir gavau 0,777 → 0,798 → 0,791 → 0,754. Perskaityta kaip: **„−4,4%, triukšmo ribose, tikro
-pagerėjimo nėra."** Vos nenurašiau putplasčio tuo pagrindu.
+pagerėjimo nėra.“** Vos nenurašiau putplasčio tuo pagrindu.
 
 Artefaktas. **Drebėjimas prieš vėją nėra proporcingas**, todėl globalus santykis visiškai
 priklauso nuo to, kurioje vėjo diapazono vietoje pasitaikė paimti duomenis. Suskirsk į dėžes

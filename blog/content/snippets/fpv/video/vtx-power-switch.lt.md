@@ -68,7 +68,7 @@ Priskirk ratuką **AUX3** siųstuvo mikseryje, tada priskirk ruožus Configurato
 
 ## Pit mode per arm / disarm
 
-Laikyk ratuką/svirtelę minimume (pit mode), kol esi pite. VTX nukris iki minimalios galios (arba RF off, jei tavo VTX tai palaiko), kol nepastumsi svirtelės aukštyn. Taip nešaudai kitiems pilotams į goggle'us pilna galia, kol pats dar prie stalo — o patikėk, už tokį triuką padėkos niekas nesako.
+Laikyk ratuką/svirtelę minimume (pit mode), kol esi pite. VTX nukris iki minimalios galios (arba RF off, jei tavo VTX tai palaiko), kol nepastumsi svirtelės aukštyn. Taip nešaudai kitiems pilotams į goggle'us pilna galia, kol pats dar prie stalo.
 
 ---
 

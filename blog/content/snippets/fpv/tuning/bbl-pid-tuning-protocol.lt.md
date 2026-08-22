@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "pid", "blackbox", "bbl", "tuning", "step-response", "pidtoolbox", "filter"]
 ---
 
-Struktūrizuotas, blackbox paremtas PID derinimo protokolas, pagrįstas step response analize. Išvestas iš metodologijos, įgyvendintos [PIDtoolbox](https://github.com/bw1129/PIDtoolbox) (Brian White, MATLAB), ir pritaikytas iteraciniam naudojimui lauke. Protokolui reikia `.bbl` log'o iš specialiai tam skirto testinio skrydžio; nebandyk derinti iš freestyle ar racing sesijos log'o — įvesties signalai per daug netaisyklingi. Taip, žinau, skristi „nuobodžiai“ tyčia yra sunkiau, nei atrodo — bet duomenys už tai atsidėkoja.
+Struktūrizuotas, blackbox paremtas PID derinimo protokolas, pagrįstas step response analize. Išvestas iš metodologijos, įgyvendintos [PIDtoolbox](https://github.com/bw1129/PIDtoolbox) (Brian White, MATLAB), ir pritaikytas iteraciniam naudojimui lauke. Protokolui reikia `.bbl` log'o iš specialiai tam skirto testinio skrydžio; nebandyk derinti iš freestyle ar racing sesijos log'o — įvesties signalai per daug netaisyklingi.
 
 ---
 
@@ -29,7 +29,7 @@ flowchart TD
     K --> B
 ```
 
-**Prieš liesdamas PID'us: įsitikink, kad tavo filtrai sukonfigūruoti teisingai.** Aukšti P gain'ai ant triukšmingo, nepakankamai filtruoto drono sukuria oscilaciją, kuri atrodo lygiai kaip P-per-didelis simptomas. Visada analizuok variklių kreives ir spektrinį triukšmo lygį prieš darydamas išvadą, kad reikia PID korekcijos.
+**Prieš liesdamas PID'us: įsitikink, kad tavo filtrai sukonfigūruoti teisingai.** Aukšti P gain'ai ant triukšmingo, nepakankamai filtruoto drono sukuria osciliaciją, kuri atrodo lygiai kaip P-per-didelis simptomas. Visada analizuok variklių kreives ir spektrinį triukšmo lygį prieš darydamas išvadą, kad reikia PID korekcijos.
 
 ---
 
@@ -64,7 +64,7 @@ Step response testinis skrydis **nėra** normalus skraidymas. Tikslas — sugene
 
 - Kabėjimo aukštis 5–10 m ramiame ore (vėjas gadina analizę)
 - Pastovus gazas įvesčių metu — gazo pokyčiai keičia kabėjimo tašką ir teršia duomenis
-- Arms įjungti, Air Mode įjungtas
+- Dronas armed, Air Mode įjungtas
 - Blackbox pilnu rate (denom = 1) arba puse rate (denom = 2) — žr. [Blackbox Logging](../blackbox-logging/)
 
 ### BBL nustatymai derinimo sesijoms
@@ -96,7 +96,7 @@ save
 
 ## 4 žingsnis — Step response analizė
 
-Step response apskaičiuojamas per Wiener dekonvoliuciją gyro atsako prieš setpoint. Rezultatas — kreivė, rodanti, kaip faktinis sukimosi rate laike seka užsakytą sukimosi rate.
+Step response apskaičiuojamas per Wiener dekonvoliuciją gyro atsako setpoint atžvilgiu. Rezultatas — kreivė, rodanti, kaip faktinis sukimosi rate laike seka nurodytą sukimosi rate.
 
 ```mermaid
 flowchart LR
@@ -191,7 +191,7 @@ flowchart LR
 
 | Forma | Diagnozė | Pagrindinis sprendimas |
 |-------|-----------|------------|
-| Overshoot >10%, oscilliuoja atgal | P per didelis | Sumažink P 10–15% |
+| Overshoot >10%, osciliuoja atgal | P per didelis | Sumažink P 10–15% |
 | Overshoot yra, bet nusistovi švariai, tik lėtai | D per mažas | Padidink D 10% |
 | Lėtas kilimas, be overshoot, vangu | P per mažas | Padidink P 10–15% |
 | Kyla greitai, milžiniškas overshoot, tęstinis ringing | P per didelis IR D per mažas | Pirma sumažink P, tada įvertink D |
@@ -205,7 +205,7 @@ flowchart LR
 
 Prieš bet kokią PID korekciją paleisk spektrinę analizę gyro ir variklių kreivėms. Ieškok:
 
-- **Prop wash dažnis**: tipiškai 100–300 Hz, priklausomai nuo rėmo/propellerio dydžio. Platus kupstas gyro spektre.
+- **Prop wash dažnis**: tipiškai 100–300 Hz, priklausomai nuo rėmo/propellerio dydžio. Platus kauburys gyro spektre.
 - **Variklių triukšmas**: aštrūs pikai virš 300 Hz. RPM filtras čia turi įdėti notch'us.
 - **ESC perjungimo triukšmas**: virš 1 kHz. Low-pass filtras turi su tuo susitvarkyti.
 - **Mechaninis rezonansas**: aštrus siauras pikas ties fiksuotu dažniu, nepriklausomai nuo gazo. Patikrink variklių varžtus, propellerių balansą.
@@ -236,19 +236,19 @@ flowchart TD
     VERIFY[Re-fly step response test<br/>Confirm all axes stable<br/>Check motor temps] --> DONE([Commit config<br/>diff all → save])
 ```
 
-**Ašių tvarka**: pirma Roll (jautriausia), tada Pitch, tada Yaw. Roll ir Pitch simetriškuose rėmuose dažnai gali dalintis PID reikšmėmis — patikrink nustatęs abi.
+**Ašių tvarka**: pirma Roll (jautriausia), tada Pitch, tada Yaw. Roll ir Pitch simetriškuose rėmuose dažnai gali turėti tas pačias PID reikšmes — patikrink nustatęs abi.
 
 ---
 
 ## 7 žingsnis — Variklių temperatūros patikra
 
-Po bet kokio PID pakeitimo pakabink 2–3 minutes ir iškart patikrink variklių temperatūras — pirštu, iškart po nusileidimo (na, ne visai delnu ant variklio, jei D tikrai per aukštas):
+Po bet kokio PID pakeitimo pakabink 2–3 minutes ir iškart patikrink variklių temperatūras — pirštu, iškart po nusileidimo:
 
-- **< 50°C** — saugu; PID'ai protingi
-- **50–65°C** — šilta; D ar filtrai gali būti per agresyvūs, generuojantys perteklinį variklių aktyvumą
-- **> 65°C** — karšta; sumažink D arba peržiūrėk filtrų cutoff'us prieš skrisdamas toliau
+- **< 50 °C** — saugu; PID'ai protingi
+- **50–65 °C** — šilta; D ar filtrai gali būti per agresyvūs, generuojantys perteklinį variklių aktyvumą
+- **> 65 °C** — karšta; sumažink D arba peržiūrėk filtrų cutoff'us prieš skrisdamas toliau
 
-Variklius reikia tikrinti ta pačia tvarka (M1–M4) kiekvieną kartą. Jei vienas variklis kaista ženkliai labiau nei kiti, ta petis gali turėti vibraciją ar minkštą variklio tvirtinimą — spręsk mechaniškai prieš priskirdamas tai PID'ams.
+Variklius reikia tikrinti ta pačia tvarka (M1–M4) kiekvieną kartą. Jei vienas variklis kaista ženkliai labiau nei kiti, ta šaka gali vibruoti arba variklio tvirtinimas gali būti per minkštas — spręsk mechaniškai prieš priskirdamas tai PID'ams.
 
 ---
 

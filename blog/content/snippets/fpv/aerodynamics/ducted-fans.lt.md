@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "aerodynamics", "duct", "whoops", "tinywhoop", "airflow", "efficiency", "blade-tip-vortex"]
 ---
 
-Duct'as (gaubtas) aplink propelerį pakeičia, kaip oras įteka ir išteka pro diską — ir stipriai pakeičia efektyvumą, traukos/dydžio santykį bei valdymą. Tiny whoop'ai (Mobula, BetaFPV Meteor — 1S, 65–75 mm) ir didesni ducted cinewhoop'ai (BetaFPV 2.2" Pavo20, 3S) duct'us naudoja pirmiausia propams apsaugoti, bet aerodinaminiai efektai yra realūs ir lemia, kaip šie rėmai skrenda, palyginus su analogiškais open-prop dizainais. (Ilgai maniau, kad duct'as — vien apsauga nuo sienų. Klydau.)
+Duct'as (gaubtas) aplink propelerį pakeičia, kaip oras įteka ir išteka pro diską — ir stipriai pakeičia efektyvumą, traukos/dydžio santykį bei valdymą. Tiny whoop'ai (Mobula, BetaFPV Meteor — 1S, 65–75 mm) ir didesni ducted cinewhoop'ai (BetaFPV 2,2" Pavo20, 3S) duct'us naudoja pirmiausia propams apsaugoti, bet aerodinaminiai efektai yra realūs ir lemia, kaip šie rėmai skrenda, palyginus su analogiškais open-prop dizainais.
 
 ---
 
@@ -138,7 +138,7 @@ function overlay() {
 }
 ```
 
-**Kairė (open):** oras prasiveržia aplink mentelių galus ir susisuka į paskui tempiamus sūkurius (raudona), kurie nusisuka žemyn — švaistoma energija, o pėdsakas išsisklaido. **Dešinė (ducted):** sienelė sustabdo galo nuotėkį, tad srautas lieka ašinis ir išteka kaip greitesnė, sukolimuota srovė prie tos pačios galios.
+**Kairė (open):** oras prasiveržia aplink mentelių galus ir susisuka į paskui tempiamus sūkurius (raudona), kurie nusisuka žemyn — švaistoma energija, o pėdsakas išsisklaido. **Dešinė (ducted):** sienelė sustabdo galo nuotėkį, tad srautas lieka ašinis ir išteka kaip greitesnė, sukolimuota srovė esant tai pačiai galiai.
 
 ---
 
@@ -146,17 +146,17 @@ function overlay() {
 
 Lengva pamanyti, kad bet koks žiedas aplink propą yra duct'as. Nėra. **Prop guard** — tai atviras lankas, kurio vienintelis darbas neleisti mentelėms atsitrenkti į daiktus: jis stovi gerokai atokiau nuo galų, neturi formuotos įėjimo lūpos ir nėra ištisinė sienelė — tad aerodinamiškai jis nieko naudingo nedaro. Jis negali nei atgauti galo sūkurio, nei pagreitinti įtekančio oro. Tik sėdi pėdsake, pridėdamas pasipriešinimo ir svorio.
 
-**Duct'as** savo vardą užsitarnauja per tris dalykus, kurių guard'as neturi: suapvalinta **įėjimo lūpa**, **ištisinė sienelė** ir *sąmoningai ankštas* **galo tarpas**. Būtent jie paverčia buferį aerodinaminiu paviršiumi — užkerta galo nuotėkį ir pagreitina įtekantį orą. Atleisk toleranciją — ir duct'as degraduoja atgal į brangų prop guard'ą: tarpas praleidžia, galo sūkurys atsikuria, o efektyvumo priedas išgaruoja (žr. tarpo grafiką žemiau).
+**Duct'as** savo vardą užsitarnauja per tris dalykus, kurių guard'as neturi: suapvalinta **įėjimo lūpa**, **ištisinė sienelė** ir *sąmoningai ankštas* **galo tarpas**. Būtent jie paverčia buferį aerodinaminiu paviršiumi — užkerta galo nuotėkį ir pagreitina įtekantį orą. Atlaisvink toleranciją — ir duct'as degraduoja atgal į brangų prop guard'ą: tarpas praleidžia, galo sūkurys atsikuria, o efektyvumo priedas išgaruoja (žr. tarpo grafiką žemiau).
 
 | | Prop guard | Duct |
 |---|-----------|------|
-| Galo tarpas | didelis, nekontroliuojamas | ankštas (siek <5% chord) |
+| Galo tarpas | didelis, nekontroliuojamas | ankštas (tikslas <5 % chord) |
 | Įėjimo lūpa | nėra | suapvalinta / formuota |
 | Sienelė | atviras lankas | ištisinis gaubtas |
 | Aerodinaminis efektas | jokio — vien pasipriešinimas | galo nuostolio atgavimas + venturi |
-| Paskirtis | apsauga per krašą | apsauga **ir** efektyvumas |
+| Paskirtis | apsauga per avariją | apsauga **ir** efektyvumas |
 
-Ir guard'as, ir duct'as prideda pasipriešinimo, palyginus su pliku open propu — tai ir yra kompromisas. Mainai maksimalų greitį ir šiek tiek svorio arba į apsaugą per krašą (guard), arba į hover efektyvumą plius apsaugą (duct).
+Ir guard'as, ir duct'as prideda pasipriešinimo, palyginus su pliku open propu — tai ir yra kompromisas. Mainai maksimalų greitį ir šiek tiek svorio arba į apsaugą per avariją (guard), arba į hover efektyvumą plius apsaugą (duct).
 
 ---
 
@@ -242,7 +242,7 @@ Liejimo (injection-molded) whoop'ų duct'ai turi santykinai didelius tarpus (3�
 | Atsparumas smūgiams | Propai atviri | Propai apsaugoti |
 | Svoris | Mažesnis | +duct'o rėmo masė |
 | Triukšmas | Vidutinis | Dažnai tylesnis (sumažintas tip vortex) |
-| Mastelio keitimas (scaling) | Gerai skaliuojasi | Nauda mažėja prie didelio skersmens |
+| Mastelio keitimas (scaling) | Gerai skaliuojasi | Nauda mažėja esant dideliam skersmeniui |
 
 Hover'e gautas efektyvumo pranašumas apsiverčia skrendant greitai į priekį — tada duct'as tampa pasipriešinimo paviršiumi. Būtent todėl racing dronai visi yra open-prop: daugumą energijos jie leidžia greityje, o ne kabodami.
 
@@ -250,7 +250,7 @@ Hover'e gautas efektyvumo pranašumas apsiverčia skrendant greitai į priekį �
 
 ## Ką tai reiškia ducted whoop'ams
 
-Pavo20 Pro II ir panašūs 2.2" ducted cinewhoop'ai skrenda tokiame režime, kur hover efektyvumas svarbus — skrydis patalpose, proximity, lėta kinematografija. Duct'as taip pat laiko propus atokiau nuo kliūčių, o tai ir yra pagrindinis dizaino veiksnys šioje ~70–110 g klasėje.
+Pavo20 Pro II ir panašūs 2,2" ducted cinewhoop'ai skrenda tokiame režime, kur hover efektyvumas svarbus — skrydis patalpose, proximity, lėta kinematografija. Duct'as taip pat laiko propus atokiau nuo kliūčių, o tai ir yra pagrindinis dizaino veiksnys šioje ~70–110 g klasėje.
 
 Tačiau ta pati duct'o geometrija, kuri padeda hover'e, sukuria skirtingą skrydžio pojūtį, palyginus su open-prop dronais:
 
@@ -269,7 +269,7 @@ flowchart LR
 
 ## Galo tarpas (tip clearance) nudėvėtuose whoop'uose
 
-Mentelių galai po apkrova šiek tiek lankstosi. Propams senstant ir atsirandant mikroįtrūkimams, galo nukrypimas didėja. Jei galas kad ir trumpam paliečia duct'o sienelę, rezultatas — garsus trakštelėjimas, propo pažeidimas ir galimai krašas. Prieš skrydį patikrink propų galus ir vidines duct'o sieneles dėl nusidėvėjimo žymių — lengvas įbrėžimas normalu, gilios vagos reiškia, kad propus laikas keisti.
+Mentelių galai po apkrova šiek tiek lankstosi. Propams senstant ir atsirandant mikroįtrūkimams, galo nukrypimas didėja. Jei galas kad ir trumpam paliečia duct'o sienelę, rezultatas — garsus trakštelėjimas, propo pažeidimas ir galimai avarija. Prieš skrydį patikrink propų galus ir vidines duct'o sieneles dėl nusidėvėjimo žymių — lengvas įbrėžimas normalu, gilios vagos reiškia, kad propus laikas keisti.
 
 ---
 

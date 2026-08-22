@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "troubleshooting", "motors", "esc", "build"]
 ---
 
-Rinkinys „pirmų 10 naujo buildo minučių“ nesėkmių ir kaip jas diagnozuoti. Beveik kiekvieną iš jų patyriau asmeniškai — kai kurias ne po vieną kartą.
+Rinkinys „pirmų 10 naujo buildo minučių“ nesėkmių ir kaip jas diagnozuoti.
 
 ---
 
@@ -14,7 +14,7 @@ Rinkinys „pirmų 10 naujo buildo minučių“ nesėkmių ir kaip jas diagnozuo
 
 **Simptomas:** dronas pakyla, bet dreifuoja arba sukasi apie yaw ašį; viena šaka iškart pasvyra žemyn davus throttle.
 
-**Priežastis:** vienas motoras sukasi ne ta kryptimi. Motorai būna CW ir CCW variantų; kai kurie turi apkeistus bullet jungtis. Jei apkeiti bet kuriuos du iš trijų motoro laidų, motoras pasisuka atgal.
+**Priežastis:** vienas motoras sukasi ne ta kryptimi. Motorai būna CW ir CCW variantų; kai kurie turi apkeistas bullet jungtis. Jei apkeiti bet kuriuos du iš trijų motoro laidų, motoras pradeda suktis į kitą pusę.
 
 **Sprendimas:**  
 Su DSHOT sukimosi kryptį apsuki be perlaidinimo (kryptis saugoma ESC'e, o ne Betaflight `set` kintamajame):
@@ -22,15 +22,15 @@ Su DSHOT sukimosi kryptį apsuki be perlaidinimo (kryptis saugoma ESC'e, o ne Be
 - **Betaflight Motors tab** (propai NUIMTI): pažymėk *Reverse* varnelę probleminiam motorui. Betaflight išsiunčia DShot komandą, kuri įrašo naują kryptį į tą ESC.
 - Arba **BLHeli_32 / AM32 konfigūratoriuje**: nustatyk Motor Direction (Normal / Reversed) atitinkamam ESC.
 
-Arba fiziškai apkeisk bet kuriuos du iš trijų fazės laidų problemiškame motore.
+Arba fiziškai apkeisk bet kuriuos du iš trijų fazės laidų probleminiame motore.
 
 ---
 
 ## Visi motorai sukasi ne ta kryptimi
 
-**Simptomas:** dronas kiekvieną kartą iškart apsiverčia ta pačia kryptimi davus throttle. Gali arm ir iškart nukristi.
+**Simptomas:** dronas kiekvieną kartą iškart apsiverčia ta pačia kryptimi davus throttle. Gali arm'intis ir iškart nukristi.
 
-**Priežastis:** visi keturi motorai apsukti — arba ESC buvo įrašytas su apsuktais numatytaisiais, arba visi motorai prilaidinti atbulai.
+**Priežastis:** visi keturi motorai apsukti — arba ESC buvo įrašytas su apsuktais numatytaisiais nustatymais, arba visi motorai prilaidinti atbulai.
 
 **Diagnozė:** Betaflight Motors tab'e (propai NUIMTI) suk kiekvieną motorą ir palygink sukimąsi su [Betaflight motorų išdėstymo schema](https://betaflight.com/docs/wiki/guides/current/Motor-Spin-Directions) tavo rėmui.
 
@@ -40,11 +40,11 @@ Arba fiziškai apkeisk bet kuriuos du iš trijų fazės laidų problemiškame mo
 
 ## Propai ant ne tų motorų (dronas apsiverčia armindamas)
 
-**Simptomas:** dronas iškart apsiverčia į vieną pusę tą akimirką, kai duodi throttle, nesvarbu koks derinimas.
+**Simptomas:** dronas iškart apsiverčia į vieną pusę tą akimirką, kai duodi throttle, nesvarbu, koks derinimas.
 
 **Priežastis:** CW propas ant CCW motoro arba propai priskirti ne toms šakoms.
 
-**Sprendimas:** patikrink Betaflight motorų išdėstymo schemą. Kiekviena motoro pozicija pažymėta 1–4 su laukiama sukimosi kryptimi. CW propai (priekinė briauna sulinkusi pagal laikrodžio rodyklę, žiūrint iš viršaus) eina ant CCW besisukančių motorų ir atvirkščiai.
+**Sprendimas:** patikrink Betaflight motorų išdėstymo schemą. Kiekviena motoro pozicija pažymėta 1–4 su laukiama sukimosi kryptimi. CW propai (priekinė briauna riečiasi pagal laikrodžio rodyklę, žiūrint iš viršaus) eina ant CCW besisukančių motorų ir atvirkščiai.
 
 Visada pirma suk motorus su NUIMTAIS propais ir vizualiai patikrink kryptį prieš uždėdamas propus.
 
@@ -54,7 +54,7 @@ Visada pirma suk motorus su NUIMTAIS propais ir vizualiai patikrink kryptį prie
 
 **Simptomas:** motoras trūkčioja arba trumpam sustoja po apkrova; staigus throttle atsako praradimas; girdimas spragtelėjimas/trūkčiojimas, po kurio seka apsivertimas.
 
-**Priežastis:** ESC praranda sinchronizaciją su motoro back-EMF signalu. Dažni sukėlėjai: agresyvus greitėjimas, susidėvėję guoliai, per didelis RPM ESC'o PWM dažniui, blogas filtravimas.
+**Priežastis:** ESC praranda sinchronizaciją su motoro back-EMF signalu. Dažni veiksniai: agresyvus greitėjimas, susidėvėję guoliai, per didelis RPM ESC'o PWM dažniui, blogas filtravimas.
 
 **Sprendimo variantai:**
 1. Sumažink RPM filtravimo poreikį — įjunk RPM filtrą (bidirectional DSHOT)
@@ -67,7 +67,7 @@ Visada pirma suk motorus su NUIMTAIS propais ir vizualiai patikrink kryptį prie
 
 ## FC pasileidžia su propais ir iškart arm'inasi
 
-**Simptomas:** motorai suksti iškart įjungus maitinimą.
+**Simptomas:** motorai sukasi iškart įjungus maitinimą.
 
 **Priežastis:** arm jungiklis buvo paliktas ARM padėtyje boot'o metu arba `motor_stop` išjungtas ir throttle kalibracija nesutvarkyta.
 
@@ -99,7 +99,7 @@ save
 **Dažnos priežastys:**
 - VTX įsijungia anksčiau, nei kamera turi stabilų maitinimą — pridėk mažą LC filtrą ant VTX maitinimo
 - ESC perjungimo triukšmas patenka į vaizdo įžeminimą — atskirk maitinimo linijas, pridėk kondensatorių ant baterijos laidų
-- VTX ir kamera dalinasi triukšminga 5V linija — kamerai naudok atskirą LC filtruotą reguliatorių
+- VTX ir kamera dalijasi triukšminga 5 V linija — kamerai naudok atskirą LC filtruotą reguliatorių
 
 ---
 
@@ -114,4 +114,4 @@ save
 4. Angle mode (jei įjungtas) — horizontas turi būti maždaug lygus
 5. GPS fix reikalingas, jei nustatytas `GPS_FIX` arm reikalavimas
 
-Paleisk `status` CLI'e, kad pamatytum visas aktyvias arm vėliavas — jis tiksliai pasako, kodėl dronas su tavimi nekalba.
+Paleisk `status` CLI'e, kad pamatytum visas aktyvias arm vėliavas.

@@ -5,4 +5,4 @@ draft: false
 description: "ExpressLRS konfigūracija, RSSI/LQ/SNR telemetrija ir antenų išdėstymas RC bei vaizdo ryšiams."
 ---
 
-Valdymo ryšys ir RF: ExpressLRS nustatymas (reguliacinis regionas, bind frazė, paketų dažnis), RSSI/LQ/SNR telemetrijos skaitymas ir antenų išdėstymas, vengiant „aklųjų zonų“.
+Valdymo ryšys ir RF: ExpressLRS nustatymas (reguliacinis domenas, bind frazė, paketų dažnis), RSSI/LQ/SNR telemetrijos skaitymas ir antenų išdėstymas, vengiant „aklųjų zonų“.

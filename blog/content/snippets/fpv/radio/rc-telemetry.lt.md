@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "elrs", "telemetry", "rssi", "lq", "snr", "link-quality", "range"]
 ---
 
-Šiuolaikiniai RC linkai siunčia telemetriją atgal iš imtuvo į siųstuvą ir OSD. Dominuoja trys skaičiai: RSSI, LQ ir SNR. Jie matuoja tą patį linką iš skirtingų kampų — o žinojimas, kurį stebėti, apsaugo ir nuo klaidingų aliarmų, ir nuo praleistų įspėjimų. Ilgai spoksojau į RSSI, kol supratau, kad iš tiesų man rūpi LQ.
+Šiuolaikiniai RC linkai siunčia telemetriją atgal iš imtuvo į siųstuvą ir OSD. Dominuoja trys skaičiai: RSSI, LQ ir SNR. Jie matuoja tą patį linką iš skirtingų kampų — o žinojimas, kurį stebėti, apsaugo ir nuo klaidingų aliarmų, ir nuo praleistų įspėjimų.
 
 ---
 
@@ -30,30 +30,30 @@ Matuojamas dBm (decibelais 1 milivato atžvilgiu). Kuo neigiamesnis = tuo silpne
 
 - **−50 dBm** — puiku, labai arti
 - **−90 dBm** — dar tinka, bet artėja prie jautrumo ribos
-- **−105 dBm** — arti triukšmo grindų; linkas gali strigti
+- **−105 dBm** — arti triukšmo lygio; linkas gali strigti
 
 RSSI pasako signalo galią, bet ne tai, ar ta galia panaudojama. Stiprus signalas triukšmingoje aplinkoje (trukdžiai) gali turėti puikų RSSI, bet siaubingą LQ.
 
 ### LQ — Link Quality (ELRS specifinis)
 
-Procentas tikėtinų paket'ų, kurie buvo sėkmingai priimti per paskutinius 100 paket'ų tarpsnių. Tai patikimiausias realios ELRS linko sveikatos rodiklis.
+Procentas laukiamų paket'ų, kurie buvo sėkmingai priimti per paskutinius 100 paketų tarpsnius. Tai patikimiausias realios ELRS linko sveikatos rodiklis.
 
 - **100%** — priimtas kiekvienas paket'as; linkas švarus
-- **70–99%** — dalis paket'ų prarandama; kvadras gali jaustis kiek mažiau atsakus
+- **70–99%** — dalis paket'ų prarandama; kvadras gali reaguoti kiek vangiau
 - **Žemiau 70%** — rimtos problemos; svarstyk leistis
 - **0%** — linkas prarastas
 
-LQ krentantis anksčiau nei RSSI reikšmingai nukrenta — trukdžių įspėjimo ženklas: signalas yra, bet sugadintas.
+Jei LQ krenta anksčiau, nei reikšmingai nukrenta RSSI, tai trukdžių įspėjimo ženklas: signalas yra, bet sugadintas.
 
 ### SNR — Signal to Noise Ratio
 
-Kiek aukščiau triukšmo grindų sėdi signalas. Matuojamas dB.
+Kiek signalas yra aukščiau triukšmo lygio. Matuojamas dB.
 
 - **Teigiamas SNR (> 5 dB)** — švarus linkas; signalas aiškiai virš triukšmo
 - **SNR apie nulį** — signalas vos atskiriamas nuo triukšmo; linkas nepatikimas
-- **Neigiamas SNR** — imtuvas dirba žemiau triukšmo grindų naudodamas spread-spectrum technikas (ELRS suprojektuotas veikti čia)
+- **Neigiamas SNR** — imtuvas dirba žemiau triukšmo lygio naudodamas spread-spectrum technikas (ELRS suprojektuotas veikti čia)
 
-ELRS gali išlaikyti linką prie neigiamų SNR reikšmių dėl savo spread-spectrum moduliacijos — tai normalu ir tikėtina.
+ELRS gali išlaikyti linką esant neigiamoms SNR reikšmėms dėl savo spread-spectrum moduliacijos — tai normalu ir tikėtina.
 
 ---
 
@@ -123,7 +123,7 @@ ELRS gali išlaikyti linką prie neigiamų SNR reikšmių dėl savo spread-spect
 
 ## Ką stebėti OSD
 
-Daugumai skraidymo stebėk **LQ** — jis tiesiogiai pasako, koks procentas valdymo paket'ų prasimuša. RSSI naudingas kaip range orientyras, bet nekinta, kol jau esi toli.
+Daugeliu skrydžio atvejų stebėk **LQ** — jis tiesiogiai pasako, koks procentas valdymo paket'ų prasimuša. RSSI naudingas kaip nuotolio gairė, bet nekinta, kol jau esi toli.
 
 Rekomenduojami OSD įspėjimai:
 - **LQ < 70%** — geltonas įspėjimas
@@ -146,6 +146,6 @@ FrSky neturi LQ ELRS prasme — kaip pagrindinį rodiklį jis naudoja RSSI. LQ n
 
 ELRS telemetrija siunčiama iš RX → TX per dalį prieinamų laiko tarpsnių. Ratio (pvz., 1:16) reiškia vieną telemetrijos paket'ą kas 16 RC paket'ų.
 
-Didesnis ratio = mažiau telemetrijos pralaidumo = šviežesnis, atsakesnis RC valdymas lėtesnių telemetrijos atnaujinimų sąskaita. Daugumai skraidymo `1:16` ar `1:8` tinka. Trumpo range treniruotėms `1:4` duoda greitesnę telemetriją be reikšmingo poveikio range.
+Didesnis ratio = mažiau telemetrijos pralaidumo = šviežesnis, sparčiau reaguojantis RC valdymas lėtesnių telemetrijos atnaujinimų sąskaita. Daugeliu atvejų `1:16` ar `1:8` tinka. Trumpo range treniruotėms `1:4` duoda greitesnę telemetriją be reikšmingo poveikio range.
 
 Nustatoma ELRS LUA skripte siųstuve: **Telemetry Ratio**.

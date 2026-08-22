@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "esc", "blheli", "am32", "demag", "desync", "startup", "protection", "temperature", "current"]
 ---
 
-Keletas ESC pusės nustatymų nulemia, kaip patikimai motoras įsisuka ir kaip elgiasi, kai jį spaudi negailestingai. Pagrindinis gedimas, nuo kurio jie saugo, — tai **desync**, motoro nutrūkimas ore, kuris baigiasi krašu (ir tą garsą, kai variklis staiga nutyla vidury punch'o, atpažinsi iš karto — patikėkite). Čia apžvelgsim demag kompensaciją, startup/rampup galią ir apsaugų grupę BLHeli_32 ir AM32 firmware. Apie timing svirtį, kuri sąveikauja su visais jais, žr. [Motor Timing Advance](../motor-advance/).
+Keletas ESC pusės nustatymų nulemia, kaip patikimai motoras įsisuka ir kaip elgiasi, kai jį spaudi negailestingai. Pagrindinis gedimas, nuo kurio jie saugo, — tai **desync**, motoro nutrūkimas ore, kuris baigiasi avarija. Čia apžvelgsim demag kompensaciją, startup/rampup galią ir apsaugų grupę BLHeli_32 ir AM32 firmware. Apie timing svirtį, kuri sąveikauja su visais jais, žr. [Motor Timing Advance](../motor-advance/).
 
 ---
 
@@ -60,9 +60,9 @@ Tai riboja, kiek galios ESC gali paduoti **žemuose RPM ir įsisukimo metu**. Ri
 - **BLHeli_32 „Rampup Power“** (senesnis pavadinimas: *Startup Power*): santykinis **3%–150%**. Per mažas → silpni ar nepavykę startai ir trūkčiojimas; per didelis → srovės šuoliai, desync ir triukšmingesnis kvadras.
 - **AM32** jį skaido į du:
   - **Startup Power** — trumpas boost'as tik per pirmas kelias komutacijas, kad motoras įsuktų į sukimąsi.
-  - **Minimum Duty Cycle** — grindys (iki ~25%), kad maži / low-inertia motorai neužstrigtų prie labai mažo throttle.
+  - **Minimum Duty Cycle** — apatinė riba (iki ~25%), kad maži / low-inertia motorai neužstrigtų prie labai mažo throttle.
 
-Rampup galios mažinimas yra teisėta svirtis prieš desync ir elektrinį triukšmą, atsiperkant šiek tiek minkštesniu motoro atsaku.
+Rampup galios mažinimas yra pagrįsta svirtis prieš desync ir elektrinį triukšmą, atsiperkant šiek tiek minkštesniu motoro atsaku.
 
 ---
 
@@ -90,7 +90,7 @@ Laikyk jį **įjungtą** — tai paskutinė gynybos linija, saugianti ESC nuo š
 
 Kietas **amperų limitas** kiekvienam ESC. Kai įjungta, srovė ribojama iki užprogramuotos vertės, o ribotuvas pakankamai greitas, kad suveiktų pagreičių metu (AM32 tai daro su tikra srovės PID kilpa).
 
-Palik **off** pagal nutylėjimą — jei ESC srovės reitingas atitinka build'ą, jo tau nereikia. Tai daugiausia apsauga nuo ESC sudeginimo per pasikartojančius krašus / desync'us.
+Palik **off** pagal nutylėjimą — jei ESC srovės reitingas atitinka build'ą, jo tau nereikia. Tai daugiausia apsauga nuo ESC sudeginimo per pasikartojančias avarijas ar desync'us.
 
 ---
 
@@ -98,7 +98,7 @@ Palik **off** pagal nutylėjimą — jei ESC srovės reitingas atitinka build'ą
 
 | Nustatymas             | Ką jis daro                                              | Ant kvadro         |
 |------------------------|----------------------------------------------------------|--------------------|
-| **Low Voltage Protection** | Nukerpa / riboja galią žemiau 2.5–4.0 V vienai celei | **Off** — FC tvarko vbat įspėjimus; niekada nenori, kad ESC nukirstų galią per flip'ą |
+| **Low Voltage Protection** | Nukerpa / riboja galią žemiau 2,5–4,0 V vienai celei | **Off** — FC tvarko vbat įspėjimus; niekada nenori, kad ESC nukirstų galią per flip'ą |
 | **Stall Protection**   | Padidina throttle, kad neužstrigtų su apkrova            | **Off** — crawler / RC-car funkcija; sukelia karštį ir keistą elgesį ant kvadrų |
 | **Brake on Stop**      | Įjungia stabdymą prie nulinio throttle                   | Paprastai Off — skirta fixed-wing sulankstomiems prop'ams (Air Mode stabdo kitaip) |
 
@@ -122,16 +122,16 @@ Kas realiai skaliuojasi su prop dydžiu, tai **demag** ir **startup**: mažesni,
 |---------------------|--------------|-------------------------------|-----------------------------------------|-----------------------|
 | 35 mm (Air65)       | 1S           | Default — nereikės High       | Default; pakelk truputį, jei motorai stringa per arm | On             |
 | 45 mm (Meteor65)    | 1S           | Default — nereikės High       | Default; pakelk truputį, jei motorai stringa per arm | On             |
-| 1.6"                | 1S–2S        | Default                       | Default                                 | On                    |
+| 1,6"                | 1S–2S        | Default                       | Default                                 | On                    |
 | 2"                  | 2S–3S        | Default                       | Default                                 | On                    |
-| 2.2"                | 3S–4S        | Default                       | Default                                 | On                    |
-| 2.5"                | 4S           | Default                       | Default                                 | On                    |
+| 2,2"                | 3S–4S        | Default                       | Default                                 | On                    |
+| 2,5"                | 4S           | Default                       | Default                                 | On                    |
 | 3"                  | 4S–6S        | Default; High jei desync      | Default                                 | On                    |
 | 5"                  | 4S–6S        | Default; High ant 6S ar desync | Default                                | On (arba Adaptive)    |
 
-> Whoop ir micro ESC dažnai sukasi ant **BLHeli_S**, kuris atveria mažiau ratelių (demag Off/Low/High ir startup-power slankiklis, be srovės limito). Patarimas tas pats — palik default'us ir kelk demag tik tada, jei gauni nutrūkimus.
+> Whoop ir micro ESC dažnai sukasi ant **BLHeli_S**, kuris atveria mažiau reguliuojamų parametrų (demag Off/Low/High ir startup-power slankiklis, be srovės limito). Patarimas tas pats — palik default'us ir kelk demag tik tada, jei gauni nutrūkimus.
 
-Keisk po vieną dalyką ir patvirtink su **full-throttle punch sesija**, tada patikrink motorų temperatūras nusileidus. Dauguma desync fix'ų yra: pakelk demag, sumažink rampup ir patikrink, kad timing nebūtų nustatytas per agresyviai. Beje — po vieną, ne visus iškart, kitaip vėliau nebežinosi, kuris nustatymas tave išgelbėjo.
+Keisk po vieną dalyką ir patvirtink su **full-throttle punch sesija**, tada patikrink motorų temperatūras nusileidus. Dauguma desync fix'ų yra: pakelk demag, sumažink rampup ir patikrink, kad timing nebūtų nustatytas per agresyviai.
 
 ---
 

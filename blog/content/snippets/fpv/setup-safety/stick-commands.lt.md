@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "stick-commands", "configuration", "cli"]
 ---
 
-Stick komandos leidžia įjungti Betaflight funkcijas tiesiai iš siųstuvo stick'ų, be kompiuterio. Naudinga lauke — kai nešiojamąjį palikai namie (arba tiesiog tingi jį tempti į lauką).
+Stick komandos leidžia įjungti Betaflight funkcijas tiesiai iš siųstuvo stick'ų, be kompiuterio. Naudinga lauke.
 
 Visoms komandoms dronas turi būti **disarm**. Throttle visada minimalioje padėtyje, nebent nurodyta kitaip.
 

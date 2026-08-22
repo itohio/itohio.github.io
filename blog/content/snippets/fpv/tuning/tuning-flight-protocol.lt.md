@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "pid", "tuning", "blackbox", "chirp", "step-response", "data-collection", "flight-protocol"]
 ---
 
-Norint gauti gerus PID analizės rezultatus, reikia konkrečios skrydžio sekos. Freestyle log'ai derinimui beveik nenaudingi — įvestys per daug chaotiškos, ašys persidengia, o gazas niekada nepastovus (taip, mano pirmieji „derinimo“ log'ai buvo būtent tokie — grynas menas, jokių duomenų). Šis protokolas apima tikslius judesius, kurie generuoja švarius, atskiriamus duomenis, reikalingus step response analizei, spektrinei analizei ir DI paremtai interpretacijai.
+Norint gauti gerus PID analizės rezultatus, reikia konkrečios skrydžio sekos. Freestyle log'ai derinimui beveik nenaudingi — įvestys per daug chaotiškos, ašys persidengia, o gazas niekada nepastovus. Šis protokolas apima tikslius judesius, kurie generuoja švarius, atskiriamus duomenis, reikalingus step response analizei, spektrinei analizei ir DI paremtai interpretacijai.
 
 Čia aprašyti judesiai — ta pati seka, kurią Betaflight CHIRP autotune funkcija atlieka automatiškai. Rankiniam ir DI paremtam derinimui, atliekant juos sąmoningai, gauni lygiavertę duomenų kokybę.
 
@@ -21,7 +21,7 @@ Bet kokio derinimo log'o tikslas — **maksimalus signalas, minimali tarša**:
 - **Signalas** = drono atsakas į žinomą, kartotiną įvestį vienoje ašyje
 - **Tarša** = vėjas, vienalaikės kelių ašių įvestys, gazo pokyčiai, ground effect, vibracija dėl propellerio pažeidimo
 
-Step response analizė (skaičiuojanti, kaip greitai ir švariai dronas seka užsakytą rate) daro prielaidą, kad įvestis yra švarus step — o ne dreifas ar wobble. Jei roll ir pitch juda tuo pačiu metu, nei viena ašis negali būti švariai išanalizuota.
+Step response analizė (skaičiuojanti, kaip greitai ir švariai dronas seka nurodytą rate) daro prielaidą, kad įvestis yra švarus step — o ne dreifas ar wobble. Jei roll ir pitch juda tuo pačiu metu, nei viena ašis negali būti švariai išanalizuota.
 
 ```mermaid
 flowchart LR
@@ -107,7 +107,7 @@ Sklandus, lėtas gazo ramp nuo minimalaus kabėjimo iki maksimalaus gazo ir atga
 
 - Padaryk **2–3 pilnus ramp'us**
 - Palaikyk ties pilnu gazu ~2 s prieš leisdamasis atgal
-- Likk pozicijoje (naudok stick trim, jei reikia) — bet **nedaryk sąmoningų pitch/roll korekcijų**
+- Laikykis pozicijos (naudok stick trim, jei reikia) — bet **nedaryk sąmoningų pitch/roll korekcijų**
 
 **Ką tai užfiksuoja:** variklių triukšmo harmonikos šluoja per visus dažnius, kylant ir krentant RPM. Būtent tai leidžia spektriniam analizatoriui identifikuoti, kur variklių harmonikos sėdi kruizuojant prieš pilną gazą.
 
@@ -117,13 +117,13 @@ Sklandus, lėtas gazo ramp nuo minimalaus kabėjimo iki maksimalaus gazo ir atga
 
 ### 2 fazė — Stabilus kabėjimo baseline
 
-**Trukmė**: ~30–40 s | **Paskirtis**: triukšmo lygio momentinė nuotrauka be jokio užsakyto judesio
+**Trukmė**: ~30–40 s | **Paskirtis**: triukšmo lygio momentinė nuotrauka be jokio nurodyto judesio
 
 Laikyk poziciją ties pastoviu aukščiu, minimalios stick'o korekcijos. Tikslas — beveik nulinės įvesties kabėjimas.
 
 **Ką tai užfiksuoja:** triukšmo lygį, nesant sąmoningų įvesčių. Tai atskaitos taškas, naudojamas filtrų efektyvumui įvertinti. Jei matai triukšmą šioje fazėje, tai mechaninė ar filtro problema — ne derinimo problema.
 
-> **2" Ripper pastaba:** ground effect labiau ryškus ant mažų rėmų (mažesnis disko plotas). Pakilk virš 1,5 m prieš pradėdamas kabėjimo baseline.
+> **2" Ripper pastaba:** ground effect ryškesnis mažuose rėmuose (mažesnis disko plotas). Pakilk virš 1,5 m prieš pradėdamas kabėjimo baseline.
 
 ---
 
@@ -144,9 +144,9 @@ Atlik greitas, **pilno atlenkimo kairė-dešinė roll įvestis** su trumpomis pa
 - Pastovus gazas (reguliuok tik aukščiui išlaikyti)
 - Skrisk acro mode — angle mode kryžmiškai sujungia ašis ir teršia roll kreivę
 
-**Ką tai užfiksuoja:** švarius roll step response. Gyro kreivė parodys, kaip faktinis sukimosi rate seka (ar peršoka/atsilieka) užsakytą rate kiekviename step.
+**Ką tai užfiksuoja:** švarius roll step response. Gyro kreivė parodys, kaip faktinis sukimosi rate seka (ar peršoka/atsilieka) nurodytą rate kiekviename step.
 
-> **Jei naudoji Betaflight CHIRP mode:** perjunk chirp ant roll ašies ir leisk FC vykdyti automatiškai. Jis autonomiškai atliks dažnio sweep nuo ~1 Hz iki ~600 Hz. Palauk, kol OSD parodys **"chirp execution finished"**, prieš eidamas toliau.
+> **Jei naudoji Betaflight CHIRP mode:** perjunk chirp ant roll ašies ir leisk FC vykdyti automatiškai. Jis autonomiškai atliks dažnio sweep nuo ~1 Hz iki ~600 Hz. Palauk, kol OSD parodys **„chirp execution finished“**, prieš eidamas toliau.
 
 ---
 
@@ -197,9 +197,9 @@ Atlik **vienos ašies** flip ir roll manevrus:
 - 3–4 pilni flip'ai (grynas pitch, be roll)
 - 3–4 yaw spin'ai (grynas yaw)
 
-Tai generuoja aukšto kampinio rate duomenis, kurie stresuoja PID kilpą kitaip nei lėtos step įvestys aukščiau. Jie taip pat gamina gazo numetimus ir leidimusis, kurie atskleidžia propwash elgseną.
+Tai generuoja aukšto kampinio rate duomenis, kurie stresuoja PID kilpą kitaip nei lėtos step įvestys aukščiau. Jie taip pat sukuria gazo numetimus ir leidimusis, kurie atskleidžia propwash elgseną.
 
-> **Po 6 fazės: nusileisk iškart.** Netęsk freestyle skraidymo. Derinimo log'as užbaigtas. Papildomas nekontroliuojamas skraidymas tik prideda triukšmo ir apsunkina reikiamų segmentų identifikavimą. Žinau, pagunda „dar vieną ratą“ didelė — bet tą ratą palik kitai baterijai.
+> **Po 6 fazės: nusileisk iškart.** Netęsk freestyle skraidymo. Derinimo log'as užbaigtas. Papildomas nekontroliuojamas skraidymas tik prideda triukšmo ir apsunkina reikiamų segmentų identifikavimą.
 
 ---
 
@@ -217,11 +217,11 @@ Jei naudoji Betaflight CHIRP autotune (reikalauja firmware su įjungta CHIRP fun
 | Vienos ašies flip'ai (rankinis) | Aukšto rate duomenys + propwash | ~30 s |
 | **Nusileisk ir disarm** | | |
 
-Kad CHIRP veiktų, turi būti nustatytas `debug_mode = CHIRP` ir CHIRP mode turi būti ant jungiklio. OSD rodys **"chirp execution finished"**, kai kiekvienos ašies sweep bus baigtas.
+Kad CHIRP veiktų, turi būti nustatytas `debug_mode = CHIRP` ir CHIRP mode turi būti ant jungiklio. OSD rodys **„chirp execution finished“**, kai kiekvienos ašies sweep bus baigtas.
 
 **Koherencijos patikra po skrydžio:** įkėlus log'ą į Betaflight autotune analizatorių, ieškok „Petrova linijos“ — ryškaus, tęstinio įstrižo pėdsako spektrogramoje nuo žemo iki aukšto dažnio. Jei ši linija blanki ar jos nėra, chirp signalas nebuvo užfiksuotas teisingai. Dažnos priežastys: neteisingas debug mode, per žemas blackbox sample rate arba perteklinis vėjas. Išmesk ir perskrisk.
 
-> **Koherencijos tikslas:** aukštesni 80-tieji iki 90-tųjų % ašiai. Žemiau 80% = nepatikimi duomenys tai ašiai.
+> **Koherencijos tikslas:** aukšti 80-ieji ar 90-ieji procentai kiekvienai ašiai. Žemiau 80 % = tai ašiai duomenys nepatikimi.
 
 ---
 
@@ -232,7 +232,7 @@ Kad CHIRP veiktų, turi būti nustatytas `debug_mode = CHIRP` ir CHIRP mode turi
 Kai įkeli log'ą ir žiūri gyro + setpoint perdengimą 3 fazei (roll įvestys):
 
 - Setpoint kreivė: švarūs stačiakampiai step'ai — plokščia viršūnė, greiti kraštai
-- Gyro kreivė: seka setpoint su trumpu vėlinimu, tada nusistovi. Neturi oscilliuoti ar smukti.
+- Gyro kreivė: seka setpoint su trumpu vėlinimu, tada nusistovi. Neturi osciliuoti ar smukti.
 - Variklių kreivės: visos keturios panašios amplitudės — jei vienas variklis ženkliai garsesnis, patikrink tą variklį/propellerį
 
 **Raudonos vėliavos:**
@@ -240,7 +240,7 @@ Kai įkeli log'ą ir žiūri gyro + setpoint perdengimą 3 fazei (roll įvestys)
 | Ką matai | Problema |
 |-------------|---------|
 | Setpoint dantytas / ne stačiakampis | Per daug RC smoothing arba stick'o įvestis nešvari |
-| Gyro kreivė oscilliuoja po kiekvieno step | P/D disbalansas — pereik prie derinimo |
+| Gyro kreivė osciliuoja po kiekvieno step | P/D disbalansas — pereik prie derinimo |
 | Gyro kreivė niekada nepasiekia setpoint | I per mažas arba P per mažas |
 | Roll ir pitch gyro abu juda roll įvesčių metu | Angle mode kryžminis sujungimas arba yaw sujungimas — perjunk į acro |
 | Variklių kreivės nepastovios / spike'uoja | Propellerio pažeidimas, laisvas variklio varžtas, kondensatoriaus problema — sutvarkyk prieš analizę |
@@ -261,12 +261,12 @@ Prieš skrisdamas derinimo sesiją:
 
 - [ ] Vėjas < 15 km/h (idealiai < 8 km/h)
 - [ ] Švieži propelleriai — jokių įskilimų, subalansuoti
-- [ ] Pilna baterija — įtampos kritimas veikia vėlinimo matavimą
+- [ ] Pilna baterija — įtampos kritimas turi įtakos vėlinimo matavimui
 - [ ] Atvira oro erdvė — jokių medžių, kuriuos reikia apeiti (jokių priverstinių kelių ašių korekcijų)
 - [ ] Flash ištrintas — švari log pradžia
 - [ ] FF slankiklis ties 0, D-max slankiklis ties 0
 - [ ] Nustatytas teisingas debug mode (`FFT_FREQ` arba `CHIRP`)
-- [ ] Blackbox sample rate: 1/1 dydžiams 2–3", priimtina iki 1/2 dydžiams 5"+
+- [ ] Blackbox sample rate: 1/1 dydžio 2–3" dronams, priimtina iki 1/2 dydžio 5"+ dronams
 
 ---
 

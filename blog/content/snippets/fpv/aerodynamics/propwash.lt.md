@@ -6,11 +6,11 @@ category: "fpv"
 tags: ["fpv", "aerodynamics", "propwash", "stall", "angle-of-attack", "dynamic-idle", "vortex-ring", "pid", "tuning"]
 ---
 
-Propeleris — tai besisukantis sparnas, ir kaip bet kuris sparnas jis gamina švarią trauką tik tada, kai oras įteka į jį iš priekio — rotoriui tai reiškia orą iš viršaus, einantį žemyn pro diską. Duok jam švaraus oro — jis skrenda; nustok duoti — jis **užstalina**, lygiai kaip sparnas, patemptas į per didelį atakos kampą.
+Propeleris — tai besisukantis sparnas, ir kaip bet kuris sparnas jis sukuria švarią trauką tik tada, kai oras įteka į jį iš priekio — rotoriui tai reiškia orą iš viršaus, einantį žemyn pro diską. Duok jam švaraus oro — jis skrenda; nustok duoti — jis **užstalina**, lygiai kaip sparnas, patemptas į per didelį atakos kampą.
 
 Štai ir visas propwash. Kai numeti gazą arba išeini iš dive'o, dronas toliau leidžiasi, o motorai lėtėja — tad dronas krenta į tą patį oro stulpą, kurį ką tik nustūmė žemyn. Srautas apsiverčia ir grįžta *aukštyn* pro diską, mentės atakos kampas peršoka stall kampą, srautas atsiskiria, ir trauka tampa nelygi bei triukšminga. Tas wobble, kurį jauti — tai PID kilpa, besigrumianti su ta nelygia trauka.
 
-Vienintelė svirtis, kurią turi — **RPM**: užstalinusi mentė vėl prilimpa, kai tik sukasi pakankamai greitai, kad jos pačios downwash įveiktų aukštyn kylantį orą. Būtent tą ir daro **dynamic idle** — jis tiesiog neleidžia motorams įkristi į žemo RPM stall zoną. (Pirmą kartą pajutęs propwash maniau, kad prastai suderinau PID. Iš dalies — taip, bet dalis jo tiesiog fizika.)
+Vienintelė svirtis, kurią turi — **RPM**: užstalinusi mentė vėl prilimpa, kai tik sukasi pakankamai greitai, kad jos pačios downwash įveiktų aukštyn kylantį orą. Būtent tą ir daro **dynamic idle** — jis tiesiog neleidžia motorams įkristi į žemo RPM stall zoną.
 
 ---
 
@@ -142,7 +142,7 @@ Propelerio mentė — tai besisukantis sparnas. Jos **efektyvus atakos kampas** 
 
 \[ \alpha = \theta_{pitch} - \varphi, \qquad \varphi = \arctan\left(\frac{V_{axial}}{V_{tangential}}\right) \]
 
-`V_tangential` — tai pačios mentės sukimosi greitis (`Ω·r`); `V_axial` — oro greitis pro diską. Kylant `V_axial` didelis ir teigiamas, tad `φ` didelis, o `α` lieka mažas. Kai leidimasis apverčia ašinį srautą, `V_axial` tampa **neigiamas**, `φ` keičia ženklą, ir `α = θ − φ` šoka virš stall kampo (~12–15°). Už to kampo srautas atsiskiria nuo mentės, keltis virsta pasipriešinimu, o trauka tampa triukšminga ir netiesinė — kaip tik tas trikdis, kurį paskui turi atmesti PID.
+`V_tangential` — tai pačios mentės sukimosi greitis (`Ω·r`); `V_axial` — oro greitis pro diską. Kylant `V_axial` didelis ir teigiamas, tad `φ` didelis, o `α` lieka mažas. Kai leidimasis apverčia ašinį srautą, `V_axial` tampa **neigiamas**, `φ` keičia ženklą, ir `α = θ − φ` šoka virš stall kampo (~12–15°). Už to kampo srautas atsiskiria nuo mentės, keliamoji jėga virsta pasipriešinimu, o trauka tampa triukšminga ir netiesinė — kaip tik tas trikdis, kurį paskui turi atmesti PID.
 
 ```mermaid
 flowchart TD
@@ -158,7 +158,7 @@ flowchart TD
 
 ## Efektyvumas ir stall zona prieš RPM
 
-Perkelk tai į traukos efektyvumą per visą RPM diapazoną. Kiekvieną kreivę formuoja du dalykai. Pirma, propas prie beveik nulinio RPM negamina beveik nieko, o **maksimumą** pasiekia ties viduriniu RPM — tada efektyvumas vėl **krenta** prie aukšto RPM, kai mentės galiukai artėja prie garso greičio (tai tip-speed riba). Antra, apsivertusiame sraute mentė lieka **užstalinusi** tol, kol RPM tampa pakankamas, kad jos induced velocity įveiktų aukštyn kylantį orą — o šis stall-išėjimo RPM kiekvienam režimui skiriasi:
+Perkelk tai į traukos efektyvumą per visą RPM diapazoną. Kiekvieną kreivę formuoja du dalykai. Pirma, propas, esant beveik nuliniam RPM, nesukuria beveik nieko, o **maksimumą** pasiekia ties viduriniu RPM — tada efektyvumas vėl **krenta** esant aukštam RPM, kai mentės galiukai artėja prie garso greičio (tai tip-speed riba). Antra, apsivertusiame sraute mentė lieka **užstalinusi** tol, kol RPM tampa pakankamas, kad jos induced velocity įveiktų aukštyn kylantį orą — o šis stall-išėjimo RPM kiekvienam režimui skiriasi:
 
 ```chart
 {
@@ -209,7 +209,7 @@ Perkelk tai į traukos efektyvumą per visą RPM diapazoną. Kiekvieną kreivę 
 
 Skaityk taip:
 
-- **Kiekvienas režimas turi maksimumą, o paskui krenta.** Geriausias efektyvumas — zona apie 9–13k RPM; sukant greičiau (per didelio KV propas) tik švaistoma energija ir kaista motorai anapus maksimumo — tip-speed bauda.
+- **Kiekvienas režimas turi maksimumą, o paskui krenta.** Geriausias efektyvumas — zona apie 9–13k RPM; sukant greičiau (varikliui per didelis KV šiam propui) tik švaistoma energija ir kaista motorai anapus maksimumo — tip-speed bauda.
 - **Kylant ir kybant stall zona baigiasi anksti** (~4000 RPM) — švarus arba beveik švarus srautas.
 - **Leidžiantis ji baigiasi vėlai** (~7000 RPM esant 3 m/s nusileidimui), ir stall-išėjimas slenka toliau į dešinę, kuo greičiau leidiesi.
 - **Užtamsinta juosta — tai visa problema.** Tarp hover stall-išėjimo ir leidimosi stall-išėjimo *kybėti čia visiškai gerai* — bet vos pradedi leistis, nukrenti ant užstalinusios leidimosi kreivės. Tas tarpas ir yra ta vieta, kur gyvena propwash.
@@ -219,7 +219,7 @@ Skaityk taip:
 
 ## Kodėl dynamic idle padeda
 
-Pažiūrėk į užtamsintą juostą grafike. Be dynamic idle ESC laiko tik *fiksuotą* minimalų gazą (default ~5.5%), tad per gazo numetimą ar staigią korekciją motoras gali nusėsti į tą juostą — arba žemiau — kaip tik tada, kai reikia jėgos. Ten jis užstalina arba dalinai desinchronizuojasi, ir wobble tik pablogėja.
+Pažiūrėk į užtamsintą juostą grafike. Be dynamic idle ESC laiko tik *fiksuotą* minimalų gazą (default ~5,5 %), tad per gazo numetimą ar staigią korekciją motoras gali nusėsti į tą juostą — arba žemiau — kaip tik tada, kai reikia jėgos. Ten jis užstalina arba dalinai desinchronizuojasi, ir wobble tik pablogėja.
 
 **Dynamic idle** naudoja dvikryptį DShot RPM telemetriją, kad lėčiausią motorą laikytų virš nustatyto minimalaus RPM net kai mikseris komanduoja nulinį gazą. Nustatyk jį taip, kad sėdėtų ties (ar už) **dešiniuoju** tos juostos kraštu — ir nusileidimas nebenumeta menčių į stall'ą. Jis sutvarko kasdienius atvejus — gazo numetimus ir švelnius nusileidimus; greitas, agresyvus dive nustumia juostos dešinį kraštą toliau, nei bet koks protingas idle gali pavyti — todėl kieti dive'ai visada turi šiek tiek propwash.
 
@@ -238,7 +238,7 @@ save
 
 ## Propelerio stall'as prieš pitch
 
-Stall priklauso nuo *geometrinio* pitch kampo `θ`, o didesnio pitch propeleriai turi didesnį `θ` kiekviename taške. Esant tam pačiam apsivertusiam srautui, didesnio pitch propeleris pasiekia stall kampą greičiau ir stalina stipriau — jis kanda daugiau oro per apsisukimą, bet blogiau toleruoja sutrikdytą srautą leidžiantis. Mažesnio pitch propeleriai atsparesni stall'ui (ir tylesni propwash'e), bet gamina mažiau traukos per RPM, tad remiasi didesniu RPM.
+Stall priklauso nuo *geometrinio* pitch kampo `θ`, o didesnio pitch propeleriai turi didesnį `θ` kiekviename taške. Esant tam pačiam apsivertusiam srautui, didesnio pitch propeleris pasiekia stall kampą greičiau ir stalina stipriau — jis kanda daugiau oro per apsisukimą, bet blogiau toleruoja sutrikdytą srautą leidžiantis. Mažesnio pitch propeleriai atsparesni stall'ui (ir tylesni propwash'e), bet sukuria mažiau traukos per RPM, tad remiasi didesniu RPM.
 
 Tai tas pats pitch kampas, kuris nustato trauką ir tip speed — žr. animuotą paaiškinimą [KV ir propelerių derinime](../../motors-esc/kv-prop-matcher/).
 
@@ -251,7 +251,7 @@ Tai tas pats pitch kampas, kuris nustato trauką ir tip speed — žr. animuotą
 | Lengvas svyravimas išeinant iš dive, nurimsta per 1–2 ciklus | Padidink D (Roll/Pitch) 5–10% | Visiškai ištaisoma |
 | Wobble kaskart numetus gazą | Padidink D, patikrink RPM filtrą, įjunk dynamic idle | Iš esmės ištaisoma |
 | Smarkus svyravimas per agresyvų split-S | D + šiek tiek sumažink P, patikrink filtravimą | Iš dalies — ekstremalūs judesiai visada turi propwash |
-| Svyravimas su karštais motorais | D per aukštas — atleisk | Nesivyk propwash pertekliniu D |
+| Svyravimas su karštais motorais | D per aukštas — sumažink | Nesivyk propwash pertekliniu D |
 | Vis dar svyruoja, kai D jau ties šiluminiu limitu | Susitaik — aerodinamika laimi | Tai ne tuning'o problema |
 
 **Tikslas — ne pašalinti propwash, o greitai jį atmesti neperkaitinant motorų.** Agresyvus freestyle dronas visada turės šiek tiek propwash; gerai suderintas (su dynamic idle, laikančiu mentes pakrautas) jį nuslopina per vieną–du svyravimo ciklus.

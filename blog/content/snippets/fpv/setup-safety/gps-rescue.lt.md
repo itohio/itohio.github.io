@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "gps", "rescue", "failsafe", "return-to-home", "long-range"]
 ---
 
-GPS Rescue — tai Betaflight return-to-home failsafe. Kai suveikia (ryšio praradimas, žema baterija ar rankinis įjungimas), dronas pakyla iki sukonfigūruoto aukščio ir parskrenda ten, kur buvo arm'intas. Skamba kaip magija — bet magija veikia tik tada, kai viską sukonfigūravai teisingai.
+GPS Rescue — tai Betaflight return-to-home failsafe. Kai suveikia (ryšio praradimas, žema baterija ar rankinis įjungimas), dronas pakyla iki sukonfigūruoto aukščio ir parskrenda ten, kur buvo arm'intas.
 
 ---
 
@@ -77,7 +77,7 @@ Bandomiesiems skrydžiams žinomose saugiose vietose gali laikinai leisti arm be
 
 ## Testavimas
 
-Prieš pasikliaudamas GPS Rescue, visada išbandyk jį ramią dieną virš atviros vietos („turėtų veikti" — tai ne testas):
+Prieš pasikliaudamas GPS Rescue, visada išbandyk jį ramią dieną virš atviros vietos:
 
 1. Arm ir pakilk; užfiksuok GPS home tašką
 2. Nuskrisk 100 m
@@ -92,4 +92,4 @@ Būk pasiruošęs atgauti valdymą, jei elgesys neteisingas.
 
 - GPS Rescue reikalauja magnetometro (kompaso) patikimam kursui. Kai kurie buildai naudoja GPS modulyje įmontuotą kompasą (įjunk Betaflight GPS tab'e).
 - Be kompaso dronas kursui vertinti naudoja akselerometrą + GPS greitį — mažiau tikslu, bet veikia.
-- GPS tikslumas kinta priklausomai nuo palydovų skaičiaus ir atmosferos sąlygų. HDOP < 2.0 yra priimtina rescue'ui; < 1.5 yra ideali.
+- GPS tikslumas kinta priklausomai nuo palydovų skaičiaus ir atmosferos sąlygų. HDOP < 2,0 yra priimtina rescue'ui; < 1,5 yra ideali.

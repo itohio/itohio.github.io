@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "rates", "actual-rates", "presets", "cli", "tuning", "733", "633", "533"]
 ---
 
-`533`, `633`, `733` — tai bendruomenės trumpiniai trims populiariems freestyle rate profiliams, o skaičius **ir yra maksimalus sukimosi greitis °/s** — `733` viršija apie 730 °/s, `533` — apie 530 °/s. Visi jie sukurti vienodai legacy Betaflight sistemoje: fiksuotas **Super Rate 0.70** su laipsniškai keliamu **RC Rate**. Šis snippet'as pateikia kiekvieną abiejose rate sistemose (legacy Betaflight *ir* Actual) su kopijuojamu CLI ir realia kreive. Formules už šių sistemų rasi čia: [Rate Modes](../rate-modes/); centro/vidurio/krašto zonas — [Rates Deep Dive](../rates-deep-dive/).
+`533`, `633`, `733` — tai bendruomenės trumpiniai trims populiariems freestyle rate profiliams, o skaičius **ir yra maksimalus sukimosi greitis °/s** — `733` pasiekia apie 730 °/s, `533` — apie 530 °/s. Visi jie sukurti vienodai legacy Betaflight sistemoje: fiksuotas **Super Rate 0.70** su laipsniškai keliamu **RC Rate**. Šis snippet'as pateikia kiekvieną abiejose rate sistemose (legacy Betaflight *ir* Actual) su kopijuojamu CLI ir realia kreive. Formules už šių sistemų rasi čia: [Rate Modes](../rate-modes/); centro/vidurio/krašto zonas — [Rates Deep Dive](../rates-deep-dive/).
 
 ---
 
@@ -40,7 +40,7 @@ RC Rate kėlimas pakelia visą kreivę (ir lubas); bendras Super Rate 0.70 sutei
 | **633** | Subalansuotas visapusis | `0.95 · 0.70 · 0`          | `190 / 630 / 55`             | ~633 °/s | Bendras freestyle / kruizavimas    |
 | **533** | Ramus, sklandus, tiesinis | `0.80 · 0.70 · 0`        | `160 / 530 / 54`             | ~533 °/s | Acro mokymasis, racing linijos, cine |
 
-Actual stulpeliai atkuria tas pačias kreives ~0.5 % tikslumu (patikrinta su Betaflight `applyBetaflightRates` / `applyActualRates`).
+Actual stulpeliai atkuria tas pačias kreives ~0,5 % tikslumu (patikrinta su Betaflight `applyBetaflightRates` / `applyActualRates`).
 
 ---
 
@@ -90,7 +90,7 @@ Actual stulpeliai atkuria tas pačias kreives ~0.5 % tikslumu (patikrinta su Bet
 }
 ```
 
-Ta pati forma, trys aukščiai. Super Rate 0.70 laiko pirmuosius ~60 % stick'o gana ramius, o tada kreivė smarkiai kyla link pilno nuspaudimo — būtent ten gyvena „snap'as“ flip'ams ir rolliams. Didesnis RC Rate pakelia ir centro gyvumą, ir lubas. Taigi jei tau atrodo, kad dronas „nervingas“ — dažniausiai kaltas ne maks. rate, o pernelyg gyvas centras.
+Ta pati forma, trys aukščiai. Super Rate 0.70 laiko pirmuosius ~60 % stick'o gana ramius, o tada kreivė smarkiai kyla link pilno nuspaudimo — būtent ten gyvena „snap'as“ flip'ams ir rolliams. Didesnis RC Rate pakelia ir centro gyvumą, ir lubas.
 
 ---
 
@@ -257,8 +257,8 @@ Kadangi pamatinė matematika skiriasi, **expo skaičiai nesutampa** tarp sistem�
 
 - **Expo** nėra trumpinio dalis. Pridėk `expo` (0.10–0.20 legacy, ~30–50 Actual'e), kad suminkštintum centrą smulkesnei hover/linijų kontrolei — jis nekeičia maks. rate.
 - **Yaw** parodytas lygus roll/pitch švariam kopijavimui. Daug pilotų nuleidžia yaw šiek tiek, kad spin'ai būtų švaresni — sumažink `yaw_*` reikšmes pagal skonį.
-- Įklijavęs atsidaryk **Rates** skirtuką Betaflight Configurator'e ir prieš skrisdamas patikrink, ar gyva kreivė ir maks. rate rodmuo atitinka aukščiau esančią lentelę (klausk manęs, iš kur žinau, kad verta pasitikrinti prieš, o ne po pirmo flip'o).
-- `rates_type` perjungimas neištrina kitos sistemos reikšmių — Betaflight laiko jas kiekvienam profiliui, tad gali laksčioti tarp BETAFLIGHT ir ACTUAL palyginimui.
+- Įklijavęs atsidaryk **Rates** skirtuką Betaflight Configurator'e ir prieš skrisdamas patikrink, ar gyva kreivė ir maks. rate rodmuo atitinka aukščiau esančią lentelę.
+- `rates_type` perjungimas neištrina kitos sistemos reikšmių — Betaflight laiko jas kiekvienam profiliui, tad gali laisvai perjunginėti tarp BETAFLIGHT ir ACTUAL, kad palygintum.
 
 ---
 
