@@ -1,8 +1,8 @@
 ---
-title: "Pirmasis įrašas Lietuvių kalba"
+title: "Pirmasis įrašas lietuvių kalba"
 date: 2022-05-13T18:26:47+02:00
 subtitle: "This is a test post to check how the multilanguage feature works"
-authod: admin
+author: admin
 thumbnail: https://preview.redd.it/0x68eoaoez071.jpg?width=640&crop=smart&auto=webp&s=3365f78f7da8accfbb5667076b02c87f69204469
 ---
 
@@ -10,22 +10,22 @@ thumbnail: https://preview.redd.it/0x68eoaoez071.jpg?width=640&crop=smart&auto=w
 
 Šiaip esu gana tingus žmogus su daugybe interesų. Ir išmokau tokios strategijos - jeigu nepavyksta kažko padaryti kuo greičiau, 
 tai tikriausiai neverta to daryti visai.
-Išskirtinais atvejais jeigu matau realią naudą iš potencialaus projekto(ar tai asmeninė satisfakcija, arba komercinė nauda, arba nauda visuomenei) - tuomet galiu jo imtis rimtai.
-Priešingu atveju norėdamas patenkinti smalsumą susikūriu smėlio dėžę ir išsibandau idėjas kol neatsiranda kas nors įdomesnio. Geriausiai šitą strategiją apibūtina štai toks komiksas:
+Išskirtiniais atvejais jeigu matau realią naudą iš potencialaus projekto(ar tai asmeninė satisfakcija, arba komercinė nauda, arba nauda visuomenei) - tuomet galiu jo imtis rimtai.
+Priešingu atveju norėdamas patenkinti smalsumą susikūriu smėlio dėžę ir išsibandau idėjas kol neatsiranda kas nors įdomesnio. Geriausiai šitą strategiją apibūdina štai toks komiksas:
 
 ![Apie projektus](https://preview.redd.it/0x68eoaoez071.jpg?width=640&crop=smart&auto=webp&s=3365f78f7da8accfbb5667076b02c87f69204469)
 
-Taigi, Pirma šio blogo versija buvo Django projektas su visokiais templeitais ir panašiai. Jį prižiūrėti buvo gana įdomu, tačiau visgi reikalaudavo daug mentalinių pastangų.
+Taigi, pirma šio blogo versija buvo Django projektas su visokiais templeitais ir panašiai. Jį prižiūrėti buvo gana įdomu, tačiau visgi reikalaudavo daug mentalinių pastangų.
 Nekalbant jau apie žingsnių kiekį norint atnaujinti turinį net ir su visom automatizacijom.
 
 Tuomet atėjo laikas prie CMS, šiuo atveju dokerizacija bei Mezzanine. Tuo atveju priežiūra būdavo daug paprastesnė - tereikėdavo prisijungti prie admin panelės, įkelti naują įrašą ir viskas.
-Tačiau kai atėjo laikas eksperimentuoti su įvairiais protokolais ir norėjau perpanaudoti savo serverį tiems tikslams supratau, jog atstatinėti tokį daiktą nėra labai paprastą. Juolabiau vis labiau tolau nuo Python ir vis arčiau Go.
+Tačiau kai atėjo laikas eksperimentuoti su įvairiais protokolais ir norėjau perpanaudoti savo serverį tiems tikslams supratau, jog atstatinėti tokį daiktą nėra labai paprasta. Juolabiau vis labiau tolau nuo Python ir vis arčiau Go.
 
-Dabar gi, po kokių dviejų-trijų metų tylos ir kaltės jausmo, jog absoliučiai niekuo niekur nesidalinu, ir po to kai iš pelenų prikėliau Mezzanine pagrindu sukurtą blogą(ir kuomet suvokiau kiek reikia šokti su bugnu aplink tiekėją, kad gaučiau SSL sertifikatą:D), suvokiau, jog net ir jungtis prie admin panelės nenoriu. O noriu, pasirodo, dirbti tiesiogiai su Github.
+Dabar gi, po kokių dviejų-trijų metų tylos ir kaltės jausmo, jog absoliučiai niekuo niekur nesidalinu, ir po to kai iš pelenų prikėliau Mezzanine pagrindu sukurtą blogą(ir kuomet suvokiau kiek reikia šokti su būgnu aplink tiekėją, kad gaučiau SSL sertifikatą:D), suvokiau, jog net ir jungtis prie admin panelės nenoriu. O noriu, pasirodo, dirbti tiesiogiai su Github.
 
 Tiksliau planas atrodė labai paprastas:
 - palikti puslapio github repo
-- sukurti deployment sripts
+- sukurti deployment scripts
 - sukurti Github Pages su automatiniu deploymentu
 - nukreipti DNS įrašus į Github Pages
 

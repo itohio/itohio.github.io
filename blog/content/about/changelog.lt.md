@@ -13,7 +13,7 @@ showShare: false
 
 # 2023-2024
 - Garso eksperimentai su DML
-- Mokausi Kolorimetrijos (Spalvų mokslas)
+- Mokausi kolorimetrijos (spalvų mokslo)
 - Elektromagnetinė mechanika - Coilgun
 
 # 2022
@@ -25,7 +25,7 @@ showShare: false
 # 2021-*
 - Visiškai perdariau ITOHI serverį
 - Perėjau prie konteinerizuotos infrastruktūros
-- Atskyriau ITOHI projektus nuo asmeninius ir perkėliau į https://github.com/itohio
+- Atskyriau ITOHI projektus nuo asmeninių ir perkėliau į https://github.com/itohio
 - Pradėjau dirbti ties EasyRobot
 - Pradėjau dirbti ties Collective
 - Pradėjau dirbti ties Phingo

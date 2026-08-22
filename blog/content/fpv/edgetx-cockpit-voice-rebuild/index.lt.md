@@ -16,27 +16,26 @@ tags:
   - telemetrija
   - minimali-itampa
   - gps-rescue
-keywords: ["EdgeTX loginis jungtukas AND pagalbinis", "EdgeTX RxBt minimumo igarsinimas", "EdgeTX prearm ispejimas"]
+keywords: ["EdgeTX loginis jungtukas AND pagalbinis", "EdgeTX RxBt minimumo įgarsinimas", "EdgeTX prearm įspėjimas"]
 series:
   - EdgeTX Cockpit Voice
 ---
 
 > **EdgeTX Cockpit Voice**, 9 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 8 dalis: Keturi dalykai, kurie negerai](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 8 dalis: keturi dalykai, kurie čia negerai](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 [8 dalis](/fpv/edgetx-cockpit-voice-whats-wrong/) išvardijo keturis dalykus, kurie
 negerai konfigūracijoje, su kuria skraidau šiandien. Ši dalis yra sprendimas,
-suprojektuotas bet dar neįrašytas, užrašytas dalinai tam, kad tikrai imčiausi.
+suprojektuotas, bet dar neįrašytas.
 
-## Šitą išbandysiu kaip sekantį: pilnas pergrupavimas
+## Šitą išbandysiu kaip kitą: pilnas pergrupavimas
 
-Viskas aukščiau yra tai, su kuo realiai skraidau šiandien, netvarką įskaitant. Šis
-skyrius yra perdarymas, kurį suprojektavau, bet dar neįrašiau į pultą, užrašau jį
-dalinai tam, kad tikrai imčiausi.
+Viskas aukščiau yra tai, su kuo realiai skraidau šiandien, netvarką įskaitant. Šį
+perdarymą užrašau dalinai tam, kad tikrai imčiausi.
 
 > **Pastaba apie numeraciją:** šis skyrius yra nuo nulio sudarytas išdėstymas, tad
-> `L` numeriai žemiau **nereiškia** to, ką jie reiškia anksčiau šiame įraše.
+> `L` numeriai žemiau **nereiškia** to, ką jie reiškia anksčiau šioje serijoje.
 > Konfigūracijoje, su kuria skraidau šiandien, `L1` yra `RxBt < 4,0 V`; perdaryme
 > `L1` yra galiojimo pagalbinis. Skaityk tuos du išdėstymus kaip atskirus dokumentus.
 
@@ -281,6 +280,6 @@ tai pamatyti.*
 
 ---
 
-> **Series:** EdgeTX Cockpit Voice, 9 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+> **Serija:** EdgeTX Cockpit Voice, 9 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 8 dalis: Keturi dalykai, kurie negerai](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 8 dalis: keturi dalykai, kurie čia negerai](/fpv/edgetx-cockpit-voice-whats-wrong/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

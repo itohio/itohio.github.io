@@ -18,7 +18,7 @@ tags:
   - betaflight
   - report-cell-voltage
   - lihv
-keywords: ["EdgeTX garsinis baterijos ispejimas", "report_cell_voltage Betaflight", "FPV celes itampos telemetrija", "RadioMaster GX12 nustatymai"]
+keywords: ["EdgeTX garsinis baterijos įspėjimas", "report_cell_voltage Betaflight", "FPV celės įtampos telemetrija", "RadioMaster GX12 nustatymai"]
 series:
   - EdgeTX Cockpit Voice
 thumbnail: "cover.jpg"
@@ -26,7 +26,7 @@ thumbnail: "cover.jpg"
 
 > **EdgeTX Cockpit Voice**, 1 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [2 dalis: Kalibracija, ant kurios stovi kiekvienas įspėjimas ›](/fpv/edgetx-cockpit-voice-calibration/)
+> [2 dalis: kalibracija, ant kurios stovi kiekvienas baterijos įspėjimas ›](/fpv/edgetx-cockpit-voice-calibration/)
 
 Tą skrydį žinai. Esi gerokai nuskridęs, reljefas geras, linijos plaukia, o tu
 visas esi akiniuose. Kažkur OSD kamputyje įtampos skaičius jau pusantros minutės
@@ -34,12 +34,12 @@ tyliai leidžiasi, ir tu į jį nė karto nepažiūrėjai, nes buvai užsiėmęs
 Tada OSD pradeda mirksėti, ir tu suskaičiuoji: atstumas iki namų, priešpriešinis
 vėjas, likęs įtampos kritimas. Ir skaičiai atsako: ne.
 
-Tas skrydis baigiasi pasivaikščiojimu. Kartais, pasivaikščiojimu su maišeliu.
+Tas skrydis baigiasi pasivaikščiojimu. Kartais pasivaikščiojimu su maišeliu.
 
 Labiausiai mane šiame gedimo scenarijuje visada trikdė tai, kad tai yra
 **tik** sąsajos problema. Duomenys buvo visą laiką. Pultas žinojo. Dronas žinojo.
-Vienintelė sulūžusi grandies vieta buvo ta, kad informacija buvo pateikta
-mažais švytinčiais skaitmenimis periferiniame lauke žmogui, kuris tuo metu
+Vienintelė trūkusi grandinės grandis buvo ta, kad informacija buvo pateikta
+mažais švytinčiais skaitmenimis periferiniame regėjimo lauke žmogui, kuris tuo metu
 koncentravosi į visai kitą dalyką.
 
 ## Tikras orlaivis su tavimi taip nepasielgtų
@@ -49,13 +49,13 @@ neleis, kad mažo kuro būklė būtų vizualinė detalė, kurią gali praleisti.
 pasakys. Garsiai. Ir pakartos. Įspėjimai apie neišleistą važiuomenę, apie
 kritinį atakos kampą, aukščio pranešimai, įspėjimai apie reljefą. Visas
 šimtmetis aviacijos žmogiškųjų faktorių inžinerijos susivedė į vieną išvadą:
-**laiko atžvilgiu kritinėms būsenos kaitoms garsas nugali vaizdą, nes garsui
+**laike kritiniams būsenos pokyčiams garsas nugali vaizdą, nes garsui
 nereikia, kad pilotas kur nors pažiūrėtų.**
 
 Ir vis dėlto standartinė FPV konfigūracija 250 gramų orlaiviui, kurio skrydžio
 laikas keturios minutės, yra... skaičius ekrano kampe.
 
-Tai aš tai sutvarkiau. Mano GX12 dabar su manimi kalba. Ne Lua skriptu, ne kažkuo
+Todėl aš tai sutvarkiau. Mano GX12 dabar su manimi kalba. Ne Lua skriptu, ne kažkuo
 egzotišku, tiesiog EdgeTX loginiais jungtukais ir specialiosiomis funkcijomis,
 kurios programinėje įrangoje sėdėjo visą laiką.
 
@@ -63,7 +63,7 @@ Tai pirmas kartas, kai tai susikonfigūravau, ir noriu pasakyti atvirai:
 **kai kurias dalis galima padaryti kur kas mažiau nerangiai.** Parodysiu
 konkrečiai, kur mano variantas nerangus ir kodėl, nes tai naudingiau nei
 apsimesti, kad viską padariau teisingai iš pirmo karto. Bet esmė veikia, ir
-vienas konkretus įspėjimas, pranešimas „grįžk namo“ maždaug prie pusės
+vienas konkretus įspėjimas, pranešimas „grįžk namo“ maždaug ties puse
 talpos, man tikrai išgelbėjo skrydžius tolimose misijose. Jis duoda signalą
 pradėti planuoti kelią atgal, kol dar turiu energijos biudžetą tai padaryti, o
 ne atrasti problemą tada, kai biudžetas jau išleistas.
@@ -75,10 +75,10 @@ ne atrasti problemą tada, kai biudžetas jau išleistas.
 Tai vienintelis pakeitimas, dėl kurio visa sistema tampa įmanoma, ir jis
 atliekamas skrydžio valdiklyje, ne pulte.
 
-Pagal nutylėjimą CRSF baterijos kadras praneša **paketo įtampą**. Kaip visai
-flotilei bendras slenkstis tai yra nenaudinga, nes mano flotilė apima nuo 1S
+Pagal nutylėjimą CRSF baterijos kadras praneša **paketo įtampą**. Bendram visos
+flotilės slenksčiui tai nenaudinga, nes mano flotilė apima nuo 1S
 iki 4S. Slenkstis „3,5 V“ nieko nereiškia, kai vienas aparatas skrenda su vienu
-18650 elementu, o kitas, su 4S LiHV paketu. Man reikėtų atskiro slenksčių
+18650 elementu, o kitas su 4S LiHV paketu. Man reikėtų atskiro slenksčių
 rinkinio kiekvienam modeliui, palaikomo ranka, amžinai.
 
 Todėl visiems aparatams nustačiau pranešti **vidutinę celės įtampą**.
@@ -102,10 +102,10 @@ riperių, ir ant 4S trijų colių. Vienas slenksčių laiptų rinkinys visai flo
 > parametro pavadinimą, o nedaryk prielaidos, kad jis identiškas. Aš to
 > neišmatavau.
 
-### Kodėl nedalinti EdgeTX pusėje?
+### Kodėl nedalyti EdgeTX pusėje?
 
 Galima. EdgeTX leidžia telemetrijos sensoriui nustatyti savą **Ratio** koeficientą,
-tad galėtum leisti valdikliui pranešti paketo įtampą ir dalinti iš celių
+tad galėtum leisti valdikliui pranešti paketo įtampą ir dalyti iš celių
 skaičiaus jau pulte.
 
 Aš to sąmoningai nedariau, ir tai matosi konfigūracijoje. RxBt sensoriui
@@ -129,7 +129,7 @@ telemetrySensors:
 
 Dvi priežastys daryti tai orlaivyje:
 
-1. **Pulte koeficientas yra vienam modeliui, o celių skaičius, vienam
+1. **Pulte koeficientas yra vienam modeliui, o celių skaičius vienam
    paketui.** Dalyba iš keturių pulto pusėje tampa neteisinga tą pačią
    sekundę, kai tą patį aparatą paskraidinu su 3S paketu.
 2. **LiHV sugriauna fiksuotą spėjimą.** Mano trijų colių skrenda su 4S LiHV —
@@ -138,18 +138,18 @@ Dvi priežastys daryti tai orlaivyje:
    skaičių iš jau padalintos reikšmės, ne. Skrydžio valdiklis savo celių skaičių
    jau žino iš tikros nustatymo logikos. Tegu skaičiuoja tas, kuris žino.
 
-Kompromisas atviras: darant tai valdiklio pusėje, kiekvienam naujam aparatui
+Kompromisas sąžiningas: darant tai valdiklio pusėje, kiekvienam naujam aparatui
 reikia tos CLI eilutės, ir jei pamirši, įspėjimai suveiks absurdišku momentu. Tad
 tai priklauso naujo aparato paruošimo sąrašui, kartu su tais dalykais, kurių irgi
 nesimato.
 
 Vienas slenksčių rinkinys dabar reiškia tą patį fizinį dalyką kiekvienam mano
 aparatui. Toliau: trys mygtukai, kurie nusprendžia, kuriems įspėjimams leidžiama
-kalbėti, ir AND vartai, neleidžiantys jiems vienas kitam po kojų kliudyti.
+kalbėti, ir AND vartai, neleidžiantys jiems lipti vienas kitam ant kojų.
 
 
 ---
 
-> **Series:** EdgeTX Cockpit Voice, 1 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+> **Serija:** EdgeTX Cockpit Voice, 1 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [2 dalis: Kalibracija, ant kurios stovi kiekvienas įspėjimas ›](/fpv/edgetx-cockpit-voice-calibration/)
+> [2 dalis: kalibracija, ant kurios stovi kiekvienas baterijos įspėjimas ›](/fpv/edgetx-cockpit-voice-calibration/)

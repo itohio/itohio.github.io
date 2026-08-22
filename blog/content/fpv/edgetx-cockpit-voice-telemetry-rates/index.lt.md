@@ -25,7 +25,7 @@ thumbnail: "rxmap-sphere-airframe.png"
 
 > **EdgeTX Cockpit Voice**, 6 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 5 dalis: Iš kur atkeliauja pranešimai](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [7 dalis: Dvi antenos, dvi juostos ›](/fpv/edgetx-cockpit-voice-antennas/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 5 dalis: iš kur atkeliauja pranešimai](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [7 dalis: dvi antenos, dvi juostos ›](/fpv/edgetx-cockpit-voice-antennas/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 Raudonas mygtukas šioje sistemoje rašo CSV į SD kortelę. Tas žurnalas pasirodo
 esąs įdomiausias objektas visame projekte ir kartu tas, kurį supratau
@@ -43,7 +43,7 @@ namų darbus, nes atviras atsakymas yra tas, kad svarbiausio dalyko neišmatavau
 1. **ELRS telemetrijos santykis**, kaip dažnai radijo kanalas apskritai skiria
    laiko tarpą atgaliniam ryšiui.
 2. **CRSF kadrų ciklinė eilė**, valdiklis turi kelis skirtingus kadrų tipus, ir
-   kiekviena telemetrijos galimybė nuveža vieną iš jų.
+   kiekvienas telemetrijos tarpas nuveža vieną iš jų.
 3. **EdgeTX įrašymo periodas**, kaip dažnai pultas nuskaito paskutinę gautą
    reikšmę.
 
@@ -122,7 +122,7 @@ Dvi iš to sekančios išvados:
   kritimai EdgeTX loginiams jungtukams yra nematomi. Jie egzistuoja tik juodojoje
   dėžėje.
 
-`TRSS` yra ženklas, kodėl tie du lygiai apskritai skiriasi. Jis pasikeitė 1384 iš
+`TRSS` parodo, kodėl tie du lygiai apskritai skiriasi. Jis pasikeitė 1384 iš
 1510 serijų, tai yra praktiškai kiekvienoje eilutėje. Jis generuojamas siųstuvo
 modulyje ir niekada nelaukia oro kadro.
 
@@ -232,6 +232,6 @@ reikia.
 
 ---
 
-> **Series:** EdgeTX Cockpit Voice, 6 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+> **Serija:** EdgeTX Cockpit Voice, 6 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 5 dalis: Iš kur atkeliauja pranešimai](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [7 dalis: Dvi antenos, dvi juostos ›](/fpv/edgetx-cockpit-voice-antennas/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 5 dalis: iš kur atkeliauja pranešimai](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [7 dalis: dvi antenos, dvi juostos ›](/fpv/edgetx-cockpit-voice-antennas/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

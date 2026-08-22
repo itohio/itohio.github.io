@@ -15,14 +15,14 @@ tags:
   - itampos-kritimas
   - rysio-kokybe
   - juodoji-deze
-keywords: ["EdgeTX loginiu jungtuku atkirtimo laikas", "itampos kritimas netikras signalas FPV", "RQly rysio kokybes ispejimas"]
+keywords: ["EdgeTX loginių jungtukų atkirtimo laikas", "įtampos kritimas netikras signalas FPV", "RQly ryšio kokybės įspėjimas"]
 series:
   - EdgeTX Cockpit Voice
 ---
 
 > **EdgeTX Cockpit Voice**, 8 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 7 dalis: Dvi antenos, dvi juostos](/fpv/edgetx-cockpit-voice-antennas/)  ·  [9 dalis: Perdarymas, sugrupuotas skrydžio tvarka ›](/fpv/edgetx-cockpit-voice-rebuild/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 7 dalis: dvi antenos, dvi juostos](/fpv/edgetx-cockpit-voice-antennas/)  ·  [9 dalis: perdarymas, sugrupuotas skrydžio tvarka ›](/fpv/edgetx-cockpit-voice-rebuild/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 Viskas iki šiol yra tai, su kuo realiai skraidau. Ši dalis yra atviras
 atsiskaitymas. Pradžioje sakiau, kad kai kurias dalis galima padaryti mažiau
@@ -53,7 +53,7 @@ penkias sekundes, vienas ant kito. Tuo momentu tai turbūt net gerai, dėmesį
 tikrai atkreipia, bet tai nėra *informatyvu*. Sirena, kuri niekada nenustoja,
 neperduoda daugiau informacijos nei sirena, kuri suveikia vieną kartą.
 
-Sprendimas, padaryti kiekvieną laiptelį išskirtinį, sujungiant kiekvieną
+Sprendimas — padaryti kiekvieną laiptelį išskirtinį, sujungiant kiekvieną
 slenkstį su žemiau esančio slenksčio negacija: „žemiau 3,6 **ir ne** žemiau
 3,5“. EdgeTX tai gali antru loginių jungtukų sluoksniu. Aš dar neperdariau.
 
@@ -71,7 +71,7 @@ pakete, kuriam viskas buvo gerai.
 
 Įtampos kritimas nėra įkrovos lygis. Įtampos slenkstis be laiko kriterijaus
 skirtumo pamatyti negali. 3,5 V ir 2,9 V laipteliai yra pažeidžiami, nes būtent
-tokias reikšmes praeini po apkrova gerokai anksčiau, nei jas pasiekiam ramybėje.
+tokias reikšmes praeini po apkrova gerokai anksčiau, nei jas pasieki ramybėje.
 
 EdgeTX įrankius turi: **Duration** reikalauja, kad sąlyga išsilaikytų N
 sekundžių prieš jungtukui tampant teisingu, o **Delay** atideda perėjimą.
@@ -79,8 +79,8 @@ Uždėjus sekundės ar dviejų trukmę žemiesiems laipteliams, netikri signalai
 įtampos kritimo išnyktų beveik visiškai.
 
 Neskelbsiu konkrečių skaičių, nes jų dar neišvedžiau iš savo įrašų, o rinktis
-juos iš nuojautos būtų būtent tas spėjimas, prieš kurį visas šis įrašas ir
-argumentuoja. Teisingas būdas, pasižiūrėti į savo juodosios dėžės įtampos
+juos iš nuojautos būtų būtent tas spėjimas, su kuriuo visas šis įrašas ir
+nesutinka. Teisingas būdas — pasižiūrėti į savo juodosios dėžės įtampos
 kritimų trukmių pasiskirstymą ir pasirinkti trukmę, ilgesnę už ilgiausią savo
 akceleravimą. Tai matavimas, ir įrašus jam turiu.
 
@@ -99,7 +99,7 @@ kai sistemą kuri: **lygio palyginimas negali atskirti „kritiškai žemai“ n
 Užsimezgus ryšiui pultas jau turi jungtį, bet CRSF baterijos kadras dar
 neatkeliavo, tad `RxBt` sensorius vis dar sėdi ant savo pradinės reikšmės
 **0,0 V**. O `0,0` yra mažiau nei 4,0, ir mažiau nei 3,6, ir mažiau nei 3,5, ir —
-gražiausia dalis, mažiau nei **2,9**. Tad visi laiptai suveikia vienu metu,
+gražiausia dalis — mažiau nei **2,9**. Tad visi laiptai suveikia vienu metu,
 įskaitant žemiausią laiptelį: pultas džiugiai informuoja, kad sugadinau paketą —
 ant šviežios baterijos, dar prieš tai, kai atėjo pirmas tikras įtampos rodmuo.
 
@@ -107,7 +107,7 @@ Tada atkeliauja baterijos kadras, `RxBt` šokteli į tikrą reikšmę, visi jung
 tampa neteisingi, `L10` pamato `> 4,2 V` ir pasako „ready“ — ir viskas gerai. Bet
 pirmas dalykas, kurį išgirstu, yra signalas.
 
-Tai dar nemaloniai persidengia su kadrų greičiu iš ankstesnio skyriaus. Ta mirusi
+Tai dar nemaloniai persidengia su kadrų greičiu iš 6 dalies. Ta mirusi
 zona nėra milisekundės, ji tęsiasi tol, kol atkeliauja pirmas baterijos kadras, o
 tie kadrai nėra dažni.
 
@@ -129,7 +129,7 @@ kai pakelsiu droną, pultas atsitrenks man į krūtinę ir arm jungtukas persive
 Esu gana tikras, kad tai bus pakankamai įsimintina pamoka, kad tą patį vakarą
 darbas būtų padarytas, su sąlyga, kad dar turėsiu visus pirštus rašyti.
 
-Kas yra blogas planas. Bet tai sąžiningas mano tikrojo plano aprašymas.
+Tai blogas planas. Bet sąžiningas mano tikrojo plano aprašymas.
 
 ### 4. Jokio ryšio kokybės įspėjimo
 
@@ -151,7 +151,7 @@ Turint galvoje, kad visas šis projektas egzistuoja tam, kad nebeprašvilptum ri
 į kurią nežiūrėjau, tai, kad nepritaikiau jo **ryšio kokybei**, ribai, kuri
 skrydžius realiai baigia, krūme, toli nuo mašinos, yra praleidimas, kurį
 pastebėjau tai rašydamas. `RQly < 70 → PLAY_TRACK "link"` yra vienas loginis
-jungtukas ir viena specialioji funkcija, ir tai sekantis punktas sąraše.
+jungtukas ir viena specialioji funkcija, ir tai kitas punktas sąraše.
 
 Ir yra dar blogiau, dėl to, kas būtent tie sensoriai yra. Žr. žemiau.
 
@@ -167,6 +167,6 @@ ta dalis, dėl kurios jie tampa sutvarkomi.
 
 ---
 
-> **Series:** EdgeTX Cockpit Voice, 8 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+> **Serija:** EdgeTX Cockpit Voice, 8 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 7 dalis: Dvi antenos, dvi juostos](/fpv/edgetx-cockpit-voice-antennas/)  ·  [9 dalis: Perdarymas, sugrupuotas skrydžio tvarka ›](/fpv/edgetx-cockpit-voice-rebuild/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 7 dalis: dvi antenos, dvi juostos](/fpv/edgetx-cockpit-voice-antennas/)  ·  [9 dalis: perdarymas, sugrupuotas skrydžio tvarka ›](/fpv/edgetx-cockpit-voice-rebuild/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

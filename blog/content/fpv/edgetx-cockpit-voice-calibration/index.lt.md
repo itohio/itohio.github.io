@@ -17,14 +17,14 @@ tags:
   - lihv
   - edgetx
   - telemetrija
-keywords: ["Betaflight vbat_scale kalibracija", "baterijos itampos kalibracija dronas", "report_cell_voltage celiu skaicius"]
+keywords: ["Betaflight vbat_scale kalibracija", "baterijos įtampos kalibracija dronui", "report_cell_voltage celių skaičius"]
 series:
   - EdgeTX Cockpit Voice
 ---
 
 > **EdgeTX Cockpit Voice**, 2 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 1 dalis: Kodėl dronas turi su tavimi kalbėti](/fpv/edgetx-cockpit-voice-why/)  ·  [3 dalis: Trys mygtukai, trys spalvos ir AND vartai ›](/fpv/edgetx-cockpit-voice-buttons/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 1 dalis: kodėl dronas turi su tavimi kalbėti](/fpv/edgetx-cockpit-voice-why/)  ·  [3 dalis: trys mygtukai, trys spalvos ir AND vartai ›](/fpv/edgetx-cockpit-voice-buttons/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 Kiekvienas šios serijos baterijos įspėjimas yra palyginimas su skaičiumi. Tad prieš
 visa kita tas skaičius turi būti tikras. Šis skyrius apie nustatymą, kuris tai
@@ -40,13 +40,13 @@ kalibracija.**
 
 Užrašyta tai skamba akivaizdžiai. Praktikoje neakivaizdu, nes blogai
 sukalibruotas įtampos rodmuo neatrodo sugedęs. Jis atrodo kaip visiškai
-tikėtinas skaičius, kuris tiesiog klysta 200 mV, ir kiekvienas aukščiau esančių
+tikėtinas skaičius, kuris tiesiog klysta per 200 mV, ir kiekvienas aukščiau esančių
 laiptų slenkstis tą klaidą tyliai paveldi.
 
 Turiu du aparatus, kurie šiuo metu yra blogai sukalibruoti, vadinasi, **jų
 įspėjimai suveikia per vėlai.** Ne „šiek tiek netiksliai“, o per vėlai, ta
 kryptimi, kuri kainuoja paketą. Aš tai žinau ir dar nesutvarkiau, būtent tokiems
-prisipažinimams šis blogas ir egzistuoja.
+prisipažinimams šis tinklaraštis ir egzistuoja.
 
 Reguliavimo parametras yra `vbat_scale` Betaflight'e. Jis pataiso ADC daliklio
 santykį pagal realius tavo plokštės rezistorius, kurie tarp plokščių skiriasi, o
@@ -54,12 +54,12 @@ nustatytas jis yra į bendrą numatytąją reikšmę, kuri tinka niekam konkreč
 
 ### 3S → 4S spąstai
 
-Konkretus būdas, kuriuo tai mane pagavo, vertas išvardijimo, nes tai natūralus
+Konkretus būdas, kuriuo tai mane pagavo, vertas aprašymo, nes tai natūralus
 veiksmas ir jokio įspėjimo nėra.
 
 Turėjau aparatus, sukonfigūruotus ir skraidančius su **3S**, o tada perkėliau
 juos į **4S** testams. Niekas tame perėjime nepasako, kad tavo kalibracija dabar
-kainuoja daugiau. Bet kainuoja, dėl kaupiamosios priežasties.
+kainuoja daugiau. Bet kainuoja, nes klaidos susideda.
 
 `report_cell_voltage = ON` reiškia, kad valdiklis dalija paketo įtampą iš savo
 **nustatyto** celių skaičiaus. Ir tas nustatymas pats yra išvestas iš išmatuotos
@@ -79,7 +79,7 @@ visiškai fiktyvi. Tada kiekvienas mano laiptų slenkstis matuotų dydį, kurio
 nėra, o `ready` savitikra puikiai suveiktų, nes neteisingas skaičius virš 4,2 V
 vis tiek yra skaičius virš 4,2 V.
 
-Savitikra, kuria taip džiaugiausi anksčiau šiame įraše, patikrina, ar veikia
+Savitikra, kurią aprašysiu 4 dalyje, patikrina, ar veikia
 signalo kelias. **Ji nepatikrina, ar skaičius yra tikras.** Tai skirtingi
 teiginiai, ir noriu būti aiškus, kurį iš jų turiu.
 
@@ -98,20 +98,20 @@ Dabartiniame Betaflight konfigūratoriuje taip nebegalima. **Išėjus iš skirtu
 motorai išsijungia.** Tos darbo sekos tiesiog nebėra.
 
 Teisingos pakeičiančios procedūros dar neišsiaiškinau, tad jos čia neišradinėsiu.
-Tai bus sekantis įrašas: tinkama įtampos kalibracija su dabartiniu
+Tai bus kitas įrašas: tinkama įtampos kalibracija su dabartiniu
 konfigūratoriumi, kas pasikeitė, ir kaip gauti patikimą rodmenį po apkrova be
 senojo triuko.
 
-### Viena atvira pastaba apie skaičių, esantį toliau šiame įraše
+### Viena atvira pastaba apie skaičių, kurį pateiksiu 8 dalyje
 
-3,065 V celei įtampos kritimo reikšmė, kurią cituoju toliau, iš 83 A
+3,065 V celei įtampos kritimo reikšmė, kurią pateiksiu 8 dalyje, iš 83 A
 akceleravimo mano trijų colių aparate, turi tą pačią priklausomybę. Tai yra tai,
 ką skrydžio valdiklis *užrašė*, ir jos tikslumas stovi ant to, kad to aparato
 įtampos kalibracija yra tvarkinga. To konkretaus aparato `vbat_scale` prieš
 etaloninį matuoklį nepatikrinau nepriklausomai. Traktuok tai kaip stiprų
 problemos formos rodiklį, o ne kaip metrologiškai švarų matavimą.
 
-Jei sukursi šiame įraše aprašytą įspėjimų sistemą ir praleisi kalibraciją,
+Jei sukursi šioje serijoje aprašytą įspėjimų sistemą ir praleisi kalibraciją,
 sukūrei kažką, kas ramiu balsu užtikrintai pasakys tau neteisingą dalyką. Tai,
 ko gero, blogiau nei skaičius ekrano kampe.
 
@@ -122,6 +122,6 @@ nei vadovui.
 
 ---
 
-> **Series:** EdgeTX Cockpit Voice, 2 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+> **Serija:** EdgeTX Cockpit Voice, 2 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 1 dalis: Kodėl dronas turi su tavimi kalbėti](/fpv/edgetx-cockpit-voice-why/)  ·  [3 dalis: Trys mygtukai, trys spalvos ir AND vartai ›](/fpv/edgetx-cockpit-voice-buttons/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 1 dalis: kodėl dronas turi su tavimi kalbėti](/fpv/edgetx-cockpit-voice-why/)  ·  [3 dalis: trys mygtukai, trys spalvos ir AND vartai ›](/fpv/edgetx-cockpit-voice-buttons/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

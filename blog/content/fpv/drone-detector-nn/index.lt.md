@@ -20,7 +20,7 @@ tags:
 
 *Gyva demonstracija: [drone-detector.sintra.site](https://drone-detector.sintra.site)*
 
-![Drone Audio Detector — gyvasis spėjimas naršyklėje, IDLE būsena. FP32 modelis, 10 klasių, kalibruoti kiekvienos klasės slenkstiai. RMS −40.6 dB / Smailė −18.2 dB iš biuro aplinkos. Spektrograma rodo dvigubą ARGMAX/SOFTMAX išvestį.](drone-detector-ui-idle.png)
+![Drone Audio Detector — gyvasis spėjimas naršyklėje, IDLE būsena. FP32 modelis, 10 klasių, kalibruoti kiekvienos klasės slenkstiai. RMS −40,6 dB / Smailė −18,2 dB iš biuro aplinkos. Spektrograma rodo dvigubą ARGMAX/SOFTMAX išvestį.](drone-detector-ui-idle.png)
 
 Pastaba prieš techninį turinį: pakaitomasis mokymo protokolas, aprašytas šiame straipsnyje, buvo sukurtas su reikšminga [Sintra AI](https://sintra.ai) pagalba. Tai, kas prasidėjo kaip eilė klausimų, kodėl paprastas P1→P2 grafikas vis sustingdavo, virto struktūrizuotu derinimo pokalbiu, kuris identifikavo kalibruoto patikros taško problemą ir suformavo ciklo logiką.
 
@@ -30,13 +30,13 @@ Pastaba prieš techninį turinį: pakaitomasis mokymo protokolas, aprašytas ši
 
 Pirmasis mano bandymas nebuvo neuroninis tinklas.
 
-Shahed-136 turi nuspėjamą harmoninę struktūrą — dvitaktis stumiamojo sraigto variklis, pagrindinis dažnis apie 83 Hz, harmoninės besitęsiančios iki maždaug 4 kHz, pastovus RPM reiso metu. Tai šablonas. Galima sukurti jam atitinkantį filtrą: aptikti energiją tikėtamais harmoniniais intervalais, kaupti įrodymus laikui bėgant, formuoti hipotezę apie buvimą, sekti tą hipotezę naudojant slenkantį įrodymų akumuliatorių arba Kalmano filtrą, ir paskelbti aptikimą, kai balas viršija slenkstį. Sukūriau tokią versiją. Ji veikė su švariais įrašais.
+Shahed-136 turi nuspėjamą harmoninę struktūrą — dvitaktis stumiamojo sraigto variklis, pagrindinis dažnis apie 83 Hz, harmonikos, besitęsiančios iki maždaug 4 kHz, pastovus RPM reiso metu. Tai šablonas. Galima sukurti jam atitinkantį filtrą: aptikti energiją tikėtinuose harmonikų intervaluose, kaupti įrodymus laikui bėgant, formuoti hipotezę apie buvimą, sekti tą hipotezę naudojant slenkantį įrodymų akumuliatorių arba Kalmano filtrą, ir paskelbti aptikimą, kai balas viršija slenkstį. Sukūriau tokią versiją. Ji veikė su švariais įrašais.
 
-Problema yra parametrų erdvė. Harmoninis detektorius nėra vienas slenkstis — tai slenkstis kiekvienai harmoninei, svėrimo funkcija per harmonines, hipotezės balų skaičiavimo funkcija, laiko akumuliatoriaus langas, minimalus SNR ir minimali aptikimo trukmė. Kiekvienas parametras pagrįstas atskirai; kartu jie yra trapūs. Tikros aplinkos įveda aidus, Doplerio ištrynimą iš judančių orlaivių, persidengiantiems variklius, vėją ir atstumus, kuriuose harmoninės nusileidžia žemiau triukšmo lygio netolygiomis normomis. Sistemos derinimas vienai aplinkai atitolina ją nuo kitos.
+Problema yra parametrų erdvė. Harmoninis detektorius nėra vienas slenkstis — tai slenkstis kiekvienai harmonikai, svorio funkcija per harmonikas, hipotezės balų skaičiavimo funkcija, laiko akumuliatoriaus langas, minimalus SNR ir minimali aptikimo trukmė. Kiekvienas parametras pagrįstas atskirai; kartu jie yra trapūs. Tikros aplinkos įveda aidus, Doplerio išplitimą iš judančių orlaivių, persidengiančius variklius, vėją ir atstumus, kuriuose harmonikos nusileidžia žemiau triukšmo lygio nevienodais tempais. Sistemos derinimas vienai aplinkai atitolina ją nuo kitos.
 
-Kitos komandos giliai panirusios į DSP metodą ir jau investavo į jį daugelį metų — Ukraina ypač išdiegė mobilių telefonų ant stulpų tinklus, kurie akustiškai įrašo ir praneša apie dronus, o kitos grupės taiko Doplerio harmoninės struktūros pritaikymą. Aparatinė įranga nėra skirtumo veiksnys — dalis to veikia ant telefonų. Problema yra jau investuotas laikas. Šios komandos patobulino savo sistemas per realaus diegimo grįžtamąjį ryšį, prie kurio aš neturiu prieigos. Perkurti tą patį DSP vamzdyną nuo nulio, pradedant metais atsilikęs, neatrodė kaip geras pastangų panaudojimas.
+Kitos komandos giliai panirusios į DSP metodą ir jau investavo į jį daugelį metų — Ukraina ypač išdiegė mobilių telefonų ant stulpų tinklus, kurie akustiškai įrašo ir praneša apie dronus, o kitos grupės taiko Doplerio harmoninės struktūros pritaikymą. Aparatinė įranga nėra tai, kas išskiria — dalis to veikia ant telefonų. Problema yra jau investuotas laikas. Šios komandos patobulino savo sistemas per realaus diegimo grįžtamąjį ryšį, prie kurio aš neturiu prieigos. Perkurti tą patį DSP vamzdyną nuo nulio, pradedant metais atsilikęs, neatrodė kaip geras pastangų panaudojimas.
 
-Tai, ką atnešiau iš AI robotikos darbo: kai jūsų sprendimas reikalauja daug rankiniu būdu nustatytų slenkstių, kiekvienas koduoja prielaidą apie pasaulį, slenkstių skaičius yra maždaug tylių gedimų skaičius. Apmokyti neuroniniai tinklai — ir adaptyvios funkcijos apskritai — mokosi atvaizdavimo tiesiogiai iš duomenų. „Slenkstis" yra užkoduotas svoriais, sureguliuotas su pavyzdžiais, o ne prielaidomis. Tokiam aptikimo uždaviniui su tiek akustinio kintamumo tai yra tinkamas įrankis.
+Tai, ką atnešiau iš AI robotikos darbo: kai tavo sprendimas reikalauja daug rankiniu būdu nustatytų slenkstių, kiekvienas koduoja prielaidą apie pasaulį, slenkstių skaičius yra maždaug tylių gedimų skaičius. Apmokyti neuroniniai tinklai — ir adaptyvios funkcijos apskritai — mokosi atvaizdavimo tiesiogiai iš duomenų. „Slenkstis“ yra užkoduotas svoriais, sureguliuotas su pavyzdžiais, o ne prielaidomis. Tokiam aptikimo uždaviniui su tiek akustinio kintamumo tai yra tinkamas įrankis.
 
 Tai taip pat nebuvo mano pirmas bandymas spręsti šią problemą. Kai 2022 metais prasidėjo konfliktas, sukūriau ankstyvą šio detektoriaus versiją ir lygiagrečiai dirbau su mikrofono masyvo sprendimu kryptinei lokalizacijai. Abu buvo techniškai funkcionalūs. Tačiau negaliu reklamuoti to, ką kuriu — turiu beveik nulinį ryšių kūrimo sugebėjimą ir jokio palaikymo tinklo — todėl abu projektai tyliai baigėsi dėl išorinės susidomėjimo stokos. Mikrofono masyvo darbas ypač būtų reikalavęs bendruomenės koordinavimo, kurį niekada nebūčiau galėjęs organizuoti. Praėjus ketveriems metams, aš tai atnaujinu.
 
@@ -46,11 +46,11 @@ Tai taip pat nebuvo mano pirmas bandymas spręsti šią problemą. Kai 2022 meta
 
 ## Problema
 
-Shahed-136 veikia su dvitakčiu stumiamojo sraigto varikliu. Pagrindinis dažnis yra apie 83 Hz su harmoninėmis, besitęsiančiomis iki maždaug 4 kHz. Jis skamba nieko bendra neturinčiai su vartojimo kvadratoriu, fiksuotasparnio RC lėktuvu ar eismu. Akustinis parašas yra ryškus, jei žinai, ko klausai.
+Shahed-136 veikia su dvitakčiu stumiamojo sraigto varikliu. Pagrindinis dažnis yra apie 83 Hz su harmonikomis, besitęsiančiomis iki maždaug 4 kHz. Jis neskamba nei kaip buitinis kvadrokopteris, nei kaip fiksuoto sparno RC lėktuvas, nei kaip automobilių srautas. Akustinis parašas yra ryškus, jei žinai, ko klausai.
 
-Inžinerinė problema: negalite atsisiųsti pažymėto Shahed-136 garso duomenų rinkinio. Ši etiketė neegzistuoja AudioSet 527 klasėse. Nėra DADS įrašo, jokios Freesound kategorijos, jokio akademinio etalono. Įrašote patys arba sintezuojate iš turimos medžiagos — o turima medžiaga yra tai, kas buvo viešai paskelbta iš konflikto zonų, o tai yra negausa, nesuderinama pagal mikrofono atstumą ir dažnai stipriai užteršta fono triukšmu.
+Inžinerinė problema: negali atsisiųsti pažymėto Shahed-136 garso duomenų rinkinio. Ši etiketė neegzistuoja AudioSet 527 klasėse. Nėra DADS įrašo, jokios Freesound kategorijos, jokio akademinio etalono. Įrašai pats arba sintezuoji iš turimos medžiagos — o turima medžiaga yra tai, kas buvo viešai paskelbta iš konflikto zonų, o tai yra negausa, nesuderinama pagal mikrofono atstumą ir dažnai stipriai užteršta fono triukšmu.
 
-Nustatyta užduotis: 10 klasių vienos etiketės klasifikatorius, veikiantis realiuoju laiku slenkančiame 10 sekundžių lange su 1 sekundės postūmiu. Klasės yra: **dronas, spiečius, kvadrotas, sraigtasparnis, reaktyvinis, lėktuvas, motociklas, vejos pjoviklis, traktorius, laukimas**. Modelis turi veikti naršyklėje ant procesoriaus ir vidutinės klasės mobiliojoje aparatinėje įrangoje.
+Nustatyta užduotis: 10 klasių vienos etiketės klasifikatorius, veikiantis realiuoju laiku slenkančiame 10 sekundžių lange su 1 sekundės postūmiu. Klasės yra: **dronas, spiečius, kvadrotas, sraigtasparnis, reaktyvinis, lėktuvas, motociklas, vejapjovė, traktorius, laukimas**. Modelis turi veikti naršyklėje ant procesoriaus ir vidutinės klasės mobiliojoje aparatinėje įrangoje.
 
 ---
 
@@ -62,12 +62,12 @@ Nustatyta užduotis: 10 klasių vienos etiketės klasifikatorius, veikiantis rea
 |----------|--------|---------|
 | Vartotojo mikrofono įrašai | dronas (Shahed proxy), spiečius | Vienintelė galimybė — viešo duomenų rinkinio nėra |
 | HuggingFace DADS | kvadrotas | Vartojimo UAV; etiketė=1 tik |
-| ESC-50 | sraigtasparnis, lėktuvas, vejos pjoviklis, laukimas | Švari, kuruota, 50 klasių, 2000 įrašų |
+| ESC-50 | sraigtasparnis, lėktuvas, vejapjovė, laukimas | Švari, kuruota, 50 klasių, 2000 įrašų |
 | AudioSet per yt-dlp | sraigtasparnis, reaktyvinis, lėktuvas, motociklas, traktorius, laukimas | MID pagrįstas segmentų atsisiuntimas; ~30% nesėkmių rodiklis |
 | DREGON / SPCup19 (Inria) | kvadrotas (savojo triukšmo) | Laivo įrašai; kelių kanalų → mono |
 | Zenodo 15190811 | kvadrotas (lauke) | 14 realių dronų modelių; pasirinkti 3–4 dydžiui valdyti |
 
-Vartotojo įrašų rinkinys yra dviejų metodų derinys. Dalis įrašų buvo tiesiogiai fiksuota lauke naudojant nešiojamojo kompiuterio mikrofoną ir telefono mikrofoną per „Jupyter" užrašinę. Klasėms, kurių šaltinės medžiagos buvo per mažai — Shahed, motociklas, vejapjovė, foninis triukšmas — garsus iš konflikto zonų ir kitų šaltinių leidžiau per garsiakalbius ir iš naujo įrašinėjau skirtingomis sąlygomis: skirtingais triukšmo lygiais, kambario akustika, persidengiančiais aplinkos garsais. Šis pakartotino įrašymo metodas pridėjo akustinę įvairovę klasėms, kurios priešingu atveju turėtų tik kelias skirtingas šaltines klipes. Kai kurie biuro aplinkos įrašai papildė laukimo klasę.
+Vartotojo įrašų rinkinys yra dviejų metodų derinys. Dalis įrašų buvo tiesiogiai fiksuota lauke naudojant nešiojamojo kompiuterio mikrofoną ir telefono mikrofoną per „Jupyter“ užrašinę. Klasėms, kurių šaltinės medžiagos buvo per mažai — Shahed, motociklas, vejapjovė, foninis triukšmas — garsus iš konflikto zonų ir kitų šaltinių leidžiau per garsiakalbius ir iš naujo įrašinėjau skirtingomis sąlygomis: skirtingais triukšmo lygiais, kambario akustika, persidengiančiais aplinkos garsais. Šis pakartotinio įrašymo metodas pridėjo akustinę įvairovę klasėms, kurios priešingu atveju turėtų tik kelis skirtingus šaltinio klipus. Kai kurie biuro aplinkos įrašai papildė laukimo klasę.
 
 ### AudioSet atsisiuntimo nesėkmės
 
@@ -75,18 +75,18 @@ Atsisiuntimas iš AudioSet per yt-dlp naudojant MID kodus konkrečioms klasėms 
 
 ### Nulinės reikšmės įrašų taisymas
 
-Trumpi šaltinio įrašai, paplėtoti iki 10 sekundžių, įveda struktūrinį artefaktą. Sukūriau paprastą RMS pagrįstą turinio ilgio detektorių, kuris nustato faktinį garso turinio langą, atmeta trumpesnius nei 3 sekundžių įrašus po tylos apkarpymo ir taiko atsitiktinę padėties nustatymą vietoj paplėtimo.
+Trumpi šaltinio įrašai, ištęsti iki 10 sekundžių, įveda struktūrinį artefaktą. Sukūriau paprastą RMS pagrįstą turinio ilgio detektorių, kuris nustato faktinį garso turinio langą, atmeta trumpesnius nei 3 sekundžių įrašus po tylos apkarpymo ir taiko atsitiktinį padėties nustatymą vietoj ištęsimo.
 
 ### Spiečiaus sintezė
 
-Spiečiaus klasė yra 100% sintetinė. Nėra viešo „kelių Shahed orlaivių" garso. Visi 300 spiečiaus įrašų buvo sugeneruoti iš dronų įrašų baseino:
+Spiečiaus klasė yra 100% sintetinė. Nėra viešo „kelių Shahed orlaivių“ garso. Visi 300 spiečiaus įrašų buvo sugeneruoti iš dronų įrašų rinkinio:
 
 ```mermaid
 flowchart TD
     DR["dronų įrašai\n(vartotojo įrašai)"]
-    PS["aukščio poslinkis ±2 pustoniai\nstiprinimas −4..0 dB\nlaiko dreifas 0..0.5s"]
+    PS["aukščio poslinkis ±2 pustoniai\nstiprinimas −4..0 dB\nlaiko dreifas 0..0,5s"]
     MX["maišyti 2–4 egzempliorius"]
-    BG["laukimo fonas\nSNR 8–18 dB\np=0.6"]
+    BG["laukimo fonas\nSNR 8–18 dB\np=0,6"]
     SW["spiečiaus įrašas\n10 s @ 16 kHz"]
 
     DR --> PS --> MX --> BG --> SW
@@ -118,9 +118,9 @@ Galutinis duomenų rinkinys: ~13 200 įrašų iš viso. Mokymo/validavimo skirst
 graph LR
     W["bangos forma\n10s @ 32kHz"]
     MEL["AugmentMelSTFT\n128 mel × 1000 kadrų"]
-    BB["MobileNetV3 stuburas\nmn20_as\n~16.1M parametrų\nAudioSet-apmokyta"]
+    BB["MobileNetV3 stuburas\nmn20_as\n~16,1M parametrų\nAudioSet-apmokyta"]
     POOL["AdaptiveAvgPool2d(1)"]
-    HEAD["DroneHead\n256 paslėptų, dropout 0.4\n→ 10 logitų"]
+    HEAD["DroneHead\n256 paslėptų, dropout 0,4\n→ 10 logitų"]
     OUT["sigmoid → vienai klasei tikimybė"]
 
     W --> MEL --> BB --> POOL --> HEAD --> OUT
@@ -128,7 +128,7 @@ graph LR
 
 ### Kodėl MobileNetV3 / EfficientAT
 
-Stuburas yra `mn20_as` iš EfficientAT šeimos — MobileNetV3-Large, išmasteluotas iki 20 pločio dauginamojo, iš anksto apmokytas ant visų 527 AudioSet klasių. Ties ~16,1 mln. parametrų ir mAP 0,478 ant AudioSet, tai yra auksinė vidurį: `mn10` nepakankamai apmokytas šiai užduočiai, `mn40` per sunkus mobiliajam išvedimui.
+Stuburas yra `mn20_as` iš EfficientAT šeimos — MobileNetV3-Large, išmasteluotas iki 20 pločio daugiklio, iš anksto apmokytas su visomis 527 AudioSet klasėmis. Ties ~16,1 mln. parametrų ir mAP 0,478 ant AudioSet, tai yra aukso vidurys: `mn10` nepakankamai apmokytas šiai užduočiai, `mn40` per sunkus mobiliajam išvedimui.
 
 ```python
 class DroneHead(nn.Module):
@@ -156,7 +156,7 @@ sequenceDiagram
     participant P2 as 2 fazė (pilnas reguliavimas)
     participant CKPT as Geriausias patikros taškas
 
-    Note over P1: Stuburas užšaldytas<br />lr = 1e-4<br />Mokyti kol val F1 ≥ 0.50
+    Note over P1: Stuburas užšaldytas<br />lr = 1e-4<br />Mokyti kol val F1 ≥ 0,50
 
     P1->>CKPT: išsaugoti kai pagerėja val F1
     P1->>P2: pereiti kai pasiekiama riba
@@ -172,7 +172,7 @@ sequenceDiagram
     end
 ```
 
-Kodėl pakaitomis: stuburas stabilizuojasi, kai užšaldytas. Kai jį atšildote, galvos gradiento signalas pernelyg stipriai traukia stuburą ties dideliu mokymosi greičiu — štai kodėl stuburo mokymosi greitis 2 fazėje yra 20× mažesnis nei galvos (5e-6 prieš 1e-4). Ciklo logiką išdirbau per eilę pokalbių su Sintra — nuo „kodėl 2 fazė visada blogina spiečiaus klasę" iki dabartinio protokolo.
+Kodėl pakaitomis: stuburas stabilizuojasi, kai užšaldytas. Kai jį atšildai, galvos gradiento signalas pernelyg stipriai traukia stuburą ties dideliu mokymosi greičiu — štai kodėl stuburo mokymosi greitis 2 fazėje yra 20× mažesnis nei galvos (5e-6 prieš 1e-4). Ciklo logiką išdirbau per eilę pokalbių su Sintra — nuo „kodėl 2 fazė visada blogina spiečiaus klasę“ iki dabartinio protokolo.
 
 ### Nuostolių funkcija
 
@@ -201,7 +201,7 @@ pos_weight = (n_neg / n_pos).clamp(min=NUM_CLASSES, max=30.0)
 | spiečius | 0.854 | Sunkiausia — sintetinis; dalinasi parašu su dronu |
 | vejapjovė | 0.887 | Painiojama su laukimu; abu plačiajuosčiai, žemo dažnio |
 
-**Makro F1 (kalibruotas): 0.940**
+**Makro F1 (kalibruotas): 0,940**
 
 ### Kiekvienos klasės ribos kalibravimas
 
@@ -222,17 +222,17 @@ Vienoda 0,5 riba yra neteisinga. Kalibruotos ribos ties drono ≥ 90% tikslumo t
 
 ```mermaid
 graph TD
-    FP32["ONNX FP32\n48.5 MB\nmakro F1 = 0.940\nlat = 16.7ms  p95 = 23.6ms"]
-    INT8["ONNX INT8 W8A8\n13.0 MB  3.7× mažesnis\nmakro F1 = 0.790\nlat = 7.8ms  p95 = 9.8ms"]
-    GUARD["F1 apsauga = 0.85\nINT8 kalibruotas = 0.828\nNepavyko → aktyvus = FP32"]
+    FP32["ONNX FP32\n48,5 MB\nmakro F1 = 0,940\nlat = 16,7ms  p95 = 23,6ms"]
+    INT8["ONNX INT8 W8A8\n13,0 MB  3,7× mažesnis\nmakro F1 = 0,790\nlat = 7,8ms  p95 = 9,8ms"]
+    GUARD["F1 apsauga = 0,85\nINT8 kalibruotas = 0,828\nNepavyko → aktyvus = FP32"]
 
     FP32 -->|"quantize_static\nQDQ formatas\nMinMax kalibravimas"| INT8
     INT8 --> GUARD
 ```
 
-Entropija agresyviai apkerta aktyvacijos diapazoną. Spiečius turi retų, bet didelių aktyvacijų — entropija jas traktuoja kaip anormalijas. Spiečiaus atpaukimas nukrito nuo 0,77 iki 0,52.
+Entropija agresyviai apkerta aktyvacijos diapazoną. Spiečius turi retų, bet didelių aktyvacijų — entropija jas traktuoja kaip anomalijas. Spiečiaus atkūrimas (recall) nukrito nuo 0,77 iki 0,52.
 
-MinMax kalibravimas išlaiko visą stebimą diapazoną. Geriau, bet makro F1 tik 0,828 po kiekvienos klasės ribų rekalibravimai ant INT8 modelio.
+MinMax kalibravimas išlaiko visą stebimą diapazoną. Geriau, bet makro F1 tik 0,828 po kiekvienos klasės ribų rekalibravimo INT8 modelyje.
 
 Pagrindinė priežastis: INT8 keičia kiekvienos klasės tikimybių skales netolygiai. Traktoriaus riba persikėlė nuo 0,934 (FP32) iki 0,010 (INT8). Tai ne apvalinimo klaidos — INT8 logitų pasiskirstymas yra struktūriškai skirtingas nuo FP32 tam tikroms klasėms.
 
@@ -246,7 +246,7 @@ flowchart LR
     BUF["žiedinis buferis\n15s"]
     WIN["10s langas\niškviesti kas 1s"]
     MEL["mel spektrograma\n128×1000"]
-    ONNX["ONNX Runtime\nFP32 išvada\n16.7ms vid."]
+    ONNX["ONNX Runtime\nFP32 išvada\n16,7ms vid."]
     MED["einamoji mediana\nper paskutinius 5 langus"]
     THR["kiekvienos klasės riba\ntaikyti kalibruotas reikšmes"]
     OUT["aptikimo išvestis"]
@@ -260,7 +260,7 @@ flowchart LR
 
 **QAT**: Aiškiausias kelias į INT8 modelį, atitinkantį F1 apsaugą. Dar nebandyta.
 
-**TFLite eksportas**: Blokuojamas dėl platformos suderinamumo — ONNX → TFLite konvertavimo kelias per tf2onnx buvo nepatikimas šiam modelio grafiko topologijai.
+**TFLite eksportas**: Blokuojamas dėl platformos suderinamumo — ONNX → TFLite konvertavimo kelias per tf2onnx buvo nepatikimas šiai modelio grafiko topologijai.
 
 **Srautinis išvedimas įterptinėje aparatinėje įrangoje**: 10 sekundžių langas + 1 sekundės postūmio architektūra buvo sukurta programoms, toleruojančioms delsą. Tinkama srautinė architektūra sumažintų delsą iki mažiau nei 2 sekundžių, tačiau reikalauja architektūros pakeitimų.
 

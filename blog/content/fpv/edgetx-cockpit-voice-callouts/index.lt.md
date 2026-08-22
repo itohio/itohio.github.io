@@ -17,7 +17,7 @@ tags:
   - telemetrija
   - aukstis
   - easa
-keywords: ["EdgeTX specialiosios funkcijos", "EdgeTX palydovu skaiciaus pranesimas", "EdgeTX aukscio ispejimas 120m"]
+keywords: ["EdgeTX specialiosios funkcijos", "EdgeTX palydovų skaičiaus pranešimas", "EdgeTX aukščio įspėjimas 120 m"]
 series:
   - EdgeTX Cockpit Voice
 thumbnail: "special-functions-1.jpg"
@@ -25,7 +25,7 @@ thumbnail: "special-functions-1.jpg"
 
 > **EdgeTX Cockpit Voice**, 4 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 3 dalis: Trys mygtukai, trys spalvos ir AND vartai](/fpv/edgetx-cockpit-voice-buttons/)  ·  [5 dalis: Iš kur atkeliauja pranešimai ›](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 3 dalis: trys mygtukai, trys spalvos ir AND vartai](/fpv/edgetx-cockpit-voice-buttons/)  ·  [5 dalis: iš kur atkeliauja pranešimai ›](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 Jungtukai iš [3 dalies](/fpv/edgetx-cockpit-voice-buttons/) yra tik loginės
 reikšmės, kol kažkas jų nepaverčia garsu. Tas kažkas yra EdgeTX specialiosios
@@ -84,7 +84,7 @@ savaime išsikrauna maždaug iki 4,15 V ir slenksčio gali niekada nepasiekti. T
 tiesą sakant, teisinga elgsena, jis man pasako, kad paketas nėra pilnas.
 
 **`rth` pranešimas prie 3,8 V yra tas, kuris tikrai išgelbėjo skrydžius.** Tai
-grubus pusės talpos apytikslis vertinimas, sudarytas iš įtampos, o ne iš
+grubus pusės talpos vertinimas, sudarytas iš įtampos, o ne iš
 kulonų, ir nesiruošiu apsimesti, kad jis tikslus. Bet jam ir nereikia būti
 tiksliam. Jam reikia atvykti *tada, kai dar turiu energijos biudžetą į jį
 sureaguoti*, o to kulonų skaitiklis, į kurį nežiūriu, nepasiekia. Atkreipk
@@ -105,7 +105,7 @@ pažiūrėti.
 | Sąlyga | Jungtukas | Garsas | Reikšmė |
 |--------|-----------|--------|---------|
 | Sats > 6 | L4 | *įgarsina skaičių* | Artėja prie naudojamo — kiek dar? |
-| Sats > 13 | L5 | `gpson` | Tvirtas fiksavimas, gelbėjimu galima tikėtis |
+| Sats > 13 | L5 | `gpson` | Tvirtas fiksavimas, gelbėjimu galima pasitikėti |
 | Sats < 6 | L7 | `gpsoff` | **Fiksavimas pablogėjo skrydžio metu** |
 
 `PLAY_VALUE` ant L4 yra maloniausia dalis, vietoj fiksuoto tono jis įgarsina
@@ -148,7 +148,7 @@ labiau pagrįstas pasirinkimas, ir priežastis verta suprasti.
 
 **`GAlt` CRSF telemetrijoje yra GPS aukštis, o ne aukštis virš pakilimo taško.**
 Jei būčiau panaudojęs akivaizdų `a > x` su `GAlt` ir 120 m slenksčiu, jis rėktų
-nuolat ir nuolatos, nes skraidau Lietuvoje, kur pati žemė yra maždaug
+be perstojo, nes skraidau Lietuvoje, kur pati žemė yra maždaug
 70–150 m virš jūros lygio. Signalas būtų teisingas dar prieš aparatui pakylant
 iš rankos.
 
@@ -160,7 +160,7 @@ Tai nėra tobula, ir noriu netobulumus pavadinti, o ne užglaistyti:
 
 - Jis suveikia ir nusileidus 120 m, nes tai absoliutus skirtumas. Nuskrisk nuo
   slėnio krašto, ir jis įspės.
-- Suveikęs jis atnaujina atskaitą, tad vėl užsiveda ir suveikia po *sekančio*
+- Suveikęs jis atnaujina atskaitą, tad vėl užsiveda ir suveikia po *kito*
   120 m pokyčio, o ne lieka užfiksuotas virš ribos.
 - Tai įspėjimas, o ne riba. Jis pasako, kad pakilau aukštai. Laikytis
   reikalavimų vis tiek yra mano darbas.
@@ -171,11 +171,11 @@ pakilimo taško, kurį barometras jau duoda OSD, bet kuris nepasiekia `GAlt`
 telemetrijos sensoriaus. Jei tai išsprendei EdgeTX'e gražiai, noriu išgirsti.
 
 Tokia sistema, su kuria skraidau. Šeši ištarti pranešimai, trys palydovų būsenos ir
-vienas aukščio signalas, kuris pasirodė matuojąs ne tai, ką maniau.
+vienas aukščio signalas, kuris, kaip pasirodė, matuoja ne tai, ką maniau.
 
 
 ---
 
-> **Series:** EdgeTX Cockpit Voice, 4 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+> **Serija:** EdgeTX Cockpit Voice, 4 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 3 dalis: Trys mygtukai, trys spalvos ir AND vartai](/fpv/edgetx-cockpit-voice-buttons/)  ·  [5 dalis: Iš kur atkeliauja pranešimai ›](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 3 dalis: trys mygtukai, trys spalvos ir AND vartai](/fpv/edgetx-cockpit-voice-buttons/)  ·  [5 dalis: iš kur atkeliauja pranešimai ›](/fpv/edgetx-cockpit-voice-audio-and-sharing/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)

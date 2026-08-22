@@ -24,7 +24,7 @@ series:
 
 > **EdgeTX Cockpit Voice**, 5 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 4 dalis: Ką pultas iš tikrųjų pasako](/fpv/edgetx-cockpit-voice-callouts/)  ·  [6 dalis: Telemetrijos įrašymas ir skaičius, kurį turi išmatuoti ›](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 4 dalis: ką pultas iš tikrųjų pasako](/fpv/edgetx-cockpit-voice-callouts/)  ·  [6 dalis: telemetrijos įrašymas ir vienas skaičius, kurį turi išmatuoti pats ›](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
 
 Pranešimai iš [4 dalies](/fpv/edgetx-cockpit-voice-callouts/) atkeliauja iš balso
 paketo, kuris pateikiamas su pultu. Iš to seka du praktiniai dalykai: kur realiai
@@ -43,7 +43,7 @@ katalogo SD kortelėje, angliškame pulte `/SOUNDS/en/`, ir standartinis paketas
 turi naudingą trumpų pranešimų žodyną. Visa ši serija yra slenksčių logika,
 nukreipta į failus, kurie jau buvo vietoje.
 
-Kas yra pigiausia viso darbo dalis ir ta, kurios tikėjausi kaip sunkiausios.
+Tai pigiausia viso darbo dalis ir ta, kurios tikėjausi kaip sunkiausios.
 
 Vienintelė vieta, kur tai riboja, yra tada, kai nori pranešimo, kurio pakete nėra.
 Perdaryta konfigūracija 9 dalyje nori ištarto „check ok“ priešskrydžio patikrai, o
@@ -65,7 +65,7 @@ audioMuteEnable: 1
 lieka garsūs. `audioMuteEnable: 1` tarp garsų išjungia stiprintuvą, kas sumažina
 šnypštimą, bet stiprintuvui reikia akimirkos atsigauti. Jei kada pastebėsi, kad
 trumpi pranešimai pameta pirmą skiemenį, tą nustatymą pirmiausia išbandyk ties `0`.
-Mano skamba gerai, tad minau tai kaip dalyką, kurį verta žinoti, o ne kaip problemą,
+Mano skamba gerai, tad paminiu tai kaip dalyką, kurį verta žinoti, o ne kaip problemą,
 kurią turiu.
 
 ## Dalijimasis konfigūracija: kas perkeliama ir ką ištrinti
@@ -95,7 +95,7 @@ Prieš skelbdamas konfigūraciją, patikrink ir ištrink:
   raktas į tavo orlaivius
 - Modelių pavadinimus, jei jie tave identifikuoja
 - Svirčių kalibraciją (`calib:`), nekenksminga, bet niekam kitam nieko
-  nereiškianti, o nukopijavus manąją tavo svirtys jausis netaisyklingai
+  nereiškianti, o nukopijavus manąją tavo svirtys jausis ne taip, kaip turi
 
 ### YAML perkeliamas mažiau, nei atrodo
 
@@ -122,7 +122,7 @@ Mano vietų tvarka, kad būtų su kuo lyginti:
 18 GPS   19  GSpd  20  Hdg   21  GAlt  22  Sats
 ```
 
-Tad atviras patarimas, pageidaujamumo tvarka:
+Tad atviras patarimas, pirmenybės tvarka:
 
 1. **Perskaityk šio įrašo lenteles ir suvesk viską ranka**, naudodamas savo
    sensorių pavadinimus. Tai penkiolika minučių, ir rezultatą tikrai suprasi —
@@ -140,6 +140,6 @@ supranti. Tai svarbu lauke, vėjyje, kai norisi pastumti slenkstį 0,1 V.
 
 ---
 
-> **Series:** EdgeTX Cockpit Voice, 5 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
+> **Serija:** EdgeTX Cockpit Voice, 5 dalis iš 9. Kaip priverčiau RadioMaster GX12 įgarsinti savo telemetriją, kad žema baterija būtų tai, ką išgirstu, o ne tai, ko pamiršau pažiūrėti.
 >
-> [‹ 4 dalis: Ką pultas iš tikrųjų pasako](/fpv/edgetx-cockpit-voice-callouts/)  ·  [6 dalis: Telemetrijos įrašymas ir skaičius, kurį turi išmatuoti ›](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
+> [‹ 4 dalis: ką pultas iš tikrųjų pasako](/fpv/edgetx-cockpit-voice-callouts/)  ·  [6 dalis: telemetrijos įrašymas ir vienas skaičius, kurį turi išmatuoti pats ›](/fpv/edgetx-cockpit-voice-telemetry-rates/)  ·  [Pradėti nuo 1 dalies](/fpv/edgetx-cockpit-voice-why/)
