@@ -16,10 +16,10 @@ tags:
   - callouts
   - risk-management
 keywords: ["fpv battery callouts", "edgetx telemetry", "gps rescue", "point of no return", "long range fpv", "pavo20 pro ii ocean loss", "fpv sea crash", "two-ray multipath"]
-thumbnail: "landnow.png"
+thumbnail: "landnow.jpg"
 ---
 
-![1.04 km from home. LAND NOW on OSD. 2.03 V per cell. Descending.](landnow.png)
+![1.04 km from home. LAND NOW on OSD. 2.03 V per cell. Descending.](landnow.jpg)
 
 That is the Pavo20 Pro II, 1.04 km from home, pack at 2.03 V per cell, the OSD
 reading LAND NOW, and the sea right there. You wonder how I got there.
@@ -28,7 +28,7 @@ Here is how.
 
 ## The Decision
 
-Earlier the same day I had flown a 2 km round trip in heavy field winds and
+A few weeks earlier I had flown a 2 km round trip in heavy field winds and
 landed with 20% remaining. The link held, the battery held, the drone came back.
 I wanted to know what clear-horizon ELRS range looked like over open water. No
 turbulence, no obstructions, just the Baltic Sea at dusk. It seemed like the
@@ -42,7 +42,7 @@ The outbound leg was easy. 2.47 km, 66 km/h, 11 V pack. The horizon was flat,
 the link was clean, the battery was barely moving. There was a tailwind I did
 not specifically register as a tailwind. I registered it as good conditions.
 
-![2.47 km out, 66 km/h, 11.0 V.](outbound.png)
+![2.47 km out, 66 km/h, 11.0 V.](outbound.jpg)
 
 I turned back. Climbed a bit for a better view. The speed dropped. The battery
 started moving faster. The return leg, the same airspeed into the same wind,
@@ -50,7 +50,7 @@ cost 183 mAh/km: 1.45 times more expensive per kilometre than the outbound.
 The tailwind is a headwind now and every metre home costs half again what
 getting out did.
 
-![Turning back. 1.89 km, 10.9 V. The speed is already lower.](turning.png)
+![Turning back. 1.89 km, 10.9 V. The speed is already lower.](turning.jpg)
 
 ## The Blackout
 
@@ -66,7 +66,7 @@ RF reflector, and at low altitude the direct and reflected paths arrive nearly
 equal in amplitude and opposite in phase. Climbing breaks the cancellation.
 0 m: silent. 75 m: restored.
 
-![1.33 km. LOW BATTERY on OSD. The radio said nothing for 150 seconds.](lowbat.png)
+![1.33 km. LOW BATTERY on OSD. The radio said nothing for 150 seconds.](lowbat.jpg)
 
 By the time the radio could see anything, 555 mAh had been consumed. 266 mAh
 remained. The point of no return, at the measured return rate with a 10% margin,
@@ -118,7 +118,7 @@ reading. Battery SoC read 85% remaining when the link first went dark.
 Outbound: 126 mAh/km. Return: 183 mAh/km. Total telemetry dark: 171 s out of
 350 s. 49% of the flight, invisible to the radio.
 
-![Last frame before water.](lastframe.png)
+![Last frame before water.](lastframe.jpg)
 
 ## What I Am Changing
 

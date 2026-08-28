@@ -16,10 +16,10 @@ tags:
   - perspėjimai
   - rizikos-valdymas
 keywords: ["fpv baterijos perspėjimai", "edgetx telemetrija", "gps rescue", "grąžos taškas", "ilgas nuotolis fpv", "pavo20 pro ii praradimas", "fpv avarija jūroje", "dvispindulinis atspindys"]
-thumbnail: "landnow.png"
+thumbnail: "landnow.jpg"
 ---
 
-![1,04 km nuo namų. OSD rodo LAND NOW. 2,03 V ant celės. Leidžiasi.](landnow.png)
+![1,04 km nuo namų. OSD rodo LAND NOW. 2,03 V ant celės. Leidžiasi.](landnow.jpg)
 
 Tai Pavo20 Pro II, 1,04 km nuo namų, baterija 2,03 V ant celės, OSD rodo
 LAND NOW, o priekyje jūra. Smagu paklausti, kaip čia atsidūriau.
@@ -28,7 +28,7 @@ LAND NOW, o priekyje jūra. Smagu paklausti, kaip čia atsidūriau.
 
 ## Sprendimas
 
-Tą pačią dieną anksčiau nuskridau 2 km apvalų reisą stipriame lauko vėjyje ir
+Kelias savaites anksčiau nuskridau 2 km apvalų reisą stipriame lauko vėjyje ir
 nusileisdau su 20% likusių. Ryšys laikė, baterija laikė, dronas grįžo.
 Norėjau sužinoti, kaip atrodo ELRS ryšys virš atviro vandens. Jokių kliūčių,
 jokios turbulencijos, tik Baltijos jūra sutemose. Atrodė kaip lengvesnė to,
@@ -42,7 +42,7 @@ Išvykimas buvo lengvas. 2,47 km, 66 km/h, 11 V baterija. Horizontas lygus,
 ryšys švarus, baterija beveik nejudėjo. Buvo pastipramas vėjas, kurio
 nespecialiai užregistravau kaip pastipramą vėją. Užregistravau kaip geras sąlygas.
 
-![2,47 km nuo starto, 66 km/h, 11,0 V.](outbound.png)
+![2,47 km nuo starto, 66 km/h, 11,0 V.](outbound.jpg)
 
 Pasukau atgal. Pakėliau šiek tiek aukščiau, kad geriau matyti. Greitis krito.
 Baterija ėmė judėti greičiau. Grįžtamasis maršrutas, tas pats oro greitis
@@ -50,7 +50,7 @@ prieš tą patį vėją, kainavo 183 mAh/km: 1,45 karto daugiau nei išvykimas.
 Pastipramas vėjas dabar yra priešvėjis, ir kiekvienas metras namo kainuoja
 pusantro karto tiek, kiek kainavo nuskysti.
 
-![Sukama atgal. 1,89 km, 10,9 V. Greitis jau mažesnis.](turning.png)
+![Sukama atgal. 1,89 km, 10,9 V. Greitis jau mažesnis.](turning.jpg)
 
 ## Tamsa
 
@@ -66,7 +66,7 @@ kryptimi: jūra yra beveik tobulas RF reflektorius, o esant mažam aukščiui
 tiesioginė ir atspindėta banga ateina vienodo amplitudės ir priešingos fazės.
 Pakilimas nutraukia slopinimą. 0 m: tylu. 75 m: ryšys atsinaujino.
 
-![1,33 km. LOW BATTERY ekrane. Radijas 150 sekundžių nieko nesakė.](lowbat.png)
+![1,33 km. LOW BATTERY ekrane. Radijas 150 sekundžių nieko nesakė.](lowbat.jpg)
 
 Kai radijas vėl kažką matė, buvo sunaudota 555 mAh. Liko 266 mAh. Grąžos
 taškas, esant išmatuotam grįžtamojo maršruto intensyvumui su 10% atsarga, buvo
@@ -117,7 +117,7 @@ Baterijos SoC rodė 85% likusių, kai ryšys pirmą kartą dingo.
 Išvykimas: 126 mAh/km. Grįžimas: 183 mAh/km. Telemetrijos tamsa iš viso:
 171 s iš 350 s. 49% skrydžio, radijui nieko nematant.
 
-![Paskutinis kadras prieš vandenį.](lastframe.png)
+![Paskutinis kadras prieš vandenį.](lastframe.jpg)
 
 ## Ką keičiu
 
