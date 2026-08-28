@@ -68,9 +68,10 @@ equal in amplitude and opposite in phase. Climbing breaks the cancellation.
 
 ![1.33 km. LOW BATTERY on OSD. The radio said nothing for 150 seconds.](lowbat.jpg)
 
-By the time the radio could see anything, 555 mAh had been consumed. 266 mAh
-remained. The point of no return, at the measured return rate with a 10% margin,
-was 1323 m from home. The drone was 1946 m from home. Already 623 m past it.
+By the time the radio could see anything, the FC reported 555 mAh consumed and
+34% SoC remaining. On the actual 680 mAh pack that is around 231 mAh. The
+point of no return, at the measured return rate with a 10% margin, was 1147 m
+from home. The drone was 1946 m from home. Already 799 m past it.
 
 The `rth` callout fired at t = 229.8 s. Correct, in the sense that it fired.
 Useless, in the sense that it fired 150 seconds after the decision had already

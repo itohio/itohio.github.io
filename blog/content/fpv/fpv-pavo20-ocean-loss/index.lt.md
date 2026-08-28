@@ -68,9 +68,10 @@ Pakilimas nutraukia slopinimą. 0 m: tylu. 75 m: ryšys atsinaujino.
 
 ![1,33 km. LOW BATTERY ekrane. Radijas 150 sekundžių nieko nesakė.](lowbat.jpg)
 
-Kai radijas vėl kažką matė, buvo sunaudota 555 mAh. Liko 266 mAh. Grąžos
-taškas, esant išmatuotam grįžtamojo maršruto intensyvumui su 10% atsarga, buvo
-1323 m nuo namų. Dronas buvo 1946 m nuo namų. Jau 623 m už jo.
+Kai radijas vėl kažką matė, valdiklis rodė 555 mAh sunaudotų ir 34% SoC
+likusių. Tikrojoje 680 mAh baterijoje tai yra apie 231 mAh. Grąžos taškas,
+esant išmatuotam grįžtamojo maršruto intensyvumui su 10% atsarga, buvo
+1147 m nuo namų. Dronas buvo 1946 m nuo namų. Jau 799 m už jo.
 
 Komanda `rth` suveikė prie t = 229,8 s. Teisinga ta prasme, kad suveikė.
 Bevertė ta prasme, kad suveikė 150 sekundžių po to, kai sprendimą jau priėmė
