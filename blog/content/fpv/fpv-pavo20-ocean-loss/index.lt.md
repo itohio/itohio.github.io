@@ -16,10 +16,10 @@ tags:
   - perspėjimai
   - rizikos-valdymas
 keywords: ["fpv baterijos perspėjimai", "edgetx telemetrija", "gps rescue", "grąžos taškas", "ilgas nuotolis fpv", "pavo20 pro ii praradimas", "fpv avarija jūroje", "dvispindulinis atspindys"]
-thumbnail: "https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/4a54fb8f-71fe-4ecf-a946-08cb51a7d5c2/vlcsnap-2026-08-28-00h19m25s148.png"
+thumbnail: "landnow.png"
 ---
 
-![1,04 km nuo namų. OSD rodo LAND NOW. 2,03 V ant celės. Leidžiasi.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/4a54fb8f-71fe-4ecf-a946-08cb51a7d5c2/vlcsnap-2026-08-28-00h19m25s148.png)
+![1,04 km nuo namų. OSD rodo LAND NOW. 2,03 V ant celės. Leidžiasi.](landnow.png)
 
 Tai Pavo20 Pro II, 1,04 km nuo namų, baterija 2,03 V ant celės, OSD rodo
 LAND NOW, o priekyje jūra. Smagu paklausti, kaip čia atsidūriau.
@@ -42,7 +42,7 @@ Išvykimas buvo lengvas. 2,47 km, 66 km/h, 11 V baterija. Horizontas lygus,
 ryšys švarus, baterija beveik nejudėjo. Buvo pastipramas vėjas, kurio
 nespecialiai užregistravau kaip pastipramą vėją. Užregistravau kaip geras sąlygas.
 
-![2,47 km nuo starto, 66 km/h, 11,0 V.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/f031f1b9-00b9-420e-899f-1e9ee2405f31/vlcsnap-2026-08-28-00h18m36s708.png)
+![2,47 km nuo starto, 66 km/h, 11,0 V.](outbound.png)
 
 Pasukau atgal. Pakėliau šiek tiek aukščiau, kad geriau matyti. Greitis krito.
 Baterija ėmė judėti greičiau. Grįžtamasis maršrutas, tas pats oro greitis
@@ -50,7 +50,7 @@ prieš tą patį vėją, kainavo 183 mAh/km: 1,45 karto daugiau nei išvykimas.
 Pastipramas vėjas dabar yra priešvėjis, ir kiekvienas metras namo kainuoja
 pusantro karto tiek, kiek kainavo nuskysti.
 
-![Sukama atgal. 1,89 km, 10,9 V. Greitis jau mažesnis.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/355d3028-6331-4409-8c1e-9fd772811eac/vlcsnap-2026-08-28-00h18m53s493.png)
+![Sukama atgal. 1,89 km, 10,9 V. Greitis jau mažesnis.](turning.png)
 
 ## Tamsa
 
@@ -66,7 +66,7 @@ kryptimi: jūra yra beveik tobulas RF reflektorius, o esant mažam aukščiui
 tiesioginė ir atspindėta banga ateina vienodo amplitudės ir priešingos fazės.
 Pakilimas nutraukia slopinimą. 0 m: tylu. 75 m: ryšys atsinaujino.
 
-![1,33 km. LOW BATTERY ekrane. Radijas 150 sekundžių nieko nesakė.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/0d4f62f8-43d0-480a-8bc0-14b69a3198e1/vlcsnap-2026-08-28-00h19m11s482.png)
+![1,33 km. LOW BATTERY ekrane. Radijas 150 sekundžių nieko nesakė.](lowbat.png)
 
 Kai radijas vėl kažką matė, buvo sunaudota 555 mAh. Liko 266 mAh. Grąžos
 taškas, esant išmatuotam grįžtamojo maršruto intensyvumui su 10% atsarga, buvo
@@ -78,7 +78,7 @@ fizika.
 
 ## Ką sako telemetrija
 
-![Penki grafikų blokai iš EdgeTX telemetrijos. Viršuje: GPS ir nuspėtas skrydžio kelias. Viduryje: sunaudota talpa ir srovė pagal atstumą. Apačioje: sunaudota talpa pagal laiką ir RSSI / ryšio kokybė pagal atstumą. Pilki tarpai žymi telemetrijos tamsą.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/39e00838-047a-453b-b5b8-443a54420a5e/ocean_flight_analysis.png)
+![Penki grafikų blokai iš EdgeTX telemetrijos. Viršuje: GPS ir nuspėtas skrydžio kelias. Viduryje: sunaudota talpa ir srovė pagal atstumą. Apačioje: sunaudota talpa pagal laiką ir RSSI / ryšio kokybė pagal atstumą. Pilki tarpai žymi telemetrijos tamsą.](analysis.png)
 
 Baterija buvo LAVA II 680 mAh 3S LiHV. Skrydžio valdiklis ją buvo sukonfigūravęs
 kaip 821 mAh, kas per 20% perdeda talpą ir tyliai išpučia kiekvieną SoC rodmenį.
@@ -98,7 +98,7 @@ RQly rodė 100% iki visiško ryšio nutrūkimo. Šiame skrydyje ryšio kokybė m
 nieko nepasakė. RSSI pasakojo istoriją nuo pirmų 40 sekundžių. Aš neklausiau,
 nes nebuvo ko klausyti.
 
-![Paskutinis kadras prieš vandenį.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/ab568c4f-a08e-41ba-9341-6bdb2544a9ec/vlcsnap-2026-08-28-00h19m56s313.png)
+![Paskutinis kadras prieš vandenį.](lastframe.png)
 
 ## Ką keičiu
 

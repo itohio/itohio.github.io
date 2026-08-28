@@ -16,10 +16,10 @@ tags:
   - callouts
   - risk-management
 keywords: ["fpv battery callouts", "edgetx telemetry", "gps rescue", "point of no return", "long range fpv", "pavo20 pro ii ocean loss", "fpv sea crash", "two-ray multipath"]
-thumbnail: "https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/4a54fb8f-71fe-4ecf-a946-08cb51a7d5c2/vlcsnap-2026-08-28-00h19m25s148.png"
+thumbnail: "landnow.png"
 ---
 
-![1.04 km from home. LAND NOW on OSD. 2.03 V per cell. Descending.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/4a54fb8f-71fe-4ecf-a946-08cb51a7d5c2/vlcsnap-2026-08-28-00h19m25s148.png)
+![1.04 km from home. LAND NOW on OSD. 2.03 V per cell. Descending.](landnow.png)
 
 That is the Pavo20 Pro II, 1.04 km from home, pack at 2.03 V per cell, the OSD
 reading LAND NOW, and the sea right there. You wonder how I got there.
@@ -42,7 +42,7 @@ The outbound leg was easy. 2.47 km, 66 km/h, 11 V pack. The horizon was flat,
 the link was clean, the battery was barely moving. There was a tailwind I did
 not specifically register as a tailwind. I registered it as good conditions.
 
-![2.47 km out, 66 km/h, 11.0 V.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/f031f1b9-00b9-420e-899f-1e9ee2405f31/vlcsnap-2026-08-28-00h18m36s708.png)
+![2.47 km out, 66 km/h, 11.0 V.](outbound.png)
 
 I turned back. Climbed a bit for a better view. The speed dropped. The battery
 started moving faster. The return leg, the same airspeed into the same wind,
@@ -50,7 +50,7 @@ cost 183 mAh/km: 1.45 times more expensive per kilometre than the outbound.
 The tailwind is a headwind now and every metre home costs half again what
 getting out did.
 
-![Turning back. 1.89 km, 10.9 V. The speed is already lower.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/355d3028-6331-4409-8c1e-9fd772811eac/vlcsnap-2026-08-28-00h18m53s493.png)
+![Turning back. 1.89 km, 10.9 V. The speed is already lower.](turning.png)
 
 ## The Blackout
 
@@ -66,7 +66,7 @@ RF reflector, and at low altitude the direct and reflected paths arrive nearly
 equal in amplitude and opposite in phase. Climbing breaks the cancellation.
 0 m: silent. 75 m: restored.
 
-![1.33 km. LOW BATTERY on OSD. The radio said nothing for 150 seconds.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/0d4f62f8-43d0-480a-8bc0-14b69a3198e1/vlcsnap-2026-08-28-00h19m11s482.png)
+![1.33 km. LOW BATTERY on OSD. The radio said nothing for 150 seconds.](lowbat.png)
 
 By the time the radio could see anything, 555 mAh had been consumed. 266 mAh
 remained. The point of no return, at the measured return rate with a 10% margin,
@@ -78,7 +78,7 @@ been made by physics.
 
 ## What the Telemetry Shows
 
-![Five-panel flight analysis from EdgeTX telemetry. Top: GPS and dead-reckoned flight path. Middle: consumed capacity and current vs distance. Bottom: consumed capacity vs time, and RSSI / link quality vs distance. Grey shading marks the telemetry dark period.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/39e00838-047a-453b-b5b8-443a54420a5e/ocean_flight_analysis.png)
+![Five-panel flight analysis from EdgeTX telemetry. Top: GPS and dead-reckoned flight path. Middle: consumed capacity and current vs distance. Bottom: consumed capacity vs time, and RSSI / link quality vs distance. Grey shading marks the telemetry dark period.](analysis.png)
 
 The pack was a LAVA II 680 mAh 3S LiHV. The flight controller had it configured
 for 821 mAh, which overstates capacity by 20% and silently inflates every SoC
@@ -97,7 +97,7 @@ RQly held 100% until total blackout. On this flight, link quality told me
 nothing. RSSI was telling a story from the first 40 seconds. I was not listening
 because there was nothing to listen to.
 
-![Last frame before water.](https://eu.chat-img.sintra.ai/f775d550-4c12-4009-b046-c70303e7256c/ab568c4f-a08e-41ba-9341-6bdb2544a9ec/vlcsnap-2026-08-28-00h19m56s313.png)
+![Last frame before water.](lastframe.png)
 
 ## What I Am Changing
 
