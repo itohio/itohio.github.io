@@ -122,6 +122,35 @@ Outbound: 126 mAh/km. Return: 183 mAh/km. Total telemetry dark: 171 s out of
 
 ![Last frame before water.](lastframe.jpg)
 
+
+## Why the Battery Drained So Fast
+
+It did not drain fast. That is the finding.
+
+The drone drew 7.19 A on the outbound leg and 6.83 A on the return. The current
+was nearly identical. The power was the same. What changed was the groundspeed:
+54.9 km/h outbound, 40.1 km/h on the return leg. 37% slower. The wind did not
+make the motors work harder. It made the journey take 37% longer per kilometre.
+
+At constant current, mAh/km is inversely proportional to groundspeed. At
+120 mAh/min outbound and 54.9 km/h that is 131 mAh/km. At 114 mAh/min return
+and 40.1 km/h that is 170 mAh/km. The measured values from the rolling window
+are 126 and 183 respectively. The speed ratio explains the consumption ratio.
+
+The field flight reference makes the same point from the other direction:
+6 minutes at 120 mAh/min is 720 mAh, right at the pack capacity, and the
+voltage never went below 3.56 V. The ocean flight was also about 5.8 minutes
+at similar power. The difference is that 2.47 km into a headwind burns the
+same pack as 2 km across a field, but leaves you 1946 m from home instead of
+walking distance from the landing spot.
+
+The 75 m altitude climb on the return cost roughly 15 mAh electrical, about 2%
+of the pack. Not the cause.
+
+The cause is simple arithmetic that was invisible until after: the return leg
+at 40 km/h into the same wind that pushed you out at 55 km/h costs 1.45× more
+per kilometre, and the pack is not 1.45× bigger than the distance requires.
+
 ## What I Am Changing
 
 Each row below is a failure mode the telemetry identified. The implementation

@@ -121,6 +121,34 @@ Išvykimas: 126 mAh/km. Grįžimas: 183 mAh/km. Telemetrijos tamsa iš viso:
 
 ![Paskutinis kadras prieš vandenį.](lastframe.jpg)
 
+
+## Kodėl baterija taip greitai išsikrovė
+
+Negreitai. Tai ir yra išvada.
+
+Išvykstant dronas traukė 7,19 A, grįžtant — 6,83 A. Srovė buvo beveik vienoda.
+Galia ta pati. Pasikeitė greitis: 54,9 km/h išvykant, 40,1 km/h grįžtant.
+37% lėčiau. Vėjas neprivertė variklių dirbti sunkiau. Jis privertė kelionę
+užtrukti 37% ilgiau kilometrui.
+
+Esant pastoviai srovei, mAh/km yra atvirkščiai proporcingas žemės greičiui.
+120 mAh/min ir 54,9 km/h — tai 131 mAh/km. 114 mAh/min ir 40,1 km/h — tai
+170 mAh/km. Iš slenkančio lango išmatuotos reikšmės yra atitinkamai 126 ir 183.
+Greičio santykis paaiškina suvartojimo santykį.
+
+Lauko skrydžio duomenys tai pat patvirtina: 6 minutės × 120 mAh/min = 720 mAh,
+lygiai ties baterijos talpa, ir įtampa niekada nekrito žemiau 3,56 V. Vandenyno
+skrydis taip pat truko apie 5,8 minutės su panaša galia. Skirtumas tas, kad
+2,47 km prieš vėją sunaudoja tą pačią bateriją kaip 2 km lauke, bet palieka
+1946 m nuo namų, o ne pėsčiomis pasiekiamoje vietoje.
+
+75 m aukščio kilimas grįžtant kainavo apytikriai 15 mAh elektrinės energijos —
+apie 2% baterijos. Ne tai buvo priežastis.
+
+Priežastis — paprasta aritmetika, kuri tapo matoma tik po: grįžimas 40 km/h
+prieš tą patį vėją, kuris išstūmė 55 km/h, kainuoja 1,45× daugiau kilometrui,
+o baterija nėra 1,45× didesnė nei kelionei reikia.
+
 ## Ką keičiu
 
 Kiekviena eilutė žemiau yra gedimo režimas, kurį atskleidė telemetrija.
