@@ -125,31 +125,37 @@ Outbound: 126 mAh/km. Return: 183 mAh/km. Total telemetry dark: 171 s out of
 
 ## Why the Battery Drained So Fast
 
-It did not drain fast. That is the finding.
+The visible telemetry tells a boring story: 7.2 A outbound, 6.8 A return,
+nearly identical. The wind slowed the return to 40 km/h versus 55 km/h
+outbound, which explains the 1.45× mAh/km difference through time alone.
+Nothing surprising there.
 
-The drone drew 7.19 A on the outbound leg and 6.83 A on the return. The current
-was nearly identical. The power was the same. What changed was the groundspeed:
-54.9 km/h outbound, 40.1 km/h on the return leg. 37% slower. The wind did not
-make the motors work harder. It made the journey take 37% longer per kilometre.
+The blackout tells a different story.
 
-At constant current, mAh/km is inversely proportional to groundspeed. At
-120 mAh/min outbound and 54.9 km/h that is 131 mAh/km. At 114 mAh/min return
-and 40.1 km/h that is 170 mAh/km. The measured values from the rolling window
-are 126 and 183 respectively. The speed ratio explains the consumption ratio.
+The FC's Capa counter keeps integrating current even when telemetry is down.
+At the last good reading before the main blackout: 156 mAh consumed.
+At the first good reading after: 555 mAh. That is 399 mAh in 139 seconds.
+Working backwards: **10.3 A average** during those 139 seconds.
 
-The field flight reference makes the same point from the other direction:
-6 minutes at 120 mAh/min is 720 mAh, right at the pack capacity, and the
-voltage never went below 3.56 V. The ocean flight was also about 5.8 minutes
-at similar power. The difference is that 2.47 km into a headwind burns the
-same pack as 2 km across a field, but leaves you 1946 m from home instead of
-walking distance from the landing spot.
+The OSD screenshot at 2.47 km — inside the blackout window — shows 10.09 A.
+That frame confirms it. The blackout covered exactly the phase of the flight
+where current was highest:
 
-The 75 m altitude climb on the return cost roughly 15 mAh electrical, about 2%
-of the pack. Not the cause.
+- the turnaround at 2.47 km (throttle spike against the headwind)
+- the climb from 0 m to 75 m
+- the first 70 s of return at near-maximum throttle
 
-The cause is simple arithmetic that was invisible until after: the return leg
-at 40 km/h into the same wind that pushed you out at 55 km/h costs 1.45× more
-per kilometre, and the pack is not 1.45× bigger than the distance requires.
+Those 139 seconds at 10.3 A consumed 399 mAh: **59% of the entire pack**.
+The radio was blind for all of it.
+
+The yard comparison now makes sense. At 6 A average (a mix of cruise, hover,
+and slower manoeuvres), a 680 mAh pack lasts 6.8 minutes — which matches the
+5–6 minute figure. The ocean flight at 7.2 A cruise would have lasted 5.7
+minutes if that was all it drew. But 139 seconds at 10.3 A pulled 122 mAh
+more than cruise rates would have, burning a full extra minute of flight
+budget in the one phase nobody could see.
+
+The pack was effectively empty before telemetry could say anything about it.
 
 ## What I Am Changing
 

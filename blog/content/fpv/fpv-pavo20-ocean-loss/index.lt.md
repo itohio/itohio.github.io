@@ -124,30 +124,36 @@ Išvykimas: 126 mAh/km. Grįžimas: 183 mAh/km. Telemetrijos tamsa iš viso:
 
 ## Kodėl baterija taip greitai išsikrovė
 
-Negreitai. Tai ir yra išvada.
+Matoma telemetrija pasakoja nuobodžią istoriją: 7,2 A išvykstant, 6,8 A
+grįžtant, beveik vienoda. Vėjas sulėtino grįžimą iki 40 km/h prieš 55 km/h
+išvykstant, kas paaiškina 1,45× mAh/km skirtumą vien per laiką. Nieko
+stebėtino.
 
-Išvykstant dronas traukė 7,19 A, grįžtant — 6,83 A. Srovė buvo beveik vienoda.
-Galia ta pati. Pasikeitė greitis: 54,9 km/h išvykant, 40,1 km/h grįžtant.
-37% lėčiau. Vėjas neprivertė variklių dirbti sunkiau. Jis privertė kelionę
-užtrukti 37% ilgiau kilometrui.
+Tamsa pasakoja kitą istoriją.
 
-Esant pastoviai srovei, mAh/km yra atvirkščiai proporcingas žemės greičiui.
-120 mAh/min ir 54,9 km/h — tai 131 mAh/km. 114 mAh/min ir 40,1 km/h — tai
-170 mAh/km. Iš slenkančio lango išmatuotos reikšmės yra atitinkamai 126 ir 183.
-Greičio santykis paaiškina suvartojimo santykį.
+Skrydžio valdiklio Capa skaitliukas integruoja srovę net kai telemetrija
+nutrūkusi. Paskutinis geras rodmuo prieš pagrindinę tamsą: 156 mAh
+sunaudota. Pirmas geras rodmuo po: 555 mAh. Tai 399 mAh per 139 sekundžių.
+Skaičiuojant atgal: **10,3 A vidutinė srovė** per tas 139 sekundes.
 
-Lauko skrydžio duomenys tai pat patvirtina: 6 minutės × 120 mAh/min = 720 mAh,
-lygiai ties baterijos talpa, ir įtampa niekada nekrito žemiau 3,56 V. Vandenyno
-skrydis taip pat truko apie 5,8 minutės su panaša galia. Skirtumas tas, kad
-2,47 km prieš vėją sunaudoja tą pačią bateriją kaip 2 km lauke, bet palieka
-1946 m nuo namų, o ne pėsčiomis pasiekiamoje vietoje.
+OSD ekrano kadras 2,47 km atstumu — jau tamsos lange — rodo 10,09 A.
+Tas kadras patvirtina. Tamsa padengė būtent tą skrydžio fazę, kur srovė
+buvo didžiausia:
 
-75 m aukščio kilimas grįžtant kainavo apytikriai 15 mAh elektrinės energijos —
-apie 2% baterijos. Ne tai buvo priežastis.
+- apsisukimas 2,47 km (srovės šuolis į priešvėjį)
+- kilimas nuo 0 m iki 75 m
+- pirmosios ~70 s grįžimo beveik maksimaliu variklių pajėgumu
 
-Priežastis — paprasta aritmetika, kuri tapo matoma tik po: grįžimas 40 km/h
-prieš tą patį vėją, kuris išstūmė 55 km/h, kainuoja 1,45× daugiau kilometrui,
-o baterija nėra 1,45× didesnė nei kelionei reikia.
+Tos 139 sekundės 10,3 A sunaudojo 399 mAh: **59% viso baterijos krūvio**.
+Radijas nieko nematė per visą tą laiką.
+
+Palyginimas su lauko skrydžiu dabar aiškus. 6 A vidurkiu (kruizas, kabinimas,
+lėtesni manevrai) 680 mAh baterija trunka 6,8 minutės — atitinka 5–6 minučių
+rezultatą. Vandenyno skrydis 7,2 A kruizu būtų trukęs 5,7 minutės. Bet
+139 sekundžių 10,3 A ištraukė 122 mAh daugiau nei kruizo greičiu, sudeginant
+visą papildomą skrydžio minutę toje vienoje fazėje, kurios niekas negalėjo matyti.
+
+Baterija buvo praktiškai tuščia dar prieš telemetrijai galint apie tai pranešti.
 
 ## Ką keičiu
 
