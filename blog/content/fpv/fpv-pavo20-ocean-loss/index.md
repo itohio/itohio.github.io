@@ -28,11 +28,13 @@ The result was informative.
 The drone is now on the sea floor.
 
 Telemetry went dark at t = 79 s, altitude 0 m, roughly 920 m out. It came back
-at t = 230 s when the drone had climbed to 75 m on the return leg — two-ray
-multipath over seawater at grazing incidence, the sea being a near-perfect
-reflector. By the time telemetry restored, 555 mAh had been consumed. 266 mAh
-remained. The point of no return was 1323 m from home. The drone was 1946 m
-from home. Already 623 m past it.
+at t = 230 s when the drone had climbed to 75 m on the return leg. Two-ray
+multipath over seawater at grazing incidence: the sea is a near-perfect RF
+reflector, and at low altitude the direct and reflected paths arrive nearly
+equal in amplitude and opposite in phase. Climbing breaks the cancellation.
+By the time telemetry restored, 555 mAh had been consumed. 266 mAh remained.
+The point of no return was 1323 m from home. The drone was 1946 m from home.
+Already 623 m past it.
 
 ## Flight Analysis
 
@@ -47,20 +49,18 @@ the telemetry records. Battery SoC read 85% remaining when the link first went d
 Outbound rate was 126 mAh/km. The drone had a 10 km/h tailwind at approximately
 50 km/h airspeed, so that number is as good as it gets. The return leg, same
 airspeed into the same wind, cost 183 mAh/km: 1.45 times more expensive per
-kilometre. The total telemetry dark period was 171 s out of 350 s total flight
-time: 49% of the flight was invisible to the radio.
+kilometre. Total telemetry dark: 171 s out of 350 s. 49% of the flight,
+invisible to the radio.
 
-RSSI at 0 m altitude was −36 dBm. At 60 m altitude it was −84 dBm, a 48 dB
-drop over 60 vertical metres. The sea surface is a near-perfect RF reflector.
-At grazing incidence the direct path and the sea-reflected path are very nearly
-co-phased, and they cancel. Climbing breaks the cancellation. Link quality held
-100% right up to the instant of total loss; RSSI was the ramp, LQ was the cliff.
+RSSI at launch was −36 dBm. At 60 m out, still at sea level, it was −84 dBm.
+48 dB of loss over 60 horizontal metres, with the link quality gauge reading
+100% throughout. RSSI was the ramp; LQ was the cliff.
 
-The mental model failure had three components. I had flown a 2 km round trip in
-heavy field winds earlier the same day and landed with 20% remaining. I assumed
-clear horizon over water would be easier. What I did not account for: the return
-leg costs 1.45× the outbound at matching airspeed; the wind reversed after I
-turned; and I was flying at 0 m altitude over a near-perfect RF reflector.
+The mental model failure: I had flown a 2 km round trip in heavy field winds
+earlier the same day and landed with 20% remaining. I assumed open water would
+be easier. What I did not account for: the return leg costs 1.45× the outbound
+at matching airspeed, the wind reversed after I turned, and I was flying at
+0 m altitude over a near-perfect RF reflector.
 
 ## What the Callouts Did and Did Not Do
 
@@ -115,6 +115,5 @@ telemetry identified. Implementation is a separate post.
 The drone is on the sea floor. The telemetry is not. One of those is more useful
 for not repeating the experiment.
 
-The implementation of the callout changes — the Lua scripts and model YAML — is
-in a separate post. This one is the flight data and the design decisions that
-come out of it.
+The scripts and YAML come in a separate post. This one is the flight data and
+the decisions it forced.
