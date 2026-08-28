@@ -30,9 +30,10 @@ Here is how.
 
 A few weeks earlier I had flown a 2 km round trip in heavy field winds and
 landed with 20% remaining. The link held, the battery held, the drone came back.
-I wanted to know what clear-horizon ELRS range looked like over open water. No
-turbulence, no obstructions, just the Baltic Sea at dusk. It seemed like the
-easier version of what I had already done.
+Same drone, same pack, six minutes of cruise in moderate winds, voltage never
+below 3.56 V. I wanted to know what clear-horizon ELRS range looked like over
+open water. No turbulence, no obstructions, just the Baltic Sea at dusk. It
+seemed like the easier version of what I had already done.
 
 It was not.
 

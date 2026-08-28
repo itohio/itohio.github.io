@@ -30,9 +30,10 @@ LAND NOW, o priekyje jūra. Smagu paklausti, kaip čia atsidūriau.
 
 Kelias savaites anksčiau nuskridau 2 km apvalų reisą stipriame lauko vėjyje ir
 nusileisdau su 20% likusių. Ryšys laikė, baterija laikė, dronas grįžo.
-Norėjau sužinoti, kaip atrodo ELRS ryšys virš atviro vandens. Jokių kliūčių,
-jokios turbulencijos, tik Baltijos jūra sutemose. Atrodė kaip lengvesnė to,
-ką jau dariau, versija.
+Tas pats dronas, ta pati baterija, šešios minutės kruizo vidutiniame vėjyje,
+įtampa niekada nekrito žemiau 3,56 V. Norėjau sužinoti, kaip atrodo ELRS ryšys
+virš atviro vandens. Jokių kliūčių, jokios turbulencijos, tik Baltijos jūra
+sutemose. Atrodė kaip lengvesnė to, ką jau dariau, versija.
 
 Nebuvo.
 
