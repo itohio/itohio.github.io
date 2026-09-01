@@ -94,7 +94,7 @@ Flight path. Blue: GPS lock. Red: telemetry dark, position dead-reckoned.
 Consumption rate in mAh/km, computed over a 150 m rolling window. Outbound
 (left half): ~126 mAh/km with a tailwind. Return (right half, after turnaround
 at ~2.5 km odometer): ~183 mAh/km into the same wind. The gap between ~1 and
-~2.5 km is the main 150 s blackout — no measurement, no points.
+~2.5 km is the main 150 s blackout, no measurement, no points.
 
 ```chart
 {"type":"scatter","data":{"datasets":[{"label":"Current  [A]","data":[{"x":0.0,"y":0.3},{"x":0.006,"y":0.3},{"x":0.006,"y":0.2},{"x":0.006,"y":0.2},{"x":0.016,"y":0.2},{"x":0.016,"y":0.5},{"x":0.02,"y":0.5},{"x":0.02,"y":0.8},{"x":0.02,"y":0.8},{"x":0.021,"y":0.8},{"x":0.021,"y":3.0},{"x":0.031,"y":3.0},{"x":0.031,"y":3.0},{"x":0.031,"y":4.4},{"x":0.056,"y":4.4},{"x":0.056,"y":3.5},{"x":0.056,"y":3.5},{"x":0.094,"y":3.5},{"x":0.094,"y":6.2},{"x":0.148,"y":6.2},{"x":0.148,"y":5.9},{"x":0.148,"y":5.9},{"x":0.202,"y":5.9},{"x":0.202,"y":6.0},{"x":0.202,"y":6.0},{"x":0.27,"y":6.0},{"x":0.27,"y":5.7},{"x":0.333,"y":5.7},{"x":0.333,"y":5.7},{"x":0.333,"y":7.2},{"x":0.408,"y":7.2},{"x":0.408,"y":7.9},{"x":0.408,"y":7.9},{"x":0.408,"y":7.9},{"x":0.48,"y":7.9},{"x":0.48,"y":7.9},{"x":0.48,"y":9.5},{"x":0.48,"y":9.5},{"x":0.603,"y":9.5},{"x":0.603,"y":9.5},{"x":0.603,"y":10.0},{"x":0.603,"y":10.0},{"x":0.714,"y":10.0},{"x":0.714,"y":9.0},{"x":0.714,"y":9.0},{"x":0.714,"y":9.0},{"x":0.714,"y":9.0},{"x":0.824,"y":9.0},{"x":0.824,"y":9.0},{"x":0.824,"y":9.2},{"x":0.824,"y":9.2},{"x":0.955,"y":9.2},{"x":0.955,"y":9.2},{"x":0.955,"y":9.2},{"x":0.955,"y":9.2},{"x":0.955,"y":9.2},{"x":2.001,"y":6.7},{"x":2.05,"y":6.7},{"x":2.05,"y":6.7},{"x":2.05,"y":6.7},{"x":2.099,"y":6.7},{"x":2.099,"y":7.7},{"x":2.148,"y":7.7},{"x":2.148,"y":6.7},{"x":2.148,"y":6.7},{"x":2.194,"y":6.7},{"x":2.194,"y":7.3},{"x":2.194,"y":7.3},{"x":2.241,"y":7.3},{"x":2.241,"y":6.3},{"x":2.291,"y":6.3},{"x":2.291,"y":8.2},{"x":2.291,"y":8.2},{"x":2.346,"y":8.2},{"x":2.346,"y":8.2},{"x":2.346,"y":6.7},{"x":2.397,"y":6.7},{"x":2.397,"y":8.0},{"x":2.397,"y":8.0},{"x":2.441,"y":8.0},{"x":2.441,"y":8.4},{"x":2.488,"y":8.4},{"x":2.488,"y":8.4},{"x":2.488,"y":8.7},{"x":2.537,"y":8.7},{"x":2.537,"y":7.6},{"x":2.537,"y":7.6},{"x":2.588,"y":7.6},{"x":2.588,"y":6.0},{"x":2.588,"y":6.0},{"x":2.63,"y":6.0},{"x":2.63,"y":5.5},{"x":2.676,"y":5.5},{"x":2.676,"y":5.7},{"x":2.676,"y":5.7},{"x":2.717,"y":5.7},{"x":2.717,"y":5.8},{"x":2.717,"y":5.8},{"x":2.759,"y":5.8},{"x":2.759,"y":6.8},{"x":2.797,"y":6.8},{"x":2.797,"y":6.8},{"x":2.797,"y":6.4},{"x":2.84,"y":6.4},{"x":2.84,"y":6.2},{"x":2.84,"y":6.2},{"x":2.875,"y":6.2},{"x":2.875,"y":5.8},{"x":2.909,"y":5.8},{"x":2.909,"y":7.1},{"x":2.909,"y":7.1},{"x":2.947,"y":7.1},{"x":2.947,"y":4.9},{"x":2.947,"y":4.9},{"x":2.982,"y":4.9},{"x":2.982,"y":7.2},{"x":2.982,"y":7.2},{"x":2.982,"y":7.2}],"backgroundColor":"rgba(39,174,96,0.7)","pointRadius":3,"showLine":true,"borderColor":"rgba(39,174,96,0.5)","borderWidth":1}]},"options":{"responsive":true,"maintainAspectRatio":true,"aspectRatio":2.2,"plugins":{"title":{"display":true,"text":"Current draw vs distance flown"},"legend":{"position":"bottom"}},"scales":{"x":{"title":{"display":true,"text":"Cumulative distance flown  [km]"},"grid":{"color":"rgba(0,0,0,0.08)"}},"y":{"title":{"display":true,"text":"Current  [A]"},"min":0,"grid":{"color":"rgba(0,0,0,0.08)"}}}}}
@@ -137,7 +137,7 @@ At the last good reading before the main blackout: 156 mAh consumed.
 At the first good reading after: 555 mAh. That is 399 mAh in 139 seconds.
 Working backwards: **10.3 A average** during those 139 seconds.
 
-The OSD screenshot at 2.47 km — inside the blackout window — shows 10.09 A.
+The OSD screenshot at 2.47 km, inside the blackout window, shows 10.09 A.
 That frame confirms it. The blackout covered exactly the phase of the flight
 where current was highest:
 
@@ -149,7 +149,7 @@ Those 139 seconds at 10.3 A consumed 399 mAh: **59% of the entire pack**.
 The radio was blind for all of it.
 
 The yard comparison now makes sense. At 6 A average (a mix of cruise, hover,
-and slower manoeuvres), a 680 mAh pack lasts 6.8 minutes — which matches the
+and slower manoeuvres), a 680 mAh pack lasts 6.8 minutes, which matches the
 5–6 minute figure. The ocean flight at 7.2 A cruise would have lasted 5.7
 minutes if that was all it drew. But 139 seconds at 10.3 A pulled 122 mAh
 more than cruise rates would have, burning a full extra minute of flight
@@ -165,12 +165,12 @@ comes in a separate post.
 | Condition | Old behaviour | New behaviour |
 |---|---|---|
 | Battery voltage crosses 4.2 / 4.0 / 3.8 V/cell on descent | Single voltage-threshold logical switch, fires once on the first crossing, gated on the battery button | Spoken number ("one", "two", "three") on each 0.1 V crossing below 3.8 V; no tone (beep volume is 0 on this radio) |
-| Battery < 3.6 V/cell | `lowbat` track via logical switch | Same, but also from the background script — first line of defence even through a blackout |
+| Battery < 3.6 V/cell | `lowbat` track via logical switch | Same, but also from the background script, first line of defence even through a blackout |
 | Return leg costs more than 1.3× the outbound per km | No callout existed | Wind asymmetry warning after ≥30 s outbound + ≥15 s return: "warning close {ratio}%" |
 | Specific power elevated + specific speed normal (internal fault: motor, prop, bearing) | No callout existed | "warning power {ratio}%" once, after a cruise baseline is established |
 | Specific power elevated + specific speed depressed (external: headwind, drag) | No callout existed | "warning speed {ratio}%" once |
-| Link RSSI below −92 dBm | `rssiSource: none` — no RF alarm wired at all. RQly held 100% until total loss | `siglow` + dBm value; `sigcrt` at −100 dBm. RSSI is the ramp; LQ is the cliff |
-| Link RSSI degrading + altitude < 25 m | Nothing | "tolow" — climb. Measured: link died at 0 m, restored at 75 m, two-ray multipath over water |
+| Link RSSI below −92 dBm | `rssiSource: none`, no RF alarm wired at all. RQly held 100% until total loss | `siglow` + dBm value; `sigcrt` at −100 dBm. RSSI is the ramp; LQ is the cliff |
+| Link RSSI degrading + altitude < 25 m | Nothing | "tolow", meaning climb. Measured: link died at 0 m, restored at 75 m, two-ray multipath over water |
 | Telemetry dark for > 4 s | Logical switches frozen FALSE; all battery callouts silenced | Background Lua script continues dead-reckoning distance and SoC, re-announces state on restore |
 | Point of no return approaching (outbound, GPS available) | Nothing | "close {metres remaining}" counting down while PNR − dHome < 400 m |
 | Arming with GPS rescue not ready (FC says "?") | Satellite count against a hardcoded threshold in the script | FC's own verdict: Betaflight appends `?` to the CRSF flight-mode string when `numSat < gps_rescue_min_sats`. Script reads that directly. |
