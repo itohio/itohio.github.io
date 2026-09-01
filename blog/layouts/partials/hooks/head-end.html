@@ -1,13 +1,28 @@
 {{- partial "schema.html" . }}
 
-{{/* Noindex taxonomy list pages (/tags/, /categories/, /series/), individual
-     term pages (/tags/fpv/, /series/edgetx-series/), and paginated pages beyond
-     page 1 (/blog/page/2/). These pages carry no unique content and burn crawl
-     budget that should go to actual posts and snippets. Use "noindex, follow" so
-     Google still traverses the links to real content. */}}
-{{- if or
-    (in (slice "taxonomy" "term") .Kind)
-    (and .Paginator (gt .Paginator.PageNumber 1)) }}
+{{/* Noindex taxonomy list pages (/tags/, /categories/, /series/) and individual
+     term pages (/tags/fpv/, /series/edgetx-series/). These carry no unique content
+     and burn crawl budget that should go to actual posts and snippets. "noindex,
+     follow" so Google still traverses the links to real content.
+
+     This covers their paginated pages too: /tags/page/7/ and /tags/fpv/page/3/ are
+     re-renders of the same Page, so .Kind is "taxonomy"/"term" on every pager page.
+     Measured: 122 of the 128 paginated URLs on this site are taxonomy or term pages,
+     so they are all noindexed here.
+
+     Do NOT add a `.Paginator` test to this partial. head-end is rendered from the
+     <head> in baseof.html, which runs BEFORE the "main" block, so touching
+     .Paginator here initialises pagination before the theme's archive.html gets to
+     call `.Paginate $pages` with its own page set. Measured consequences on this
+     site: the home paginator switched from mainSections (3 pager pages) to all
+     RegularPages (30 pager pages), and non-paginating templates such as
+     snippets/section.html gained spurious /page/1/ duplicates, 34 extra pages in
+     total. .Paginator also hard-errors on kinds that cannot paginate, which is what
+     broke the 404 page and the whole build. Hugo 0.163 exposes no read-only pager
+     accessor, and .Permalink does not vary between pager renders, so the remaining
+     6 home/section pager URLs cannot be detected here without that side effect.
+     They are left indexable deliberately. */}}
+{{- if in (slice "taxonomy" "term") .Kind }}
 <meta name="robots" content="noindex, follow">
 {{- end }}
 
