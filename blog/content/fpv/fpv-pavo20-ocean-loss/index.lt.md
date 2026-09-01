@@ -28,8 +28,8 @@ LAND NOW, o priekyje jūra. Natūralu paklausti, kaip aš čia atsidūriau.
 
 ## Sprendimas
 
-Prieš kelias savaites buvau nuskridęs 2 km tolyn ir atgal per stiprų vėją
-atvirame lauke ir nusileidau turėdamas 20 % likutį. Ryšys laikė, baterija laikė,
+Prieš kelias savaites, per stiprų vėją atvirame lauke, nuskridau 2 km tolyn
+ir atgal, o nusileidau turėdamas 20 % likutį. Ryšys laikė, baterija laikė,
 dronas grįžo. Tas pats dronas, ta pati baterija, šešios minutės kruizinio
 skridimo vidutiniame vėjyje, ir įtampa nė karto nenukrito žemiau 3,56 V.
 Norėjau pamatyti, koks yra ELRS nuotolis virš atviro vandens, kai horizontas
@@ -42,7 +42,7 @@ Nebuvo.
 
 Atkarpa tolyn buvo lengva. 2,47 km, 66 km/h, 11 V baterijos įtampa. Horizontas
 lygus, ryšys švarus, baterijos rodmuo beveik nekrito. Pūtė pavėjys, kurio kaip
-pavėjo neužfiksavau. Užfiksavau kaip geras sąlygas.
+pavėjo neįvertinau. Įvertinau kaip geras sąlygas.
 
 ![2,47 km nuo starto, 66 km/h, 11,0 V.](outbound.jpg)
 
@@ -62,17 +62,16 @@ Telemetrija dingo ties t = 79 s, aukštis 0 m, maždaug 920 m nuo starto. Negrį
 jungikliai, kurių šaltinis yra telemetrijos jutiklis, tamsos metu priverstinai
 laikomi FALSE. Įtampos slenksčio jungiklis negali suveikti, kol ryšio nėra.
 
-Telemetrija atsirado ties t = 230 s, kai dronas jau buvo pakilęs į 75 m.
-Priežastis yra dviejų spindulių interferencija virš jūros beveik slystančiu
-kritimo kampu. Jūros paviršius yra beveik idealus radijo bangų atspindėtojas, o
+Telemetrija atsistatė ties t = 230 s, kai dronas jau buvo pakilęs į 75 m.
+Priežastis yra dviejų spindulių interferencija virš jūros esant beveik
+slystančiam kritimo kampui. Jūros paviršius yra beveik idealus radijo bangų atspindėtojas, o
 mažame aukštyje tiesioginė ir atspindėta banga atkeliauja beveik vienodos
-amplitudės ir priešingų fazių. Pakilus ta fazių kompensacija suyra. 0 m: tyla.
+amplitudės ir priešingų fazių. Pakilus aukščiau ta fazių kompensacija suyra. 0 m: tyla.
 75 m: ryšys atgal.
 
 ![1,33 km. LOW BATTERY ekrane. Radijas 150 sekundžių nesakė nieko.](lowbat.jpg)
 
-Kai radijas vėl ką nors pamatė, valdiklis rodė 555 mAh sunaudotų ir 34 % likusio
-SoC. Realioje 680 mAh baterijoje tai yra apie 231 mAh. Negrįžimo taškas,
+Kai radijas vėl ką nors pamatė, valdiklis rodė, kad sunaudota 555 mAh ir likę 34 % SoC. Realioje 680 mAh baterijoje tai yra apie 231 mAh. Negrįžimo taškas,
 skaičiuojant pagal išmatuotas grįžimo sąnaudas su 10 % atsarga, buvo 1147 m nuo
 namų. Dronas buvo 1946 m nuo namų, tai yra jau 799 m už jo.
 
@@ -103,7 +102,7 @@ maždaug 1 ir 2,5 km yra ta pati 150 s tamsa: matavimų nėra, taškų nėra.
 ```
 
 Srovė viso skrydžio metu. Atkarpoje atgal ji didesnė ir labiau išsibarsčiusi,
-nes prieš priešvėjį dronas dirba sunkiau.
+nes prieš vėją dronas dirba sunkiau.
 
 ```chart
 {"type":"scatter","data":{"datasets":[{"label":"1RSS [dBm]","data":[{"x":0.0,"y":-36.0},{"x":6.0,"y":-38.0},{"x":6.0,"y":-36.0},{"x":6.0,"y":-38.0},{"x":15.0,"y":-40.0},{"x":15.0,"y":-40.0},{"x":19.0,"y":-42.0},{"x":19.0,"y":-42.0},{"x":19.0,"y":-34.0},{"x":20.0,"y":-50.0},{"x":20.0,"y":-57.0},{"x":13.0,"y":-67.0},{"x":13.0,"y":-75.0},{"x":13.0,"y":-77.0},{"x":23.0,"y":-81.0},{"x":23.0,"y":-75.0},{"x":23.0,"y":-84.0},{"x":61.0,"y":-84.0},{"x":61.0,"y":-92.0},{"x":114.0,"y":-85.0},{"x":114.0,"y":-82.0},{"x":114.0,"y":-82.0},{"x":168.0,"y":-83.0},{"x":168.0,"y":-83.0},{"x":168.0,"y":-84.0},{"x":235.0,"y":-85.0},{"x":235.0,"y":-87.0},{"x":298.0,"y":-89.0},{"x":298.0,"y":-90.0},{"x":298.0,"y":-89.0},{"x":373.0,"y":-89.0},{"x":373.0,"y":-91.0},{"x":373.0,"y":-93.0},{"x":373.0,"y":-98.0},{"x":445.0,"y":-94.0},{"x":445.0,"y":-92.0},{"x":445.0,"y":-91.0},{"x":445.0,"y":-91.0},{"x":568.0,"y":-93.0},{"x":568.0,"y":-90.0},{"x":568.0,"y":-91.0},{"x":568.0,"y":-92.0},{"x":679.0,"y":-91.0},{"x":679.0,"y":-92.0},{"x":679.0,"y":-92.0},{"x":679.0,"y":-90.0},{"x":679.0,"y":-93.0},{"x":789.0,"y":-90.0},{"x":789.0,"y":-90.0},{"x":789.0,"y":-93.0},{"x":789.0,"y":-91.0},{"x":920.0,"y":-91.0},{"x":920.0,"y":-91.0},{"x":920.0,"y":-91.0},{"x":920.0,"y":-91.0},{"x":920.0,"y":-91.0},{"x":1946.0,"y":-94.0},{"x":1903.0,"y":-93.0},{"x":1903.0,"y":-92.0},{"x":1903.0,"y":-92.0},{"x":1857.0,"y":-92.0},{"x":1857.0,"y":-92.0},{"x":1810.0,"y":-91.0},{"x":1810.0,"y":-91.0},{"x":1810.0,"y":-91.0},{"x":1765.0,"y":-91.0},{"x":1765.0,"y":-92.0},{"x":1765.0,"y":-92.0},{"x":1720.0,"y":-91.0},{"x":1720.0,"y":-90.0},{"x":1672.0,"y":-91.0},{"x":1672.0,"y":-90.0},{"x":1672.0,"y":-90.0},{"x":1618.0,"y":-93.0},{"x":1618.0,"y":-92.0},{"x":1618.0,"y":-92.0},{"x":1576.0,"y":-91.0},{"x":1576.0,"y":-91.0},{"x":1576.0,"y":-91.0},{"x":1537.0,"y":-90.0},{"x":1537.0,"y":-90.0},{"x":1497.0,"y":-90.0},{"x":1497.0,"y":-90.0},{"x":1497.0,"y":-90.0},{"x":1455.0,"y":-90.0},{"x":1455.0,"y":-90.0},{"x":1455.0,"y":-89.0},{"x":1409.0,"y":-89.0},{"x":1409.0,"y":-89.0},{"x":1409.0,"y":-89.0},{"x":1371.0,"y":-89.0},{"x":1371.0,"y":-88.0},{"x":1330.0,"y":-88.0},{"x":1330.0,"y":-89.0},{"x":1330.0,"y":-89.0},{"x":1290.0,"y":-88.0},{"x":1290.0,"y":-88.0},{"x":1290.0,"y":-87.0},{"x":1250.0,"y":-87.0},{"x":1250.0,"y":-87.0},{"x":1214.0,"y":-87.0},{"x":1214.0,"y":-87.0},{"x":1214.0,"y":-87.0},{"x":1172.0,"y":-87.0},{"x":1172.0,"y":-87.0},{"x":1172.0,"y":-87.0},{"x":1138.0,"y":-86.0},{"x":1138.0,"y":-87.0},{"x":1104.0,"y":-87.0},{"x":1104.0,"y":-87.0},{"x":1104.0,"y":-87.0},{"x":1068.0,"y":-87.0},{"x":1068.0,"y":-89.0},{"x":1068.0,"y":-92.0},{"x":1033.0,"y":-90.0},{"x":1033.0,"y":-93.0},{"x":1033.0,"y":-93.0},{"x":1033.0,"y":-93.0}],"backgroundColor":"rgba(41,128,185,0.65)","pointRadius":3,"showLine":true,"borderColor":"rgba(41,128,185,0.4)","borderWidth":1,"yAxisID":"y"},{"label":"Ryšio kokybė [%]","data":[{"x":0.0,"y":100.0},{"x":6.0,"y":100.0},{"x":6.0,"y":100.0},{"x":6.0,"y":100.0},{"x":15.0,"y":100.0},{"x":15.0,"y":100.0},{"x":19.0,"y":100.0},{"x":19.0,"y":100.0},{"x":19.0,"y":100.0},{"x":20.0,"y":99.0},{"x":20.0,"y":100.0},{"x":13.0,"y":99.0},{"x":13.0,"y":100.0},{"x":13.0,"y":100.0},{"x":23.0,"y":99.0},{"x":23.0,"y":100.0},{"x":23.0,"y":100.0},{"x":61.0,"y":100.0},{"x":61.0,"y":100.0},{"x":114.0,"y":100.0},{"x":114.0,"y":100.0},{"x":114.0,"y":99.0},{"x":168.0,"y":99.0},{"x":168.0,"y":100.0},{"x":168.0,"y":100.0},{"x":235.0,"y":100.0},{"x":235.0,"y":100.0},{"x":298.0,"y":100.0},{"x":298.0,"y":99.0},{"x":298.0,"y":100.0},{"x":373.0,"y":100.0},{"x":373.0,"y":99.0},{"x":373.0,"y":100.0},{"x":373.0,"y":100.0},{"x":445.0,"y":100.0},{"x":445.0,"y":100.0},{"x":445.0,"y":100.0},{"x":445.0,"y":100.0},{"x":568.0,"y":100.0},{"x":568.0,"y":100.0},{"x":568.0,"y":99.0},{"x":568.0,"y":100.0},{"x":679.0,"y":100.0},{"x":679.0,"y":99.0},{"x":679.0,"y":100.0},{"x":679.0,"y":99.0},{"x":679.0,"y":100.0},{"x":789.0,"y":100.0},{"x":789.0,"y":100.0},{"x":789.0,"y":100.0},{"x":789.0,"y":98.0},{"x":920.0,"y":98.0},{"x":920.0,"y":98.0},{"x":920.0,"y":100.0},{"x":920.0,"y":100.0},{"x":920.0,"y":100.0},{"x":1946.0,"y":100.0},{"x":1903.0,"y":100.0},{"x":1903.0,"y":99.0},{"x":1903.0,"y":100.0},{"x":1857.0,"y":100.0},{"x":1857.0,"y":100.0},{"x":1810.0,"y":100.0},{"x":1810.0,"y":100.0},{"x":1810.0,"y":100.0},{"x":1765.0,"y":100.0},{"x":1765.0,"y":100.0},{"x":1765.0,"y":100.0},{"x":1720.0,"y":100.0},{"x":1720.0,"y":100.0},{"x":1672.0,"y":100.0},{"x":1672.0,"y":97.0},{"x":1672.0,"y":100.0},{"x":1618.0,"y":100.0},{"x":1618.0,"y":100.0},{"x":1618.0,"y":99.0},{"x":1576.0,"y":99.0},{"x":1576.0,"y":100.0},{"x":1576.0,"y":100.0},{"x":1537.0,"y":100.0},{"x":1537.0,"y":100.0},{"x":1497.0,"y":100.0},{"x":1497.0,"y":100.0},{"x":1497.0,"y":100.0},{"x":1455.0,"y":100.0},{"x":1455.0,"y":100.0},{"x":1455.0,"y":100.0},{"x":1409.0,"y":100.0},{"x":1409.0,"y":99.0},{"x":1409.0,"y":100.0},{"x":1371.0,"y":100.0},{"x":1371.0,"y":100.0},{"x":1330.0,"y":98.0},{"x":1330.0,"y":98.0},{"x":1330.0,"y":100.0},{"x":1290.0,"y":100.0},{"x":1290.0,"y":100.0},{"x":1290.0,"y":100.0},{"x":1250.0,"y":100.0},{"x":1250.0,"y":99.0},{"x":1214.0,"y":100.0},{"x":1214.0,"y":100.0},{"x":1214.0,"y":100.0},{"x":1172.0,"y":100.0},{"x":1172.0,"y":100.0},{"x":1172.0,"y":100.0},{"x":1138.0,"y":100.0},{"x":1138.0,"y":100.0},{"x":1104.0,"y":100.0},{"x":1104.0,"y":100.0},{"x":1104.0,"y":99.0},{"x":1068.0,"y":100.0},{"x":1068.0,"y":100.0},{"x":1068.0,"y":100.0},{"x":1033.0,"y":100.0},{"x":1033.0,"y":100.0},{"x":1033.0,"y":100.0},{"x":1033.0,"y":100.0}],"backgroundColor":"rgba(39,174,96,0.5)","pointRadius":3,"showLine":true,"borderColor":"rgba(39,174,96,0.3)","borderWidth":1,"yAxisID":"y2"}]},"options":{"responsive":true,"maintainAspectRatio":true,"aspectRatio":2.2,"plugins":{"title":{"display":true,"text":"1RSS (dBm) ir ryšio kokybė pagal atstumą nuo namų"},"legend":{"position":"bottom"}},"scales":{"x":{"title":{"display":true,"text":"Atstumas nuo namų [m]"},"grid":{"color":"rgba(0,0,0,0.08)"}},"y":{"title":{"display":true,"text":"1RSS [dBm]"},"position":"left","grid":{"color":"rgba(0,0,0,0.08)"}},"y2":{"title":{"display":true,"text":"Ryšio kokybė [%]"},"position":"right","min":0,"max":110,"grid":{"drawOnChartArea":false}}}}}
@@ -111,7 +110,7 @@ nes prieš priešvėjį dronas dirba sunkiau.
 
 1RSS ir ryšio kokybė pagal atstumą nuo namų. Ties 60 m nuo starto 1RSS jau buvo
 −84 dBm, tai yra 48 dB žemiau starto reikšmės. RQly rodė 100 % iki pat visiško
-ryšio nutrūkimo. RF pavojaus signalo apskritai nebuvo sukonfigūruota. Jei būtų
+ryšio nutrūkimo. RF pavojaus signalas apskritai nebuvo sukonfigūruotas. Jei būtų
 buvęs, jis būtų suveikęs jau 235 m nuo starto.
 
 Baterija buvo LAVA II 680 mAh 3S LiHV. Skrydžio valdiklyje ji buvo aprašyta kaip
@@ -126,7 +125,7 @@ Tolyn: 126 mAh/km. Atgal: 183 mAh/km. Iš viso telemetrijos tamsoje: 171 s iš
 ## Kodėl baterija taip greitai išsikrovė
 
 Matoma telemetrija pasakoja nuobodžią istoriją: 7,2 A tolyn, 6,8 A atgal,
-beveik tas pats. Vėjas sulėtino grįžimą iki 40 km/h prieš 55 km/h tolyn, ir vien
+beveik tas pats. Vėjas sulėtino grįžimą iki 40 km/h, palyginti su 55 km/h tolyn, ir vien
 tai per laiką paaiškina 1,45× mAh/km skirtumą. Nieko stebėtino.
 
 Tamsa pasakoja kitą istoriją.
@@ -134,7 +133,7 @@ Tamsa pasakoja kitą istoriją.
 Valdiklio Capa skaitiklis integruoja srovę ir tada, kai telemetrijos nėra.
 Paskutinis geras rodmuo prieš pagrindinę tamsą: 156 mAh sunaudota. Pirmas geras
 rodmuo po jos: 555 mAh. Tai 399 mAh per 139 sekundes. Perskaičiavus:
-**vidutinė srovė 10,3 A** tomis 139 sekundėmis.
+**vidutinė srovė 10,3 A** per tas 139 sekundes.
 
 OSD kadras 2,47 km atstumu, jau tamsos lange, rodo 10,09 A. Kadras tai
 patvirtina. Tamsa uždengė būtent tą skrydžio fazę, kurioje srovė buvo didžiausia:
@@ -143,13 +142,13 @@ patvirtina. Tamsa uždengė būtent tą skrydžio fazę, kurioje srovė buvo did
 - kilimą iš 0 m į 75 m
 - pirmąsias maždaug 70 s grįžimo beveik maksimalia galia
 
-Tos 139 sekundės esant 10,3 A sunaudojo 399 mAh, tai yra **59 % visos
+Tos 139 sekundės su 10,3 A vidutine srove sunaudojo 399 mAh, tai yra **59 % visos
 baterijos**. Radijas visą tą laiką buvo aklas.
 
 Palyginimas su skrydžiais kieme dabar tampa suprantamas. Esant 6 A vidurkiui
 (kruizas, kybojimas ir lėtesni manevrai) 680 mAh baterijos užtenka 6,8 minutės,
 o tai atitinka tuos 5–6 minučių rezultatus. Skrydis virš jūros būtų tęsęsis
-5,7 minutės, jei visas būtų buvęs 7,2 A kruizas. Bet 139 sekundės esant 10,3 A
+5,7 minutės, jei visas būtų buvęs 7,2 A kruizas. Bet 139 sekundės su 10,3 A
 ištraukė 122 mAh daugiau, nei būtų ištraukęs kruizas, ir sudegino visą papildomą
 skrydžio minutę toje vienoje fazėje, kurios niekas negalėjo matyti.
 
@@ -163,12 +162,12 @@ Kiekviena eilutė žemiau yra gedimo režimas, kurį atskleidė telemetrija.
 
 | Sąlyga | Senasis elgesys | Naujasis elgesys |
 |---|---|---|
-| Įtampa krisdama kerta 4,2 / 4,0 / 3,8 V vienai celei | Vienas įtampos slenksčio loginis jungiklis, suveikia vieną kartą, sąlygotas baterijos mygtuko | Ištariamas skaičius („vienas“, „du“, „trys“) prie kiekvieno 0,1 V kirtimo žemiau 3,8 V; be tono (šiame radijuje pyptelėjimų garsas yra 0) |
+| Įtampa krisdama kerta 4,2 / 4,0 / 3,8 V vienai celei | Vienas įtampos slenksčio loginis jungiklis, suveikia vieną kartą, veikia tik įjungus baterijos mygtuką | Ištariamas skaičius („vienas“, „du“, „trys“) prie kiekvieno 0,1 V kirtimo žemiau 3,8 V; be tono (šiame radijuje pyptelėjimų garsas yra 0) |
 | Baterija žemiau 3,6 V vienai celei | `lowbat` takelis per loginį jungiklį | Tas pats, bet ir iš fone veikiančio scenarijaus: pirmoji gynybos linija net per telemetrijos tamsą |
 | Kelias atgal kainuoja daugiau nei 1,3× kelio tolyn už kilometrą | Perspėjimo nebuvo | Vėjo asimetrijos perspėjimas po ≥30 s tolyn ir ≥15 s atgal: „warning close {santykis}%“ |
 | Savitoji galia padidėjusi, savitasis greitis normalus (vidinis gedimas: variklis, propeleris, guolis) | Perspėjimo nebuvo | „warning power {santykis}%“ vieną kartą, nusistačius kruizo bazinę reikšmę |
 | Savitoji galia padidėjusi, savitasis greitis sumažėjęs (išorinė priežastis: priešvėjis, pasipriešinimas) | Perspėjimo nebuvo | „warning speed {santykis}%“ vieną kartą |
-| 1RSS žemiau −92 dBm | `rssiSource: none`, RF pavojaus signalo nebuvo sukonfigūruota apskritai. RQly rodė 100 % iki visiško praradimo | `siglow` ir dBm reikšmė; `sigcrt` ties −100 dBm. RSSI yra nuolydis, LQ yra skardis |
+| 1RSS žemiau −92 dBm | `rssiSource: none`, RF pavojaus signalas apskritai nebuvo sukonfigūruotas. RQly rodė 100 % iki visiško praradimo | `siglow` ir dBm reikšmė; `sigcrt` ties −100 dBm. RSSI yra nuolydis, LQ yra skardis |
 | 1RSS blogėja, aukštis mažiau nei 25 m | Nieko | „tolow“, tai yra kilk. Išmatuota: ryšys nutrūko ties 0 m, atsistatė ties 75 m dėl dviejų spindulių interferencijos virš vandens |
 | Telemetrijos nėra ilgiau nei 4 s | Loginiai jungikliai priverstinai FALSE, visi baterijos perspėjimai nutyla | Fone veikiantis Lua scenarijus toliau skaičiuoja atstumą ir SoC skaičiuojamąja navigacija ir, atsistačius ryšiui, būseną paskelbia iš naujo |
 | Artėja negrįžimo taškas (skrendant tolyn, veikiant GPS) | Nieko | „close {likę metrai}“ skaičiuojant žemyn, kol PNR − dHome < 400 m |
