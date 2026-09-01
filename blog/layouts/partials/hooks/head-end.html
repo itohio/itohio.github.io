@@ -1,5 +1,16 @@
 {{- partial "schema.html" . }}
 
+{{/* Noindex taxonomy list pages (/tags/, /categories/, /series/), individual
+     term pages (/tags/fpv/, /series/edgetx-series/), and paginated pages beyond
+     page 1 (/blog/page/2/). These pages carry no unique content and burn crawl
+     budget that should go to actual posts and snippets. Use "noindex, follow" so
+     Google still traverses the links to real content. */}}
+{{- if or
+    (in (slice "taxonomy" "term") .Kind)
+    (and .Paginator (gt .Paginator.PageNumber 1)) }}
+<meta name="robots" content="noindex, follow">
+{{- end }}
+
 {{/* hreflang. The sitemap already declares xhtml:link alternates, but the head
      tags are the signal Google treats as authoritative for a page it reaches
      without the sitemap (an internal link, a backlink, a share). x-default
