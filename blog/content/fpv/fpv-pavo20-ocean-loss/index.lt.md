@@ -1,5 +1,5 @@
 ---
-title: "Saulėlydžio nardymas prie Olando Kepurės: už ką mėgstu telemetriją pultelyje"
+title: "Pavo20 ir nardymas saulėlydyje"
 date: 2026-08-28
 description: "Pavo20 Pro II praradimo analizė: kaip saulėlydžio skrydis prie Olando Kepurės baigėsi neplanuotu nardymu, ką užfiksavo telemetrija ir kokius pakeitimus po to darau."
 draft: false
