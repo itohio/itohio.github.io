@@ -71,7 +71,7 @@ amplitudės ir priešingų fazių. Pakilus aukščiau ta fazių kompensacija suy
 
 ![1,33 km. LOW BATTERY ekrane. Radijas 150 sekundžių nesakė nieko.](lowbat.jpg)
 
-Kai radijas vėl ką nors pamatė, valdiklis rodė, kad sunaudota 555 mAh ir likę 34 % SoC. Realioje 680 mAh baterijoje tai yra apie 231 mAh. Negrįžimo taškas,
+Kai radijas vėl ką nors pamatė, valdiklis rodė, kad sunaudota 555 mAh ir liko 34 % SoC. Realioje 680 mAh baterijoje tai yra apie 231 mAh. Negrįžimo taškas,
 skaičiuojant pagal išmatuotas grįžimo sąnaudas su 10 % atsarga, buvo 1147 m nuo
 namų. Dronas buvo 1946 m nuo namų, tai yra jau 799 m už jo.
 
@@ -125,12 +125,12 @@ Tolyn: 126 mAh/km. Atgal: 183 mAh/km. Iš viso telemetrijos tamsoje: 171 s iš
 ## Kodėl baterija taip greitai išsikrovė
 
 Matoma telemetrija pasakoja nuobodžią istoriją: 7,2 A tolyn, 6,8 A atgal,
-beveik tas pats. Vėjas sulėtino grįžimą iki 40 km/h, palyginti su 55 km/h tolyn, ir vien
+beveik tas pats. Vėjas sulėtino grįžimą iki 40 km/h palyginti su 55 km/h tolyn, ir vien
 tai per laiką paaiškina 1,45× mAh/km skirtumą. Nieko stebėtino.
 
 Tamsa pasakoja kitą istoriją.
 
-Valdiklio Capa skaitiklis integruoja srovę ir tada, kai telemetrijos nėra.
+Valdiklio Capa skaitiklis integruoja srovę net tada, kai telemetrijos nėra.
 Paskutinis geras rodmuo prieš pagrindinę tamsą: 156 mAh sunaudota. Pirmas geras
 rodmuo po jos: 555 mAh. Tai 399 mAh per 139 sekundes. Perskaičiavus:
 **vidutinė srovė 10,3 A** per tas 139 sekundes.
@@ -171,7 +171,7 @@ Kiekviena eilutė žemiau yra gedimo režimas, kurį atskleidė telemetrija.
 | 1RSS blogėja, aukštis mažiau nei 25 m | Nieko | „tolow“, tai yra kilk. Išmatuota: ryšys nutrūko ties 0 m, atsistatė ties 75 m dėl dviejų spindulių interferencijos virš vandens |
 | Telemetrijos nėra ilgiau nei 4 s | Loginiai jungikliai priverstinai FALSE, visi baterijos perspėjimai nutyla | Fone veikiantis Lua scenarijus toliau skaičiuoja atstumą ir SoC skaičiuojamąja navigacija ir, atsistačius ryšiui, būseną paskelbia iš naujo |
 | Artėja negrįžimo taškas (skrendant tolyn, veikiant GPS) | Nieko | „close {likę metrai}“ skaičiuojant žemyn, kol PNR − dHome < 400 m |
-| Aktyvuojama (arm), kai GPS rescue neparengtas (valdiklis rodo „?“) | Palydovų skaičius lyginamas su scenarijuje įrašyta riba | Sprendžia pats valdiklis: kai `numSat < gps_rescue_min_sats`, Betaflight prie CRSF skrydžio režimo eilutės prideda `?`. Scenarijus skaito tai tiesiogiai. |
+| Aktyvavimas (arm), kai GPS rescue neparengtas (valdiklis rodo „?“) | Palydovų skaičius lyginamas su scenarijuje įrašyta riba | Sprendžia pats valdiklis: kai `numSat < gps_rescue_min_sats`, Betaflight prie CRSF skrydžio režimo eilutės prideda `?`. Scenarijus skaito tai tiesiogiai. |
 | Vidinė varža auga daugiau, nei paaiškina iškrovos gylis (perteklius ≥ 1,4×) | Perspėjimo nebuvo | „warning bad {mΩ}“ vieną kartą, kol SoC > 25 % |
 
 Dronas jūros dugne. Telemetrija ne. Vienas iš tų dviejų dalykų labiau padeda
