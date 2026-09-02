@@ -178,3 +178,5 @@ comes in a separate post.
 
 The Pavo20 learned to dive. The telemetry did not. One of those is more useful
 for not repeating the experiment.
+
+Still need a cinewooping daily driver. Pavo20 4S or DeepSpace Stellar25. Can't decide which one gets the next swimming lesson.

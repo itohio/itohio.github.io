@@ -175,4 +175,6 @@ Kiekviena eilutė žemiau yra gedimo režimas, kurį atskleidė telemetrija.
 | Vidinė varža auga daugiau, nei paaiškina iškrovos gylis (perteklius ≥ 1,4×) | Perspėjimo nebuvo | „warning bad {mΩ}“ vieną kartą, kol SoC > 25 % |
 
 Pavo20 išmoko nardyti. Telemetrija — ne. Vienas iš tų dviejų dalykų labiau padeda
-šio eksperimento nepakartoti. Vat taip vat...
+šio eksperimento nepakartoti.
+
+Kasdienio cinewoopinio drono vis dar ieškau. Pavo20 4S ar DeepSpace Stellar25. Dar nežinau, kuriam teks sekanti plaukimo pamoka. Vat taip vat...
