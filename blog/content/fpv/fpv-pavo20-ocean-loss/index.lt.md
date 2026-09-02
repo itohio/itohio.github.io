@@ -87,7 +87,7 @@ ryšio nutrūkimo. RF pavojaus signalas apskritai nebuvo sukonfigūruotas. Jei b
 buvęs, jis būtų suveikęs jau 235 m nuo starto.
 
 Dviejų spindulių interferencija virš jūros esant beveik slystančiam kritimo
-kampui: jūros paviršius yra beveik idealus radijo bangų atspindėtojas, o mažame
+kampui: jūros paviršius yra beveik tobulas radijo bangų veidrodis, o mažame
 aukštyje tiesioginė ir atspindėta banga atkeliauja beveik vienodos amplitudės ir
 priešingų fazių. Pakilus aukščiau ta fazių kompensacija suyra. 0 m: tyla.
 75 m: ryšys atgal.
