@@ -13,7 +13,8 @@
   xhtml:link hreflang alternates, which are currently the site's ONLY hreflang
   signal. Do not drop them.
 */ -}}
-{{- $excludedTaxonomies := slice "tags" -}}
+{{- /* Shared with hooks/head-end.html, which noindexes the same set. */ -}}
+{{- $excludedTaxonomies := site.Params.thinTaxonomies | default (slice "tags") -}}
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   {{- range .Pages }}

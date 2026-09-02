@@ -74,6 +74,12 @@ enableMathNotation = true
 # directory(s) where your articles are located
 mainSections = ["blog", "fpv", "colorimetry", "acoustics", "blog-2023", "esp-reflow", "esp-weather", "esp-motion"]
 
+# Taxonomies treated as thin: dropped from the sitemap (layouts/sitemap.xml) and
+# served "noindex, follow" (layouts/partials/hooks/head-end.html). Both templates
+# read this one list so the two signals cannot disagree. Categories and series are
+# curated and stay indexed and listed.
+thinTaxonomies = ["tags"]
+
 # Label Non inline images on an article body
 figurePositionShow = false # toggle on or off globally
 # you can toggle this behaviour on or off on per page using the same variable inside your articles frontmatter
