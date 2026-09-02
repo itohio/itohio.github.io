@@ -1,5 +1,5 @@
 ---
-title: "Sunset Dive at Olando Kepurė: What the Telemetry Says"
+title: "Sunset Dive at Olando Kepurė: What I Love About Telemetry Recording on Your Remote"
 date: 2026-08-28
 description: "Post-mortem on losing a Pavo20 Pro II to the Baltic at Olando Kepurė: how a sunset flight ended in an unplanned dive, what the telemetry recorded, and the hardening strategy that comes out of it."
 draft: false
