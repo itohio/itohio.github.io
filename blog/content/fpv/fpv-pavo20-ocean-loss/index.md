@@ -1,7 +1,7 @@
 ---
-title: "Lost in the Baltic: What the Telemetry Says"
+title: "Sunset Dive at Olando Kepurė: What the Telemetry Says"
 date: 2026-08-28
-description: "Post-mortem on losing a Pavo20 Pro II to the Baltic Sea: how a reasonable experiment ended on the sea floor, what the telemetry recorded, and the hardening strategy that comes out of it."
+description: "Post-mortem on losing a Pavo20 Pro II to the Baltic at Olando Kepurė: how a sunset flight ended in an unplanned dive, what the telemetry recorded, and the hardening strategy that comes out of it."
 draft: false
 toc: true
 categories:
@@ -15,7 +15,7 @@ tags:
   - long-range
   - callouts
   - risk-management
-keywords: ["fpv battery callouts", "edgetx telemetry", "gps rescue", "point of no return", "long range fpv", "pavo20 pro ii ocean loss", "fpv sea crash", "two-ray multipath"]
+keywords: ["fpv battery callouts", "edgetx telemetry", "gps rescue", "point of no return", "long range fpv", "pavo20 pro ii ocean loss", "olando kepurė", "karkle coast", "two-ray multipath"]
 thumbnail: "landnow.jpg"
 ---
 
@@ -32,7 +32,7 @@ A few weeks earlier I had flown a 2 km round trip in heavy field winds and
 landed with 20% remaining. The link held, the battery held, the drone came back.
 Same drone, same pack, six minutes of cruise in moderate winds, voltage never
 below 3.56 V. I wanted to know what clear-horizon ELRS range looked like over
-open water. No turbulence, no obstructions, just the Baltic Sea at dusk. It
+open water. No turbulence, no obstructions, just the Baltic at Olando Kepurė at dusk. It
 seemed like the easier version of what I had already done.
 
 It was not.
@@ -176,5 +176,5 @@ comes in a separate post.
 | Arming with GPS rescue not ready (FC says "?") | Satellite count against a hardcoded threshold in the script | FC's own verdict: Betaflight appends `?` to the CRSF flight-mode string when `numSat < gps_rescue_min_sats`. Script reads that directly. |
 | Impedance rises beyond what depth-of-discharge explains (excess ≥ 1.4×) | No callout | "warning bad {mΩ}" once, while SoC > 25% |
 
-The drone is on the sea floor. The telemetry is not. One of those is more useful
+The Pavo20 learned to dive. The telemetry did not. One of those is more useful
 for not repeating the experiment.

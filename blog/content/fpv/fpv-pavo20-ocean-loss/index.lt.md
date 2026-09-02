@@ -1,7 +1,7 @@
 ---
-title: "Prarastas Baltijoje: ką sako telemetrija"
+title: "Saulėlydžio nardymas prie Olando Kepurės: ką sako telemetrija"
 date: 2026-08-28
-description: "Pavo20 Pro II praradimo Baltijos jūroje analizė: kaip protingai atrodęs eksperimentas baigėsi jūros dugne, ką užfiksavo telemetrija ir kokius pakeitimus po to darau."
+description: "Pavo20 Pro II praradimo analizė: kaip saulėlydžio skrydis prie Olando Kepurės baigėsi neplanuotu nardymu, ką užfiksavo telemetrija ir kokius pakeitimus po to darau."
 draft: false
 toc: true
 categories:
@@ -15,7 +15,7 @@ tags:
   - ilgas-nuotolis
   - perspėjimai
   - rizikos-valdymas
-keywords: ["fpv baterijos perspėjimai", "edgetx telemetrija", "gps rescue", "negrįžimo taškas", "ilgo nuotolio fpv", "pavo20 pro ii praradimas", "fpv avarija jūroje", "dviejų spindulių interferencija"]
+keywords: ["fpv baterijos perspėjimai", "edgetx telemetrija", "gps rescue", "negrįžimo taškas", "ilgo nuotolio fpv", "pavo20 pro ii praradimas", "olando kepurė", "karkle pakrantė", "dviejų spindulių interferencija"]
 thumbnail: "landnow.jpg"
 ---
 
@@ -33,7 +33,7 @@ ir atgal, o nusileidau turėdamas 20 % likutį. Ryšys laikė, baterija laikė,
 dronas grįžo. Tas pats dronas, ta pati baterija, šešios minutės kruizinio
 skridimo vidutiniame vėjyje, ir įtampa nė karto nenukrito žemiau 3,56 V.
 Norėjau pamatyti, koks yra ELRS nuotolis virš atviro vandens, kai horizontas
-visiškai laisvas. Jokių kliūčių, jokios turbulencijos, tik Baltijos jūra
+visiškai laisvas. Jokių kliūčių, jokios turbulencijos, tik Baltija prie Olando Kepurės
 sutemose. Atrodė kaip lengvesnė versija to, ką jau buvau padaręs.
 
 Nebuvo.
@@ -174,5 +174,5 @@ Kiekviena eilutė žemiau yra gedimo režimas, kurį atskleidė telemetrija.
 | Aktyvavimas (arm), kai GPS rescue neparengtas (valdiklis rodo „?“) | Palydovų skaičius lyginamas su scenarijuje įrašyta riba | Sprendžia pats valdiklis: kai `numSat < gps_rescue_min_sats`, Betaflight prie CRSF skrydžio režimo eilutės prideda `?`. Scenarijus skaito tai tiesiogiai. |
 | Vidinė varža auga daugiau, nei paaiškina iškrovos gylis (perteklius ≥ 1,4×) | Perspėjimo nebuvo | „warning bad {mΩ}“ vieną kartą, kol SoC > 25 % |
 
-Dronas jūros dugne. Telemetrija ne. Vienas iš tų dviejų dalykų labiau padeda
+Pavo20 išmoko nardyti. Telemetrija — ne. Vienas iš tų dviejų dalykų labiau padeda
 šio eksperimento nepakartoti. Vat taip vat...
