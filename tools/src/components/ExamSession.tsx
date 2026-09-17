@@ -287,6 +287,7 @@ export default function ExamSession({ questions, config, onBack }: Props) {
     const opts = [20, 30, 40, maxQ].filter((n, i, a) => n <= maxQ && a.indexOf(n) === i).sort((a, b) => a - b);
     return (
       <div className="ex-setup">
+        <button className="fc-back-btn" onClick={onBack}>{t(S.back)}</button>
         <h1>{config.name}</h1>
         <p className="ex-sub">{config.description}</p>
 
@@ -359,7 +360,6 @@ export default function ExamSession({ questions, config, onBack }: Props) {
 
         <p className="ex-time-note">{fmt(t(S.estTime), { n: Math.round((qCount / config.questionCount) * config.timeMinutes) })}</p>
         <button className="ex-start" onClick={() => startFresh(qCount)}>{t(S.startExam)}</button>
-        <button className="fc-back-btn" style={{ marginTop: "16px", display: "inline-block" }} onClick={onBack}>{t(S.back)}</button>
       </div>
     );
   }

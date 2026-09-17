@@ -189,6 +189,7 @@ export default function FlashcardSession({ questions, title, storagePrefix = "fc
   return (
     <div className="fc-wrap">
       <div className="fc-header">
+        <button className="fc-back-btn" onClick={onBack}>{t(S.back)}</button>
         <h1>{title} {t(S.fcTitleSuffix)}</h1>
         <div className="fc-controls">
           <label>
@@ -201,7 +202,6 @@ export default function FlashcardSession({ questions, title, storagePrefix = "fc
             {doShuffle ? t(S.shuffled) : t(S.inOrder)}
           </button>
           <button onClick={buildQueue}>{t(S.restartSession)}</button>
-          <button className="fc-back-btn" onClick={onBack}>{t(S.back)}</button>
         </div>
       </div>
 
