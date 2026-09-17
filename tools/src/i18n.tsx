@@ -78,13 +78,13 @@ export const S = {
                      lt: "FPV įrankiai ir egzaminų mokymasis iš ITOHI. Viskas veikia jūsų naršyklėje — be paskyros, be įkėlimo, duomenys lieka jūsų įrenginyje." },
   toolFly:         { en: "Fly", lt: "Skrydis" },
   toolFlyBlurb:    { en: "Pre/post-flight checklists for Open A1/A2/A3, BVLOS, over people, FPV indoor, Poland/PANSA. Clearance gate + timer that survives browser close.",
-                     lt: "Kontroliniai sąrašai prieš ir po skrydžio: atviroji A1/A2/A3, BVLOS, virš žmonių, FPV patalpose, Lenkija/PANSA. Leidimo vartai ir laikmatis, išliekantis uždarius naršyklę." },
+                     lt: "Kontroliniai sąrašai prieš ir po skrydžio: atviroji A1/A2/A3, BVLOS, virš žmonių, FPV patalpose, Lenkija/PANSA. Kilimo leidimas ir laikmatis, išliekantis uždarius naršyklę." },
   toolRx:          { en: "RX Blind-Spot Viewer", lt: "RX aklųjų zonų žiūryklė" },
   toolRxBlurb:     { en: "Load an EdgeTX telemetry CSV and visualise your control link in 3D. Antenna-pattern sphere, per-flight splitting, RTH risk.",
                      lt: "Įkelkite EdgeTX telemetrijos CSV ir pamatykite valdymo ryšį 3D. Antenos diagramos sfera, skaidymas pagal skrydžius, RTH rizika." },
   toolExams:       { en: "Exam Study", lt: "Egzaminų mokymasis" },
-  toolExamsBlurb:  { en: "EASA A1/A3 (336 Q), A2 CoC (60 Q), and radio operator exams in Lithuanian and English — {n} questions total. SM-2 flashcards + timed exams.",
-                     lt: "EASA A1/A3 (336 kl.), A2 CoC (60 kl.) ir radijo mėgėjų egzaminai lietuvių bei anglų kalbomis — iš viso {n} klausimų. SM-2 kortelės ir egzaminai su laikmačiu." },
+  toolExamsBlurb:  { en: "EASA A1/A3 (336 Q), A2 CoC (60 Q), and radio operator exams in Lithuanian and English — {n} total. SM-2 flashcards + timed exams.",
+                     lt: "EASA A1/A3 (336 kl.), A2 CoC (60 kl.) ir radijo mėgėjų egzaminai lietuvių bei anglų kalbomis — iš viso {n}. SM-2 kortelės ir egzaminai su laikmačiu." },
   tagChecklists:   { en: "Checklists", lt: "Kontroliniai sąrašai" },
   tagTimer:        { en: "Timer", lt: "Laikmatis" },
   tagCountry:      { en: "Country links", lt: "Šalių nuorodos" },
@@ -108,10 +108,10 @@ export const S = {
   explanations:    { en: "Explanations", lt: "Su paaiškinimais" },
   // A1/A3 hub
   a1a3Title:       { en: "EASA A1/A3 — Open Category", lt: "EASA A1/A3 — atviroji kategorija" },
-  a1a3Sub1:        { en: "Study for the EASA", lt: "Mokykitės EASA" },
-  a1a3CertName:    { en: "A1/A3 remote pilot competency certificate", lt: "A1/A3 nuotolinio piloto kompetencijos pažymėjimui" },
-  a1a3Sub2:        { en: "{n} questions across 9 categories matching the Lithuanian CAA exam syllabus. Spaced repetition (SM-2) in flashcards. Exam questions proportionally distributed across categories.",
-                     lt: "{n} klausimų 9 kategorijose pagal Lietuvos TKA egzamino programą. Intervalinis kartojimas (SM-2) kortelėse. Egzamino klausimai proporcingai paskirstyti pagal kategorijas." },
+  a1a3Sub1:        { en: "Study for the EASA", lt: "Pasiruoškite EASA" },
+  a1a3CertName:    { en: "A1/A3 remote pilot competency certificate", lt: "A1/A3 nuotolinio piloto kompetencijos egzaminui" },
+  a1a3Sub2:        { en: "{n} across 9 categories matching the Lithuanian CAA exam syllabus. Spaced repetition (SM-2) in flashcards. Exam questions proportionally distributed across categories.",
+                     lt: "{n} 9 kategorijose pagal Lietuvos TKA egzamino programą. Intervalinis kartojimas (SM-2) kortelėse. Egzamino klausimai proporcingai paskirstyti pagal kategorijas." },
   fcSR:            { en: "Flashcards + Spaced Repetition", lt: "Kortelės + intervalinis kartojimas" },
   a1a3FcBlurb:     { en: "All {n} questions with SM-2 scheduling. Hard cards come back sooner; easy ones space out. Filter by category, reasoning questions tagged ⚡.",
                      lt: "Visi {n} klausimai su SM-2 planavimu. Sunkios kortelės grįžta greičiau, lengvos — rečiau. Filtras pagal kategoriją, samprotavimo klausimai pažymėti ⚡." },
@@ -129,10 +129,10 @@ export const S = {
   realExamLT:      { en: "Lithuania —", lt: "Lietuva —" },
   // A2 hub
   a2Title:         { en: "EASA A2 Certificate of Competency", lt: "EASA A2 kompetencijos pažymėjimas" },
-  a2Sub:           { en: "Study for the", lt: "Mokykitės" },
-  a2CocName:       { en: "A2 CoC", lt: "A2 CoC pažymėjimui" },
-  a2Sub2:          { en: "— fly C2 drones within 30–50 m of uninvolved persons. Prerequisite: A1/A3 certificate. {n} questions across {c} categories.",
-                     lt: "— skraidykite C2 klasės dronais 30–50 m nuo nesusijusių asmenų. Būtina sąlyga: A1/A3 pažymėjimas. {n} klausimų {c} kategorijose." },
+  a2Sub:           { en: "Study for the", lt: "Pasiruoškite" },
+  a2CocName:       { en: "A2 CoC", lt: "A2 CoC egzaminui" },
+  a2Sub2:          { en: "— fly C2 drones within 30–50 m of uninvolved persons. Prerequisite: A1/A3 certificate. {n} across {c} categories.",
+                     lt: "— skraidykite C2 klasės dronais 30–50 m nuo nesusijusių asmenų. Būtina sąlyga: A1/A3 pažymėjimas. {n} {c} kategorijose." },
   flashcards:      { en: "Flashcards", lt: "Kortelės" },
   a2FcBlurb:       { en: "All {n} A2-specific questions: advanced meteorology, human performance, UAS technical knowledge, A2 operational rules. SM-2 scheduling.",
                      lt: "Visi {n} A2 klausimai: išplėstinė meteorologija, žmogaus galimybės, UAS techninės žinios, A2 veiklos taisyklės. SM-2 planavimas." },
@@ -179,6 +179,7 @@ export const S = {
   flag:            { en: "⚑ Flag", lt: "⚑ Pažymėti" },
   flagged:         { en: "⚑ Flagged", lt: "⚑ Pažymėtas" },
   reasoningTag:    { en: "⚡ Reasoning", lt: "⚡ Samprotavimas" },
+  qPrefix:         { en: "Q", lt: "" },
   today:           { en: "today", lt: "šiandien" },
   yesterday:       { en: "yesterday", lt: "vakar" },
   dAgo:            { en: "{n}d ago", lt: "prieš {n} d." },
@@ -216,6 +217,16 @@ export const S = {
   keysHint:        { en: "1 = Again · 2 = Hard · 3 = Good · 4 = Easy", lt: "1 = Dar kartą · 2 = Sunku · 3 = Gerai · 4 = Lengva" },
   noCards:         { en: "No cards match this filter.", lt: "Šiam filtrui kortelių nėra." },
 } as const satisfies Record<string, LS>;
+
+/** Lithuanian noun agreement with a numeral: 1 klausimas, 2–9 klausimai, 10/20/11–19 klausimų. */
+export function ltCount(n: number, one: string, few: string, many: string) {
+  const m10 = n % 10, m100 = n % 100;
+  if (m10 === 0 || (m100 >= 11 && m100 <= 19)) return `${n} ${many}`;
+  if (m10 === 1) return `${n} ${one}`;
+  return `${n} ${few}`;
+}
+/** Percent with locale typography: "75%" in EN, "75 %" in LT. */
+export function pct(n: number, lang: Lang) { return lang === "lt" ? `${n} %` : `${n}%`; }
 
 export function fmt(s: string, vars: Record<string, string | number>) {
   return s.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ""));

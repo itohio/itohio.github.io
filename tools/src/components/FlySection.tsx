@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useLang, type LS, type Lang } from "@/i18n";
+import { useLang, ltCount, type LS, type Lang } from "@/i18n";
 
 // ── types ─────────────────────────────────────────────────────────────────────
 interface CheckItem {
@@ -419,7 +419,7 @@ function fmtMs(ms: number) {
 
 // ── ChecklistView ─────────────────────────────────────────────────────────────
 function ChecklistView({ def, onBack }: { def: ChecklistDef; onBack: () => void }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [state, setState] = useState<FlightState>(() => loadState(def.id));
   const [planMin, setPlanMin] = useState(def.defaultMinutes);
   const [location, setLocation] = useState(state.location ?? "");
@@ -516,7 +516,7 @@ function ChecklistView({ def, onBack }: { def: ChecklistDef; onBack: () => void 
               }}>{t(T.startTimer)}</button>
             </div>
           ) : (
-            <p className="fly-progress-note">{def.preItems.length-preCount} {t(T.remainingItems)}</p>
+            <p className="fly-progress-note">{lang === "lt" ? `${ltCount(def.preItems.length-preCount, "punktas", "punktai", "punktų")} iki kilimo` : `${def.preItems.length-preCount} ${t(T.remainingItems)}`}</p>
           )}
         </div>
       )}

@@ -10,7 +10,7 @@ import { radioLtuAQuestions } from "@/data/radio-ltu-a";
 import { a1a3Lt, a1a3CategoriesLt } from "@/data/lt/a1a3";
 import { a2Lt, a2CategoriesLt } from "@/data/lt/a2";
 import type { ExamConfig } from "@/types/exam";
-import { LangProvider, LangToggle, useLang, localizeQuestions, S, fmt } from "@/i18n";
+import { LangProvider, LangToggle, useLang, localizeQuestions, S, fmt, ltCount, pct } from "@/i18n";
 
 const RxViewerClient         = dynamic(() => import("@/components/RxViewerClient"),         { ssr: false });
 const FlashcardSessionClient = dynamic(() => import("@/components/FlashcardSessionClient"), { ssr: false });
@@ -78,6 +78,8 @@ function Eyebrow({ trail }: { trail?: Array<{ label: string; to: string }> }) {
 }
 
 // ── hub components ────────────────────────────────────────────────────────────
+function qCount(n: number, lang: "en" | "lt") { return lang === "lt" ? ltCount(n, "klausimas", "klausimai", "klausimų") : `${n} question${n === 1 ? "" : "s"}`; }
+
 function A1A3Hub() {
   const { t, lang } = useLang();
   const total = a1a3Questions.length;
@@ -89,7 +91,7 @@ function A1A3Hub() {
         <h1>{t(S.a1a3Title)}</h1>
         <p className="hub-sub">
           {t(S.a1a3Sub1)} <strong>{t(S.a1a3CertName)}</strong>.{" "}
-          {fmt(t(S.a1a3Sub2), { n: total })}
+          {fmt(t(S.a1a3Sub2), { n: qCount(total, lang) })}
         </p>
       </header>
       <ul className="hub-grid">
@@ -105,7 +107,7 @@ function A1A3Hub() {
           <button className="hub-card-btn" onClick={() => navigate("a1a3/exam")}>
             <h2>{t(S.examPractice)}</h2>
             <p>{t(S.a1a3ExBlurb)}</p>
-            <div className="hub-tags"><span>{t(S.qProportional)}</span><span>60 {t(S.min)}</span><span>75% {t(S.pass)}</span><span>{t(S.reasoning)}</span></div>
+            <div className="hub-tags"><span>{t(S.qProportional)}</span><span>60 {t(S.min)}</span><span>{pct(75, lang)} {t(S.pass)}</span><span>{t(S.reasoning)}</span></div>
             <span className="hub-go">{t(S.startExam)}</span>
           </button>
         </li>
@@ -123,7 +125,7 @@ function A1A3Hub() {
         </table>
       </div>
       <div className="hub-note">
-        <strong>{t(S.realExam)}</strong> {t(S.realExamLT)} <a href="https://sertifikatai.tka.lt/lt/login" target="_blank" rel="noopener">TKA (sertifikatai.tka.lt)</a> · <a href="https://utm.ans.lt" target="_blank" rel="noopener">utm.ans.lt</a>. 40 {t(S.q)} · 60 {t(S.min)} · 75% {t(S.pass)}.
+        <strong>{t(S.realExam)}</strong> {t(S.realExamLT)} <a href="https://sertifikatai.tka.lt/lt/login" target="_blank" rel="noopener">TKA (sertifikatai.tka.lt)</a> · <a href="https://utm.ans.lt" target="_blank" rel="noopener">utm.ans.lt</a>. 40 {t(S.q)} · 60 {t(S.min)} · {pct(75, lang)} {t(S.pass)}.
       </div>
       <p className="hub-back"><button className="hub-link-btn" onClick={() => navigate("")}>{t(S.allTools)}</button></p>
     </div>
@@ -140,7 +142,7 @@ function A2Hub() {
         <Eyebrow trail={[{ label: t(S.exams), to: "exams" }]} />
         <h1>{t(S.a2Title)}</h1>
         <p className="hub-sub">
-          {t(S.a2Sub)} <strong>{t(S.a2CocName)}</strong> {fmt(t(S.a2Sub2), { n: total, c: cats.length })}
+          {t(S.a2Sub)} <strong>{t(S.a2CocName)}</strong> {fmt(t(S.a2Sub2), { n: qCount(total, lang), c: cats.length })}
         </p>
       </header>
       <ul className="hub-grid">
@@ -156,7 +158,7 @@ function A2Hub() {
           <button className="hub-card-btn" onClick={() => navigate("a2/exam")}>
             <h2>{t(S.examPractice)}</h2>
             <p>{t(S.a2ExBlurb)}</p>
-            <div className="hub-tags"><span>40 {t(S.q)}</span><span>30 {t(S.min)}</span><span>75% {t(S.pass)}</span></div>
+            <div className="hub-tags"><span>40 {t(S.q)}</span><span>30 {t(S.min)}</span><span>{pct(75, lang)} {t(S.pass)}</span></div>
             <span className="hub-go">{t(S.startExam)}</span>
           </button>
         </li>
@@ -270,7 +272,7 @@ function RadioLtuHub({ level }: { level: "a" | "b" }) {
 
 // ── exams hub ─────────────────────────────────────────────────────────────────
 function ExamsHub() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   return (
     <div className="hub">
       <header className="hub-head">
@@ -286,7 +288,7 @@ function ExamsHub() {
             <h2>EASA A1/A3</h2>
             <p>{t(S.a1a3CardBlurb)}</p>
             <div className="hub-tags"><span>336 {t(S.q)}</span><span>{t(S.categories9)}</span><span>{t(S.reasoning)}</span></div>
-            <span className="hub-exam-sub">40 {t(S.q)} · 60 {t(S.min)} · 75% {t(S.pass)}</span>
+            <span className="hub-exam-sub">40 {t(S.q)} · 60 {t(S.min)} · {pct(75, lang)} {t(S.pass)}</span>
             <span className="hub-go">{t(S.flashcardsExam)}</span>
           </button>
         </li>
@@ -295,7 +297,7 @@ function ExamsHub() {
             <h2>EASA A2 CoC</h2>
             <p>{t(S.a2CardBlurb)}</p>
             <div className="hub-tags"><span>60 {t(S.q)}</span><span>{t(S.a2specific)}</span></div>
-            <span className="hub-exam-sub">40 {t(S.q)} · 30 {t(S.min)} · 75% {t(S.pass)}</span>
+            <span className="hub-exam-sub">40 {t(S.q)} · 30 {t(S.min)} · {pct(75, lang)} {t(S.pass)}</span>
             <span className="hub-go">{t(S.flashcardsExam)}</span>
           </button>
         </li>
@@ -338,12 +340,12 @@ function ExamsHub() {
 
 // ── landing page ──────────────────────────────────────────────────────────────
 function Home() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const totalQ = radioLtuBQuestions.length + radioLtuAQuestions.length + radioQuestions.length + a1a3Questions.length + a2Questions.length;
   const tools = [
     { slug: "fly",   name: t(S.toolFly),   blurb: t(S.toolFlyBlurb), tags: [t(S.tagChecklists), t(S.tagTimer), "BVLOS", t(S.tagCountry)], color: "green" },
     { slug: "rxmap", name: t(S.toolRx),    blurb: t(S.toolRxBlurb),  tags: ["FPV", "EdgeTX", "3D", t(S.tagTelemetry)], color: "blue" },
-    { slug: "exams", name: t(S.toolExams), blurb: fmt(t(S.toolExamsBlurb), { n: totalQ }), tags: ["A1/A3", "A2", "Klasė B/A", "HAREC"], color: "orange" },
+    { slug: "exams", name: t(S.toolExams), blurb: fmt(t(S.toolExamsBlurb), { n: qCount(totalQ, lang) }), tags: ["A1/A3", "A2", "Klasė B/A", "HAREC"], color: "orange" },
   ];
   return (
     <div className="hub">

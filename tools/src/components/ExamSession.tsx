@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from "react";
 import type { Question, ExamConfig } from "@/types/exam";
-import { useLang, S, fmt, type Lang } from "@/i18n";
+import { useLang, S, fmt, pct, type Lang } from "@/i18n";
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 function shuffle<T>(arr: T[]): T[] {
@@ -317,7 +317,7 @@ export default function ExamSession({ questions, config, onBack }: Props) {
 
         <div className="ex-info-grid">
           <div><span>{t(S.questionsInPool)}</span><strong>{maxQ}</strong></div>
-          <div><span>{t(S.passMark)}</span><strong>{config.passPercent}%</strong></div>
+          <div><span>{t(S.passMark)}</span><strong>{pct(config.passPercent, lang)}</strong></div>
           <div><span>{t(S.time)}</span><strong>{config.timeMinutes} {t(S.min)}</strong></div>
         </div>
 
@@ -327,10 +327,10 @@ export default function ExamSession({ questions, config, onBack }: Props) {
             <span>{history.length} {lang === "en" ? (history.length !== 1 ? "attempts" : "attempt") : (history.length === 1 ? "bandymas" : (history.length % 10 === 0 || (history.length % 100 >= 11 && history.length % 100 <= 19)) ? "bandymų" : "bandymai")}</span>
             {lastResult && (
               <span className={lastResult.passed ? "ok" : "bad"}>
-                {t(S.last)}: {lastResult.score}% ({lastResult.correct}/{lastResult.total}) — {fmtDate(lastResult.date, lang)}
+                {t(S.last)}: {pct(lastResult.score, lang)} ({lastResult.correct}/{lastResult.total}) — {fmtDate(lastResult.date, lang)}
               </span>
             )}
-            {bestScore !== null && <span className="ok">{t(S.best)}: {bestScore}%</span>}
+            {bestScore !== null && <span className="ok">{t(S.best)}: {pct(bestScore, lang)}</span>}
           </div>
         )}
 
@@ -371,8 +371,8 @@ export default function ExamSession({ questions, config, onBack }: Props) {
     return (
       <div className="ex-review">
         <div className="ex-result-header">
-          <h1 className={passed ? "pass" : "fail"}>{passed ? t(S.passUpper) : t(S.failUpper)} — {score}%</h1>
-          <p>{correct} / {pool.length} {t(S.correct)} · {t(S.passLabel)} {config.passPercent}% · {config.name}</p>
+          <h1 className={passed ? "pass" : "fail"}>{passed ? t(S.passUpper) : t(S.failUpper)} — {pct(score, lang)}</h1>
+          <p>{correct} / {pool.length} {t(S.correct)} · {t(S.passLabel)} {pct(config.passPercent, lang)} · {config.name}</p>
         </div>
 
         <div className="ex-cat-breakdown">
@@ -388,7 +388,7 @@ export default function ExamSession({ questions, config, onBack }: Props) {
 
         <div className="ex-rev-nav">
           <button onClick={() => setReviewIdx(i => Math.max(0, i - 1))} disabled={reviewIdx === 0}>{t(S.prev)}</button>
-          <span className="ex-rev-counter">Q{reviewIdx + 1} / {pool.length}</span>
+          <span className="ex-rev-counter">{t(S.qPrefix)}{reviewIdx + 1} / {pool.length}</span>
           <button onClick={() => setReviewIdx(i => Math.min(pool.length - 1, i + 1))} disabled={reviewIdx === pool.length - 1}>{t(S.next)}</button>
         </div>
 
