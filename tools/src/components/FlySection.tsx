@@ -331,7 +331,7 @@ const T = {
   flying:         L("✈ Flying","✈ Skrenda"),
   postFlight:     L("Post-flight","Po skrydžio"),
   done:           L("✓ Done","✓ Baigta"),
-  back:           L("← Back","← Atgal"),
+  back:           L("Back →","Atgal →"),   // mirrored by .fc-back-btn
   cert:           L("Cert:","Pažymėjimas:"),
   stepPre:        L("Pre-flight","Prieš skrydį"),
   stepFlying:     L("Flying","Skrydis"),
@@ -473,9 +473,11 @@ function ChecklistView({ def, onBack }: { def: ChecklistDef; onBack: () => void 
   return (
     <div className="fly-view">
       <div className="fly-hdr">
-        <button className="fc-back-btn" onClick={onBack}>{t(T.back)}</button>
-        <span className={`fly-badge fly-badge--${def.color}`}>{def.badge}</span>
-        <h1>{t(def.name)}</h1>
+        <div className="hdr-row">
+          <button className="fc-back-btn" onClick={onBack}>{t(T.back)}</button>
+          <span className={`fly-badge fly-badge--${def.color}`}>{def.badge}</span>
+          <h1>{t(def.name)}</h1>
+        </div>
         <p className="fly-desc">{t(def.description)}</p>
         <p className="fly-cert">{t(T.cert)} <strong>{t(def.cert)}</strong></p>
       </div>
@@ -582,8 +584,10 @@ function ReferenceView({ onBack }: { onBack: () => void }) {
   return (
     <div className="fly-view">
       <div className="fly-hdr">
-        <button className="fc-back-btn" onClick={onBack}>{t(T.back)}</button>
-        <h1>{t(T.quickRef)}</h1>
+        <div className="hdr-row">
+          <button className="fc-back-btn" onClick={onBack}>{t(T.back)}</button>
+          <h1>{t(T.quickRef)}</h1>
+        </div>
         <p className="fly-desc">{t(T.refSource)}</p>
       </div>
 

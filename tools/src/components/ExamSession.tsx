@@ -287,8 +287,10 @@ export default function ExamSession({ questions, config, onBack }: Props) {
     const opts = [20, 30, 40, maxQ].filter((n, i, a) => n <= maxQ && a.indexOf(n) === i).sort((a, b) => a - b);
     return (
       <div className="ex-setup">
-        <button className="fc-back-btn" onClick={onBack}>{t(S.back)}</button>
-        <h1>{config.name}</h1>
+        <div className="hdr-row">
+          <button className="fc-back-btn" onClick={onBack}>{t(S.back)}</button>
+          <h1>{config.name}</h1>
+        </div>
         <p className="ex-sub">{config.description}</p>
 
         {/* Resume banner */}

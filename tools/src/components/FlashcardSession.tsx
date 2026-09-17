@@ -189,8 +189,10 @@ export default function FlashcardSession({ questions, title, storagePrefix = "fc
   return (
     <div className="fc-wrap">
       <div className="fc-header">
-        <button className="fc-back-btn" onClick={onBack}>{t(S.back)}</button>
-        <h1>{title} {t(S.fcTitleSuffix)}</h1>
+        <div className="hdr-row">
+          <button className="fc-back-btn" onClick={onBack}>{t(S.back)}</button>
+          <h1>{title} {t(S.fcTitleSuffix)}</h1>
+        </div>
         <div className="fc-controls">
           <label>
             {t(S.category)}

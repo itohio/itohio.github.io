@@ -66,7 +66,7 @@ export const S = {
   itohiTools:      { en: "ITOHI Tools", lt: "ITOHI įrankiai" },
   exams:           { en: "Exams", lt: "Egzaminai" },
   allTools:        { en: "← All tools", lt: "← Visi įrankiai" },
-  back:            { en: "← Back", lt: "← Atgal" },
+  back:            { en: "Back →", lt: "Atgal →" },   // rendered mirrored (.fc-back-btn): reads "← ʞɔɐꓭ"
   open:            { en: "Open →", lt: "Atidaryti →" },
   start:           { en: "Start →", lt: "Pradėti →" },
   pass:            { en: "pass", lt: "išlaikymo riba" },
@@ -202,7 +202,7 @@ export const S = {
   allCorrect:      { en: "All answered correctly.", lt: "Į visas atsakyta teisingai." },
   comeBack:        { en: "Cards scheduled for future sessions will appear when due. Come back tomorrow!", lt: "Kortelės, suplanuotos vėliau, pasirodys, kai ateis jų laikas. Sugrįžkite rytoj!" },
   startNewSession: { en: "Start new session", lt: "Pradėti naują sesiją" },
-  backToModule:    { en: "← Back to module", lt: "← Atgal į modulį" },
+  backToModule:    { en: "Back to module →", lt: "Atgal į modulį →" },   // mirrored
   clickToReveal:   { en: "Click or Space to reveal", lt: "Spauskite arba tarpas — atskleisti" },
   correctAnswer:   { en: "Correct answer", lt: "Teisingas atsakymas" },
   hideExplanation: { en: "Hide explanation", lt: "Slėpti paaiškinimą" },
