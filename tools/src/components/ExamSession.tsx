@@ -359,7 +359,7 @@ export default function ExamSession({ questions, config, onBack }: Props) {
 
         <p className="ex-time-note">{fmt(t(S.estTime), { n: Math.round((qCount / config.questionCount) * config.timeMinutes) })}</p>
         <button className="ex-start" onClick={() => startFresh(qCount)}>{t(S.startExam)}</button>
-        <button className="fc-back" style={{ marginTop: "16px", display: "inline-block" }} onClick={onBack}>{t(S.back)}</button>
+        <button className="fc-back-btn" style={{ marginTop: "16px", display: "inline-block" }} onClick={onBack}>{t(S.back)}</button>
       </div>
     );
   }

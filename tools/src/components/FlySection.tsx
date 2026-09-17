@@ -473,7 +473,7 @@ function ChecklistView({ def, onBack }: { def: ChecklistDef; onBack: () => void 
   return (
     <div className="fly-view">
       <div className="fly-hdr">
-        <button className="fc-back" onClick={onBack}>{t(T.back)}</button>
+        <button className="fc-back-btn" onClick={onBack}>{t(T.back)}</button>
         <span className={`fly-badge fly-badge--${def.color}`}>{def.badge}</span>
         <h1>{t(def.name)}</h1>
         <p className="fly-desc">{t(def.description)}</p>
@@ -582,7 +582,7 @@ function ReferenceView({ onBack }: { onBack: () => void }) {
   return (
     <div className="fly-view">
       <div className="fly-hdr">
-        <button className="fc-back" onClick={onBack}>{t(T.back)}</button>
+        <button className="fc-back-btn" onClick={onBack}>{t(T.back)}</button>
         <h1>{t(T.quickRef)}</h1>
         <p className="fly-desc">{t(T.refSource)}</p>
       </div>

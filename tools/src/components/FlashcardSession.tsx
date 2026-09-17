@@ -201,7 +201,7 @@ export default function FlashcardSession({ questions, title, storagePrefix = "fc
             {doShuffle ? t(S.shuffled) : t(S.inOrder)}
           </button>
           <button onClick={buildQueue}>{t(S.restartSession)}</button>
-          <button className="fc-back" onClick={onBack}>{t(S.back)}</button>
+          <button className="fc-back-btn" onClick={onBack}>{t(S.back)}</button>
         </div>
       </div>
 
@@ -219,7 +219,7 @@ export default function FlashcardSession({ questions, title, storagePrefix = "fc
           <p>{fmt(t(S.cardsReviewed), { n: sessionDone })} {sessionAgain > 0 ? fmt(t(S.wereHard), { n: sessionAgain }) : t(S.allCorrect)}</p>
           <p className="fc-done-sub">{t(S.comeBack)}</p>
           <button onClick={buildQueue}>{t(S.startNewSession)}</button>
-          <button className="fc-back" style={{marginLeft:"12px"}} onClick={onBack}>{t(S.backToModule)}</button>
+          <button className="fc-back-btn" style={{marginLeft:"12px"}} onClick={onBack}>{t(S.backToModule)}</button>
         </div>
       ) : card ? (
         <>

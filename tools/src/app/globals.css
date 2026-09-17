@@ -105,10 +105,10 @@ html, body { margin:0; height:100%; background:var(--bg); color:var(--txt);
 .hub-card-btn h2 { font-size:15px; color:#fff; margin:0 0 8px; }
 .hub-card-btn p  { font-size:13px; color:var(--dim); margin:0 0 12px; flex:1; line-height:1.55; }
 .hub-card a { display:flex; flex-direction:column; padding:18px; text-decoration:none; height:100%; }
-.fc-back { background:none; border:none; color:var(--accent); font-size:12px; cursor:pointer; padding:0; }
-.fc-back:hover { text-decoration:underline; }
-.fc-back { color:var(--accent); font-size:12px; text-decoration:none; }
-.fc-back:hover { text-decoration:underline; }
+/* The mirrored "Back" is intentional (a happy accident the owner liked). Mirror only the glyphs,
+   keep the hit area and the accessible name normal. */
+.fc-back-btn { background:none; border:none; color:var(--accent); font-size:12px; cursor:pointer; padding:0; text-decoration:none; display:inline-block; transform:scaleX(-1); }
+.fc-back-btn:hover { text-decoration:underline; }
 
 /* ===== Flashcard Session ===== */
 .fc-wrap { max-width:680px; margin:0 auto; padding:24px 16px 48px; }
@@ -124,12 +124,13 @@ html, body { margin:0; height:100%; background:var(--bg); color:var(--txt);
 .fc-prog-bar { flex:1; height:6px; background:#21262d; border-radius:3px; overflow:hidden; }
 .fc-prog-fill { height:100%; background:var(--accent); border-radius:3px; transition:width .3s; }
 .fc-known-badge { font-size:11px; color:#3fb950; white-space:nowrap; }
-.fc-scene { perspective:1000px; cursor:pointer; margin-bottom:16px; min-height:260px; }
-.fc-card { position:relative; width:100%; min-height:260px; transform-style:preserve-3d; transition:transform .4s; border-radius:12px; }
+.fc-scene { perspective:1000px; cursor:pointer; margin-bottom:16px; }
+.fc-card { display:grid; width:100%; transform-style:preserve-3d; transition:transform .4s; border-radius:12px; }
 .fc-card.flipped { transform:rotateY(180deg); }
 .fc-card.fc-known { opacity:.7; }
-.fc-face { position:absolute; top:0; left:0; right:0; min-height:260px; backface-visibility:hidden; border-radius:12px; padding:24px; border:1px solid var(--line); background:var(--panel); display:flex; flex-direction:column; }
-.fc-back { transform:rotateY(180deg); }
+/* both faces occupy the same grid cell, so the card is as tall as its taller face */
+.fc-face { grid-area:1 / 1; min-height:260px; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; padding:24px; border:1px solid var(--line); background:var(--panel); display:flex; flex-direction:column; }
+.fc-face.fc-back { transform:rotateY(180deg); }
 .fc-cat { font-size:11px; color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
 .fc-question { font-size:17px; color:#fff; line-height:1.55; flex:1; margin:0; }
 .fc-hint { font-size:11px; color:var(--dim); margin-top:auto; padding-top:12px; }
@@ -163,7 +164,7 @@ html, body { margin:0; height:100%; background:var(--bg); color:var(--txt);
 .ex-start { display:inline-block; background:var(--accent); color:#04203f; border:none; border-radius:8px; padding:11px 28px; font-size:14px; font-weight:700; cursor:pointer; }
 .ex-start:hover { background:#79c0ff; }
 
-.ex-wrap { display:flex; flex-direction:column; height:100vh; max-width:760px; margin:0 auto; padding:0 12px; }
+.ex-wrap { display:flex; flex-direction:column; min-height:100vh; min-height:100dvh; max-width:760px; margin:0 auto; padding:0 12px; }
 .ex-topbar { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); flex-wrap:wrap; }
 .ex-counter { font-size:13px; color:var(--dim); white-space:nowrap; }
 .ex-timer-bar { flex:1; min-width:80px; height:6px; background:#21262d; border-radius:3px; overflow:hidden; }
@@ -176,7 +177,7 @@ html, body { margin:0; height:100%; background:var(--bg); color:var(--txt);
 .ex-end-btn { margin-left:auto; background:#21262d; color:var(--dim); border:1px solid var(--line); border-radius:6px; padding:4px 10px; cursor:pointer; font-size:12px; }
 .ex-end-btn:hover { border-color:#f85149; color:#f85149; }
 
-.ex-body { flex:1; overflow-y:auto; padding:20px 0 12px; }
+.ex-body { flex:1; padding:20px 0 12px; }
 .ex-q-head { display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
 .ex-question { font-size:17px; color:#fff; line-height:1.55; margin:0 0 20px; }
 .ex-options { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
@@ -462,3 +463,48 @@ html, body { margin:0; height:100%; background:var(--bg); color:var(--txt);
 .lang-toggle button { background: transparent; border: 0; color: var(--dim); font: inherit; font-size: 11px; font-weight: 600; letter-spacing: .04em; padding: 4px 10px; border-radius: 999px; cursor: pointer; }
 .lang-toggle button.on { background: var(--accent); color: #0d1117; }
 .lang-toggle button:hover:not(.on) { color: #fff; }
+
+
+/* ===== Small screens ===== */
+@media (max-width: 640px) {
+  /* keep the fixed language toggle clear of page titles */
+  body { padding-top: 34px; }
+  .lang-toggle { top: 6px; right: 8px; }
+  .lang-toggle button { padding: 3px 9px; font-size: 10px; }
+
+  .hub { padding: 12px 14px 48px; }
+  .hub-head { margin-bottom: 24px; }
+  .hub h1 { font-size: 22px; }
+  .hub-grid, .hub-grid--3 { grid-template-columns: 1fr; }
+  .hub-cat-table { overflow-x: auto; }
+
+  .fc-wrap { padding: 12px 12px 40px; }
+  .fc-header h1 { font-size: 16px; }
+  .fc-controls { gap: 6px; }
+  .fc-controls label { flex: 1 1 100%; }
+  .fc-controls select { width: 100%; }
+  .fc-face { padding: 16px; min-height: 200px; }
+  .fc-question { font-size: 16px; }
+  .fc-rate-row { flex-wrap: wrap; }
+  .fc-rate { flex: 1 1 calc(50% - 4px); }
+  .fc-sr-stats { flex-wrap: wrap; gap: 6px 12px; }
+
+  .ex-setup { margin: 16px auto; }
+  .ex-info-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .ex-info-grid strong { font-size: 15px; }
+  .ex-topbar { gap: 8px; }
+  .ex-answered, .ex-flagged { font-size: 11px; }
+  .ex-question { font-size: 16px; }
+  .ex-opt { padding: 10px 12px; font-size: 14px; }
+  .ex-footer button { font-size: 12px; padding: 10px 0; }
+  .ex-strip-btn { width: 30px; height: 30px; }
+  .ex-rev-nav { flex-wrap: wrap; }
+  .ex-cat-row { flex: 1 1 100%; }
+
+  .fly-view { padding: 12px 12px 48px; }
+  .fly-step small { font-size: 10px; }
+  .fly-ref-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .fly-ref-table { min-width: 560px; }
+  .fly-dist-grid, .fly-country-grid { grid-template-columns: 1fr; }
+  .fly-timer-big { font-size: 48px; }
+}
