@@ -1,0 +1,163 @@
+import type { Question } from "@/types/exam";
+
+// Insurance — 22 questions
+export const insuranceQuestions: Question[] = [
+  {
+    id:"ins-001", category:"Insurance",
+    q:"Which EU regulation requires third-party liability insurance for aircraft operations including UAS?",
+    options:["EU 2019/947","EU 2019/945","EU 785/2004","EU 2018/1139"],
+    answer:2,
+    explanation:"Regulation (EC) No 785/2004 on insurance requirements for air carriers and aircraft operators covers UAS with an MTOM of 20 kg or more; model aircraft under 20 kg are excluded (Art. 2(2)(b)) and fall under national rules. It mandates third-party liability insurance for the covered aircraft.",
+
+  },
+  {
+    id:"ins-002", category:"Insurance",
+    q:"Third-party liability insurance for UAS covers:",
+    options:["Damage to your own drone","Death, personal injury, or property damage caused to third parties as a result of the UAS operation","Both the drone and third-party damage in one policy","Theft of the drone"],
+    answer:1,
+    explanation:"Third-party liability (TPI) covers harm you cause to others — injured bystanders, damaged property, etc. It does NOT cover damage to your own drone (that's hull/own-damage insurance). TPI is the legally mandatory component.",
+  },
+  {
+    id:"ins-003", category:"Insurance",
+    q:"Is insurance mandatory for recreational UAS flights in the EU?",
+    options:["No — only commercial operators need insurance in every member state","EU law (785/2004) mandates it only from 20 kg MTOM; below that each member state decides — in Lithuania it is compulsory only above 20 kg, but strongly recommended for every drone","Only if the drone weighs over 500 g","Only for flights near airports"],
+    answer:1,
+    explanation:"EASA: 'you must have insurance if your drone weighs more than 20 kg; for lighter drones there is no separate EU requirement, but most member states apply a liability insurance requirement to lighter drones too.' TKA (Lithuania): third-party liability insurance is compulsory only when MTOM including payload exceeds 20 kg. Below that it is voluntary — but you remain personally liable for any harm, so cover is strongly recommended. Many home policies exclude drones; check the wording.",
+
+  },
+  {
+    id:"ins-004", category:"Insurance",
+    q:"The minimum third-party liability insurance limit required by EU 785/2004 for light UAS operations is expressed as:",
+    options:["€100,000 per incident","Defined by SDRs (Special Drawing Rights) based on MTOM thresholds — lighter aircraft require lower minimum coverage but coverage must meet the specified SDR minimum","Unlimited — there is no minimum specified","€1,000,000 per incident for all aircraft"],
+    answer:1,
+    explanation:"EU 785/2004 uses SDR (Special Drawing Right — an IMF currency unit) amounts tied to MTOM bands. For aircraft under 500 kg MTOM the minimum third-party cover is 750,000 SDR. Remember the regulation itself only applies to UAS of 20 kg and above; for lighter drones any minimum is set nationally or by the policy.",
+
+  },
+  {
+    id:"ins-005", category:"Insurance",
+    q:"'Hull insurance' for a drone covers:",
+    options:["Third-party injury and property damage","Physical damage to or loss of the drone itself — crash, theft, accidental damage","Only flight accidents in controlled airspace","Only commercial flights"],
+    answer:1,
+    explanation:"Hull insurance covers your own drone. It typically includes crash damage, flyaway/loss, theft, and sometimes water damage. It is optional under EU law but highly recommended for expensive equipment. It is separate from mandatory third-party liability.",
+  },
+  {
+    id:"ins-006", category:"Insurance", reasoning:true,
+    q:"Your homeowner's policy says it covers 'personal property.' You assume your new €1200 drone is covered. Why might this assumption be wrong?",
+    options:["Home insurance always covers drones","Most home/contents policies exclude aircraft or motorised devices from standard coverage — always check the policy wording; 'personal property' does not automatically include UAS","Only drones under €500 are covered by home insurance","Coverage depends on the drone's weight"],
+    answer:1,
+    explanation:"Home policies routinely exclude 'aircraft,' 'motorised devices,' or 'vehicles' — and drones may fall into these exclusions. Even if damage is covered, third-party liability from drone incidents is almost always excluded. Always read the policy or obtain a specialist drone insurance product.",
+  },
+  {
+    id:"ins-007", category:"Insurance",
+    q:"If you fly uninsured and cause injury to a person, you:",
+    options:["Are protected by the state insurance fund","Are personally liable for all damages — which could include medical bills, compensation for pain and suffering, and loss of earnings with no upper limit","Can claim through your drone manufacturer's product liability","Pay only up to the drone's market value"],
+    answer:1,
+    explanation:"Without insurance, you bear personal liability for the full extent of damages. A serious injury with long-term care costs can easily reach hundreds of thousands of euros. This is exactly why third-party liability insurance is mandatory — to ensure victims can be compensated.",
+  },
+  {
+    id:"ins-008", category:"Insurance",
+    q:"Before purchasing drone insurance, you should verify that the policy:",
+    options:["Only that it covers the drone's replacement value","Covers the specific activities you plan (e.g. commercial vs. recreational), the drone's MTOM, operating altitude, geographic area, and provides the legally required minimum liability coverage","Is issued by a national insurer only","Only applies in your home country"],
+    answer:1,
+    explanation:"Policy exclusions matter. Common exclusions: commercial use on a recreational policy, flying over events, BVLOS, specific countries, drones above a certain weight, or racing. Verify the policy covers your actual operations before relying on it.",
+  },
+  {
+    id:"ins-009", category:"Insurance",
+    q:"When flying abroad in another EU country, your EU home-country insurance:",
+    options:["Automatically covers you fully in all EU countries","May or may not cover you — check the policy for territorial coverage; some policies are 'EU-wide,' others limit to your home country or specific listed territories","Never covers abroad — a local policy must be purchased","Covers EU + EEA countries automatically"],
+    answer:1,
+    explanation:"Policy territorial scope varies enormously. Some EU policies cover all EU member states; others only cover your home country. When flying in Lithuania and planning a trip to Norway or Switzerland (non-EU), check explicitly that coverage extends there.",
+  },
+  {
+    id:"ins-010", category:"Insurance",
+    q:"A spectator is injured when your drone loses control and falls into a crowd. The insurance covers:",
+    options:["Only if you were flying in a legal zone","The spectator's injury under third-party liability — provided you were operating within the policy's terms and conditions; unauthorized operations may void coverage","Only the spectator's medical bills up to €500","Nothing — UAS insurance never covers events with crowds"],
+    answer:1,
+    explanation:"Third-party liability covers harm to third parties — including spectators. However, if you were operating outside your policy terms (over crowds in violation of the policy exclusions, or without correct registration), the insurer may deny the claim. Always operate within policy terms.",
+  },
+  {
+    id:"ins-011", category:"Insurance",
+    q:"A 'claims-made' vs. 'occurrence-based' insurance policy differs in that:",
+    options:["They are identical","Occurrence-based covers incidents that happen during the policy period regardless of when the claim is made; claims-made only covers claims submitted while the policy is active","Claims-made covers future incidents; occurrence covers past incidents","Occurrence-based is cheaper"],
+    answer:1,
+    explanation:"Occurrence-based: the incident occurred during the policy period — even if you claim years later. Claims-made: the claim must be submitted while the policy is active. For liability insurance, occurrence-based generally provides broader protection. Know which type your policy is.",
+  },
+  {
+    id:"ins-012", category:"Insurance",
+    q:"You crash your drone into another person's car, causing €4,000 damage. Your third-party liability has a €500 excess (deductible). How much does the insurance pay?",
+    options:["€4,000","€3,500","€500","Nothing — car damage is excluded"],
+    answer:1,
+    explanation:"Third-party liability covers property damage to others. With a €500 excess, the insurer pays: €4,000 − €500 = €3,500. You pay the first €500. This is standard excess/deductible structure — lower excess means higher premiums but less out-of-pocket on claims.",
+  },
+  {
+    id:"ins-013", category:"Insurance",
+    q:"What should you do immediately after an incident where your drone injures someone or causes significant property damage?",
+    options:["Leave the area quickly to avoid confrontation","Ensure safety first, render or call for medical assistance, exchange details with the affected party, document the scene, notify your insurer as soon as possible, and preserve all flight logs","Only call your insurer — avoid admitting anything at the scene","File a police report within 30 days"],
+    answer:1,
+    explanation:"Immediate actions after an incident: safety and medical priority first. Then: document fully (photos, video, witness names), exchange contact details, notify your insurer promptly (most policies have prompt reporting requirements), and preserve all evidence including flight logs and camera footage.",
+  },
+  {
+    id:"ins-014", category:"Insurance",
+    q:"EU 785/2004 insurance requirements apply to UAS operators when:",
+    options:["Only when flying commercially","When the UAS has an MTOM of 20 kg or more — lighter 'model aircraft' are excluded from the regulation and fall under national rules","Whenever the UAS is registered with the NAA","Only in controlled airspace"],
+    answer:1,
+    explanation:"Art. 2(2)(b) of Regulation 785/2004 excludes model aircraft with an MTOM under 20 kg, so the EU insurance mandate starts at 20 kg. Below that, member states decide: several require cover for all drones, Lithuania only above 20 kg. Registration with the NAA does not by itself create an insurance obligation — but it does not remove your personal liability either.",
+
+  },
+  {
+    id:"ins-015", category:"Insurance", reasoning:true,
+    q:"A drone operator has third-party liability insurance. Their drone crashes into a tree on private property. The tree was the only thing damaged. Is this covered?",
+    options:["No — trees on private property are excluded","Yes — damage to third-party property (including trees) is covered under third-party liability, provided the operation was within the policy terms","Only if the property owner is insured","Only if the tree value exceeds the policy excess"],
+    answer:1,
+    explanation:"Third-party property damage includes trees, fences, vehicles, structures, and personal belongings. A tree on private property that is damaged by your drone is third-party property damage. Subject to the excess and policy terms, this should be covered.",
+  },
+  {
+    id:"ins-016", category:"Insurance",
+    q:"An operator's drone is stolen from their car. Hull insurance will:",
+    options:["Always pay the full replacement cost","Cover the theft if theft is listed as a covered peril in the hull policy; policies vary — some cover theft only from locked premises, others cover vehicle theft","Not cover theft — hull insurance is only for crashes","Cover theft only if the drone was registered"],
+    answer:1,
+    explanation:"Hull insurance may or may not cover theft depending on the specific policy. Read the schedule of covered perils carefully. Some require a forced entry, locked premises, or police report. 'Left on the back seat visible' may be excluded under a 'reasonable care' clause.",
+  },
+  {
+    id:"ins-017", category:"Insurance",
+    q:"What is 'product liability insurance' relevant to UAS?",
+    options:["Insurance for your drone against manufacturing defects","Insurance that covers a drone manufacturer or seller if their product causes harm due to a design or manufacturing defect — relevant to operators if they assemble or sell custom drones","The same as third-party liability for operators","Only relevant to retailers"],
+    answer:1,
+    explanation:"If you build and sell drones, you may be considered a manufacturer with product liability exposure. If a drone you sold injures someone due to a design or assembly fault, product liability covers your exposure. Standard operator TPI does not cover this scenario.",
+  },
+  {
+    id:"ins-018", category:"Insurance",
+    q:"Why do most UAS insurance policies require the drone to be registered?",
+    options:["To increase the premium","Registration demonstrates regulatory compliance — unregistered operation violates regulations, and most policies exclude cover for operations conducted in violation of applicable laws","Only commercial policies require registration proof","Registration provides the insurer with flight data"],
+    answer:1,
+    explanation:"Insurance policies routinely include a 'compliance with laws' condition — the drone must be operated in accordance with applicable regulations. Flying without required registration is a regulatory breach; this voids coverage in most policies.",
+  },
+  {
+    id:"ins-019", category:"Insurance",
+    q:"A wedding photographer uses a drone commercially. Their recreational drone insurance policy states 'for non-commercial use only.' Are they covered?",
+    options:["Yes — the policy covers the drone regardless of use","No — commercial use is explicitly excluded; using the drone for paid work voids recreational coverage and they are uninsured for the commercial activity","Yes, if the fee is under €500","Yes, if the client signs a waiver"],
+    answer:1,
+    explanation:"This is a common and serious mistake. 'Non-commercial use only' means any paid work — photography, inspection, survey — is excluded. Using a recreational policy for paid work likely voids all coverage. Commercial drone insurance is not expensive and is essential for professional work.",
+  },
+  {
+    id:"ins-020", category:"Insurance",
+    q:"Which party in a commercial UAS operation is typically responsible for holding third-party liability insurance?",
+    options:["The drone manufacturer","The UAS operator (the person or company responsible for the operation, named on the operator registration)","The client who commissioned the flight","The NAA that issued the authorisation"],
+    answer:1,
+    explanation:"The UAS operator — the legal entity registered with the NAA — bears the operational and insurance responsibility. Clients may have their own liability coverage but that doesn't substitute for the operator's own TPI. Both may have policies; both should.",
+  },
+  {
+    id:"ins-021", category:"Insurance", reasoning:true,
+    q:"You photograph a client's factory for an insurance survey. While flying, your drone hits a worker causing a minor injury. The client claims the drone was their 'hired equipment' and their insurance covers it. Are you off the hook?",
+    options:["Yes — if they hired you, they accept responsibility","No — as the UAS operator you remain personally liable as the operator; you need your own TPI; the client's policy may or may not cover the incident and your own insurance provides the independent protection you need","Yes, if there is a written contract","Only if the client is insured for at least €1 million"],
+    answer:1,
+    explanation:"Operating a drone makes you the aircraft operator in the eyes of the law. The client's blanket property insurance typically won't cover aircraft operations they didn't conduct. Even if the client's insurer pays, they may seek to recover from you if you were at fault. Your own TPI is essential.",
+  },
+  {
+    id:"ins-022", category:"Insurance",
+    q:"Proof of valid insurance should be:",
+    options:["Kept at home only — not required at the flight site","Carried during operations — many insurers provide a certificate of insurance or policy card; authorities may request proof during or after an incident","Only submitted to the NAA annually","Not needed if operator registration is current"],
+    answer:1,
+    explanation:"Carry proof of insurance on every flight — whether on your phone, a printed certificate, or on your registration card. After an incident, the affected party has the right to know your insurer. Authorities may request it during inspections.",
+  },
+];
