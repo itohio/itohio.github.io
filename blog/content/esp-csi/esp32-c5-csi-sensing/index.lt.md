@@ -34,7 +34,7 @@ Dvi Seeed Studio XIAO ESP32-C5 plokštės, sulituotos šalia viena kitos. Jos be
 
 Norėjau turėti galimybę keisti WiFi kanalus, bet tada prieigos taškas neveikė.
 
-[TODO: Andrius — kokia programinė įranga: ESP-IDF C ar TinyGo?]
+Programinė įranga yra ESP-IDF. TinyGo atnaujinti atsisakiau, nes tai pareikalautų per daug pastangų vienos nakties eksperimentui.
 
 [TODO: Photo — proof of concept: abi C5 plokštės šalia viena kitos, matomi UART ir maitinimo laidai]
 

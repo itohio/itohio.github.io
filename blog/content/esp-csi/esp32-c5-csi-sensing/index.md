@@ -34,7 +34,7 @@ Two Seeed Studio XIAO ESP32-C5 boards, soldered side by side. They share UART an
 
 I wanted to be able to switch WiFi channels, but then the access point would not work.
 
-[TODO: Andrius — what firmware stack is this: ESP-IDF C, or TinyGo?]
+The firmware is ESP-IDF. I opted out of updating TinyGo for this, since that needed too much effort for a one-night experiment.
 
 [TODO: Photo — the proof of concept: both C5 boards soldered side by side, UART and power wires visible]
 
