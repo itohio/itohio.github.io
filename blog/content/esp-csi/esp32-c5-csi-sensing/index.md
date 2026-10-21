@@ -19,7 +19,7 @@ tags:
 keywords: ["ESP32-C5 CSI", "WiFi CSI presence detection", "WiFi breathing detection", "LHCP RHCP antenna isolation", "ESP32 channel state information"]
 ---
 
-I finally had some free time to try WiFi sensing myself, with a few tweaks. It works well enough to show breathing on a plot. It also has a problem that I have not solved: the two antennas hear each other far better than they hear me.
+I finally had some free time to try WiFi sensing myself, with a few tweaks. It also has two problems that I have not solved: the direct signal between the antennas is too strong, and CSI freezes whenever the leader connects to a router.
 
 This is a teaser. The code is ugly and experimental, and I will clean it up and publish a GitHub repo later. Further CSI experiments are coming, and some of them have a lot to do with FPV.
 
@@ -83,10 +83,12 @@ Connecting the leader to a router is not. CSI freezes on the leader after 3 minu
 
 [TODO: Andrius — what exactly freezes: do the packets stop arriving, does the CSI callback stop, does the board hang or reboot? Is the follower affected? And what is the router band and channel versus the AP channel?]
 
-I am not going to guess a cause in the post. If you have seen this on the C5, I would like to hear about it.
+I do not know the cause yet, so I am not going to guess one here.
 
 ## Where things stand
 
-Presence, motion and breathing are detected. The isolation between the antennas is the thing standing in the way of better data, and the glue demonstrated how fragile 26 dB is. The router freeze is open.
+Presence, motion and breathing detection runs on the boards. The isolation between the antennas is the thing standing in the way of better data, and the glue demonstrated how fragile 26 dB is. The router freeze is open.
 
-Next: a proper mechanical mount that does not depend on glue, a better shield, and the cleaned-up repo.
+Further CSI experiments are coming, and the GitHub repo follows once the code is cleaned up.
+
+[TODO: Andrius — anything concrete you want here about the next experiment, e.g. the FPV ones?]
