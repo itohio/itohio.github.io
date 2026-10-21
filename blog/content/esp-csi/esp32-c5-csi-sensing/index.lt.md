@@ -25,14 +25,16 @@ Tai tik užuomina. Kodas dar bjaurus ir eksperimentinis, vėliau jį sutvarkysiu
 
 ## Įranga
 
-Dvi ESP32-C5 plokštės, sulituotos šalia viena kitos. Jos bendrauja UART ir turi bendrą maitinimą.
+Dvi Seeed Studio XIAO ESP32-C5 plokštės, sulituotos šalia viena kitos. Jos bendrauja UART ir turi bendrą maitinimą.
 
 - Plokštės pačios nusprendžia, kuri yra **lyderis**, o kuri **sekėja**.
 - Lyderis per WiFi talpina web programėlę.
-- Abi plokštės 100 Hz dažniu siunčia neapdorotus WiFi paketus. Taip aplinka apšviečiama, o kartu kiekviena plokštė jaučia, ką siuntė kita.
+- Plokštės dirba paeiliui. Viena 100 Hz dažniu siunčia neapdorotus WiFi paketus, apšviesdama aplinką, kita tuo metu jaučia, paskui vaidmenys apsikeičia.
 - Kiekviena plokštė perduoda CSI duomenis kitai per UART. Judesį, žmogaus buvimą ir kvėpavimą randantis filtravimas veikia pačiose plokštėse.
 
-[TODO: Andrius — kokia programinė įranga: ESP-IDF C ar TinyGo? Kokio modelio plokštės, ir ar abi plokštės tikrai vienu metu ir siunčia, ir priima?]
+Norėjau turėti galimybę keisti WiFi kanalus, bet tada prieigos taškas neveikė.
+
+[TODO: Andrius — kokia programinė įranga: ESP-IDF C ar TinyGo?]
 
 [TODO: Photo — proof of concept: abi C5 plokštės šalia viena kitos, matomi UART ir maitinimo laidai]
 
@@ -40,7 +42,7 @@ Dvi ESP32-C5 plokštės, sulituotos šalia viena kitos. Jos bendrauja UART ir tu
 
 Judesys daugiausia yra atspindys. Idėja: vienoje plokštėje kairinės, kitoje dešininės apskritiminės poliarizacijos antena, kad poliarizacija iš dalies filtruotų atspindžius.
 
-[TODO: Andrius — kuri antena siunčia, kuri priima? Ar darbinė prielaida, kad atspindys pakeičia sukimosi kryptį?]
+Darbinė prielaida: atspindys pakeičia sukimosi kryptį, todėl priešingos krypties antena turėtų labiau teikti pirmenybę atspindėtai energijai nei tiesioginiam keliui. Tai prielaida. Čia jos nepatikrinau.
 
 [TODO: Photo — dvi LHCP ir RHCP antenos]
 
@@ -59,9 +61,9 @@ Ekranui panaudojau dūmų nusiurbėjo filtro putas, kurios gulėjo be darbo. Iš
 
 Perkeliodamas antenas pasiekiau **26 dB** atskyrimą. Paskui klijai sukietėjo, ir atskyrimas grįžo į maždaug **4–8 dB**.
 
-[TODO: Andrius — kaip matavai atskyrimą? Kokį dydį: RSSI, CSI amplitudę, kita?]
+Atskyrimo skaičiai yra RSSI.
 
-[TODO: Andrius — putų varža: kaip matuota? Ar žinoma, ar tokios putos tikrai sugeria 5 GHz, ar tai tik spėjimas?]
+Neturiu matavimo, ar putos apskritai ką nors sugeria WiFi dažniais. Tinkamam patikrinimui reikėtų dviejų kryptinių arba rago antenų, kurių neturiu, nors galbūt pasigaminsiu. Taip pat reikėtų bekyšulinės kameros, kurios irgi neturiu. Taigi putos yra spėjimas.
 
 ## Kaip atrodo jutimas
 
@@ -73,7 +75,9 @@ Lyderio web programėlė realiu laiku rodo CSI subnešlius, spektrogramas ir kv�
 
 [TODO: Photo — CSI kreivės]
 
-[TODO: Andrius — kokiomis sąlygomis gautas kvėpavimo grafikas ir kokie filtrai naudojami? Skaičiai prašomi.]
+Kvėpavimo grafiką gavau, kai atskyrimas buvo didelis. Tačiau spektrogramose matosi triukšmas, tad kvėpavimo kreivė gali būti tiesiog triukšmas. Kol kas nežinau ir nesakau, kad tai kvėpavimas.
+
+[TODO: Andrius — kokius filtrus naudoji judesiui, buvimui ir kvėpavimui? Skaičiai, kuriuos nori matyti kaip faktus.]
 
 ## Maršrutizatoriaus klaida
 
@@ -81,15 +85,18 @@ Vienu metu talpinti prieigos tašką ir srautu siųsti dvejetainius kadrus į we
 
 Bet kai lyderis prisijungia prie maršrutizatoriaus, CSI po 3 minučių sustoja. Visada. Kodėl, nežinau.
 
-[TODO: Andrius — kas tiksliai sustoja: ar nustoja ateiti paketai, ar callback, ar plokštė pakimba? Ar sekėja nukenčia?]
+Strigimo detalės:
+
+- CSI toliau praneša galiojančius kadrus, bet visos reikšmės vienodos. Paketai baitas į baitą vienodi.
+- Tai išlieka po programinio perkrovimo ir perkrovimo.
+- Dingsta tik atjungus ir vėl prijungus maitinimą.
 
 Priežasties kol kas nežinau, todėl jos čia nespėlioju.
 
 ## Kur dabar esame
 
-Buvimo, judesio ir kvėpavimo aptikimas veikia plokštėse. Antenų izoliacija trukdo gauti geresnius duomenis, o klijai parodė, kokie trapūs tie 26 dB. Maršrutizatoriaus strigimas neišspręstas.
+Buvimo, judesio ir kvėpavimo aptikimas veikia plokštėse. Ar kvėpavimas tikras, neaišku, nes spektrogramose matosi triukšmas. Tiesioginis kelias tarp antenų per stiprus, o klijai parodė, kokie trapūs buvo tie 26 dB. Maršrutizatoriaus strigimas neišspręstas.
 
-Toliau bus daugiau CSI eksperimentų, o repo atsiras sutvarkius kodą.
-[TODO: Andrius — ar nori čia ką nors konkretaus apie kitą eksperimentą?]
+Tai pirmieji žingsniai link kažko įdomesnio, o repo atsiras sutvarkius kodą.
 
 *Lietuviška versija yra juodraštis, kurį reikia peržiūrėti.*

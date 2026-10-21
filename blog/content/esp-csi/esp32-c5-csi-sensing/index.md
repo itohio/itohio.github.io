@@ -25,14 +25,16 @@ This is a teaser. The code is ugly and experimental, and I will clean it up and 
 
 ## The setup
 
-Two ESP32-C5 boards, soldered side by side. They share UART and power, so they can talk to each other.
+Two Seeed Studio XIAO ESP32-C5 boards, soldered side by side. They share UART and power, so they can talk to each other.
 
 - The boards decide on their own which one is the **leader** and which is the **follower**.
 - The leader hosts a web app over WiFi.
-- Both boards send raw WiFi packets at 100 Hz. That illuminates the environment and, at the same time, each board senses what the other one sent.
+- The boards take turns. One sends raw WiFi packets at 100 Hz to illuminate the environment while the other senses, then the roles reverse.
 - Each board passes its CSI data to the other over UART. The filtering that finds motion, human presence and breathing runs on the boards.
 
-[TODO: Andrius — what firmware stack is this: ESP-IDF C, or TinyGo? Which board model, and are the two sides really "TX and RX at once on each board" or alternating?]
+I wanted to be able to switch WiFi channels, but then the access point would not work.
+
+[TODO: Andrius — what firmware stack is this: ESP-IDF C, or TinyGo?]
 
 [TODO: Photo — the proof of concept: both C5 boards soldered side by side, UART and power wires visible]
 
@@ -40,7 +42,7 @@ Two ESP32-C5 boards, soldered side by side. They share UART and power, so they c
 
 Motion is predominantly a reflection. The idea is to use a left-hand circularly polarized antenna on one board and a right-hand one on the other, so the polarization acts as a rough filter on reflections.
 
-[TODO: Andrius — which antenna transmits and which receives, and are both boards doing both? Also: is the working assumption that a reflection flips the handedness, so the opposite-handed antenna prefers reflected energy over the direct path?]
+My working assumption is that a reflection flips the handedness, so the opposite-handed antenna should prefer reflected energy over the direct path. It is an assumption. I have not verified it here.
 
 [TODO: Photo — the dual LHCP and RHCP antennas]
 
@@ -59,9 +61,9 @@ For the shield, I had fume extractor filter foam lying around. I measured about 
 
 I tried moving the antennas around and reached **26 dB** of separation. Then the glue settled, and the separation went back to about **4 to 8 dB**.
 
-[TODO: Andrius — how did you measure the separation? Which quantity: RSSI between the boards, CSI amplitude, something else? A single number or a spectrum?]
+The separation figures are RSSI.
 
-[TODO: Andrius — the foam resistance: how was it measured (probe spacing, multimeter)? And is it known whether foam at 600 kΩ per 5 mm actually absorbs at 5 GHz, or is it only a guess? I will label it a guess unless you have a measurement.]
+I have no measurement of whether the foam absorbs anything at WiFi frequencies. Checking that properly needs two directional or horn antennas, which I do not have, though I might build one. It would also need an anechoic chamber, which I do not have either. So the foam is a guess.
 
 ## What the sensing looks like
 
@@ -73,7 +75,9 @@ The leader's web app shows the data in real time: the CSI subcarriers, spectrogr
 
 [TODO: Photo — CSI traces / subcarrier plot]
 
-[TODO: Andrius — what did you do to get the breathing plot (distance, posture, how many seconds of window)? Which filters do you use for motion, presence and breathing? Give me anything you want stated as a fact here, with numbers.]
+I got the breathing plot when the separation was high. The spectrograms, however, show noise, so the breathing trace might be just noise. I cannot tell yet, and I am not claiming it is breathing.
+
+[TODO: Andrius — which filters do you use for motion, presence and breathing? Anything with numbers you want stated as fact.]
 
 ## The router bug
 
@@ -81,14 +85,16 @@ Hosting an access point and streaming binary frames to the web app, with real-ti
 
 Connecting the leader to a router is not. CSI freezes on the leader after 3 minutes. Always. I have not found out why.
 
-[TODO: Andrius — what exactly freezes: do the packets stop arriving, does the CSI callback stop, does the board hang or reboot? Is the follower affected? And what is the router band and channel versus the AP channel?]
+The details of the freeze:
+
+- CSI keeps reporting valid frames, but all the values are identical. The packets are byte-for-byte the same.
+- It survives soft resets and resets.
+- It goes away only after a power cycle.
 
 I do not know the cause yet, so I am not going to guess one here.
 
 ## Where things stand
 
-Presence, motion and breathing detection runs on the boards. The isolation between the antennas is the thing standing in the way of better data, and the glue demonstrated how fragile 26 dB is. The router freeze is open.
+Presence, motion and breathing detection runs on the boards. Whether the breathing is real is open, because the spectrograms show noise. The direct path between the antennas is too strong, and the glue showed how fragile 26 dB was. The router freeze is open.
 
-Further CSI experiments are coming, and the GitHub repo follows once the code is cleaned up.
-
-[TODO: Andrius — anything concrete you want here about the next experiment, e.g. the FPV ones?]
+These are the first steps into something more interesting, and the GitHub repo follows once the code is cleaned up.
