@@ -195,7 +195,7 @@ I could feed I2S from ESP32 directly into the DSP. And I tried to do so, but cou
 ![Power Amp module](power.jpg)
 *This is the main power-horse that drives the speakers. It is powered directly from battery BMS*
 
-**TPA3110**: Class D efficiency for minimal heat in enclosed ceiling space. Can deliver 30W per channel at 16V into 4Ohms @10% THD. An overkill, but at up to 10W it is very clean and cool! I've added ferrite beads as per recommendation(eyeballed them basically)
+**TPA3110**: Class D efficiency for minimal heat in enclosed ceiling space. Can deliver 15W per channel at 16V into 8Ohms @10% THD (30W only as a bridged mono (PBTL) channel into 4Ohms). An overkill, but at up to 10W it is very clean and cool! I've added ferrite beads as per recommendation(eyeballed them basically)
 
 ![Exciters closeup](exciter.jpg)
 

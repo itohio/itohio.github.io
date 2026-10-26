@@ -51,7 +51,7 @@ void setup() {
 }
 ```
 
-Note, however, that ESP32 can only use GPIO 0, 2 and 3 for MCLK output, however, I was already using these pins for programming as well as reading out logs except for GPIO0.
+Note, however, that ESP32 can only use GPIO 0, 1 and 3 for MCLK output, however, I was already using these pins for programming as well as reading out logs except for GPIO0.
 
 # Internal ESP32 DAC
 
