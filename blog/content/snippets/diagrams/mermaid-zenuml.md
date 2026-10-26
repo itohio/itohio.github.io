@@ -25,8 +25,10 @@ Use ZenUML when you need to:
 zenuml
     Client -> API: Request
     API -> Database: Query
-    Database --> API: Result
-    API --> Client: Response
+    @return
+    Database -> API: Result
+    @return
+    API -> Client: Response
 ```
 ````
 
@@ -36,8 +38,10 @@ zenuml
 zenuml
     Client -> API: Request
     API -> Database: Query
-    Database --> API: Result
-    API --> Client: Response
+    @return
+    Database -> API: Result
+    @return
+    API -> Client: Response
 ```
 
 ## Examples
@@ -50,11 +54,15 @@ zenuml
     User -> Frontend: Click Button
     Frontend -> API: POST /data
     API -> Auth: Validate Token
-    Auth --> API: Valid
+    @return
+    Auth -> API: Valid
     API -> Database: Save Data
-    Database --> API: Success
-    API --> Frontend: 201 Created
-    Frontend --> User: Show Success
+    @return
+    Database -> API: Success
+    @return
+    API -> Frontend: 201 Created
+    @return
+    Frontend -> User: Show Success
 ```
 ````
 
@@ -65,11 +73,15 @@ zenuml
     User -> Frontend: Click Button
     Frontend -> API: POST /data
     API -> Auth: Validate Token
-    Auth --> API: Valid
+    @return
+    Auth -> API: Valid
     API -> Database: Save Data
-    Database --> API: Success
-    API --> Frontend: 201 Created
-    Frontend --> User: Show Success
+    @return
+    Database -> API: Success
+    @return
+    API -> Frontend: 201 Created
+    @return
+    Frontend -> User: Show Success
 ```
 
 ### Example 2: Decorators, Groups, and Blocks
@@ -137,7 +149,7 @@ zenuml
 ## Notes
 
 - `zenuml` - Start ZenUML diagram
-- `->` - Synchronous call, `-->` - Return/response
+- `A -> B: msg` - Async message; `A.method()` - sync call; replies use `return x`, `x = B.method()`, or `@return` before a message (there is no `-->`)
 - `title` - Diagram title
 - Decorators like `@Actor`, `@Boundary`, `@EC2`, `@Lambda`, `@AzureFunction` declare participants with types and optional colors
 - `group Name { ... }` - Logical group of related participants

@@ -206,7 +206,7 @@ erDiagram
 
 ## Notes
 
-- Entity names should be in UPPERCASE
+- Entity names are UPPERCASE by convention (not required)
 - Attributes are defined inside curly braces
 - PK = Primary Key, FK = Foreign Key
 - Relationship labels are optional but recommended
@@ -214,7 +214,7 @@ erDiagram
 
 ## Gotchas/Warnings
 
-- ⚠️ **Entity Names**: Must be uppercase and use hyphens for multi-word names
+- ⚠️ **Entity Names**: Any case works; quote names with spaces (`"Order Item"`) or use hyphens/underscores
 - ⚠️ **Attributes**: Define inside entity blocks with type and constraints
 - ⚠️ **Relationships**: Cardinality symbols must match the relationship direction
 - ⚠️ **Complexity**: Large ER diagrams can become hard to read - break into modules

@@ -23,14 +23,13 @@ Use Kanban boards when you need to:
 ````markdown
 ```mermaid
 kanban
-    title Kanban Board
-    section To Do
-        Task 1
-        Task 2
-    section In Progress
-        Task 3
-    section Done
-        Task 4
+    todo[To Do]
+        t1[Task 1]
+        t2[Task 2]
+    doing[In Progress]
+        t3[Task 3]
+    done[Done]
+        t4[Task 4]
 ```
 ````
 
@@ -38,14 +37,13 @@ kanban
 
 ```mermaid
 kanban
-    title Kanban Board
-    section To Do
-        Task 1
-        Task 2
-    section In Progress
-        Task 3
-    section Done
-        Task 4
+    todo[To Do]
+        t1[Task 1]
+        t2[Task 2]
+    doing[In Progress]
+        t3[Task 3]
+    done[Done]
+        t4[Task 4]
 ```
 
 ## Examples
@@ -55,18 +53,17 @@ kanban
 ````markdown
 ```mermaid
 kanban
-    title Development Pipeline
-    section Backlog
-        Design API
-        Write Tests
-    section In Progress
-        Implement Feature
-        Code Review
-    section Testing
-        Unit Tests
-    section Done
-        Deploy to Prod
-        Documentation
+    backlog[Backlog]
+        t1[Design API]
+        t2[Write Tests]
+    doing[In Progress]
+        t3[Implement Feature]
+        t4[Code Review]
+    testing[Testing]
+        t5[Unit Tests]
+    done[Done]
+        t6[Deploy to Prod]
+        t7[Documentation]
 ```
 ````
 
@@ -74,18 +71,17 @@ kanban
 
 ```mermaid
 kanban
-    title Development Pipeline
-    section Backlog
-        Design API
-        Write Tests
-    section In Progress
-        Implement Feature
-        Code Review
-    section Testing
-        Unit Tests
-    section Done
-        Deploy to Prod
-        Documentation
+    backlog[Backlog]
+        t1[Design API]
+        t2[Write Tests]
+    doing[In Progress]
+        t3[Implement Feature]
+        t4[Code Review]
+    testing[Testing]
+        t5[Unit Tests]
+    done[Done]
+        t6[Deploy to Prod]
+        t7[Documentation]
 ```
 
 ### Example 2: Bug Tracking (with IDs and metadata)
@@ -93,21 +89,20 @@ kanban
 ````markdown
 ```mermaid
 kanban
-    title Bug Tracking
-    section Todo
+    todo[Todo]
         id1[Create Documentation]
         docs[Create Blog about the new diagram]
-    section In progress
+    doing[In progress]
         id6[Create renderer so that it works in all cases. We also add some extra text here for testing purposes. And some more just for the extra flare.]
-    section Ready for deploy
+    deploy[Ready for deploy]
         id8[Design grammar]@{ assigned: 'knsv' }
-    section Ready for test
+    test[Ready for test]
         id4[Create parsing tests]@{ ticket: 2038, assigned: 'K.Sveidqvist', priority: 'High' }
         id66[last item]@{ priority: 'Very Low', assigned: 'knsv' }
-    section Done
+    done[Done]
         id5[define getData]
         id2[Title of diagram is more than 100 chars when user duplicates diagram with 100 char]@{ ticket: 2036, priority: 'Very High'}
-    section Can't reproduce
+    cnr[Can't reproduce]
         id3[Weird flickering in Firefox]
 ```
 ````
@@ -116,35 +111,33 @@ kanban
 
 ```mermaid
 kanban
-    title Bug Tracking
-    section Todo
+    todo[Todo]
         id1[Create Documentation]
         docs[Create Blog about the new diagram]
-    section In progress
+    doing[In progress]
         id6[Create renderer so that it works in all cases. We also add some extra text here for testing purposes. And some more just for the extra flare.]
-    section Ready for deploy
+    deploy[Ready for deploy]
         id8[Design grammar]@{ assigned: 'knsv' }
-    section Ready for test
+    test[Ready for test]
         id4[Create parsing tests]@{ ticket: 2038, assigned: 'K.Sveidqvist', priority: 'High' }
         id66[last item]@{ priority: 'Very Low', assigned: 'knsv' }
-    section Done
+    done[Done]
         id5[define getData]
         id2[Title of diagram is more than 100 chars when user duplicates diagram with 100 char]@{ ticket: 2036, priority: 'Very High'}
-    section Can't reproduce
+    cnr[Can't reproduce]
         id3[Weird flickering in Firefox]
 ```
 
 ## Notes
 
-- `title` - Optional board title
-- `section` - Defines a column/stage
-- Tasks can be plain text or `id[Label]` with optional `@{ ... }` metadata
+- No `title` or `section` keywords: a column is `columnId[Column Title]`
+- Tasks are `taskId[Label]`, indented under their column, with optional `@{ ... }` metadata
 - Keep task names concise
 
 ## Gotchas/Warnings
 
-- ⚠️ **Indentation**: Tasks must be indented under their `section`
-- ⚠️ **Sections**: Must define sections before tasks
+- ⚠️ **Indentation**: Tasks must be indented under their column
+- ⚠️ **Columns**: Define a column before its tasks
 - ⚠️ **IDs**: Use unique IDs when you add metadata (`@{ ... }`)
 - ⚠️ **Complexity**: Too many tasks can clutter the board
 

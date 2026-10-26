@@ -188,7 +188,7 @@ packet
 
 ## Notes
 
-- Use `packet` keyword (not `packet-beta`)
+- `packet` keyword needs Mermaid 11.9.0+; `packet-beta` works on all versions
 - Format: `start-end: "Field Name"` for bit ranges
 - Format: `position: "Field Name"` for single bits
 - Field labels must be in double quotes
@@ -197,7 +197,7 @@ packet
 
 ## Gotchas/Warnings
 
-- ⚠️ **Syntax**: Use `packet` (not `packet-beta`)
+- ⚠️ **Syntax**: Bare `packet` fails before Mermaid 11.9.0 — use `packet-beta` for older renderers
 - ⚠️ **Quotes**: Field labels must be in double quotes
 - ⚠️ **Format**: Use `start-end: "name"` for ranges, `position: "name"` for single bits
 - ⚠️ **Order**: Fields should be listed sequentially from top to bottom

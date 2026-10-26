@@ -559,7 +559,7 @@ rf.fit(X_train, y_train)  # Only trains 50 new trees
 ```python
 # ❌ BAD: Overfitting
 rf = RandomForestClassifier(
-    n_estimators=1000,
+    n_estimators=1000,      # More trees don't overfit, they only cost compute
     max_depth=None,         # Unlimited depth
     min_samples_split=2,    # Split on 2 samples
     min_samples_leaf=1      # Leaf can have 1 sample

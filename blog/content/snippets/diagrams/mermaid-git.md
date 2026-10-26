@@ -158,14 +158,14 @@ gitGraph
 
 ## Notes
 
-- Commits must have `id:` label
+- `id:` is optional; without it Mermaid generates a commit id
 - Branch names should be descriptive
 - Use `checkout` before committing to set branch
 - Merge creates a merge commit
 
 ## Gotchas/Warnings
 
-- ⚠️ **Commits**: Must include `id:` in commit command
+- ⚠️ **Commit IDs**: Custom `id:` values must be unique
 - ⚠️ **Order**: Commits must be in chronological order
 - ⚠️ **Branches**: Create branch before checking out
 - ⚠️ **Merges**: Must checkout target branch before merging

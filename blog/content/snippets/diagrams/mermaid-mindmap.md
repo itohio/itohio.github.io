@@ -47,7 +47,7 @@ mindmap
 ## Explanation
 
 - `mindmap` - Start mindmap diagram
-- `((text))` - Root node (double parentheses)
+- `((text))` - Root node as a circle (any node shape, or plain text, works for the root)
 - Indentation creates hierarchy
 - Each level is a child of the previous
 
@@ -155,15 +155,15 @@ mindmap
 
 ## Notes
 
-- Root node uses double parentheses: `((Root))`
-- Indentation determines hierarchy (2 spaces per level)
+- Root node can use any shape; `((Root))` draws a circle
+- Indentation determines hierarchy (only relative indentation matters, not an exact count)
 - Keep node names concise
 - Can nest multiple levels deep
 
 ## Gotchas/Warnings
 
 - ⚠️ **Indentation**: Must be consistent (spaces, not tabs)
-- ⚠️ **Root Node**: Must use double parentheses
+- ⚠️ **Root Node**: Only one root; any shape works
 - ⚠️ **Depth**: Very deep hierarchies can be hard to read
 - ⚠️ **Node Names**: Keep short for better visualization
 
