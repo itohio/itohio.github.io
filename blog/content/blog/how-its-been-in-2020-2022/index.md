@@ -218,7 +218,7 @@ Overall, I mostly belive that the most important factors to sound clarity and qu
 - speaker placement
 
 ## The next steps
-I am currently working on ADAU1456-based implementation of the amplifier and DSP(so that I could turn off APO for the main setup), where the whole audio tract would be completely digital!
+I am currently working on ADAU1452-based implementation of the amplifier and DSP(so that I could turn off APO for the main setup), where the whole audio tract would be completely digital!
 
 ![Parts are being collected](dsp-boards.jpg)
 
