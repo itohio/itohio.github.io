@@ -120,8 +120,8 @@ convert input.jpg -thumbnail 200x200 thumb.jpg
 convert input.jpg -thumbnail 200x200^ -gravity center -extent 200x200 thumb.jpg
 
 # Multiple thumbnails
-convert input.jpg -thumbnail 100x100 small.jpg \
-                  -thumbnail 200x200 medium.jpg \
+convert input.jpg \( +clone -thumbnail 100x100 -write small.jpg +delete \) \
+                  \( +clone -thumbnail 200x200 -write medium.jpg +delete \) \
                   -thumbnail 400x400 large.jpg
 ```
 
@@ -329,7 +329,7 @@ convert image1.jpg image2.jpg -blend 50x50 output.jpg
 
 ```bash
 # Simple border
-convert input.jpg -border 10x10 -bordercolor black output.jpg
+convert input.jpg -bordercolor black -border 10x10 output.jpg
 
 # Frame effect
 convert input.jpg -mattecolor "#FF0000" -frame 10x10+5+5 output.jpg

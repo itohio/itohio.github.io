@@ -132,8 +132,8 @@ ffmpeg -i input.mkv -map 0:m:language:eng -c copy audio_english.m4a
 # Extract first subtitle track to SRT
 ffmpeg -i input.mkv -map 0:s:0 output.srt
 
-# Extract all subtitle tracks
-ffmpeg -i input.mkv -map 0:s -c copy output_%d.srt
+# Extract each subtitle track (the SRT muxer takes one stream per file)
+ffmpeg -i input.mkv -map 0:s:0 output_0.srt -map 0:s:1 output_1.srt
 
 # Extract subtitle by language
 ffmpeg -i input.mkv -map 0:m:language:eng subtitle_english.srt
@@ -259,8 +259,8 @@ ffmpeg -i video.mp4 -i subtitle.srt -c copy -c:s srt output.mkv
 ffmpeg -i input.mp4 -i new_audio.m4a -map 0:v -map 1:a -c copy output.mp4
 
 # Replace audio and re-sync (delay audio by 0.5 seconds)
-ffmpeg -i input.mp4 -i new_audio.m4a -map 0:v -map 1:a \
-  -c copy -itsoffset 0.5 output.mp4
+ffmpeg -i input.mp4 -itsoffset 0.5 -i new_audio.m4a -map 0:v -map 1:a \
+  -c copy output.mp4
 ```
 
 ### Replace Video Track

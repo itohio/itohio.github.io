@@ -16,7 +16,7 @@ HSV (Hue, Saturation, Value) and HSL (Hue, Saturation, Lightness) are cylindrica
 
 **Key Difference**:
 - **HSV**: Value represents brightness (pure colors at V=1)
-- **HSL**: Lightness represents perceptual brightness (pure colors at L=0.5)
+- **HSL**: Lightness is the mean of max and min RGB, not perceptual brightness (pure colors at L=0.5, yet yellow looks far brighter than blue)
 
 ---
 
