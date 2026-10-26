@@ -163,7 +163,7 @@ model.eval()
 
 # Save entire model
 torch.save(model, 'entire_model.pth')
-loaded_model = torch.load('entire_model.pth')
+loaded_model = torch.load('entire_model.pth', weights_only=False)  # PyTorch ≥ 2.6 defaults to weights_only=True; only for trusted files
 
 # Save checkpoint
 torch.save({

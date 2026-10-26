@@ -78,7 +78,7 @@ graph TB
 
 ```python
 from langchain.llms import OpenAI
-from langchain.chains import create_extraction_chain
+from langchain_classic.chains import create_extraction_chain
 
 schema = {
     "properties": {
@@ -215,11 +215,10 @@ def retrieve_multi_hop(entity_name, hops=2):
 **Key Insight**: Communities represent thematically related entities, providing broader context than direct connections alone.
 
 ```python
-# Run Louvain algorithm
+# Run Louvain algorithm (GDS 2.x: project a named graph first)
+graph.query("CALL gds.graph.project('entities', 'Entity', 'RELATES_TO')")
 graph.query("""
-CALL gds.louvain.write({
-    nodeProjection: 'Entity',
-    relationshipProjection: 'RELATES_TO',
+CALL gds.louvain.write('entities', {
     writeProperty: 'community'
 })
 """)
@@ -276,7 +275,7 @@ def hybrid_retrieve(query_text, k=5):
 ## LangChain Graph QA
 
 ```python
-from langchain.chains import GraphCypherQAChain
+from langchain_neo4j import GraphCypherQAChain
 
 chain = GraphCypherQAChain.from_llm(
     llm=OpenAI(),
@@ -294,7 +293,7 @@ response = chain.run("Who are the authors of papers about RAG?")
 **Core Idea**: Builds a hierarchical summary structure by detecting communities, summarizing each community, and organizing summaries into a tree for multi-level querying.
 
 **Mathematical Formulation**:
-1. **Community Detection**: $C = \text{Louvain}(G)$ partitions graph into communities
+1. **Community Detection**: $C = \text{Leiden}(G)$ hierarchically partitions graph into communities
 2. **Community Summarization**: $S_i = \text{LLM}(\text{summarize}, C_i)$ for each community
 3. **Hierarchy Construction**: Build tree $T$ where nodes are communities/summaries
 4. **Query Routing**: $\text{query}(q) = \text{route}(q, T)$ selects appropriate level in hierarchy
@@ -304,7 +303,7 @@ response = chain.run("Who are the authors of papers about RAG?")
 ### Hierarchical Summarization
 
 ```python
-from langchain.chains.summarize import load_summarize_chain
+from langchain_classic.chains.summarize import load_summarize_chain
 
 # 1. Extract entities and build graph
 # 2. Detect communities
@@ -325,9 +324,9 @@ def summarize_community(community_nodes):
 ## Graph RAG with LlamaIndex
 
 ```python
-from llama_index import KnowledgeGraphIndex, ServiceContext
-from llama_index.graph_stores import Neo4jGraphStore
-from llama_index.llms import OpenAI
+from llama_index.core import KnowledgeGraphIndex, Settings  # KnowledgeGraphIndex is deprecated; PropertyGraphIndex replaces it
+from llama_index.graph_stores.neo4j import Neo4jGraphStore
+from llama_index.llms.openai import OpenAI
 
 # Setup
 graph_store = Neo4jGraphStore(
@@ -337,16 +336,13 @@ graph_store = Neo4jGraphStore(
     database="neo4j"
 )
 
-service_context = ServiceContext.from_defaults(
-    llm=OpenAI(model="gpt-4"),
-    chunk_size=512
-)
+Settings.llm = OpenAI(model="gpt-4")
+Settings.chunk_size = 512
 
 # Build index
 index = KnowledgeGraphIndex.from_documents(
     documents,
     storage_context=storage_context,
-    service_context=service_context,
     max_triplets_per_chunk=10,
     include_embeddings=True
 )
@@ -379,7 +375,8 @@ def extract_relevant_subgraph(query_entities, max_depth=2):
     
     query = """
     UNWIND $entities AS entity
-    MATCH path = (e:Entity {name: entity})-[*1..$max_depth]-(connected)
+    MATCH path = (e:Entity {name: entity})-[*1..5]-(connected)
+    WHERE length(path) <= $max_depth  // parameters are not allowed in [*1..n] bounds
     WITH collect(path) AS paths
     CALL apoc.convert.toTree(paths) YIELD value
     RETURN value
@@ -447,13 +444,13 @@ def evaluate_graph_quality(graph):
     # Average degree
     result = graph.query("""
         MATCH (n)
-        RETURN avg(size((n)-->())) AS avg_degree
+        RETURN avg(COUNT { (n)-->() }) AS avg_degree
     """)
     metrics['avg_degree'] = result[0]['avg_degree']
     
     # Connected components
     result = graph.query("""
-        CALL gds.wcc.stats({nodeProjection: '*', relationshipProjection: '*'})
+        CALL gds.wcc.stats('entities')
         YIELD componentCount
         RETURN componentCount
     """)

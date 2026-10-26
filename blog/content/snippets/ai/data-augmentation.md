@@ -29,7 +29,7 @@ Comprehensive guide to data augmentation techniques for training robust deep lea
 
 ## Keras Data Augmentation
 
-### Basic Image Augmentation (Legacy)
+### Basic Image Augmentation (Legacy, deprecated in Keras 3)
 
 ```python
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -111,8 +111,10 @@ class MixupLayer(layers.Layer):
         images, labels = inputs
         batch_size = tf.shape(images)[0]
         
-        # Sample lambda from Beta distribution
-        lam = tf.random.uniform([batch_size, 1, 1, 1], 0, 1)
+        # Sample lambda from Beta(alpha, alpha) via two Gamma draws
+        g1 = tf.random.gamma([batch_size, 1, 1, 1], self.alpha)
+        g2 = tf.random.gamma([batch_size, 1, 1, 1], self.alpha)
+        lam = g1 / (g1 + g2)
         lam = tf.maximum(lam, 1 - lam)
         
         # Shuffle indices
@@ -163,14 +165,11 @@ class CutMixLayer(layers.Layer):
         shuffled_images = tf.gather(images, indices)
         shuffled_labels = tf.gather(labels, indices)
         
-        # Create mask
-        mask = tf.ones([batch_size, height, width, 1])
-        mask = tf.tensor_scatter_nd_update(
-            mask,
-            [[i, j, k, 0] for i in range(batch_size) 
-             for j in range(y1, y2) for k in range(x1, x2)],
-            tf.zeros([batch_size * (y2-y1) * (x2-x1)])
-        )
+        # Create mask (vectorised so it also runs in graph mode)
+        ys = tf.range(height)[:, None]
+        xs = tf.range(width)[None, :]
+        inside = (ys >= y1) & (ys < y2) & (xs >= x1) & (xs < x2)
+        mask = 1.0 - tf.cast(inside, tf.float32)[None, :, :, None]
         
         mixed_images = mask * images + (1 - mask) * shuffled_images
         
@@ -265,10 +264,10 @@ train_transform = transforms.Compose([
     
     # Advanced
     transforms.RandomPerspective(distortion_scale=0.2, p=0.5),
-    transforms.RandomErasing(p=0.5, scale=(0.02, 0.2)),
     
     # Normalize
     transforms.ToTensor(),
+    transforms.RandomErasing(p=0.5, scale=(0.02, 0.2)),  # tensors only: after ToTensor
     transforms.Normalize(mean=[0.485, 0.456, 0.406],
                         std=[0.229, 0.224, 0.225])
 ])
@@ -302,7 +301,7 @@ import cv2
 # Powerful augmentation library
 train_transform = A.Compose([
     # Resize and crop
-    A.RandomResizedCrop(224, 224, scale=(0.8, 1.0)),
+    A.RandomResizedCrop(size=(224, 224), scale=(0.8, 1.0)),
     
     # Geometric
     A.HorizontalFlip(p=0.5),
@@ -329,7 +328,7 @@ train_transform = A.Compose([
     ], p=0.3),
     
     A.OneOf([
-        A.GaussNoise(var_limit=(10.0, 50.0)),
+        A.GaussNoise(std_range=(0.012, 0.028)),  # albumentations ≥ 2.0; was var_limit=(10, 50)
         A.ISONoise(),
     ], p=0.3),
     
@@ -341,8 +340,8 @@ train_transform = A.Compose([
     ], p=0.1),
     
     # Cutout/Erasing
-    A.CoarseDropout(max_holes=8, max_height=32, max_width=32, 
-                    fill_value=0, p=0.5),
+    A.CoarseDropout(num_holes_range=(1, 8), hole_height_range=(8, 32),
+                    hole_width_range=(8, 32), fill=0, p=0.5),
     
     # Normalize and convert
     A.Normalize(mean=[0.485, 0.456, 0.406],

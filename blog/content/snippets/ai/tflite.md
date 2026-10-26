@@ -62,9 +62,10 @@ tflite_int8_model = converter.convert()
 
 ```python
 import numpy as np
+from ai_edge_litert.interpreter import Interpreter  # pip install ai-edge-litert; tf.lite.Interpreter is deprecated
 
 # Load model
-interpreter = tf.lite.Interpreter(model_path='model.tflite')
+interpreter = Interpreter(model_path='model.tflite')
 interpreter.allocate_tensors()
 
 # Get input and output details

@@ -120,7 +120,7 @@ Final dataset: ~13,200 clips total. Train/validation split is stratified.
 graph LR
     W["waveform\n10s @ 32kHz"]
     MEL["AugmentMelSTFT\n128 mel × 1000 frames"]
-    BB["MobileNetV3 backbone\nmn20_as\n~16.1M params\nAudioSet-pretrained"]
+    BB["MobileNetV3 backbone\nmn20_as\n~17.9M params\nAudioSet-pretrained"]
     POOL["AdaptiveAvgPool2d(1)"]
     HEAD["DroneHead\n256 hidden, dropout 0.4\n→ 10 logits"]
     OUT["sigmoid → per-class probability"]
@@ -130,7 +130,7 @@ graph LR
 
 ### Why MobileNetV3 / EfficientAT
 
-The backbone is `mn20_as` from the EfficientAT family — MobileNetV3-Large scaled to 20 width multiplier, pre-trained on all 527 AudioSet classes. At ~16.1M parameters and mAP 0.478 on AudioSet, it is the sweet spot: `mn10` undertrained on this task, `mn40` too heavy for mobile inference. AudioSet pretraining gives the backbone strong generic audio representations across a wide range of sound types; those representations transfer to the detection task without starting from random initialization.
+The backbone is `mn20_as` from the EfficientAT family — MobileNetV3-Large scaled to width multiplier 2.0, pre-trained on all 527 AudioSet classes. At ~17.9M parameters and mAP 0.478 on AudioSet, it is the sweet spot: `mn10` undertrained on this task, `mn40` too heavy for mobile inference. AudioSet pretraining gives the backbone strong generic audio representations across a wide range of sound types; those representations transfer to the detection task without starting from random initialization.
 
 The head is the only part trained from scratch:
 
@@ -302,7 +302,7 @@ flowchart LR
     MIC --> BUF --> WIN --> MEL --> ONNX --> MED --> THR --> OUT
 ```
 
-The ring buffer is 15 seconds; each extraction gives a 10-second window with 1-second overlap. The running median over 5 windows suppresses single-window jitter without adding significant latency — 5 seconds of delay at a 1-second hop is acceptable for the use case.
+The ring buffer is 15 seconds; each extraction gives a 10-second window with a 1-second hop (9 seconds of overlap). The running median over 5 windows suppresses single-window jitter without adding significant latency — 5 seconds of delay at a 1-second hop is acceptable for the use case.
 
 The mel preprocessing `FrequencyMasking` and `TimeMasking` issue mentioned in the architecture section is present in the inference path too. Zero the mask parameters before exporting and before running inference. Do not rely on `model.eval()` to disable them.
 
@@ -312,7 +312,7 @@ The mel preprocessing `FrequencyMasking` and `TimeMasking` issue mentioned in th
 
 **QAT**: The clearest path to an INT8 model that meets the F1 guard. Not attempted yet.
 
-**TFLite export**: Blocked on platform compatibility — the ONNX → TFLite conversion path through tf2onnx was unreliable for this model graph topology. The goal is a model that runs on Android without ONNX Runtime.
+**TFLite export**: Blocked on platform compatibility — the ONNX → TFLite conversion path was unreliable for this model graph topology (tf2onnx only converts TF → ONNX; the ONNX → TFLite tools are onnx2tf or litert-torch). The goal is a model that runs on Android without ONNX Runtime.
 
 **Streaming inference on embedded hardware**: The 10-second window + 1-second hop architecture was designed for latency-tolerant applications. A proper streaming architecture — processing in smaller frames with a running context buffer — would reduce latency to under 2 seconds but requires architectural changes to how the mel spectrogram integrates over time.
 

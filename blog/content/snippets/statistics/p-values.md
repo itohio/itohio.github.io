@@ -245,7 +245,7 @@ observed_heads = 65
 expected = 0.5
 
 # Binomial test
-p_value = stats.binom_test(observed_heads, n, expected, alternative='two-sided')
+p_value = stats.binomtest(observed_heads, n, expected, alternative='two-sided').pvalue
 print(f"P-value: {p_value:.4f}")
 
 # Interpretation

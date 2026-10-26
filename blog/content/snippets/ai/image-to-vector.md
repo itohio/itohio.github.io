@@ -82,7 +82,8 @@ class ImageEncoder(nn.Module):
         resnet = models.resnet50(pretrained=True)
         # Remove final classification layer
         self.backbone = nn.Sequential(*list(resnet.children())[:-1])
-        # Add projection head
+        # Add projection head (randomly initialised: train it with the
+        # contrastive loss below before using its output as an embedding)
         self.projection = nn.Sequential(
             nn.Linear(2048, embedding_dim),
             nn.ReLU(),
@@ -197,27 +198,23 @@ from langchain.schema import Document
 import base64
 from io import BytesIO
 
-# For multimodal embeddings (image + text)
-from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+# For multimodal embeddings (image + text): OpenCLIP has embed_image();
+# HuggingFaceInferenceAPIEmbeddings only has embed_documents/embed_query
+from langchain_experimental.open_clip import OpenCLIPEmbeddings
 
 # Using CLIP for image embeddings
-embeddings = HuggingFaceInferenceAPIEmbeddings(
-    model_name="sentence-transformers/clip-ViT-B-32"
-)
+embeddings = OpenCLIPEmbeddings(model_name="ViT-B-32", checkpoint="laion2b_s34b_b79k")
 
 # Encode image
 def encode_image(image_path):
-    with open(image_path, "rb") as f:
-        image_bytes = base64.b64encode(f.read()).decode()
-    return embeddings.embed_image(image_bytes)
+    return embeddings.embed_image([image_path])[0]
 
 # Create vector store with image embeddings
 image_embeddings = [encode_image(f"image_{i}.jpg") for i in range(100)]
 documents = [Document(page_content=f"Image {i}") for i in range(100)]
 
 vectorstore = FAISS.from_embeddings(
-    texts=[doc.page_content for doc in documents],
-    embeddings=image_embeddings,
+    list(zip([doc.page_content for doc in documents], image_embeddings)),
     embedding=embeddings
 )
 

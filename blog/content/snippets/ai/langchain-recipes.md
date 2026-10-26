@@ -13,6 +13,7 @@ Practical recipes for building LLM applications with LangChain: prompts, chains,
 ```bash
 # Core LangChain
 pip install langchain langchain-community langchain-core
+pip install langchain-classic  # LangChain 1.0 moved legacy chains, memory, hub and AgentExecutor here
 
 # OpenAI
 pip install langchain-openai
@@ -196,7 +197,7 @@ response = chain.invoke({"input": "big"})
 ### Simple Sequential Chain
 
 ```python
-from langchain.chains import LLMChain, SimpleSequentialChain
+from langchain_classic.chains import LLMChain, SimpleSequentialChain
 
 # First chain: generate topic
 topic_template = "Suggest a topic about {subject}"
@@ -227,7 +228,7 @@ print(result)
 ### Sequential Chain with Multiple Inputs/Outputs
 
 ```python
-from langchain.chains import SequentialChain
+from langchain_classic.chains import SequentialChain
 
 # Chain 1: Translate
 translate_template = "Translate this to {language}: {text}"
@@ -273,8 +274,8 @@ print("Summary:", result["summary"])
 ### Router Chain
 
 ```python
-from langchain.chains.router import MultiPromptChain
-from langchain.chains.router.llm_router import LLMRouterChain, RouterOutputParser
+from langchain_classic.chains.router import MultiPromptChain
+from langchain_classic.chains.router.llm_router import LLMRouterChain, RouterOutputParser
 
 # Define prompts for different topics
 physics_template = """You are a physics expert. Answer this question:
@@ -355,8 +356,8 @@ print(result)
 ### Conversation Buffer Memory
 
 ```python
-from langchain.memory import ConversationBufferMemory
-from langchain.chains import ConversationChain
+from langchain_classic.memory import ConversationBufferMemory
+from langchain_classic.chains import ConversationChain
 
 # Create memory
 memory = ConversationBufferMemory()
@@ -382,7 +383,7 @@ print(memory.load_memory_variables({}))
 ### Conversation Buffer Window Memory
 
 ```python
-from langchain.memory import ConversationBufferWindowMemory
+from langchain_classic.memory import ConversationBufferWindowMemory
 
 # Keep only last k interactions
 memory = ConversationBufferWindowMemory(k=2)
@@ -403,7 +404,7 @@ conversation.invoke("What's my name?")  # Forgets Alice (outside window)
 ### Conversation Summary Memory
 
 ```python
-from langchain.memory import ConversationSummaryMemory
+from langchain_classic.memory import ConversationSummaryMemory
 
 # Summarize conversation history
 memory = ConversationSummaryMemory(llm=llm)
@@ -425,7 +426,7 @@ print(memory.load_memory_variables({}))
 ### Conversation Summary Buffer Memory
 
 ```python
-from langchain.memory import ConversationSummaryBufferMemory
+from langchain_classic.memory import ConversationSummaryBufferMemory
 
 # Hybrid: keep recent messages, summarize old ones
 memory = ConversationSummaryBufferMemory(
@@ -593,7 +594,7 @@ docs = vectorstore.similarity_search(query, k=3)
 ### Basic RAG
 
 ```python
-from langchain.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 
 # Create retriever
 retriever = vectorstore.as_retriever(
@@ -621,7 +622,7 @@ for doc in result["source_documents"]:
 ### Conversational RAG
 
 ```python
-from langchain.chains import ConversationalRetrievalChain
+from langchain_classic.chains import ConversationalRetrievalChain
 
 # Create conversational chain with memory
 qa_chain = ConversationalRetrievalChain.from_llm(
@@ -682,8 +683,8 @@ print(answer)
 ### Basic Agent
 
 ```python
-from langchain.agents import AgentExecutor, create_react_agent
-from langchain import hub
+from langchain_classic.agents import AgentExecutor, create_react_agent
+from langchain_classic import hub
 from langchain_community.tools import DuckDuckGoSearchRun
 
 # Create tools
@@ -754,8 +755,8 @@ tools = [multiply_tool, calculator_tool]
 ### Agent with Memory
 
 ```python
-from langchain.agents import AgentExecutor, create_react_agent
-from langchain.memory import ConversationBufferMemory
+from langchain_classic.agents import AgentExecutor, create_react_agent
+from langchain_classic.memory import ConversationBufferMemory
 
 # Create memory
 memory = ConversationBufferMemory(
@@ -972,7 +973,7 @@ result = chain.invoke(
 
 ```python
 from langchain_openai import ChatOpenAI
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     openai_api_key: str
