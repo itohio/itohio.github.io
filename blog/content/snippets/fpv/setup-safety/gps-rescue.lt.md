@@ -70,7 +70,7 @@ Bandomiesiems skrydžiams žinomose saugiose vietose gali laikinai leisti arm be
 
 - **Initial climb** turi apeiti vietines kliūtis. Atviruose laukuose 15 m užtenka. Prie medžių ar statinių padidink iki 30–50 m.
 - **Return altitude** nustato aukštį, naudojamą parskridimo metu. Turi būti virš aukščiausios kliūties parskridimo kelyje.
-- **Return speed** (numatytoji 300 cm/s = 3 m/s) yra atsargi. Long-range buildams padidink iki 500–700 cm/s.
+- **Return speed** (`gps_rescue_ground_speed`, numatytoji 750 cm/s = 7,5 m/s). Mažiems ar silpnesniems buildams sumažink.
 - **Descent distance** — tai kaip toli nuo namų dronas pradeda galutinį leidimąsi. Padidink vėjuotomis sąlygomis.
 
 ---
@@ -90,6 +90,6 @@ Būk pasiruošęs atgauti valdymą, jei elgesys neteisingas.
 
 ## Pastabos
 
-- GPS Rescue reikalauja magnetometro (kompaso) patikimam kursui. Kai kurie buildai naudoja GPS modulyje įmontuotą kompasą (įjunk Betaflight GPS tab'e).
+- GPS Rescue nereikalauja magnetometro — kursas imamas iš GPS judėjimo krypties; kompasas neprivalomas (`gps_rescue_use_mag`, įjunk Betaflight GPS tab'e).
 - Be kompaso dronas kursui vertinti naudoja akselerometrą + GPS greitį — mažiau tikslu, bet veikia.
 - GPS tikslumas kinta priklausomai nuo palydovų skaičiaus ir atmosferos sąlygų. HDOP < 2,0 yra priimtina rescue'ui; < 1,5 yra ideali.

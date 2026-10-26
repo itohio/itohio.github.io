@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "rates", "actual-rates", "kiss-rates", "quickrates", "rc-rate", "expo", "tuning"]
 ---
 
-Betaflight supports four rate mode formulas. They all do the same job — map stick deflection (0 to ±1) to a commanded rotation rate (°/s) — but they parameterize the curve differently. Switching modes changes what the sliders mean, not what the quad feels like if you set equivalent parameters.
+Betaflight supports five rate mode formulas (Betaflight, Raceflight, KISS, Actual, Quick). They all do the same job — map stick deflection (0 to ±1) to a commanded rotation rate (°/s) — but they parameterize the curve differently. Switching modes changes what the sliders mean, not what the quad feels like if you set equivalent parameters.
 
 ---
 
@@ -16,8 +16,9 @@ Betaflight supports four rate mode formulas. They all do the same job — map st
 |------|-----------|-----------|---------|
 | **Betaflight** (legacy) | `BETAFLIGHT` | RC Rate, Super Rate, Expo | Default; most community presets use this |
 | **Actual** | `ACTUAL` | Center Sensitivity, Max Rate, Expo | Direct control over specific feel metrics |
-| **KISS** | `KISS` | Rate | Single-knob simplicity |
-| **Quickrates** | `QUICK` | Max Rate | Closest to linear; cleanest data flights |
+| **Raceflight** | `RACEFLIGHT` | Rate, Acro+, Expo | Matching a RaceFlight feel |
+| **KISS** | `KISS` | RC Rate, Rate, RC Curve | Matching a KISS FC feel |
+| **Quickrates** | `QUICK` | Center Rate, Max Rate, Expo | Center and max set independently |
 
 **Switch modes via CLI:**
 ```
@@ -84,18 +85,15 @@ With expo > 0, the middle portion of the curve is blended toward a sine-shaped c
 
 ## KISS Rates
 
-**Parameters:** Rate (single slider)
+**Parameters:** RC Rate, Rate, RC Curve
 
 **Formula:**
 ```
-output = sign(rcCommand) × kissRate × 1998 × |rcCommand| / (1 − kissRate × |rcCommand|)
+curve  = rcCurve × x³ + (1 − rcCurve) × x            # x = stick, −1…1
+output = 2000 × (rcRate / 10) × curve / (1 − rate × |x|)   # rcRate 1.00, rate 0.70 → ~667 °/s
 ```
 
-Structurally identical to the BF legacy formula but with a single combined rate parameter (no separate RC Rate / Super Rate split). Simpler to reason about: one number controls the overall aggressiveness.
-
-- **kissRate = 0.26** → ~700 °/s max, moderate center feel
-- **kissRate = 0.32** → ~930 °/s max, more aggressive
-- **kissRate < 0.20** → sub-400 °/s max, beginner/cinematic feel
+Structurally close to the BF legacy formula: RC Rate scales the whole curve, Rate sets the 1/(1 − rate·|x|) end boost, and RC Curve adds cubic expo.
 
 KISS rates are named after the KISS ESC/FC ecosystem where this formula originated. Betaflight's implementation matches the original closely.
 
@@ -103,14 +101,15 @@ KISS rates are named after the KISS ESC/FC ecosystem where this formula originat
 
 ## Quickrates
 
-**Parameters:** Max Rate (single slider)
+**Parameters:** Center Rate (RC Rate × 200 °/s), Max Rate, Expo
 
 **Formula:**
 ```
-output = sign(rcCommand) × maxRate × |rcCommand|
+superFactor = 1 / (1 − |x| × (1 − centerRate / maxRate))
+output      = sign(x) × centerRate × |x| × superFactor   # expo 0
 ```
 
-Perfectly linear. One parameter, one curve. Quickrates is the closest Betaflight gets to a direct "stick position → rotation rate" mapping with no shaping.
+Set the center sensitivity and the full-stick rate directly; a super-factor bends the curve between them. It is linear only when center rate equals max rate.
 
 **When to use:**
 - Cinematography and slow-motion builds where you want predictable, linear control
@@ -157,7 +156,7 @@ Typical settings matched for roughly comparable feel:
         "pointRadius": 2
       },
       {
-        "label": "Quickrates (max=700) — linear",
+        "label": "Quickrates (center = max = 700) — linear in this case",
         "data": [0,70,140,210,280,350,420,490,560,630,700],
         "borderColor": "rgba(249,115,22,1)",
         "backgroundColor": "transparent",
@@ -190,8 +189,8 @@ Typical settings matched for roughly comparable feel:
 **Key observations:**
 - **BF (red)**: starts shallow (low center sensitivity at these settings) but accelerates hard at extremes — the hockey stick is visible above 0.7 stick
 - **Actual (green)**: defined quadratic — clean, predictable slope from center to max
-- **KISS (purple)**: similar shape to BF but parameterized with one number; mid-stick feel slightly more linear than BF
-- **Quickrates (orange dashed)**: truly linear — equal spacing between all points
+- **KISS (purple)**: similar shape to BF (RC Rate × end boost from Rate); mid-stick feel slightly more linear than BF
+- **Quickrates (orange dashed)**: linear only because center = max here; a lower center rate bends it like the others
 
 ---
 
@@ -242,11 +241,11 @@ These are starting points — adjust to taste. The configurator Rate graph updat
 
 **Use Actual** if you want to independently control "how sharp is center" vs "how fast does full stick go". Particularly useful when copying the feel of a previous build to a new one with different motor/prop — you can match center sensitivity and max rate independently.
 
-**Use KISS** if you prefer one slider, tend to fly from muscle memory alone, and don't want to think about the interaction between RC Rate and Super Rate.
+**Use KISS** if you are coming from a KISS flight controller and want to carry over its RC Rate / Rate / RC Curve numbers.
 
-**Use Quickrates** for cinematography or for tuning data collection flights (linear setpoint = cleanest step response data).
+**Use Quickrates** with center = max rate for cinematography or tuning data collection flights (linear setpoint = cleanest step response data).
 
-> All four modes can produce an identical real-world flying feel if parameterized correctly. Mode choice is a matter of how you prefer to think about and adjust the curve — not which one is "better".
+> All five modes can produce an identical real-world flying feel if parameterized correctly. Mode choice is a matter of how you prefer to think about and adjust the curve — not which one is "better".
 
 ---
 

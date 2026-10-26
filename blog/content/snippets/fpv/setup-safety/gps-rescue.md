@@ -70,7 +70,7 @@ For test flights in known safe areas you can temporarily allow arming without fi
 
 - **Initial climb** should clear local obstacles. In open fields, 15 m is fine. Near trees or structures, increase to 30–50 m.
 - **Return altitude** sets the altitude used during the homeward flight. Should be above the highest obstacle on the return path.
-- **Return speed** (default 300 cm/s = 3 m/s) is conservative. For long-range builds, increase to 500–700 cm/s.
+- **Return speed** (`gps_rescue_ground_speed`, default 750 cm/s = 7.5 m/s). Lower it for small or underpowered builds.
 - **Descent distance** is how far from home the quad starts its final descent. Increase for windy conditions.
 
 ---
@@ -90,6 +90,6 @@ Be ready to take back control if behavior is wrong.
 
 ## Notes
 
-- GPS Rescue requires a magnetometer (compass) for reliable heading. Some builds use the GPS module's built-in compass (enable in Betaflight's GPS tab).
+- GPS Rescue does not require a magnetometer — heading comes from the GPS course over ground; a compass is optional (`gps_rescue_use_mag`, enable in Betaflight's GPS tab).
 - Without a compass, the quad uses accelerometer + GPS velocity for heading estimate — less accurate but functional.
 - GPS accuracy varies with satellite count and atmospheric conditions. HDOP < 2.0 is acceptable for rescue; < 1.5 is ideal.

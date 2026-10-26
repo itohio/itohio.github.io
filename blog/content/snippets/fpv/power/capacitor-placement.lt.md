@@ -115,5 +115,5 @@ Buildams su atskiru PDB ar maitinimo paskirstymu:
 ## Pastabos
 
 - Kondensatoriai degraduoja. Jei builde atsiranda anksčiau nebuvęs vaizdo triukšmas, pirmiausia patikrink kondensatorių — išsipūtęs ar tekantis kondensatorius = keisk nedelsiant.
-- Prieš dirbdamas su buildu, visada iškrauk didelį kondensatorių. Trumpai sujungus įkrautą 2200 µF kondensatorių, esant 16 V, kibirkštis suvirins litavimo įrankius.
+- Prieš dirbdamas su buildu, visada iškrauk didelį kondensatorių. Įkrautas 2200 µF kondensatorius ties 16,8 V turi tik ½CV² ≈ 0,31 J — trumpai sujungus bus kibirkštis ir apdegęs antgalis, ne suvirinimas; tikrasis pavojus yra už jo esanti baterija, tad ją atjunk pirmiausia.
 - MLCC (keraminiai) kondensatoriai µF diapazone taip pat tinka ir geriau tvarkosi su aukštais dažniais, bet už tokią pačią talpą kainuoja brangiau.

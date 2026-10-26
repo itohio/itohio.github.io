@@ -94,7 +94,7 @@ graph LR
     class VT1,VT2,VT3 good;
 ```
 
-Atvaizdavimas toks: `vtx_power = N` išrenka `vtxtable[N-1]`. Reikšmė `0` nėra „pirmas įrašas“ — ji už diapazono ribų, o už ribų reiškia pit. Reikšmė `1` *yra* tinkama, bet standartinėje Emax tipo lentelėje `vtxtable[0]` yra **PIT** įrašas. Taigi dvi žemiausios reikšmės, kurias „natūraliai“ pasiekiau, abi reiškė pit, o tikras 400 mW lizdas ties `vtxtable[3]` reikalavo `4`, kurio niekada neįvedžiau.
+Atvaizdavimas toks: `vtx_power = N` išrenka `vtxtable[N-1]`. Reikšmė `0` nėra „pirmas įrašas“ — ji reiškia *nekeisti galios*: diapazonas atitinka, bet VTX lieka su ta galia, kurią jau turėjo. Reikšmė `1` *yra* tinkama, bet standartinėje Emax tipo lentelėje `vtxtable[0]` yra **PIT** įrašas. Taigi dvi žemiausios reikšmės, kurias „natūraliai“ pasiekiau, arba palikdavo pit, arba jį išrinkdavo, o tikras 400 mW lizdas ties `vtxtable[3]` reikalavo `4`, kurio niekada neįvedžiau.
 
 ---
 
@@ -159,7 +159,7 @@ Buvo ir antras, klastingesnis nukentėjęs: `set vtx_power`.
 set vtx_power = 1
 ```
 
-Tai **atsarginė** (fallback) galia, kurią Betaflight taiko, kai AUX reikšmė neatitinka jokio sukonfigūruoto diapazono. Nustačiau `1` galvodamas „žemiausia tikra galia“. Bet `set vtx_power` *taip pat* skaičiuojamas nuo 1 ir rodo į tą pačią lentelę — tad `1` = `vtxtable[0]` = **PIT**. Štai kodėl bet kuri ratuko padėtis, prasprūdusi tarp mano diapazonų, nenukrisdavo į žemą galią; ji nukrisdavo į pit. Du atskiri „nuo 1“ laukai, viena klaidinga prielaida, ir efektas susideda.
+Tai **išsaugota** galia — ją Betaflight taiko paleidžiant ir laiko, kol ją pakeis kuris nors `vtx` diapazonas. Tai nėra atsarginė reikšmė neatitikusiems AUX diapazonams: kai ratukas už visų diapazonų, tiesiog lieka paskutinis pasirinkimas. Nustačiau `1` galvodamas „žemiausia tikra galia“. Bet `set vtx_power` *taip pat* skaičiuojamas nuo 1 ir rodo į tą pačią lentelę — tad `1` = `vtxtable[0]` = **PIT**. Štai kodėl dronas pasileisdavo pit režime, o bet kuri ratuko padėtis, neatitikusi galią keičiančio diapazono, jį ten ir palikdavo. Du atskiri „nuo 1“ laukai, viena klaidinga prielaida, ir efektas susideda.
 
 ---
 
@@ -175,9 +175,9 @@ set vtx_power = 2
 ```
 
 - **`2` / `3` / `4`** dabar teisingai išrenka 25 / 100 / 400 mW. 400 mW pagaliau pasiekiami ratuko viršuje.
-- **`set vtx_power = 2`** paverčia atsarginę reikšmę tikrais 25 mW vietoj pit, tad neatitikusi ratuko padėtis nukrenta į žemą galią, o ne į mirusį vaizdą.
+- **`set vtx_power = 2`** paverčia paleidimo galią tikrais 25 mW vietoj pit, tad vaizdas gyvas dar prieš ratukui atitinkant kurį nors diapazoną.
 - **Diapazonai sutraukti į tris zonas** per visą ratuko eigą be tarpų tarp jų — kiekvieno diapazono `end` yra kito diapazono `start`.
-- **`900` ir `2100`** kraštuose, o ne `1000`–`2000`, sąmoningai: per CRSF kanalų galiniai taškai šiek tiek peršoka — ratuko viršus rodo apie **~2012 µs**, ne švarų 2000, o apačia nukrenta žemiau 1000. Diapazonas, kuris baigiasi tiksliai ties `2000`, palieka patį ratuko viršų neatitiktą, o tai — dėl aukščiau aprašytų atsarginės reikšmės spąstų — mane ties maksimaliu ratuku įmesdavo tiesiai į pit. Praplėtimas iki `900`–`2100` sugeria peršokimą, tad galiniai taškai lieka pririšti prie zonų, kurių noriu.
+- **`900` ir `2100`** kraštuose, o ne `1000`–`2000`, sąmoningai: per CRSF kanalų galiniai taškai šiek tiek peršoka — ratuko viršus rodo apie **~2012 µs**, ne švarų 2000, o apačia nukrenta žemiau 1000. Diapazonas, kuris baigiasi tiksliai ties `2000`, palieka patį ratuko viršų neatitiktą, tad ratukas nustoja perjunginėti ir prilimpa paskutinė galia (paleidus — pit). Praplėtimas iki `900`–`2100` sugeria peršokimą, tad galiniai taškai lieka pririšti prie zonų, kurių noriu.
 
 Perkrauk, ir ratukas daro tai, ką siūlo fizinis pasukimas: apačia = žema, vidurys = vidutinė, viršus = 400 mW. Jokių pit netikėtumų.
 

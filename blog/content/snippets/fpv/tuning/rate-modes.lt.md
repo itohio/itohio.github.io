@@ -6,7 +6,7 @@ category: "fpv"
 tags: ["fpv", "betaflight", "rates", "actual-rates", "kiss-rates", "quickrates", "rc-rate", "expo", "tuning"]
 ---
 
-Betaflight palaiko keturias rate režimų formules. Visos daro tą patį darbą — susieja stick'o nuspaudimą (0 iki ±1) su komanduojamu sukimosi greičiu (°/s) — bet kreivę parametrizuoja skirtingai. Režimo perjungimas keičia tai, ką reiškia slankikliai, o ne tai, kaip dronas jaučiasi, jei nustatysi ekvivalentiškus parametrus.
+Betaflight palaiko penkias rate režimų formules (Betaflight, Raceflight, KISS, Actual, Quick). Visos daro tą patį darbą — susieja stick'o nuspaudimą (0 iki ±1) su komanduojamu sukimosi greičiu (°/s) — bet kreivę parametrizuoja skirtingai. Režimo perjungimas keičia tai, ką reiškia slankikliai, o ne tai, kaip dronas jaučiasi, jei nustatysi ekvivalentiškus parametrus.
 
 ---
 
@@ -16,8 +16,9 @@ Betaflight palaiko keturias rate režimų formules. Visos daro tą patį darbą 
 |------|-----------|-----------|---------|
 | **Betaflight** (legacy) | `BETAFLIGHT` | RC Rate, Super Rate, Expo | Numatytasis; dauguma bendruomenės preset'ų naudoja šitą |
 | **Actual** | `ACTUAL` | Center Sensitivity, Max Rate, Expo | Tiesioginė konkrečių pojūčio metrikų kontrolė |
-| **KISS** | `KISS` | Rate | Vieno „ratuko“ paprastumas |
-| **Quickrates** | `QUICK` | Max Rate | Arčiausiai tiesinio; švariausi duomenų skrydžiai |
+| **Raceflight** | `RACEFLIGHT` | Rate, Acro+, Expo | RaceFlight pojūčio atkartojimui |
+| **KISS** | `KISS` | RC Rate, Rate, RC Curve | KISS FC pojūčio atkartojimui |
+| **Quickrates** | `QUICK` | Center Rate, Max Rate, Expo | Centras ir maksimumas nustatomi atskirai |
 
 **Režimo perjungimas per CLI:**
 ```
@@ -84,18 +85,15 @@ Kai expo > 0, vidurinė kreivės dalis linksta į sinusinę formą, sukurdama š
 
 ## KISS Rates
 
-**Parametrai:** Rate (vienas slankiklis)
+**Parametrai:** RC Rate, Rate, RC Curve
 
 **Formulė:**
 ```
-output = sign(rcCommand) × kissRate × 1998 × |rcCommand| / (1 − kissRate × |rcCommand|)
+curve  = rcCurve × x³ + (1 − rcCurve) × x            # x = stick, −1…1
+output = 2000 × (rcRate / 10) × curve / (1 − rate × |x|)   # rcRate 1.00, rate 0.70 → ~667 °/s
 ```
 
-Struktūriškai identiška BF legacy formulei, tik su vienu jungtiniu rate parametru (be atskiro RC Rate / Super Rate skaidymo). Paprasčiau suprasti: vienas skaičius valdo bendrą agresyvumą.
-
-- **kissRate = 0.26** → ~700 °/s maks., saikingas centro pojūtis
-- **kissRate = 0.32** → ~930 °/s maks., agresyvesnis
-- **kissRate < 0.20** → maks. žemiau 400 °/s, pradedančiojo/cinematic pojūtis
+Struktūriškai artima BF legacy formulei: RC Rate skaliuoja visą kreivę, Rate nustato 1/(1 − rate·|x|) galų sustiprinimą, o RC Curve prideda kubinį expo.
 
 KISS rates pavadinti pagal KISS ESC/FC ekosistemą, kur ši formulė ir atsirado. Betaflight realizacija artimai atitinka originalą.
 
@@ -103,14 +101,15 @@ KISS rates pavadinti pagal KISS ESC/FC ekosistemą, kur ši formulė ir atsirado
 
 ## Quickrates
 
-**Parametrai:** Max Rate (vienas slankiklis)
+**Parametrai:** Center Rate (RC Rate × 200 °/s), Max Rate, Expo
 
 **Formulė:**
 ```
-output = sign(rcCommand) × maxRate × |rcCommand|
+superFactor = 1 / (1 − |x| × (1 − centerRate / maxRate))
+output      = sign(x) × centerRate × |x| × superFactor   # expo 0
 ```
 
-Idealiai tiesinis. Vienas parametras, viena kreivė. Quickrates — tai artimiausia, ką Betaflight gali pasiūlyti tiesioginiam „stick'o pozicija → sukimosi greitis“ susiejimui be jokio kreivės formavimo.
+Centro jautrumą ir pilno stick'o greitį nustatai tiesiogiai; super-faktorius išlenkia kreivę tarp jų. Tiesinė ji tik tada, kai center rate lygus max rate.
 
 **Kada naudoti:**
 - Kinematografijai ir slow-motion buildams, kur nori nuspėjamos, tiesinės kontrolės
@@ -157,7 +156,7 @@ Tipiniai nustatymai, suderinti maždaug panašiam pojūčiui:
         "pointRadius": 2
       },
       {
-        "label": "Quickrates (max=700) — linear",
+        "label": "Quickrates (center = max = 700) — linear in this case",
         "data": [0,70,140,210,280,350,420,490,560,630,700],
         "borderColor": "rgba(249,115,22,1)",
         "backgroundColor": "transparent",
@@ -190,8 +189,8 @@ Tipiniai nustatymai, suderinti maždaug panašiam pojūčiui:
 **Pagrindiniai pastebėjimai:**
 - **BF (raudona)**: prasideda švelniai (žemas centro jautrumas su šiais nustatymais), bet stipriai pagreitėja ties kraštais — hockey-stick forma matoma virš 0.7 stick'o
 - **Actual (žalia)**: apibrėžta kvadratinė kreivė — švarus, nuspėjamas nuolydis nuo centro iki maks.
-- **KISS (violetinė)**: forma panaši į BF, bet parametrizuota vienu skaičiumi; vidurio stick'o pojūtis kiek labiau tiesinis nei BF
-- **Quickrates (oranžinė punktyrinė)**: tikrai tiesinis — vienodi tarpai tarp visų taškų
+- **KISS (violetinė)**: forma panaši į BF (RC Rate × galų sustiprinimas iš Rate); vidurio stick'o pojūtis kiek labiau tiesinis nei BF
+- **Quickrates (oranžinė punktyrinė)**: tiesinė tik todėl, kad čia center = max; mažesnis center rate ją išlenkia kaip ir kitas
 
 ---
 
@@ -242,11 +241,11 @@ Tai atspirties taškai — koreguok pagal skonį. Konfigūratoriaus Rate grafika
 
 **Naudok Actual**, jei nori nepriklausomai valdyti „koks aštrus centras“ ir „kaip greitai eina pilnas stick'as“. Ypač naudinga perkeliant ankstesnio buildo pojūtį į naują su kitokiais varikliais/propeleriais — gali suderinti centro jautrumą ir maks. rate nepriklausomai.
 
-**Naudok KISS**, jei mėgsti vieną slankiklį, skraidai vien iš raumenų atminties ir nenori galvoti apie RC Rate ir Super Rate sąveiką.
+**Naudok KISS**, jei pereini nuo KISS skrydžio kontrolerio ir nori perkelti jo RC Rate / Rate / RC Curve reikšmes.
 
-**Naudok Quickrates** kinematografijai arba derinimo duomenų rinkimo skrydžiams (tiesinis setpoint = švariausi step response duomenys).
+**Naudok Quickrates** su center = max rate kinematografijai arba derinimo duomenų rinkimo skrydžiams (tiesinis setpoint = švariausi step response duomenys).
 
-> Visi keturi režimai gali sukurti identišką realų skraidymo pojūtį, jei tinkamai parametrizuoti. Režimo pasirinkimas — tai klausimas, kaip tau patogiau galvoti apie kreivę ir ją koreguoti, o ne kuris „geresnis“.
+> Visi penki režimai gali sukurti identišką realų skraidymo pojūtį, jei tinkamai parametrizuoti. Režimo pasirinkimas — tai klausimas, kaip tau patogiau galvoti apie kreivę ir ją koreguoti, o ne kuris „geresnis“.
 
 ---
 

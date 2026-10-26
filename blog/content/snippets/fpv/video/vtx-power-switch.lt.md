@@ -30,7 +30,7 @@ vtxtable powerlabels 25 100 200 400 600
 
 ## Mode Condition nustatymas
 
-Configurator → **Modes** tab'e priskirk `VTX PIT MODE` ir/arba `VTX POWER LEVEL n` AUX kanalo ruožams.
+Galia iš jungiklio konfigūruojama Configurator → **VTX** tab'e (išsaugoma kaip `vtx` CLI eilutės); pit mode naudoja `VTX PIT MODE` mode **Modes** tab'e.
 
 3 pozicijų jungikliui, perjunginėjančiam 25 / 200 / 600 mW:
 ```
@@ -54,15 +54,15 @@ vtxtable powerlabels 25 100 200 400 600
 save
 ```
 
-Priskirk ratuką **AUX3** siųstuvo mikseryje, tada priskirk ruožus Configurator → **Modes** tab'e (ne per raw CLI — mode ruožai redaguojami GUI arba su skaitine `aux` komanda). Padalink 1000–2000 µs ratuko eigą į nepersidengiančias juostas:
+Priskirk ratuką **AUX3** siųstuvo mikseryje, tada pridėk juostas Configurator → **VTX** tab'e arba `vtx <slot> <aux> <band> <channel> <power> <start> <end>` eilutėmis (AUX numeruojami nuo 0, tad AUX3 = 2; band/channel/power 0 = nekeisti; ruožai 25 µs žingsniu; power — `vtxtable` lygis nuo 1). Padalink 1000–2000 µs ratuko eigą į nepersidengiančias juostas:
 
 | Ratuko juosta | µs ruožas | Priskyrimas |
 |-----------|----------|--------|
-| LOW | 1000–1333 | `VTX PIT MODE` |
-| MID | 1334–1666 | `VTX POWER LEVEL 2` (200 mW) |
-| HIGH | 1667–2000 | `VTX POWER LEVEL 4` (600 mW) |
+| LOW | 1000–1325 | `VTX PIT MODE` (Modes tab'as) |
+| MID | 1350–1650 | `vtx 0 2 0 0 3 1350 1650` (3 lygis = 200 mW) |
+| HIGH | 1675–2000 | `vtx 1 2 0 0 5 1675 2000` (5 lygis = 600 mW) |
 
-`VTX POWER LEVEL n` mode condition'ai patys tvarko žingsniavimą — nereikia tikslių vidurio taškų, tik nepersidengiančių ruožų.
+Už visų juostų lieka paskutinis pasirinkimas; tikslių vidurio taškų nereikia, tik nepersidengiančių ruožų.
 
 ---
 

@@ -47,10 +47,10 @@ flowchart TD
 
 | Motoras | Pozicija        | Kryptis   |
 |-------|-----------------|-----------|
-| M1    | Galinis dešinys | CCW       |
-| M2    | Priekinis dešinys | CW      |
-| M3    | Galinis kairys  | CW        |
-| M4    | Priekinis kairys | CCW      |
+| M1    | Galinis dešinys | CW        |
+| M2    | Priekinis dešinys | CCW     |
+| M3    | Galinis kairys  | CCW       |
+| M4    | Priekinis kairys | CW       |
 
 **Testuok be propų. Visada.**
 
@@ -74,8 +74,8 @@ status
 # RXLOSS    → receiver not connected / failsafe active
 # NOGYRO    → IMU not detected (hardware fault)
 # CALIB     → IMU still calibrating (wait ~10s after powerup)
-# ANGLE     → Angle mode active but accelerometer not calibrated
-# BADVIBES  → excessive vibration on IMU
+# ANGLE     → dronas pakreiptas daugiau nei small_angle (numatytoji 25°)
+# NO_ACC_CAL → akselerometras nesukalibruotas
 # ARMSWITCH → ARM switch not in disarm position
 ```
 

@@ -35,20 +35,20 @@ If you import a module from the USA and use it in the EU, reflash both TX and RX
 ## Checking Your Domain
 
 In ELRS Configurator (during a flash or update):
-- Look for the `Regulatory Domain` dropdown — it will show `FCC_915_US`, `EU_868`, `ISM_2400` etc.
-- 2.4 GHz ELRS (`ISM_2400`) is generally **not subject to LBT** in most regions and is the same firmware globally — making it simpler to use internationally.
+- Look for the `Regulatory Domain` dropdown — it will show `FCC_915`, `EU_868`, `ISM_2400`, `EU_CE_2400` etc.
+- 2.4 GHz has two builds: `ISM_2400` (no LBT) and `EU_CE_2400` (with LBT, for EU/CE use).
 
-For 900 MHz ELRS, domain matters most. For 2.4 GHz, you can mostly ignore it (same firmware everywhere), but verify with your specific hardware's docs.
+For both 900 MHz and 2.4 GHz the domain matters: TX and RX must run the same domain to link.
 
 ---
 
 ## Bind Phrase
 
-The bind phrase is a user-chosen passphrase compiled into both TX and RX firmware. It replaces traditional button-press binding.
+The bind phrase is a user-chosen passphrase that TX and RX hash into the same UID. It replaces traditional button-press binding.
 
-- Both TX module and RX **must be flashed with the same bind phrase**.
-- The phrase is set at flash time, not at runtime — you cannot change it without reflashing.
-- There is no "default" phrase — every compiled firmware has one embedded.
+- TX module and RX **must use the same bind phrase**.
+- It is usually set when flashing, but can also be changed later without reflashing (e.g. via the WiFi web UI / runtime options).
+- It is optional: firmware built without a phrase uses traditional bind (bind mode on RX + Bind in the TX Lua).
 
 **Setup:**
 1. Open [ELRS Configurator](https://github.com/ExpressLRS/ExpressLRS-Configurator)

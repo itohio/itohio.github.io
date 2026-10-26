@@ -105,7 +105,7 @@ Over the air, **packet rate** is how many control packets per second the TX send
 
 ### 900 MHz
 
-Tops out at **200 Hz**, but the low-rate modes reach much deeper: 25 Hz hits **−123 dBm** and 50 Hz **−120 dBm**. Lower frequency also **diffracts around obstacles** better than 2.4 GHz, so 900 MHz is the long-range / behind-terrain band.
+Tops out at **200 Hz** on SX127x hardware (**250 Hz** on LR1121, and K1000 full-res in 4.x), but the low-rate modes reach much deeper: 25 Hz hits **−123 dBm** and 50 Hz **−120 dBm**. Lower frequency also **diffracts around obstacles** better than 2.4 GHz, so 900 MHz is the long-range / behind-terrain band.
 
 ---
 
@@ -117,7 +117,7 @@ Lower packet rate → each packet is on air longer, using a higher LoRa **spread
 - **Sensitivity → penetration.** Trees, walls and your own body attenuate the signal by some dB. The extra sensitivity margin is exactly what lets a low rate "punch through" an obstacle that makes a high rate fail-safe.
 - **Rate → responsiveness.** Responsiveness is just the gap between updates: 1000 Hz = a fresh command every 1 ms; 50 Hz = every 20 ms. Racers feel the difference between 2 ms and 6.7 ms as a tighter stick-to-quad connection; below ~150 Hz the latency becomes perceptible.
 
-You cannot have all three. Fast packets are responsive but fragile; slow packets are tough but laggy. The right answer is **dynamic**: enable *Dynamic Power* and let the link drop to a lower rate at the edge of range (set once in the ELRS LUA script).
+You cannot have all three. Fast packets are responsive but fragile; slow packets are tough but laggy. ELRS never changes the packet rate on its own — pick it for the flight (set in the ELRS LUA script). *Dynamic Power* only lowers TX power when the link is strong.
 
 ```mermaid
 flowchart TD
@@ -133,7 +133,7 @@ flowchart TD
 Downlink telemetry (RX → handset) borrows time slots from the uplink. The **telemetry ratio** `1:n` means one telemetry packet per `n` RC packets:
 
 - A **tighter** ratio (`1:2`) gives fast telemetry but steals slots from control.
-- A **looser** ratio (`1:64`, "Std") keeps almost all bandwidth for RC.
+- A **looser** ratio keeps almost all bandwidth for RC. "Std" depends on the rate (2.4 GHz: 50 Hz → 1:16, 150 Hz → 1:32, 250 Hz → 1:64, 500 Hz/FLRC → 1:128).
 - At low packet rates the total pipe is tiny — even `1:2` at 50 Hz is only ~25 telemetry updates/s, too little for a smooth MAVLink HUD. Raising telemetry bandwidth means raising the packet rate, not just the ratio.
 
 For most flying `Std` or `1:8`–`1:16` is right; for GPS/HUD work run 250 Hz+ with `1:2`.

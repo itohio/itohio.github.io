@@ -74,10 +74,10 @@ Sag is not state of charge. A voltage threshold with no time qualifier cannot
 tell the difference. The 3.5 V and 2.9 V rungs are the exposed ones, because
 those are the values you transit under load long before you reach them at rest.
 
-EdgeTX gives you the tools: **Duration** requires the condition to hold for N
-seconds before the switch goes true, and **Delay** postpones the transition.
-Putting a duration of a second or two on the low rungs would eliminate
-sag-triggered false alarms almost entirely.
+EdgeTX gives you the tools: **Delay** requires the condition to hold for N
+seconds before the switch goes true, and **Duration** sets how long the switch
+stays on once triggered. Putting a delay of a second or two on the low rungs
+would eliminate sag-triggered false alarms almost entirely.
 
 I am not going to publish numbers for this, because I have not derived them from
 my own logs yet, and picking them by feel would be exactly the kind of guess
@@ -114,7 +114,7 @@ those frames are not frequent.
 
 The fix I have not yet applied is trivial: **AND every low-voltage switch with a
 validity condition**, something like `RxBt > 0.5`, so that "no telemetry" reads
-as "no opinion" instead of "catastrophe". A `Duration` long enough to outlast the
+as "no opinion" instead of "catastrophe". A `Delay` long enough to outlast the
 startup gap would also work.
 
 The fix I have actually _started_ is more interesting, and it explains a switch

@@ -161,13 +161,13 @@ flowchart TD
 
 ---
 
-## Betaflight numatytieji PID diapazonai (5" freestyle, BF 4.4)
+## Betaflight numatytieji PID diapazonai (5" freestyle, BF 4.5)
 
 | Terminas | Numatytoji | Tipiškas diapazonas | Derinimo kryptis |
 |------|---------|----------------|-------------------|
-| Roll P | 47 | 35–65 | Aukštyn → aštriau, žemyn → minkščiau |
-| Roll D | 35 | 25–55 | Aukštyn → slopina propwash, žemyn → mažiau variklių kaitimo |
-| Roll I | 85 | 60–110 | Paprastai palik ramybėje, nebent dreifuoja vėjyje |
+| Roll P | 45 | 35–65 | Aukštyn → aštriau, žemyn → minkščiau |
+| Roll D | 40 (d_min 30) | 25–55 | Aukštyn → slopina propwash, žemyn → mažiau variklių kaitimo |
+| Roll I | 80 | 60–110 | Paprastai palik ramybėje, nebent dreifuoja vėjyje |
 | Roll FF | 120 | 80–160 | Aukštyn → momentinis sekimas, žemyn → mažiau overshoot |
 | Pitch ≈ Roll | — | ±10% nuo roll | Pitch paprastai 5–10% didesnis P/D nei roll |
 | Yaw P | 45 | 30–60 | Mažesnis nei roll; yaw yra lėtesnė ašis |

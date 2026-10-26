@@ -56,17 +56,17 @@ BLHeli_32 / AM32 configurator'yje:
 
 | ESC Firmware | Nustatymo pavadinimas | Vertės                |
 |--------------|--------------------|-----------------------|
-| BLHeli_32    | Motor Timing       | Low / MedLow / Med / MedHigh / High |
+| BLHeli_32    | Motor Timing       | 1–31° arba Auto       |
 | AM32         | Motor Timing (deg) | Tiesioginė laipsnių įvestis |
 
-BLHeli_32 „Motor Timing“ apytikslis mapping:
-- Low ≈ 15°
-- MedLow ≈ 18°
-- Medium ≈ 22°
-- MedHigh ≈ 25°
-- High ≈ 30°
+Pavadinimai Low / MedLow / Medium / MedHigh / High priklauso **BLHeli_S**, kur jie reiškia:
+- Low = 0°
+- MedLow = 7,5°
+- Medium = 15°
+- MedHigh = 22,5°
+- High = 30°
 
-Efektyvumui: rink **Low**. Freestyle: **Medium**.
+Efektyvumui: žemas timing (BLHeli_S **Low**/**MedLow**, BLHeli_32 ~15° arba Auto). Freestyle: **Medium** / ~22°.
 
 ---
 

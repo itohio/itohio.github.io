@@ -35,20 +35,20 @@ Jei atsiveži modulį iš JAV ir naudoji jį ES, perflashink ir TX, ir RX į LBT
 ## Kaip patikrinti savo domeną
 
 ELRS Configurator (flashinimo ar atnaujinimo metu):
-- Ieškok `Regulatory Domain` dropdown'o — jis rodys `FCC_915_US`, `EU_868`, `ISM_2400` ir pan.
-- 2,4 GHz ELRS (`ISM_2400`) daugumoje regionų paprastai **netaikomas LBT** ir visame pasaulyje yra tas pats firmware — todėl jį paprasčiau naudoti tarptautiškai.
+- Ieškok `Regulatory Domain` dropdown'o — jis rodys `FCC_915`, `EU_868`, `ISM_2400`, `EU_CE_2400` ir pan.
+- 2,4 GHz turi du build'us: `ISM_2400` (be LBT) ir `EU_CE_2400` (su LBT, ES/CE naudojimui).
 
-900 MHz ELRS atveju domenas svarbiausias. 2,4 GHz jį daugiausia gali ignoruoti (visur tas pats firmware), bet pasitikrink su savo konkrečios aparatūros dokumentacija.
+Ir 900 MHz, ir 2,4 GHz atveju domenas svarbus: TX ir RX turi veikti tame pačiame domene, kad susijungtų.
 
 ---
 
 ## Bind phrase
 
-Bind phrase — tai vartotojo pasirinkta slaptažodinė frazė, sukompiliuojama į abu — TX ir RX firmware. Ji pakeičia tradicinį baindinimą mygtuko paspaudimu.
+Bind phrase — tai vartotojo pasirinkta frazė, kurią TX ir RX hashina į tą patį UID. Ji pakeičia tradicinį baindinimą mygtuko paspaudimu.
 
-- Ir TX modulis, ir RX **turi būti flashinti su ta pačia bind phrase**.
-- Frazė nustatoma flashinimo metu, o ne veikimo metu — negali jos pakeisti neperflashinęs.
-- Nėra jokios „numatytosios“ frazės — kiekvienas sukompiliuotas firmware turi vieną įkomponuotą.
+- TX modulis ir RX **turi naudoti tą pačią bind phrase**.
+- Dažniausiai ji nustatoma flashinant, bet ją galima pakeisti ir vėliau neperflashinus (pvz., per WiFi web UI / runtime options).
+- Ji neprivaloma: be frazės sukompiliuotas firmware naudoja tradicinį bind (bind režimas RX + Bind TX Lua skripte).
 
 **Nustatymas:**
 1. Atidaryk [ELRS Configurator](https://github.com/ExpressLRS/ExpressLRS-Configurator)

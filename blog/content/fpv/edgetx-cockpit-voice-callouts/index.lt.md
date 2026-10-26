@@ -143,18 +143,19 @@ apie ją kai ką atskleidė:
 kai aukštis *viršija* 120 m. Ji suveikia, kai aukštis *pasikeitė* 120 m nuo savo
 atskaitos taško.
 
-Galėčiau apsimesti, kad taip ir suplanavau. Pasakysiu kitką: pasirodo, tai
-labiau pagrįstas pasirinkimas, ir priežastis verta suprasti.
+Galėčiau apsimesti, kad taip ir suplanavau. Pasakysiu kitką: mano priežastis jį
+rinktis pasirodė klaidinga, ir tai verta suprasti.
 
-**`GAlt` CRSF telemetrijoje yra GPS aukštis, o ne aukštis virš pakilimo taško.**
-Jei būčiau panaudojęs akivaizdų `a > x` su `GAlt` ir 120 m slenksčiu, jis rėktų
-be perstojo, nes skraidau Lietuvoje, kur pati žemė yra maždaug
-70–150 m virš jūros lygio. Signalas būtų teisingas dar prieš aparatui pakylant
-iš rankos.
+**`GAlt` CRSF telemetrijoje nėra paprastas GPS aukštis virš jūros lygio.**
+Betaflight siunčia savo įvertintą aukštį: virš jūros lygio tik kol disarm, o
+po arm — nuo arm taško. Tad akivaizdus `a > x` su `GAlt` ir 120 m slenksčiu
+iš tikrųjų būtų veikęs kaip riba nuo pakilimo taško, nors skraidau Lietuvoje,
+kur pati žemė yra maždaug 70–150 m virš jūros lygio.
 
-Skirtumo funkcija tai visiškai apeina: ji matuoja *pokytį*, tad atskaita yra
-ten, kur pradėjau, ir 120 m pakilimo yra 120 m pakilimo nepriklausomai nuo
-lauko aukščio. Tai gerokai artimiau AGL nei absoliutus GPS aukštis.
+Skirtumo funkcija matuoja *pokytį*, tad 120 m pakilimo yra 120 m pakilimo
+nepriklausomai nuo lauko aukščio. Bet ji turi spąstus, kurių paprastas
+palyginimas neturi: arm metu reikšmė šokteli nuo aukščio virš jūros lygio iki
+~0, ir vien šis šuolis gali sužadinti |Δ| signalą.
 
 Tai nėra tobula, ir noriu netobulumus pavadinti, o ne užglaistyti:
 
@@ -166,9 +167,9 @@ Tai nėra tobula, ir noriu netobulumus pavadinti, o ne užglaistyti:
   reikalavimų vis tiek yra mano darbas.
 
 **Būtent šią dalį labiausiai norėčiau pagerinti, ir geresnio varianto dar
-neišmatavau.** Tikras atsakymas tikriausiai būtų išvesti realų aukštį nuo
-pakilimo taško, kurį barometras jau duoda OSD, bet kuris nepasiekia `GAlt`
-telemetrijos sensoriaus. Jei tai išsprendei EdgeTX'e gražiai, noriu išgirsti.
+neišmatavau.** Kadangi po arm `GAlt` jau skaičiuojamas nuo pakilimo taško,
+tikras atsakymas tikriausiai būtų paprastas `GAlt > 120`, susietas su arm
+jungikliu. Jei tai išsprendei EdgeTX'e gražiai, noriu išgirsti.
 
 Tokia sistema, su kuria skraidau. Šeši ištarti pranešimai, trys palydovų būsenos ir
 vienas aukščio signalas, kuris, kaip pasirodė, matuoja ne tai, ką maniau.

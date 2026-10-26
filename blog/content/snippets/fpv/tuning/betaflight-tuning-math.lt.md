@@ -87,7 +87,7 @@ relax_factor  = max(0, 1 − setpoint_hf / relax_threshold)
 I            += Ki × error × dt × relax_factor
 ```
 
-Kai stick'as juda greitai (`setpoint_hf` didelis), `relax_factor` krenta link 0 ir I nustoja kauptis. `iterm_relax_cutoff` parametras valdo slenksčio dažnį — didesnės reikšmės agresyviau slopina I greitų manevrų metu.
+Kai stick'as juda greitai (`setpoint_hf` didelis), `relax_factor` krenta link 0 ir I nustoja kauptis. `setpoint_hf = |setpoint − PT1(setpoint, iterm_relax_cutoff)|`, todėl *didesnis* cutoff leidžia filtrui artimiau sekti stick'ą ir I slopinamas *mažiau*; atšokimą (bounce-back) gydyk mažindamas cutoff.
 
 | Build dydis | iterm_relax_cutoff |
 |------------|-------------------|
@@ -216,10 +216,10 @@ Esant dideliam gazui, varikliai gamina gerokai daugiau sukimo momento vienam kom
 **Formulė:**
 ```
 tpa_factor = 1 − tpa_rate × max(0, (throttle − breakpoint) / (1 − breakpoint))
-P_effective = P × tpa_factor
+D_effective = D × tpa_factor   # tpa_mode = D (default); PD also scales P
 ```
 
-`set tpa_rate = 50` → 50% sumažinimas esant pilnam gazui. `set tpa_breakpoint = 1650` → slopinimas prasideda ties 65% gazo. (Tai iliustracinės reikšmės; realios numatytosios priklauso nuo Betaflight versijos.)
+Betaflight 4.5 numatytosios: `tpa_mode = D` (slopina tik D; `PD` slopina abu), `tpa_rate = 65` (65% sumažinimas esant pilnam gazui), `tpa_breakpoint = 1350`. 50% kreivė žemiau — iliustracinė.
 
 ```chart
 {
@@ -247,7 +247,7 @@ P_effective = P × tpa_factor
         "pointRadius": 0
       },
       {
-        "label": "TPA 50% default (tpa_rate=50)",
+        "label": "TPA 50% (tpa_rate=50)",
         "data": [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.929,0.857,0.786,0.714,0.643,0.571,0.50],
         "borderColor": "rgba(34,197,94,1)",
         "backgroundColor": "transparent",
@@ -297,8 +297,9 @@ Taip gauni geriausia iš abiejų: sumažintą D triukšmą ir kaitimą kruizuoja
 
 **CLI komandos:**
 ```
-set d_min_roll = 20    # base D (applied at rest)
+set d_min_roll = 20    # base D (applied at rest) — BF ≤ 4.5
 set d_roll = 30        # D_max — the peak D reached at high stick velocity
+# BF 2025.12: set d_roll = 20 (base D), set d_max_roll = 30
 ```
 
 Nustatyk `d_min_roll` lygų `d_roll` (abu = tavo D reikšmei), kad išjungtum dinaminį D diapazoną ir skristum su fiksuotu D — būtina švariems derinimo duomenų skrydžiams.

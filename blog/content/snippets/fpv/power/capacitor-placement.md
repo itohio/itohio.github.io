@@ -115,5 +115,5 @@ For builds with a separate PDB or power distribution:
 ## Notes
 
 - Capacitors degrade. If a build develops video noise it didn't have before, check the cap first — bulging or leaking cap = replace immediately.
-- Always discharge a large cap before working on the build. Shorting a charged 2200 µF cap at 16V will weld solder tools.
+- Always discharge a large cap before working on the build. A charged 2200 µF cap at 16.8 V holds only ½CV² ≈ 0.31 J — shorting it gives a spark and a pitted tip, not welding; the real hazard is the battery behind it, so unplug it first.
 - MLCC (ceramic) capacitors in the µF range can also be used and handle high frequencies better, but cost more for equivalent capacitance.

@@ -161,13 +161,13 @@ flowchart TD
 
 ---
 
-## Betaflight Default PID Ranges (5" freestyle, BF 4.4)
+## Betaflight Default PID Ranges (5" freestyle, BF 4.5)
 
 | Term | Default | Typical range  | Direction to tune |
 |------|---------|----------------|-------------------|
-| Roll P | 47 | 35–65 | Up → snappier, Down → softer |
-| Roll D | 35 | 25–55 | Up → damps propwash, Down → less motor heat |
-| Roll I | 85 | 60–110 | Usually leave alone unless wind drift |
+| Roll P | 45 | 35–65 | Up → snappier, Down → softer |
+| Roll D | 40 (d_min 30) | 25–55 | Up → damps propwash, Down → less motor heat |
+| Roll I | 80 | 60–110 | Usually leave alone unless wind drift |
 | Roll FF | 120 | 80–160 | Up → instant tracking, Down → less overshoot |
 | Pitch ≈ Roll | — | ±10% of roll | Pitch usually 5–10% higher P/D than roll |
 | Yaw P | 45 | 30–60 | Lower than roll; yaw is slower axis |

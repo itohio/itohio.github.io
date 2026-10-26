@@ -30,11 +30,12 @@ ROLL maps to: ← LEFT  |  RIGHT →
 
 | Action                        | Throttle | Yaw   | Pitch | Roll  |
 |-------------------------------|----------|-------|-------|-------|
-| Enter CLI / Config mode       | LOW      | LOW   | HIGH  | HIGH  |
-| Save config (in CLI mode)     | LOW      | LOW   | HIGH  | LOW   |
-| Enter Accelerometer Calibration | LOW    | LOW   | HIGH  | CENTER|
-| Enable/Disable Blackbox       | LOW      | LOW   | LOW   | HIGH  |
-| Enter OSD menu                | CENTER   | LOW   | CENTER| CENTER (hold) |
+| In-flight ACC trim calibration | LOW     | LOW   | HIGH  | HIGH  |
+| Save config                   | LOW      | LOW   | LOW   | HIGH  |
+| Gyro calibration              | LOW      | LOW   | LOW   | CENTER|
+| Accelerometer calibration     | HIGH     | LOW   | LOW   | CENTER|
+| Select PID profile 2          | LOW      | LOW   | HIGH  | CENTER|
+| Enter OSD menu                | CENTER   | LOW   | HIGH  | CENTER |
 
 > Exact stick positions vary by Betaflight version and whether you use mode 1/2. The table above is for **Mode 2** (throttle left stick).
 
@@ -42,11 +43,7 @@ ROLL maps to: ← LEFT  |  RIGHT →
 
 ## Entering CLI via Sticks (Field Config)
 
-Hold: **Throttle LOW · Yaw LOW · Pitch HIGH · Roll HIGH** for ~5 seconds.
-
-The FC enters a configuration state. From here you can:
-- Access the OSD menu (if configured)
-- Trigger calibration
+There is no stick command for the CLI or blackbox. **Throttle LOW · Yaw LEFT · Pitch HIGH · Roll RIGHT** is in-flight accelerometer calibration, not config mode.
 
 To enter the actual CLI you still need USB + Betaflight Configurator or a Bluetooth/WiFi adapter. Stick-based "config mode" is primarily for OSD menu access.
 
@@ -56,7 +53,7 @@ To enter the actual CLI you still need USB + Betaflight Configurator or a Blueto
 
 With **CONFIGURATOR MSP** mode enabled on a switch, or via stick command:
 
-Hold **Throttle CENTER · Yaw LEFT · Pitch CENTER** for ~3 seconds.
+Hold **Throttle CENTER · Yaw LEFT · Pitch HIGH** for ~3 seconds.
 
 Navigate:
 - **Pitch UP/DOWN** — move cursor

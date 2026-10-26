@@ -44,7 +44,7 @@ Or physically swap any two of the three phase wires on the offending motor.
 
 **Cause:** CW prop on a CCW motor, or props assigned to the wrong arms.
 
-**Fix:** Check the Betaflight motor layout diagram. Each motor position is labeled 1–4 with expected rotation direction. CW props (bent leading edge clockwise when viewed from above) go on CCW-spinning motors, and vice versa.
+**Fix:** Check the Betaflight motor layout diagram. Each motor position is labeled 1–4 with expected rotation direction. A CW prop goes on a CW-spinning motor and a CCW prop on a CCW motor — prop handedness is defined by the direction it must spin.
 
 Always spin motors with props OFF first and verify direction visually before installing props.
 
@@ -86,7 +86,7 @@ Always spin motors with props OFF first and verify direction visually before ins
 ```
 # For digital systems — set MSP OSD
 set osd_displayport_device = MSP
-set displayport_msp_serial = 1   # match the UART connected to air unit
+# and set the air-unit UART to MSP + DisplayPort in the Ports tab
 save
 ```
 
