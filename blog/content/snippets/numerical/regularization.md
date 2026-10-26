@@ -26,10 +26,10 @@ model.fit(X, y)
 ## L1 Regularization (Lasso)
 
 $$
-\min_w \|Xw - y\|^2 + \lambda\|w\|_1
+\min_w \frac{1}{2n}\|Xw - y\|^2 + \alpha\|w\|_1
 $$
 
-Promotes sparsity (many weights become zero).
+Promotes sparsity (many weights become zero). This is scikit-learn's objective ($n$ = samples), so for $\|Xw-y\|^2 + \lambda\|w\|_1$ use $\alpha = \lambda/(2n)$.
 
 ```python
 from sklearn.linear_model import Lasso
@@ -43,13 +43,13 @@ model.fit(X, y)
 Combines L1 and L2:
 
 $$
-\min_w \|Xw - y\|^2 + \lambda_1\|w\|_1 + \lambda_2\|w\|^2
+\min_w \frac{1}{2n}\|Xw - y\|^2 + \alpha\rho\|w\|_1 + \frac{\alpha(1-\rho)}{2}\|w\|^2
 $$
 
 ```python
 from sklearn.linear_model import ElasticNet
 
-model = ElasticNet(alpha=1.0, l1_ratio=0.5)
+model = ElasticNet(alpha=1.0, l1_ratio=0.5)  # l1_ratio = rho
 model.fit(X, y)
 ```
 

@@ -537,7 +537,7 @@ $$
 import numpy as np
 
 class KalmanFilter:
-    def __init__(self, F, H, Q, R, x0, P0):
+    def __init__(self, F, H, Q, R, x0, P0, B=None):
         """
         F: State transition matrix
         H: Observation matrix
@@ -545,6 +545,7 @@ class KalmanFilter:
         R: Measurement noise covariance
         x0: Initial state estimate
         P0: Initial covariance estimate
+        B: Control input matrix (optional)
         """
         self.F = F
         self.H = H
@@ -552,6 +553,7 @@ class KalmanFilter:
         self.R = R
         self.x = x0
         self.P = P0
+        self.B = B
     
     def predict(self, u=None):
         """Prediction step"""

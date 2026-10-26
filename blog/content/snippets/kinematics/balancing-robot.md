@@ -63,7 +63,7 @@ A **two-wheel balancing robot** is an underactuated system that must continuousl
 For $\theta \approx 0$, the system can be linearized:
 
 $$
-\ddot{\theta} = \frac{(m_b + m_w)gL\theta - m_bL\ddot{x}}{I_b + m_bL^2}
+\ddot{\theta} = \frac{m_b gL\theta - m_bL\ddot{x}}{I_b + m_bL^2}
 $$
 
 $$
@@ -151,7 +151,7 @@ class BalancingRobot:
         
         # Acceleration of body tilt
         theta_ddot = (
-            (m_total * self.g * self.L * np.sin(theta) 
+            (self.m_b * self.g * self.L * np.sin(theta) 
              - self.m_b * self.L * np.cos(theta) * 
              (tau_avg / self.r - self.m_b * self.L * theta_dot**2 * np.sin(theta)) / denom2)
             / (denom1 - self.m_b**2 * self.L**2 * np.cos(theta)**2 / denom2)

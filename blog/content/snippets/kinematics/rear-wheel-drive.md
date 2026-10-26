@@ -102,8 +102,8 @@ sketch.draw = function() {
   let R = 0;
   if (Math.abs(delta) > 0.01) {
     // For RWD, turning radius is measured from rear axle
-    R = wheelbase / Math.sin(delta);
-    omega = v * Math.sin(delta) / wheelbase;
+    R = wheelbase / Math.tan(delta);
+    omega = v * Math.tan(delta) / wheelbase;
   }
   
   // Update robot pose (velocity at rear axle)
@@ -285,11 +285,11 @@ sketch.draw = function() {
 For RWD, the velocity reference is at the **rear axle**:
 
 $$
-\omega = \frac{v \sin\delta}{L}
+\omega = \frac{v \tan\delta}{L}
 $$
 
 $$
-R = \frac{L}{\sin\delta}
+R = \frac{L}{\tan\delta}
 $$
 
 Where:
@@ -308,7 +308,7 @@ $$
 $$
 
 $$
-\dot{\theta} = \omega = \frac{v \sin\delta}{L}
+\dot{\theta} = \omega = \frac{v \tan\delta}{L}
 $$
 
 **Note:** Position $(x, y)$ is at the rear axle, not the center!
@@ -349,7 +349,7 @@ class RearWheelDrive:
         if abs(delta) < 1e-6:
             omega = 0
         else:
-            omega = v * np.sin(delta) / self.L
+            omega = v * np.tan(delta) / self.L
         
         # Update pose (rear axle position)
         x += v * np.cos(theta) * dt
@@ -373,7 +373,7 @@ class RearWheelDrive:
         """Calculate turning radius for given steering angle"""
         if abs(delta) < 1e-6:
             return float('inf')
-        return self.L / np.sin(delta)
+        return self.L / np.tan(delta)
 
 # Example
 robot = RearWheelDrive(wheelbase=0.5, wheel_radius=0.1)
@@ -395,7 +395,7 @@ print(f"Front axle position: {robot.get_front_position()}")
 Given desired turning radius $R$ and velocity $v$:
 
 $$
-\delta = \arcsin\left(\frac{L}{R}\right)
+\delta = \arctan\left(\frac{L}{R}\right)
 $$
 
 ### Implementation
@@ -419,7 +419,7 @@ def inverse_kinematics(self, v_desired, R_desired):
         if abs(R_desired) < self.L:
             R_desired = self.L * np.sign(R_desired)
         
-        delta = np.arcsin(self.L / R_desired)
+        delta = np.arctan(self.L / R_desired)
     
     return v_desired, delta
 
@@ -439,8 +439,8 @@ print(f"For R=2m: v={v:.2f} m/s, δ={np.degrees(delta):.1f}°")
 | Aspect | RWD | FWD |
 |--------|-----|-----|
 | **Reference Point** | Rear axle | Center/Front axle |
-| **Kinematics** | $\omega = \frac{v\sin\delta}{L}$ | $\omega = \frac{v\tan\delta}{L}$ |
-| **Turning Radius** | $R = \frac{L}{\sin\delta}$ | $R = \frac{L}{\tan\delta}$ |
+| **Kinematics** | $\omega = \frac{v\tan\delta}{L}$ (v at rear axle) | $\omega = \frac{v\tan\delta}{L}$ (same; drive axle doesn't change kinematics) |
+| **Turning Radius** | $R = \frac{L}{\tan\delta}$ | $R = \frac{L}{\tan\delta}$ |
 | **Stability** | Can oversteer | More stable |
 | **Reversing** | More challenging | Easier |
 | **Towing** | Better | Worse |
