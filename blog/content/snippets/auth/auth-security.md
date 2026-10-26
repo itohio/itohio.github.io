@@ -15,8 +15,8 @@ Security best practices for authentication: password security, token storage, CS
 ```text
 ✅ DO:
 - Use bcrypt, scrypt, or Argon2 for hashing
-- Minimum 12 characters
-- Require complexity (upper, lower, number, symbol)
+- Minimum 15 characters for single-factor passwords (NIST SP 800-63B-4), allow at least 64
+- No composition rules (upper/lower/number/symbol); check against breached-password lists instead
 - Implement rate limiting on login
 - Use HTTPS only
 - Implement account lockout after failed attempts
@@ -98,9 +98,9 @@ def validate_password(password):
 |----------|----------------|-----------------|----------|
 | **LocalStorage** | ✅ Yes | ❌ No | ❌ Avoid for auth tokens |
 | **SessionStorage** | ✅ Yes | ❌ No | Temporary data only |
-| **Cookie (HttpOnly)** | ❌ No | ✅ Yes | Session tokens (with CSRF protection) |
-| **Cookie (HttpOnly + Secure + SameSite)** | ❌ No | ❌ No | ✅ Best for web apps |
-| **Memory only** | ❌ No | ❌ No | ✅ SPAs (lost on refresh) |
+| **Cookie (HttpOnly)** | ⚠️ Not readable, but injected script can send requests | ✅ Yes | Session tokens (with CSRF protection) |
+| **Cookie (HttpOnly + Secure + SameSite)** | ⚠️ Not readable, but injected script can send requests | ⚠️ Reduced (not same-site subdomains or Lax top-level GETs) | ✅ Best for web apps (still add CSRF tokens) |
+| **Memory only** | ✅ Yes (injected script can read/use it) | ❌ No | SPAs (lost on refresh) |
 
 ### Recommended Cookie Configuration
 
@@ -111,7 +111,7 @@ Set-Cookie: token=abc123; HttpOnly; Secure; SameSite=Strict; Max-Age=3600; Path=
 **Flags Explained:**
 - `HttpOnly`: Prevents JavaScript access (XSS protection)
 - `Secure`: Only sent over HTTPS
-- `SameSite=Strict`: Prevents CSRF attacks
+- `SameSite=Strict`: Reduces CSRF (does not cover same-site subdomains; keep CSRF tokens)
 - `Max-Age`: Token lifetime in seconds
 - `Path=/`: Cookie scope
 
@@ -503,7 +503,7 @@ async function refreshAccessToken() {
 
 ### 1. JWT Vulnerabilities
 
-**Algorithm Confusion Attack:**
+**`alg: none` Attack:**
 
 ```json
 // Attacker changes header
@@ -512,6 +512,8 @@ async function refreshAccessToken() {
   "typ": "JWT"
 }
 ```
+
+**Algorithm Confusion Attack:** attacker switches `RS256` to `HS256` and signs with the server's RSA public key as the HMAC secret; a verifier that takes the key type from the header accepts it.
 
 **Mitigation:**
 

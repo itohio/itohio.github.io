@@ -391,30 +391,28 @@ for name, matches in patterns.items():
 ### Baud Rate Detection
 
 ```python
-def detect_baud_rate(data, common_rates=None):
+def detect_baud_rate(edge_times_s, common_rates=None):
     """
-    Attempt to detect baud rate by looking for valid ASCII
+    Estimate baud rate from logic-analyzer edge timestamps (seconds).
+    Decoded bytes can't reveal the baud rate; the shortest pulse
+    between edges approximates one bit time.
     
-    Note: This is heuristic and may not always work
+    Note: needs enough traffic to contain a single-bit pulse
     """
     if common_rates is None:
         common_rates = [9600, 19200, 38400, 57600, 115200]
     
-    scores = {}
-    for rate in common_rates:
-        # Count valid ASCII characters
-        valid_chars = sum(1 for b in data if 32 <= b < 127 or b in [9, 10, 13])
-        score = valid_chars / len(data) if data else 0
-        scores[rate] = score
+    pulses = [b - a for a, b in zip(edge_times_s, edge_times_s[1:])]
+    measured = 1 / min(pulses)
     
-    # Return rate with highest score
-    best_rate = max(scores, key=scores.get)
-    return best_rate, scores[best_rate]
+    # Snap to the nearest standard rate
+    best_rate = min(common_rates, key=lambda r: abs(r - measured))
+    return best_rate, measured
 
-# Example
-data = b'Hello World\r\n'
-rate, confidence = detect_baud_rate(data)
-print(f"Detected baud rate: {rate} (confidence: {confidence:.2%})")
+# Example: edges 8.68 us apart (one bit at 115200)
+edges = [0.0, 8.68e-6, 26.04e-6, 34.72e-6]
+rate, measured = detect_baud_rate(edges)
+print(f"Detected baud rate: {rate} (measured: {measured:.0f})")
 ```
 
 ---

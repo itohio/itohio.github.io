@@ -265,7 +265,7 @@ graph TB
 | **Ethereum** | PoS | 15-30 | ~15 min | Yes (EVM) | Largest ecosystem |
 | **Cosmos** | Tendermint BFT | 1000+ | Instant | Yes (CosmWasm) | Interoperability |
 | **Polkadot** | GRANDPA+BABE | 1000+ | ~12 sec | Yes (Wasm) | Shared security |
-| **Solana** | PoH+PoS | 3000+ | ~13 sec | Yes (Rust) | High performance |
+| **Solana** | PoH+PoS | 3000+ | ~13 sec (Alpenglow targets 100–150 ms) | Yes (Rust) | High performance |
 | **Cardano** | Ouroboros PoS | 250 | ~5 min | Yes (Plutus) | Formal methods |
 
 ## Common Concepts

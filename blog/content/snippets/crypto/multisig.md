@@ -418,11 +418,11 @@ class MuSig:
 
 **Rogue Key Attack** (MuSig1):
 - Attacker manipulates key aggregation
-- **Mitigation**: Use MuSig2 with proof of possession
+- **Mitigation**: MuSig1 already prevents it with key-aggregation coefficients (no proof of possession needed); MuSig2 keeps this and cuts signing to 2 rounds
 
 **Nonce Reuse**:
 - Reusing nonce reveals private key
-- **Mitigation**: Never reuse nonces, use deterministic nonce generation
+- **Mitigation**: Never reuse nonces; use fresh random nonces per signing session (BIP327: multi-party nonces must not be derived deterministically)
 
 **Partial Signature Leakage**:
 - Revealing partial signatures before all collected
@@ -437,7 +437,7 @@ class MuSig:
 | **Bitcoin P2SH** | Low (visible on-chain) | Medium | Low | Bitcoin, Bitcoin-like |
 | **Ethereum Contract** | Low (visible on-chain) | Low (gas costs) | Medium | Ethereum, EVM chains |
 | **Schnorr/MuSig** | High (looks like single-sig) | High | High | Bitcoin (Taproot), newer chains |
-| **BLS Multisig** | High | Very High | Medium | Ethereum 2.0, Cosmos |
+| **BLS Multisig** | High | Very High | Medium | Ethereum 2.0 (aggregate attestations), Dfinity/ICP |
 
 ---
 

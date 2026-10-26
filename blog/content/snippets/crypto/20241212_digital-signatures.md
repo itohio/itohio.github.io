@@ -35,16 +35,16 @@ $$
 ### Signing
 
 $$
-\sigma = (H(M))^d \mod n
+\sigma = (\text{EMSA-PSS}(H(M), \text{salt}))^d \mod n
 $$
 
 ### Verification
 
 $$
-H(M) \stackrel{?}{=} \sigma^e \mod n
+\text{EMSA-PSS-Verify}(H(M), \sigma^e \mod n)
 $$
 
-Where $H$ is a hash function (SHA-256).
+Where $H$ is a hash function (SHA-256) and EMSA-PSS is the randomized salt + MGF1 encoding (RFC 8017); without it this is insecure textbook RSA.
 
 ---
 

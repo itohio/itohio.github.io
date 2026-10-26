@@ -449,16 +449,16 @@ class ThresholdBLS:
 **Critical**: Nonce reuse or predictable nonces break security!
 
 ```python
-# ✅ GOOD: Deterministic nonce (RFC 6979)
+# ✅ GOOD: Fresh random nonce per signing session (BIP327, RFC 9591)
+def generate_nonce_random():
+    return secrets.randbelow(curve_order)
+
+# ❌ BAD: Deterministic nonce (RFC 6979) in multi-party signing:
+# co-signers can change their nonces and force you to reuse k
 def generate_nonce_deterministic(private_key, message):
-    """Generate deterministic nonce (simplified RFC 6979)"""
     h = sha256(private_key + message).digest()
     k = int.from_bytes(h, 'big')
     return k
-
-# ❌ BAD: Random nonce (can be manipulated in MPC)
-def generate_nonce_random():
-    return secrets.randbelow(curve_order)
 ```
 
 ### 2. Malicious Parties
@@ -539,7 +539,7 @@ Rollup validators:
 |--------|--------|------------|-------------|----------|
 | **Threshold ECDSA** | 3-5 | Very High | Complex | Bitcoin, Ethereum (legacy) |
 | **Threshold Schnorr** | 2-3 | Medium | Simple | Bitcoin (Taproot), modern chains |
-| **Threshold BLS** | 1 | Low | Very Simple | Ethereum 2.0, Cosmos |
+| **Threshold BLS** | 1 | Low | Very Simple | Ethereum 2.0, Dfinity/ICP |
 | **Threshold EdDSA** | 2 | Medium | Simple | Monero, general purpose |
 
 ---

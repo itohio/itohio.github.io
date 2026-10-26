@@ -600,7 +600,7 @@ sequenceDiagram
     participant C as Client
     participant S as Server
     
-    Note over C,S: TCP + TLS (3 RTT)
+    Note over C,S: TCP + TLS 1.3 (2 RTT; TLS 1.2 is 3 RTT)
     C->>S: TCP SYN
     S->>C: TCP SYN-ACK
     C->>S: TCP ACK

@@ -17,7 +17,7 @@ Consensus algorithm comparison and general implementation interview questions.
 | **Paxos** | Classic | Immediate | N/A | Low | (n-1)/2 failures |
 | **BFT** | Byzantine | Immediate | Fast | Low | f Byzantine (n=3f+1) |
 | **Tendermint** | BFT | Immediate | 1-6s | Low | 1/3 Byzantine |
-| **Ouroboros** | PoS | Probabilistic | 1s | Very Low | 51% stake attack |
+| **Ouroboros** | PoS | Probabilistic | ~20s (1s slots) | Very Low | 51% stake attack |
 | **Bitcoin** | PoW | Probabilistic | 10min | Very High | 51% hash power |
 | **Ethereum PoS** | PoS | Checkpoint | 12s | Very Low | 1/3 stake attack |
 | **Polkadot** | NPoS | Fast | 6s | Very Low | 1/3 stake attack |
@@ -26,8 +26,8 @@ Consensus algorithm comparison and general implementation interview questions.
 **Trade-offs**:
 
 **Safety vs Liveness**:
-- **Paxos/BFT/Tendermint**: Strong safety, requires synchrony
-- **PoW/PoS**: Probabilistic safety, works asynchronously
+- **Paxos/BFT/Tendermint**: Strong safety even under asynchrony; liveness needs partial synchrony
+- **PoW/PoS (Nakamoto-style)**: Probabilistic safety that needs a network delay bound
 
 **Finality**:
 - **Immediate**: Paxos, BFT, Tendermint

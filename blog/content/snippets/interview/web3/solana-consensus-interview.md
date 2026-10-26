@@ -25,7 +25,7 @@ sequenceDiagram
     
     Note over Leader: PoH Generation
     Leader->>Leader: Generate PoH Sequence<br/>SHA256 Hash Chain
-    Leader->>Leader: Create PoH Tick (400ms)
+    Leader->>Leader: Create PoH Ticks (64 per slot)
     Leader->>Leader: Accumulate Transactions
     Leader->>Leader: Create Block with PoH
     
@@ -91,7 +91,7 @@ graph TB
     B --> C[Leader Generates PoH]
     
     C --> D[PoH Hash Chain<br/>SHA256 Iterations]
-    D --> E[PoH Tick Created<br/>Every 400ms]
+    D --> E[PoH Tick Created<br/>64 per slot]
     E --> F[Accumulate Transactions<br/>from Mempool]
     
     F --> G[Order Transactions<br/>by PoH Timestamp]
@@ -136,7 +136,7 @@ graph TB
     B -->|Yes| C[Generate PoH]
     C --> D[Start PoH Hash Chain<br/>hash_0 = SHA256 seed]
     D --> E[Iterate Hash Chain<br/>hash_i = SHA256 hash_i-1]
-    E --> F{PoH Tick Interval<br/>400ms?}
+    E --> F{PoH Tick Interval<br/>slot / 64?}
     
     F -->|No| E
     F -->|Yes| G[Create PoH Tick<br/>Store hash_i]
@@ -208,7 +208,7 @@ graph TB
 - Cannot be parallelized (sequential by design)
 
 **2. PoH Ticks**:
-- Created at regular intervals (~400ms)
+- Created at regular intervals (64 ticks per slot, ~6.25ms at 400ms slots)
 - Each tick contains a hash from the chain
 - Provides timestamp for transactions
 - Enables parallel transaction processing
@@ -221,13 +221,13 @@ graph TB
 
 **4. Leader Selection (PoS)**:
 - Leaders selected by stake-weighted voting
-- Rotates every slot (~400ms)
+- Each leader holds 4 consecutive slots (~1.6s at 400ms slots)
 - Provides Byzantine fault tolerance
 - Requires 2/3+ stake for finality
 
 **Key Properties**:
 - **High Throughput**: 65,000+ TPS (theoretical)
-- **Low Latency**: ~400ms block time
+- **Low Latency**: ~200ms slots since October 2026 (400ms before)
 - **Parallel Execution**: Transactions ordered by PoH
 - **Verifiable Time**: Cryptographic proof of time passage
 - **Energy Efficient**: PoS-based, no mining

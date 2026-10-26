@@ -37,7 +37,7 @@ U_j &= PRF(password, U_{j-1})
 \end{aligned}
 $$
 
-**Iterations**: Minimum 100,000 for PBKDF2-HMAC-SHA256
+**Iterations**: Minimum 600,000 for PBKDF2-HMAC-SHA256 (OWASP)
 
 ### Argon2 (Winner of Password Hashing Competition)
 
@@ -217,8 +217,8 @@ mac_key = key_material[32:]
 1. **Use Argon2id** (or scrypt if unavailable)
 2. **Minimum parameters**:
    - Argon2: `time_cost=2, memory_cost=65536 (64MB), parallelism=4`
-   - scrypt: `N=2^14, r=8, p=1`
-   - PBKDF2: `iterations=100000+`
+   - scrypt: `N=2^17, r=8, p=1`
+   - PBKDF2: `iterations=600000+`
 3. **Always use salt** (random, unique per password)
 4. **Salt length**: 16+ bytes
 

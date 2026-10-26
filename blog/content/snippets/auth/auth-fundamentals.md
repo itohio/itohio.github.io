@@ -110,8 +110,8 @@ Detailed guide: [Authentication Security](../auth-security/)
 |---------|----------|----------------|
 | LocalStorage | ❌ Vulnerable to XSS | Avoid |
 | SessionStorage | ❌ Vulnerable to XSS | Temporary data only |
-| HttpOnly Cookie | ✅ Protected | ✅ Best for web |
-| Memory only | ✅ Most secure | ✅ SPAs (lost on refresh) |
+| HttpOnly Cookie | ✅ Not readable by JS (pair with CSRF protection) | ✅ Best for web |
+| Memory only | ⚠️ Readable by injected script | SPAs (lost on refresh) |
 
 **Coverage:**
 - Password security (hashing, policies)

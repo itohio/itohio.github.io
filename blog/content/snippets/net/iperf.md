@@ -18,10 +18,10 @@ Network bandwidth testing with iperf and iperf3. Understand differences and comm
 | Feature | iperf2 | iperf3 |
 |---------|--------|--------|
 | **Compatibility** | Not compatible with iperf3 | Not compatible with iperf2 |
-| **Parallel Streams** | Multiple streams in both directions | One direction at a time |
-| **Simultaneous Bi-directional** | Yes | No (sequential only) |
+| **Parallel Streams** | Multiple streams in both directions | Yes (`-P`), and both directions with `--bidir` |
+| **Simultaneous Bi-directional** | Yes | Yes (`--bidir`, iperf3 3.7+) |
 | **JSON Output** | No | Yes |
-| **UDP Bandwidth** | Must specify | Auto-detects |
+| **UDP Bandwidth** | Must specify | Defaults to 1 Mbit/s unless `-b` |
 | **Active Development** | Less active | Actively maintained |
 | **Default Port** | 5001 | 5201 |
 
@@ -151,10 +151,10 @@ iperf3 -c server_ip -b 100M
 ### Bi-directional Test
 
 ```bash
-# Test both directions (sequential in iperf3)
+# Test both directions simultaneously (iperf3 3.7+)
 iperf3 -c server_ip --bidir
 
-# First tests client->server, then server->client
+# Client->server and server->client run at the same time
 ```
 
 ### IPv6

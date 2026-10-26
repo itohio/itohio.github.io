@@ -215,8 +215,8 @@ Block Header:
 - If valid: Add to chain
 
 **5. Chain Selection**:
-- Always extend longest valid chain
-- Fork resolution: Longest chain wins
+- Always extend the valid chain with the most cumulative work
+- Fork resolution: Most cumulative work (chainwork) wins, not most blocks
 - Orphaned blocks: No reward
 
 **Key Properties**:
