@@ -149,7 +149,7 @@ LEFT JOIN orders o ON u.id = o.user_id
 GROUP BY u.id, u.username;
 
 -- Look for:
--- - Seq Scan (bad) vs Index Scan (good)
+-- - Seq Scan on a large table where few rows are needed (fine for small tables or when reading most rows)
 -- - High cost numbers
 -- - Large row estimates
 ```

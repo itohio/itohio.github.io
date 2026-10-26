@@ -306,29 +306,26 @@ CREATE OR REPLACE PROCEDURE transfer_funds(
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    -- Start transaction
-    BEGIN
-        -- Deduct from source
-        UPDATE accounts
-        SET balance = balance - amount
-        WHERE id = from_account;
-        
-        -- Check if sufficient funds
-        IF NOT FOUND OR (SELECT balance FROM accounts WHERE id = from_account) < 0 THEN
-            RAISE EXCEPTION 'Insufficient funds';
-        END IF;
-        
-        -- Add to destination
-        UPDATE accounts
-        SET balance = balance + amount
-        WHERE id = to_account;
-        
-        COMMIT;
-    EXCEPTION
-        WHEN OTHERS THEN
-            ROLLBACK;
-            RAISE;
-    END;
+    -- No EXCEPTION block here: a block with exception handlers is a
+    -- subtransaction, and COMMIT/ROLLBACK are not allowed inside it.
+    -- An uncaught error rolls the transaction back automatically.
+
+    -- Deduct from source
+    UPDATE accounts
+    SET balance = balance - amount
+    WHERE id = from_account;
+
+    -- Check if sufficient funds
+    IF NOT FOUND OR (SELECT balance FROM accounts WHERE id = from_account) < 0 THEN
+        RAISE EXCEPTION 'Insufficient funds';
+    END IF;
+
+    -- Add to destination
+    UPDATE accounts
+    SET balance = balance + amount
+    WHERE id = to_account;
+
+    COMMIT;
 END;
 $$;
 ```
@@ -400,10 +397,12 @@ CREATE TABLE documents (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create index for similarity search
+-- Create index for similarity search (build IVFFlat after loading data;
+-- lists ≈ rows / 1000 up to 1M rows, an index built on an empty table has poor recall)
 CREATE INDEX ON documents USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 
--- Or use HNSW index (better for high-dimensional vectors)
+-- Or use HNSW index (better speed-recall tradeoff and no training step,
+-- but slower build and more memory)
 CREATE INDEX ON documents USING hnsw (embedding vector_cosine_ops);
 ```
 
@@ -472,7 +471,7 @@ SELECT
     1 - (embedding <=> '[0.1, 0.2, ...]'::vector) AS similarity
 FROM documents
 WHERE created_at > '2024-01-01'
-  AND similarity > 0.8
+  AND embedding <=> '[0.1, 0.2, ...]'::vector < 0.2  -- WHERE can't use the SELECT alias; with an ANN index this filter runs after the index scan
 ORDER BY embedding <=> '[0.1, 0.2, ...]'::vector
 LIMIT 10;
 ```
@@ -660,9 +659,9 @@ CREATE INDEX idx_active_users ON users(email) WHERE active = true;
 VACUUM ANALYZE users;
 
 -- Show slow queries
-SELECT query, calls, total_time, mean_time
+SELECT query, calls, total_exec_time, mean_exec_time
 FROM pg_stat_statements
-ORDER BY mean_time DESC
+ORDER BY mean_exec_time DESC
 LIMIT 10;
 ```
 
