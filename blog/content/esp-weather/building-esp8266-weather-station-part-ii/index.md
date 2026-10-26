@@ -85,7 +85,7 @@ Second thing is to define proper variant defines which should be done in  `platf
 You have two options on how to upload the firmware to your board: Either use OTA or connect GND/RX/TX/RST pins to the board using your favorite ESP8266 programmer. Note that your programmer(or USB to Serial converter) must be set to use 3.3V signals, otherwise you may kill the board.
 
 ## Note about PUYA
-Some ESP-12 modules have a weird flash chip which causes errors with writing data to SPIFFS partition. That means, that you can flash SPIFFS data, you can read it in the code, but if you try to write to any file on that partition - the whole partition will be corrupted. This is known as PUYA issue. If you happen to have the ESP-12 with this troublesome flash chip, you should set  `build_flags = -D define PUYA_ISSUE`  in the  `platformio.ini`  file for the variant you are building.  
+Some ESP-12 modules have a weird flash chip which causes errors with writing data to SPIFFS partition. That means, that you can flash SPIFFS data, you can read it in the code, but if you try to write to any file on that partition - the whole partition will be corrupted. This is known as PUYA issue. If you happen to have the ESP-12 with this troublesome flash chip, you should set  `build_flags = -D PUYA_SUPPORT=1`  in the  `platformio.ini`  file for the variant you are building (newer ESP8266 Arduino cores enable it by default; 2.7.4 also fixed the write alignment).
 Unfortunately until PUYA issue is fixed in the ESP firmware,  SPIFFS will not be available and in turn UI interface is useless since you cannot save any configs to the SPIFFS partition.
 
 ## Upload using OTA

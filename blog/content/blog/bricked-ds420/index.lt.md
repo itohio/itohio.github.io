@@ -183,6 +183,8 @@ Padding: 8388608 bytes (8.00 MB)
 ✓ Created: flash.bin (16777216 bytes)
 ```
 
+Jūsų poslinkiai ir dydžiai skirsis (skriptas pjauna nuo antraštės+24 baitų), tad prieš rašydami patikrinkite ištraukto BIOS dydį pagal flash sritį. Man užpildymas `0x00` suveikė, bet ištrintos flash numatytoji reikšmė yra `0xFF` - palyginkite su savo dump'u.
+
 ## BIOS įrašymas
 
 PASTABA: Įsitikinkite, kad nuskaitėte flash ir išsaugojote - tik tam atvejui! Atsarginės kopijos niekada nekenkia. Be to, gal jums smalsu, kokie gi baitai jūsų biose buvo sugadinti! Mano turėjo kelių baitų skirtumus

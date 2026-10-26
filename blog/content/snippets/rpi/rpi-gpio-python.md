@@ -16,7 +16,7 @@ Python examples for accessing Raspberry Pi GPIO, I2C, SPI, I2S, and PWM.
 ### Installation
 
 ```bash
-# Install RPi.GPIO
+# Install RPi.GPIO (not on Pi 5: RP1 GPIO needs gpiozero/lgpio or rpi-lgpio)
 sudo apt install python3-rpi.gpio
 
 # Or use pip
@@ -116,7 +116,7 @@ pwm.stop()
 GPIO.cleanup()
 ```
 
-### Hardware PWM (pigpio)
+### Hardware PWM (pigpio, not Pi 5)
 
 ```python
 import pigpio
@@ -130,18 +130,15 @@ if not pi.connected:
 
 PWM_PIN = 18
 
-# Set PWM frequency (Hz)
-pi.set_PWM_frequency(PWM_PIN, 1000)
-
-# Set PWM duty cycle (0-255)
-pi.set_PWM_dutycycle(PWM_PIN, 128)  # 50%
+# Hardware PWM on GPIO 12/13/18/19: frequency (Hz), duty 0-1000000
+pi.hardware_PWM(PWM_PIN, 1000, 500000)  # 50%
 
 # Fade
-for i in range(0, 256, 5):
-    pi.set_PWM_dutycycle(PWM_PIN, i)
+for i in range(0, 1000001, 20000):
+    pi.hardware_PWM(PWM_PIN, 1000, i)
     time.sleep(0.01)
 
-pi.set_PWM_dutycycle(PWM_PIN, 0)
+pi.hardware_PWM(PWM_PIN, 1000, 0)
 pi.stop()
 ```
 
@@ -157,7 +154,7 @@ sudo raspi-config
 # Interface Options > I2C > Enable
 
 # Install tools
-sudo apt install i2c-tools python3-smbus
+sudo apt install i2c-tools python3-smbus2
 
 # Check I2C devices
 i2cdetect -y 1
@@ -311,7 +308,7 @@ class MCP3008:
     
     def read_voltage(self, channel, vref=3.3):
         value = self.read_channel(channel)
-        voltage = (value * vref) / 1023.0
+        voltage = (value * vref) / 1024.0
         return voltage
     
     def close(self):
@@ -334,9 +331,9 @@ while True:
 ### Installation
 
 ```bash
-# Enable I2S
-sudo raspi-config
-# Interface Options > I2S > Enable
+# Enable I2S: add to /boot/firmware/config.txt (then reboot)
+# dtparam=i2s=on
+# dtoverlay=hifiberry-dac   # or the overlay for your codec/DAC
 
 # Install libraries
 pip3 install pyaudio numpy

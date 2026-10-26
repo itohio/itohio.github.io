@@ -7,7 +7,7 @@ tags: ["rpi-knowhow", "go", "golang", "gpio", "i2c", "spi", "pwm"]
 ---
 
 
-Go examples for accessing Raspberry Pi GPIO, I2C, SPI, and PWM using periph.io.
+Go examples for accessing Raspberry Pi GPIO, I2C, SPI, and PWM using periph.io. Note: periph.io's bcm283x driver does not support the Pi 5 (RP1).
 
 ---
 
@@ -19,7 +19,7 @@ wget https://go.dev/dl/go1.21.5.linux-arm64.tar.gz
 sudo tar -C /usr/local -xzf go1.21.5.linux-arm64.tar.gz
 
 # Add to PATH
-echo 'export PATH=$PATH:/usr/local/bin/go/bin' >> ~/.bashrc
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
 source ~/.bashrc
 
 # Verify
