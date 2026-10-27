@@ -60,7 +60,7 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.llms import OpenAI
-from langchain.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA  # langchain.chains before LangChain 1.0
 
 # 1. Load and split documents
 documents = load_documents()
@@ -118,7 +118,7 @@ chunks = splitter.split_text(text)
 ### Semantic Chunking
 
 ```python
-from langchain.text_splitter import SemanticChunker
+from langchain_experimental.text_splitter import SemanticChunker
 from langchain.embeddings import OpenAIEmbeddings
 
 splitter = SemanticChunker(
@@ -186,11 +186,11 @@ vectorstore = FAISS.load_local("faiss_index", embeddings)
 ### Pinecone
 
 ```python
-import pinecone
-from langchain.vectorstores import Pinecone
+import os
+from langchain_pinecone import PineconeVectorStore
 
-pinecone.init(api_key="YOUR_API_KEY", environment="us-west1-gcp")
-vectorstore = Pinecone.from_documents(texts, embeddings, index_name="my-index")
+os.environ["PINECONE_API_KEY"] = "YOUR_API_KEY"  # pinecone.init() was removed in client v3
+vectorstore = PineconeVectorStore.from_documents(texts, embeddings, index_name="my-index")
 ```
 
 ---
@@ -238,7 +238,7 @@ results = vectorstore.max_marginal_relevance_search(
 
 **Core Idea**: Combines **dense** (semantic) and **sparse** (keyword-based) retrieval to leverage both semantic understanding and exact term matching.
 
-**Mathematical Formulation**:
+**Mathematical Formulation** (score blending):
 $$\text{score}(q, d) = \alpha \cdot \text{sim}_{\text{dense}}(\mathbf{q}, \mathbf{d}) + (1-\alpha) \cdot \text{BM25}(q, d)$$
 
 where:
@@ -248,7 +248,7 @@ where:
 
 **Key Insight**: Dense vectors capture semantic meaning while sparse retrieval handles exact matches and rare terms effectively.
 
-Combine dense and sparse retrieval:
+Combine dense and sparse retrieval. LangChain's `EnsembleRetriever` does not blend scores: it uses weighted Reciprocal Rank Fusion, $\text{score}(d) = \sum_i w_i / (c + \text{rank}_i(d))$ with $c = 60$:
 
 ```python
 from langchain.retrievers import EnsembleRetriever
@@ -291,7 +291,7 @@ from langchain.retrievers.document_compressors import CohereRerank
 base_retriever = vectorstore.as_retriever(search_kwargs={"k": 20})
 
 # Reranker
-compressor = CohereRerank(model="rerank-english-v2.0", top_n=4)
+compressor = CohereRerank(model="rerank-v3.5", top_n=4)
 
 # Compression retriever
 compression_retriever = ContextualCompressionRetriever(

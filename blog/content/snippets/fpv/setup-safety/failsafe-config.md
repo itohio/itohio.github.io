@@ -18,7 +18,7 @@ Betaflight uses a two-stage system:
 flowchart TD
     A([RC signal<br/>lost]) --> B{Stage 1<br/>guard time}
     B -->|Signal returns<br/>before timer| C([Resume normal<br/>flight])
-    B -->|Timer expires<br/>default 300ms| D[Stage 1<br/>Hold last valid RC values]
+    B -->|Timer expires<br/>default 1.5s| D[Stage 1<br/>Hold last valid RC values]
     D --> E{Stage 2<br/>guard time}
     E -->|Signal returns| C
     E -->|Timer expires<br/>default 1s| F{Stage 2<br/>procedure?}
@@ -41,7 +41,7 @@ Most modern receivers have two modes:
 - **Hold** — output last valid values (dangerous: Betaflight never triggers failsafe)
 - **No pulses / failsafe values** — output zero signal or pre-set custom values
 
-Configure the receiver to output **no pulses** or its own failsafe position. On ELRS receivers this is automatic — ELRS outputs the failsafe position from the binding configuration when the link drops.
+Configure the receiver to output **no pulses** or its own failsafe position. On ELRS receivers over CRSF this is automatic — the receiver simply stops sending frames when the link drops (ELRS failsafe positions apply only to SBUS/PWM outputs).
 
 ---
 
@@ -121,7 +121,7 @@ Betaflight blocks arming if failsafe configuration is incomplete:
 status
 
 # Look for arming flags like:
-# NOGYRO, RXLOSS, FAILSAFE, BADVIBES, etc.
+# NOGYRO, RXLOSS, FAILSAFE, NO_ACC_CAL, etc.
 
 # If RXLOSS is shown:
 # - RC link is not connected
@@ -143,6 +143,6 @@ status
 
 ## Notes
 
-- ELRS defaults to outputting failsafe values on link loss if set during binding. Verify by killing the TX and confirming the Receiver tab in Configurator shows channel values changing to the failsafe position.
+- On CRSF, ELRS stops sending frames on link loss and Betaflight's own failsafe takes over (ELRS failsafe positions apply only to SBUS/PWM outputs). Verify by killing the TX and confirming the Receiver tab in Configurator shows the failsafe values.
 - "No pulses" failsafe output is preferred over "hold" — it guarantees Betaflight detects the loss within the Stage 1 guard window.
 - Failsafe is not a substitute for not flying out of range. It is a last resort.

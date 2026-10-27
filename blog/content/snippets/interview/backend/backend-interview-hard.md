@@ -441,6 +441,8 @@ graph TB
 
 ### Redlock Algorithm
 
+> ⚠️ Redlock is fine for efficiency (avoiding duplicate work) but not safe for correctness: a GC pause or clock jump can let two clients believe they hold the lock. When correctness matters, have the storage layer check a monotonically increasing **fencing token**, or use a consensus store (etcd, ZooKeeper).
+
 ```go
 package main
 

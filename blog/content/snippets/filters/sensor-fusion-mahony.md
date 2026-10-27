@@ -495,7 +495,7 @@ $$
 - **Medium Kp (1-3)**: Balanced (recommended)
 - **Low Kp (0.1-0.5)**: Slow correction, smooth output
 
-**Rule of thumb**: $K_p \approx 2 \times \text{expected\_angular\_velocity}$
+**Reference defaults** (Madgwick's MahonyAHRS.c): $K_p = 0.5$, $K_i = 0$; tune from there.
 
 ### Ki (Integral Gain)
 
@@ -549,7 +549,7 @@ class MahonyFilter:
         
         # Integral feedback
         if self.Ki > 0:
-            self.integral_error += np.array([ex, ey, ez]) * self.sample_period
+            self.integral_error += self.Ki * np.array([ex, ey, ez]) * self.sample_period
         
         # Corrected gyroscope
         gyro_corrected = gyro + self.Kp * np.array([ex, ey, ez]) + self.integral_error
@@ -620,7 +620,7 @@ for _ in range(1000):
 |---------|--------|----------|
 | **Approach** | Complementary filter + PI | Gradient descent |
 | **Parameters** | Kp, Ki (2 params) | β (1 param) |
-| **Bias Compensation** | Yes (integral term) | No |
+| **Bias Compensation** | Yes (integral term) | Yes (gyro bias drift term ζ) |
 | **Computational Cost** | Lower | Slightly higher |
 | **Tuning Complexity** | Moderate | Easier |
 | **Convergence** | Faster with good Ki | Depends on β |

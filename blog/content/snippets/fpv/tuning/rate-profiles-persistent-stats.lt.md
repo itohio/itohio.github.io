@@ -25,9 +25,7 @@ Betaflight Configurator → **OSD** skirtukas → nuslink iki Stats sekcijos, į
 
 Per CLI:
 ```
-set stats = ON
-set stats_total_flights = ON
-set stats_total_time = ON
+set stats_min_armed_time_s = 0   # -1 = off; counters: stats_total_flights, stats_total_time_s, stats_total_dist_m
 save
 ```
 

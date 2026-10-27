@@ -49,10 +49,10 @@ where:
 
 **Supervised Fine-tuning (Sentence-BERT):**
 
-For sentence pairs $(s_i, s_j)$ with label $y_{ij}$:
-$$\mathcal{L} = -\sum_{(i,j)} y_{ij} \log(\sigma(\text{sim}(\mathbf{v}_i, \mathbf{v}_j))) + (1-y_{ij}) \log(1-\sigma(\text{sim}(\mathbf{v}_i, \mathbf{v}_j)))$$
-
-where $\sigma$ is the sigmoid function.
+For sentence pairs $(s_i, s_j)$ encoded as $\mathbf{u}, \mathbf{v}$, SBERT uses one of three objectives:
+- **Classification** (NLI): $\mathcal{L} = \text{CE}(\text{softmax}(W[\mathbf{u}; \mathbf{v}; |\mathbf{u}-\mathbf{v}|]), y)$
+- **Regression** (STS): $\mathcal{L} = (\cos(\mathbf{u}, \mathbf{v}) - y)^2$
+- **Triplet**: $\mathcal{L} = \max(0, \|\mathbf{v}_a - \mathbf{v}_p\| - \|\mathbf{v}_a - \mathbf{v}_n\| + \epsilon)$
 
 ---
 
@@ -315,8 +315,9 @@ class CustomHuggingFaceEmbeddings(Embeddings):
         
         with torch.no_grad():
             outputs = self.model(**inputs)
-            # Mean pooling
-            embeddings = outputs.last_hidden_state.mean(dim=1)
+            # Mean pooling over real tokens only (mask out padding)
+            mask = inputs["attention_mask"].unsqueeze(-1).float()
+            embeddings = (outputs.last_hidden_state * mask).sum(dim=1) / mask.sum(dim=1)
             embeddings = torch.nn.functional.normalize(embeddings, p=2, dim=1)
         
         return embeddings.cpu().numpy().tolist()
@@ -335,7 +336,7 @@ vectorstore = FAISS.from_documents(documents, custom_embeddings)
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 from langchain.llms import OpenAI
 
 # Load and split documents
@@ -367,7 +368,7 @@ response = qa_chain.run("What is the main topic?")
 
 **Tokenization**: Converts text to subword units:
 - **Word-level**: "machine learning" → ["machine", "learning"]
-- **Subword-level (BPE)**: "machine" → ["machine", "##ing"] (handles OOV)
+- **Subword-level (WordPiece)**: "embeddings" → ["em", "##bed", "##ding", "##s"] (handles OOV; BPE is similar without the `##` marker)
 - **SentencePiece**: Handles multilingual text and special characters
 
 **Position Embeddings**: Inject positional information:

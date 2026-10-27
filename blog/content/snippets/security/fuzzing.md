@@ -77,9 +77,9 @@ brew install afl++          # macOS
 
 ```bash
 # 1. Compile target with AFL instrumentation
-afl-gcc -o target target.c
+afl-clang-fast -o target target.c   # or afl-clang-lto / afl-gcc-fast (afl-gcc is removed in AFL++)
 # Or for C++
-afl-g++ -o target target.cpp
+afl-clang-fast++ -o target target.cpp
 
 # 2. Create input directory with seed files
 mkdir input
@@ -148,7 +148,7 @@ int main(int argc, char **argv) {
 
 ```bash
 # Compile with AFL
-afl-gcc -o vulnerable vulnerable.c
+afl-clang-fast -o vulnerable vulnerable.c
 
 # Fuzz
 mkdir in out
@@ -189,7 +189,7 @@ afl-fuzz -Q -i in -o out -- ./binary @@
 ./target output/crashes/id:000000,sig:11,src:000000,op:havoc,rep:2
 
 # With Address Sanitizer for better diagnostics
-afl-gcc -fsanitize=address -o target_asan target.c
+afl-clang-fast -fsanitize=address -o target_asan target.c
 ./target_asan output/crashes/id:000000*
 
 # Minimize crashing input
@@ -562,7 +562,7 @@ jobs:
       
       - name: Build
         run: |
-          afl-gcc -o target target.c
+          afl-clang-fast -o target target.c
       
       - name: Fuzz
         run: |

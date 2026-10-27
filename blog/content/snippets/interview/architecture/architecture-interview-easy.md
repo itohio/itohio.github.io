@@ -679,10 +679,10 @@ cache.set(`user:123:v2`, data)
 
 **Answer**:
 
-**Definition**: In a distributed system, you can only guarantee 2 out of 3 properties:
+**Definition**: In a distributed system, when a network partition happens you must choose between consistency and availability (partition tolerance is not optional):
 
 ### C - Consistency
-**Definition**: All nodes see the same data at the same time.
+**Definition**: Linearizability — every read sees the most recent completed write, as if there were a single copy of the data.
 
 **Example**: After writing to any node, all subsequent reads return that value.
 
@@ -711,7 +711,7 @@ graph TB
     style D fill:#FFB6C1
 ```
 
-**CA** (Consistency + Availability):
+**CA** (Consistency + Availability) — not a real choice for a distributed system, since partitions can't be ruled out; "CA" just means not distributed:
 - Single-node systems (no partitions possible)
 - Traditional RDBMS on single server
 - **Example**: PostgreSQL on one machine
@@ -719,7 +719,7 @@ graph TB
 **CP** (Consistency + Partition Tolerance):
 - Sacrifice availability during partitions
 - Wait for consensus before responding
-- **Examples**: MongoDB, HBase, Redis (with replication)
+- **Examples**: MongoDB (majority writes), HBase, etcd/ZooKeeper (Redis with async replication is *not* CP: failover can lose acknowledged writes)
 
 **AP** (Availability + Partition Tolerance):
 - Sacrifice consistency (eventual consistency)

@@ -32,9 +32,9 @@ Betaflight treats GPS as a safety feature. INAV treats GPS as the primary use ca
 | Manual acro flying            | Excellent         | Good               |
 | PID loop latency              | ~1ms target       | ~2–4ms typical     |
 | GPS Rescue (RTH)              | Basic — emergency only | Full RTH with braking, hold, mission |
-| Position Hold                 | Not available     | Yes — POSHOLD mode  |
+| Position Hold                 | POS_HOLD mode (2025.12+) | Yes — POSHOLD mode  |
 | Waypoint missions             | Not available     | Yes — autonomous routes |
-| Altitude hold                 | Not available     | Yes — ALTHOLD mode |
+| Altitude hold                 | ALT_HOLD mode (2025.12+) | Yes — ALTHOLD mode |
 | Fixed-wing support            | No                | Yes — full support  |
 | Blackbox / tuning tools       | Excellent         | Good               |
 | OSD integration               | Excellent         | Good (more GPS data shown) |

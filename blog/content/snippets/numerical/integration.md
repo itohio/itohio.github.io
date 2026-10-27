@@ -13,13 +13,13 @@ Approximate $\int_a^b f(x) dx$.
 ## Trapezoidal Rule
 
 ```python
-from scipy.integrate import trapz, simps, quad
+from scipy.integrate import trapezoid, simpson, quad
 
 # Trapezoidal
-result = trapz(y, x)
+result = trapezoid(y, x=x)
 
 # Simpson's rule
-result = simps(y, x)
+result = simpson(y, x=x)
 
 # Adaptive quadrature (best)
 result, error = quad(f, a, b)

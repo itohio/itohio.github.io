@@ -188,6 +188,8 @@ Padding: 8388608 bytes (8.00 MB)
 ✓ Created: flash.bin (16777216 bytes)
 ```
 
+Your offsets and sizes will differ (the script slices from header+24 bytes), so check the extracted BIOS size against the flash region before writing. Padding with `0x00` worked for me, but `0xFF` is the erased-flash default - compare with your own dump.
+
 
 ## Flashing the BIOS
 

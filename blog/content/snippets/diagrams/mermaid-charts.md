@@ -89,9 +89,9 @@ pie title System Performance Breakdown
     "Disk I/O" : 10
 ```
 
-## Bar Charts (GitGraph Style)
+## Bar Charts (XY Chart)
 
-Mermaid bar charts use the `gitgraph` syntax for creating bar-like visualizations, or you can use `xychart-beta` for more traditional bar charts.
+Mermaid bar and line charts use `xychart-beta` (`gitGraph` is for Git history, not charts).
 
 ### XY Chart Bar
 

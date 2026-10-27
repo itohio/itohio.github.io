@@ -80,12 +80,12 @@ argon2.verify_password(password.as_bytes(), &parsed_hash)?;
 ## Secure Random Generation
 
 ```rust
-// ❌ Insecure
-use rand::Rng;
-let mut rng = rand::thread_rng();
+// ❌ Insecure for secrets: fast, predictable PRNG
+use rand::{rngs::SmallRng, Rng, SeedableRng};
+let mut rng = SmallRng::seed_from_u64(42);
 let token: u32 = rng.gen();
 
-// ✅ Secure
+// ✅ Secure (rand::thread_rng() is also a CSPRNG; OsRng reads the OS directly)
 use rand::rngs::OsRng;
 use rand::RngCore;
 

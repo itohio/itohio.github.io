@@ -181,11 +181,11 @@ graph TB
     style G fill:#FFB6C1
 ```
 
-**P-value**: Probability of observing results if null hypothesis is true.
+**P-value**: Probability of observing results at least this extreme if the null hypothesis is true.
 
 **Interpretation**:
-- **p < 0.05**: Less than 5% chance results are due to random chance (significant)
-- **p > 0.05**: Results could be due to random chance (not significant)
+- **p < 0.05**: Data this extreme would occur less than 5% of the time if H0 were true (significant). It is *not* the probability that the results are due to chance.
+- **p > 0.05**: Data are compatible with H0 (not significant; this does not prove H0)
 
 **Example**:
 - Test if new algorithm is faster

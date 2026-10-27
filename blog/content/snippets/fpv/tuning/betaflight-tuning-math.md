@@ -87,7 +87,7 @@ relax_factor  = max(0, 1 − setpoint_hf / relax_threshold)
 I            += Ki × error × dt × relax_factor
 ```
 
-When the stick is moving quickly (`setpoint_hf` is large), `relax_factor` drops toward 0 and I stops accumulating. The `iterm_relax_cutoff` parameter controls the threshold frequency — higher values suppress I more aggressively during fast moves.
+When the stick is moving quickly (`setpoint_hf` is large), `relax_factor` drops toward 0 and I stops accumulating. `setpoint_hf = |setpoint − PT1(setpoint, iterm_relax_cutoff)|`, so a *higher* cutoff makes the low-pass track the stick more closely and relaxes I *less*; lower the cutoff to fight I-term bounce-back.
 
 | Build size | iterm_relax_cutoff |
 |------------|-------------------|
@@ -216,10 +216,10 @@ At high throttle, motors produce significantly more torque per command unit than
 **Formula:**
 ```
 tpa_factor = 1 − tpa_rate × max(0, (throttle − breakpoint) / (1 − breakpoint))
-P_effective = P × tpa_factor
+D_effective = D × tpa_factor   # tpa_mode = D (default); PD also scales P
 ```
 
-`set tpa_rate = 50` → 50% reduction at full throttle. `set tpa_breakpoint = 1650` → attenuation begins at 65% throttle. (These are illustrative values; actual defaults vary by Betaflight version.)
+Betaflight 4.5 defaults: `tpa_mode = D` (attenuates D only; `PD` attenuates both), `tpa_rate = 65` (65% reduction at full throttle), `tpa_breakpoint = 1350`. The 50% curve below is illustrative.
 
 ```chart
 {
@@ -247,7 +247,7 @@ P_effective = P × tpa_factor
         "pointRadius": 0
       },
       {
-        "label": "TPA 50% default (tpa_rate=50)",
+        "label": "TPA 50% (tpa_rate=50)",
         "data": [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.929,0.857,0.786,0.714,0.643,0.571,0.50],
         "borderColor": "rgba(34,197,94,1)",
         "backgroundColor": "transparent",
@@ -297,8 +297,9 @@ This gives you the best of both worlds: reduced D noise and heat during cruise, 
 
 **CLI commands:**
 ```
-set d_min_roll = 20    # base D (applied at rest)
+set d_min_roll = 20    # base D (applied at rest) — BF ≤ 4.5
 set d_roll = 30        # D_max — the peak D reached at high stick velocity
+# BF 2025.12: set d_roll = 20 (base D), set d_max_roll = 30
 ```
 
 Set `d_min_roll` equal to `d_roll` (both = your D value) to disable the dynamic D range and fly with a fixed D — required for clean tuning data flights.

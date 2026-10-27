@@ -32,9 +32,7 @@ usbipd --version
 # Update WSL
 wsl --update
 
-# Inside WSL, install USB/IP tools
-sudo apt install linux-tools-generic hwdata
-sudo update-alternatives --install /usr/local/bin/usbip usbip /usr/lib/linux-tools/*-generic/usbip 20
+# usbipd-win 4.0+ needs no USB/IP tools inside WSL (older versions needed linux-tools-generic hwdata)
 ```
 
 ---
@@ -74,10 +72,10 @@ usbipd list
 usbipd attach --wsl --busid 1-1
 
 # Attach to specific distribution
-usbipd attach --wsl --distribution Ubuntu --busid 1-1
+usbipd attach --wsl Ubuntu --busid 1-1
 
 # Auto-attach (attach automatically when device is connected)
-usbipd bind --busid 1-1 --auto-attach
+usbipd attach --wsl --busid 1-1 --auto-attach
 ```
 
 ### Verify in WSL
@@ -311,8 +309,8 @@ sudo chmod 666 /dev/ttyUSB0
 # Windows: Check if device is in use
 # Close applications using the device
 
-# Force detach
-usbipd detach --busid 1-1 --force
+# Detach (there is no --force; close the WSL app using it first)
+usbipd detach --busid 1-1
 ```
 
 ### WSL Kernel Doesn't Support USB

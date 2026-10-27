@@ -16,10 +16,10 @@ Hardware random number generation using /dev/random, /dev/urandom, and hardware 
 ### /dev/random vs /dev/urandom
 
 ```bash
-# /dev/random - Blocks when entropy pool is depleted
+# /dev/random - Since Linux 5.6 blocks only until the CRNG is initialised at boot
 # Use for: Long-term cryptographic keys
 
-# /dev/urandom - Never blocks, uses CSPRNG when entropy low
+# /dev/urandom - Never blocks (same CRNG; before 5.6 it could return output pre-initialisation)
 # Use for: Most cryptographic operations (recommended)
 
 # Read random bytes
@@ -38,8 +38,7 @@ xxd -l 16 -p /dev/urandom
 # Available entropy
 cat /proc/sys/kernel/random/entropy_avail
 
-# Should be > 1000 for good randomness
-# Typical range: 128 - 4096
+# Since ~5.18 this reads a fixed 256 (fully seeded CRNG); the number is no longer meaningful
 
 # Watch entropy
 watch -n 1 cat /proc/sys/kernel/random/entropy_avail
@@ -73,7 +72,7 @@ sudo systemctl enable rng-tools
 
 # Verify it's feeding entropy
 cat /proc/sys/kernel/random/entropy_avail
-# Should be consistently high (3000-4000)
+# Fixed at 256 on current kernels
 ```
 
 ### CPU-based RNG (RDRAND/RDSEED)
@@ -304,7 +303,7 @@ for i in {1..10000}; do
     echo $(($(od -An -N1 -tu1 < /dev/urandom) % 10))
 done | sort | uniq -c
 
-# Each digit should appear ~1000 times
+# Each digit should appear ~1000 times (only approximately: % 10 of 0-255 favours 0-5 slightly)
 ```
 
 ---
@@ -314,14 +313,14 @@ done | sort | uniq -c
 ### haveged
 
 ```bash
-# Install haveged (entropy daemon)
+# Install haveged (entropy daemon; unnecessary on kernels >= 5.6, kept for old systems)
 sudo apt install haveged
 
 # Start service
 sudo systemctl start haveged
 sudo systemctl enable haveged
 
-# Check entropy (should be consistently high)
+# Check entropy (fixed 256 on current kernels)
 cat /proc/sys/kernel/random/entropy_avail
 ```
 

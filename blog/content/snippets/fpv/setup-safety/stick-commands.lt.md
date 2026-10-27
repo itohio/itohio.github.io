@@ -30,11 +30,12 @@ ROLL maps to: ← LEFT  |  RIGHT →
 
 | Veiksmas                      | Throttle | Yaw   | Pitch | Roll  |
 |-------------------------------|----------|-------|-------|-------|
-| Įeiti į CLI / Config mode     | LOW      | LOW   | HIGH  | HIGH  |
-| Išsaugoti konfigūraciją (CLI mode) | LOW | LOW   | HIGH  | LOW   |
-| Įeiti į akselerometro kalibraciją | LOW  | LOW   | HIGH  | CENTER|
-| Įjungti/išjungti Blackbox     | LOW      | LOW   | LOW   | HIGH  |
-| Įeiti į OSD meniu             | CENTER   | LOW   | CENTER| CENTER (laikyti) |
+| Akselerometro kalibracija skrydžiui (in-flight ACC) | LOW | LOW | HIGH | HIGH |
+| Išsaugoti konfigūraciją       | LOW      | LOW   | LOW   | HIGH  |
+| Giroskopo kalibracija         | LOW      | LOW   | LOW   | CENTER|
+| Akselerometro kalibracija     | HIGH     | LOW   | LOW   | CENTER|
+| Pasirinkti PID profilį 2      | LOW      | LOW   | HIGH  | CENTER|
+| Įeiti į OSD meniu             | CENTER   | LOW   | HIGH  | CENTER |
 
 > Tikslios stick'ų padėtys skiriasi priklausomai nuo Betaflight versijos ir ar naudoji mode 1/2. Lentelė aukščiau skirta **Mode 2** (throttle kairysis stick'as).
 
@@ -42,11 +43,7 @@ ROLL maps to: ← LEFT  |  RIGHT →
 
 ## Įėjimas į CLI per stick'us (lauko konfigūracija)
 
-Laikyk: **Throttle LOW · Yaw LOW · Pitch HIGH · Roll HIGH** ~5 sekundes.
-
-FC pereina į konfigūracijos būseną. Iš čia gali:
-- Pasiekti OSD meniu (jei sukonfigūruota)
-- Įjungti kalibraciją
+CLI ar blackbox stick komandos nėra. **Throttle LOW · Yaw LEFT · Pitch HIGH · Roll RIGHT** yra akselerometro kalibracija skrydžiui, ne config mode.
 
 Kad įeitum į tikrąjį CLI, vis tiek reikia USB + Betaflight Konfigūratoriaus arba Bluetooth/WiFi adapterio. Stick'ais valdomas „config mode“ daugiausia skirtas OSD meniu prieigai.
 
@@ -56,7 +53,7 @@ Kad įeitum į tikrąjį CLI, vis tiek reikia USB + Betaflight Konfigūratoriaus
 
 Su **CONFIGURATOR MSP** mode įjungtu ant jungiklio arba per stick komandą:
 
-Laikyk **Throttle CENTER · Yaw LEFT · Pitch CENTER** ~3 sekundes.
+Laikyk **Throttle CENTER · Yaw LEFT · Pitch HIGH** ~3 sekundes.
 
 Naviguok:
 - **Pitch UP/DOWN** — judinti žymeklį

@@ -30,7 +30,7 @@ Represent natural daylight at different color temperatures.
 | **D50** | 5003K | 96.42 | 100.0 | 82.51 | Horizon daylight, printing standard |
 | **D55** | 5503K | 95.68 | 100.0 | 92.15 | Mid-morning/afternoon daylight |
 | **D65** | 6504K | 95.047 | 100.0 | 108.883 | Noon daylight, sRGB standard |
-| **D75** | 7504K | 94.97 | 100.0 | 122.61 | North sky daylight |
+| **D75** | 7504K | 94.97 | 100.0 | 122.64 | North sky daylight |
 
 ### A-Series (Incandescent)
 
@@ -140,7 +140,7 @@ $$
 
 ## Color Rendering Index (CRI)
 
-CRI measures how accurately a light source renders colors compared to a reference illuminant (typically D65 or A).
+CRI measures how accurately a light source renders colors compared to a reference illuminant of the same CCT (a Planckian radiator below 5000K, CIE daylight at or above 5000K).
 
 ### CRI Calculation Method
 
@@ -172,7 +172,7 @@ $$
 
 **Step 4:** Apply chromatic adaptation
 
-Adapt test illuminant colors to reference illuminant using von Kries transform.
+Adapt test illuminant colors to reference illuminant using the von Kries transform in CIE 1960 $(c, d)$ space, with $c = (4 - u - 10v)/v$ and $d = (1.708v + 0.404 - 1.481u)/v$. Each illuminant is normalized so its white has $Y = 100$, and each uses its own white point.
 
 **Step 5:** Convert to CIE 1964 W*U*V* color space
 
@@ -224,7 +224,7 @@ def calculate_cri_single_sample(spd_test, spd_ref, reflectance, cmf_x, cmf_y, cm
     
     Parameters:
     - spd_test: Test illuminant SPD
-    - spd_ref: Reference illuminant SPD (D65 or A)
+    - spd_ref: Reference illuminant SPD (Planckian at test CCT if < 5000K, else CIE daylight)
     - reflectance: Test color sample reflectance
     - cmf_x, cmf_y, cmf_z: CIE 1931 color matching functions
     - wavelengths: Wavelength array
@@ -234,41 +234,47 @@ def calculate_cri_single_sample(spd_test, spd_ref, reflectance, cmf_x, cmf_y, cm
     """
     delta_lambda = wavelengths[1] - wavelengths[0]
     
-    # Calculate XYZ for test illuminant
-    X_test = np.sum(spd_test * reflectance * cmf_x) * delta_lambda
-    Y_test = np.sum(spd_test * reflectance * cmf_y) * delta_lambda
-    Z_test = np.sum(spd_test * reflectance * cmf_z) * delta_lambda
+    def xyz(spd, refl):
+        return np.array([np.sum(spd * refl * cmf) for cmf in (cmf_x, cmf_y, cmf_z)]) * delta_lambda
     
-    # Calculate XYZ for reference illuminant
-    X_ref = np.sum(spd_ref * reflectance * cmf_x) * delta_lambda
-    Y_ref = np.sum(spd_ref * reflectance * cmf_y) * delta_lambda
-    Z_ref = np.sum(spd_ref * reflectance * cmf_z) * delta_lambda
+    # Normalize each illuminant so its own white has Y = 100
+    white_test = xyz(spd_test, 1.0)
+    white_ref = xyz(spd_ref, 1.0)
+    sample_test = xyz(spd_test, reflectance) * 100 / white_test[1]
+    sample_ref = xyz(spd_ref, reflectance) * 100 / white_ref[1]
     
     # Convert to CIE 1960 UCS
     def xyz_to_uv(X, Y, Z):
         denom = X + 15*Y + 3*Z
-        u = 4*X / denom if denom != 0 else 0
-        v = 6*Y / denom if denom != 0 else 0
-        return u, v
+        return 4*X / denom, 6*Y / denom
     
-    u_test, v_test = xyz_to_uv(X_test, Y_test, Z_test)
-    u_ref, v_ref = xyz_to_uv(X_ref, Y_ref, Z_ref)
+    def uv_to_cd(u, v):
+        return (4 - u - 10*v) / v, (1.708*v + 0.404 - 1.481*u) / v
     
-    # Calculate white point
-    X_n_test = np.sum(spd_test * cmf_x) * delta_lambda
-    Y_n_test = np.sum(spd_test * cmf_y) * delta_lambda
-    Z_n_test = np.sum(spd_test * cmf_z) * delta_lambda
-    u_n, v_n = xyz_to_uv(X_n_test, Y_n_test, Z_n_test)
+    u_t, v_t = xyz_to_uv(*white_test)
+    u_r, v_r = xyz_to_uv(*white_ref)
+    u_i, v_i = xyz_to_uv(*sample_test)
+    u_ri, v_ri = xyz_to_uv(*sample_ref)
     
-    # Convert to W*U*V*
+    # Von Kries adaptation of the test sample to the reference white
+    c_t, d_t = uv_to_cd(u_t, v_t)
+    c_r, d_r = uv_to_cd(u_r, v_r)
+    c_i, d_i = uv_to_cd(u_i, v_i)
+    cc = c_r / c_t * c_i
+    dd = d_r / d_t * d_i
+    denom = 16.518 + 1.481*cc - dd
+    u_ti = (10.872 + 0.404*cc - 4*dd) / denom
+    v_ti = 5.520 / denom
+    
+    # Convert to W*U*V* (both relative to the reference white after adaptation)
     def uv_to_wuv(u, v, Y, u_n, v_n):
         W = 25 * (Y ** (1/3)) - 17
         U = 13 * W * (u - u_n)
         V = 13 * W * (v - v_n)
         return W, U, V
     
-    W_test, U_test, V_test = uv_to_wuv(u_test, v_test, Y_test, u_n, v_n)
-    W_ref, U_ref, V_ref = uv_to_wuv(u_ref, v_ref, Y_ref, u_n, v_n)
+    W_test, U_test, V_test = uv_to_wuv(u_ti, v_ti, sample_test[1], u_r, v_r)
+    W_ref, U_ref, V_ref = uv_to_wuv(u_ri, v_ri, sample_ref[1], u_r, v_r)
     
     # Calculate color difference
     delta_E = np.sqrt((U_test - U_ref)**2 + (V_test - V_ref)**2 + (W_test - W_ref)**2)
@@ -309,7 +315,7 @@ def calculate_cri(spd_test, spd_ref, tcs_reflectances, cmf_x, cmf_y, cmf_z, wave
 # Example usage:
 # wavelengths = np.arange(380, 781, 5)  # 5nm resolution
 # spd_test = load_spd("test_led.csv")
-# spd_ref = load_spd("D65.csv")
+# spd_ref = load_spd("reference_at_test_cct.csv")  # Planckian (< 5000K) or CIE daylight
 # tcs_reflectances = load_tcs_samples()  # Load 8 TCS samples
 # cmf_x, cmf_y, cmf_z = load_cmf()
 # 
@@ -334,9 +340,9 @@ ILLUMINANTS = {
     'D65': np.array([95.047, 100.0, 108.883]),
     'D75': np.array([94.972, 100.0, 122.638]),
     'E':   np.array([100.0, 100.0, 100.0]),
-    'F2':  np.array([99.187, 100.0, 67.395]),
-    'F7':  np.array([95.044, 100.0, 108.755]),
-    'F11': np.array([100.966, 100.0, 64.370]),
+    'F2':  np.array([99.186, 100.0, 67.393]),
+    'F7':  np.array([95.041, 100.0, 108.747]),
+    'F11': np.array([100.962, 100.0, 64.350]),
 }
 
 def get_illuminant(name='D65'):
@@ -390,9 +396,9 @@ var Illuminants = map[string]XYZ{
     "D65": {95.047, 100.0, 108.883},
     "D75": {94.972, 100.0, 122.638},
     "E":   {100.0, 100.0, 100.0},
-    "F2":  {99.187, 100.0, 67.395},
-    "F7":  {95.044, 100.0, 108.755},
-    "F11": {100.966, 100.0, 64.370},
+    "F2":  {99.186, 100.0, 67.393},
+    "F7":  {95.041, 100.0, 108.747},
+    "F11": {100.962, 100.0, 64.350},
 }
 
 func GetIlluminant(name string) XYZ {

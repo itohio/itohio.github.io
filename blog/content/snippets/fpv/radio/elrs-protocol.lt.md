@@ -105,7 +105,7 @@ Ore **packet rate** yra tai, kiek valdymo paket'ų per sekundę siunčia TX. Tai
 
 ### 900 MHz
 
-Maksimumas — **200 Hz**, bet žemo rate režimai pasiekia daug giliau: 25 Hz siekia **−123 dBm**, o 50 Hz — **−120 dBm**. Žemesnis dažnis taip pat geriau **difraguoja aplink kliūtis** nei 2,4 GHz, todėl 900 MHz — long-range / už reljefo diapazonas.
+Maksimumas — **200 Hz** su SX127x aparatūra (**250 Hz** su LR1121, ir K1000 full-res 4.x versijoje), bet žemo rate režimai pasiekia daug giliau: 25 Hz siekia **−123 dBm**, o 50 Hz — **−120 dBm**. Žemesnis dažnis taip pat geriau **difraguoja aplink kliūtis** nei 2,4 GHz, todėl 900 MHz — long-range / už reljefo diapazonas.
 
 ---
 
@@ -117,7 +117,7 @@ Maksimumas — **200 Hz**, bet žemo rate režimai pasiekia daug giliau: 25 Hz s
 - **Jautrumas → prasiskverbimas.** Medžiai, sienos ir tavo paties kūnas slopina signalą keliais dB. Būtent papildoma jautrumo atsarga leidžia žemam rate „prasimušti“ pro kliūtį, dėl kurios aukštas rate nueitų į failsafe.
 - **Rate → atsakas.** Atsakas — tai tiesiog tarpas tarp atnaujinimų: 1000 Hz = švieža komanda kas 1 ms; 50 Hz = kas 20 ms. Racer'iai jaučia skirtumą tarp 2 ms ir 6,7 ms kaip glaudesnį stick-to-quad ryšį; žemiau ~150 Hz vėlinimas tampa juntamas.
 
-Visų trijų vienu metu turėti negali. Greiti paket'ai reaguoja greitai, bet yra trapūs; lėti yra atsparūs, bet vėluoja. Teisingas atsakymas — **dinaminis**: įjunk *Dynamic Power* ir leisk linkui nusileisti į žemesnį rate ties range riba (nustatoma vieną kartą ELRS LUA skripte).
+Visų trijų vienu metu turėti negali. Greiti paket'ai reaguoja greitai, bet yra trapūs; lėti yra atsparūs, bet vėluoja. ELRS niekada pats nekeičia packet rate — pasirink jį skrydžiui (nustatoma ELRS LUA skripte). *Dynamic Power* tik sumažina TX galią, kai ryšys stiprus.
 
 ```mermaid
 flowchart TD
@@ -133,7 +133,7 @@ flowchart TD
 Downlink telemetrija (RX → pultas) pasiskolina laiko tarpsnius iš uplink'o. **Telemetry ratio** `1:n` reiškia vieną telemetrijos paket'ą kas `n` RC paket'ų:
 
 - **Tankesnis** ratio (`1:2`) duoda greitą telemetriją, bet vagia tarpsnius iš valdymo.
-- **Retesnis** ratio (`1:64`, „Std“) beveik visą pralaidumą palieka RC.
+- **Retesnis** ratio beveik visą pralaidumą palieka RC. „Std“ priklauso nuo rate (2,4 GHz: 50 Hz → 1:16, 150 Hz → 1:32, 250 Hz → 1:64, 500 Hz/FLRC → 1:128).
 - Esant žemam packet rate visas vamzdis labai siauras — net `1:2` ties 50 Hz duoda tik ~25 telemetrijos atnaujinimų/s, per mažai sklandžiam MAVLink HUD. Norint daugiau telemetrijos pralaidumo, reikia kelti packet rate, o ne vien ratio.
 
 Daugeliu atvejų tinka `Std` arba `1:8`–`1:16`; GPS/HUD darbui varyk 250 Hz+ su `1:2`.

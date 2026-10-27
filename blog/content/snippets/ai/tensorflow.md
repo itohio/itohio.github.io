@@ -142,15 +142,15 @@ for epoch in range(epochs):
 
 ```python
 # Save entire model
-model.save('my_model.h5')
-model.save('my_model')  # SavedModel format
+model.save('my_model.keras')  # Keras 3 (TF ≥ 2.16) needs .keras (.h5 is legacy)
+model.export('my_model')  # SavedModel for serving / TFLite
 
 # Load model
-loaded_model = keras.models.load_model('my_model.h5')
+loaded_model = keras.models.load_model('my_model.keras')
 
 # Save weights only
-model.save_weights('weights.h5')
-model.load_weights('weights.h5')
+model.save_weights('model.weights.h5')
+model.load_weights('model.weights.h5')
 ```
 
 ---

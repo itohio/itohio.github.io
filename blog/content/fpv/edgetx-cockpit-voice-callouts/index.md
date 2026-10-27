@@ -148,19 +148,19 @@ YAML back taught me something about it:
 when altitude _exceeds_ 120 m. It fires when altitude has _changed by_ 120 m
 from its reference point.
 
-I could pretend I planned that. What I will say is that it turns out to be the
-more defensible choice, for a reason worth understanding:
+I could pretend I planned that. What I will say is that my reason for preferring
+it turned out to be wrong, in a way worth understanding:
 
-**`GAlt` on CRSF is GPS altitude, not height above your launch point.** If I had
-used the obvious `a > x` on `GAlt` with a 120 m threshold, it would scream at me
-constantly and permanently, because I fly in Lithuania, where the ground itself
-sits around 70–150 m above sea level. The alarm would be true before the
-aircraft left my hand.
+**`GAlt` on CRSF is not plain GPS altitude above sea level.** Betaflight sends its
+estimated altitude: above sea level only while disarmed, and relative to the
+arming point once armed. So the obvious `a > x` on `GAlt` with a 120 m threshold
+would actually have worked as a launch-relative limit, even though I fly in
+Lithuania, where the ground itself sits around 70–150 m above sea level.
 
-The delta function sidesteps that entirely: it measures _change_, so the
-reference is wherever I started, and 120 m of climb is 120 m of climb regardless
-of the elevation of the field. That is much closer to AGL than absolute GPS
-altitude is.
+The delta function measures _change_, so 120 m of climb is 120 m of climb
+regardless of the elevation of the field. But it has a catch the plain
+comparison doesn't: at arming the value jumps from sea-level altitude to ~0,
+and that jump alone can fire the |Δ| alarm.
 
 It is not perfect, and I want to name the imperfections rather than paper over
 them:
@@ -173,10 +173,9 @@ them:
   legal is still my job.
 
 **This is the part I would most like to improve, and I have not measured a
-better version yet.** The right answer is probably to derive a true
-launch-relative altitude, which the barometer already provides in the OSD but
-which is not what lands in the `GAlt` telemetry sensor. If you have solved this
-cleanly in EdgeTX, I want to hear about it.
+better version yet.** Since `GAlt` is already launch-relative once armed, the
+right answer is probably a plain `GAlt > 120` gated on the armed switch. If you
+have solved this cleanly in EdgeTX, I want to hear about it.
 
 That is the system as I fly it. Six spoken tracks, three satellite states, one
 altitude alarm that turned out to measure something other than what I thought.

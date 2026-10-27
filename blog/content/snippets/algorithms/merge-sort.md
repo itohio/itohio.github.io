@@ -308,7 +308,7 @@ func main() {
 | Aspect | Array | Linked List |
 |--------|-------|-------------|
 | Time | $O(n \log n)$ | $O(n \log n)$ |
-| Auxiliary Space | $O(n)$ | $O(1)$ |
+| Auxiliary Space | $O(n)$ | $O(\log n)$ top-down stack, $O(1)$ bottom-up |
 | Find Middle | $O(1)$ | $O(n)$ |
 | Merge | $O(n)$ with copying | $O(n)$ pointer manipulation |
 | Cache Performance | Better (contiguous) | Worse (scattered) |

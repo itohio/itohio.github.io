@@ -46,7 +46,7 @@ Galioja tas pats minimalistinis elementų sąrašas. Su digital turi daugiau ekr
 DJI atveju įjunk MSP OSD per CLI:
 ```
 set osd_displayport_device = MSP
-set displayport_msp_serial = <serial port number of DJI air unit>
+# ir Ports tab'e oro modulio UART nustatyk į MSP + DisplayPort
 save
 ```
 
@@ -107,16 +107,10 @@ save
 
 ## Stats ekranas (po disarm)
 
-Stats ekranas rodomas po disarm, jei `stats = ON`. Naudingi elementai:
+Stats ekranas rodomas po disarm. Elementus pasirink OSD tab'e → Stats (saugoma `osd_stat_bitmask`): min. baterija, maks. srovė, sunaudoti mAh, maks. greitis (GPS), maks. aukštis (GPS arba baro), viso skrydžių. Persistent skaitikliams reikia:
 
 ```
-set stats = ON
-set stats_min_voltage = ON
-set stats_max_current = ON
-set stats_used_mah = ON
-set stats_max_speed = ON    # requires GPS
-set stats_max_altitude = ON # requires GPS or baro
-set stats_total_flights = ON
+set stats_min_armed_time_s = 0   # -1 = off
 save
 ```
 

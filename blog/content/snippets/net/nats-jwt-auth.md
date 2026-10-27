@@ -52,10 +52,10 @@ docker run -d \
   -p 4222:4222 \
   -p 8222:8222 \
   -v nats-data:/data \
-  nats:latest -js
+  nats:latest -js -sd /data
 
-# Connect
-docker exec -it nats nats-cli
+# Connect (the server image has no CLI; use nats-box)
+docker run --rm -it --network host natsio/nats-box
 ```
 
 ### Docker Compose
@@ -159,7 +159,7 @@ services:
   nats:
     image: nats:latest
     container_name: nats
-    command: ["-js", "-m=8222"]
+    command: ["-js", "-m=8222", "-sd=/data"]
     ports:
       - "4222:4222"
       - "8222:8222"
@@ -435,7 +435,7 @@ nats req --creds=alice.creds "orders.status" "123"
 # User expires after 30 days
 --expiry 30d
 
-# Bearer token (one-time use)
+# Bearer token (no nonce signature: the JWT alone authenticates and is reusable)
 --bearer
 ```
 

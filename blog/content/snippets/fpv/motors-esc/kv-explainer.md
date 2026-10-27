@@ -92,9 +92,9 @@ KV ≈ 25,000 ÷ (14.8 × 0.75) ≈ 25,000 ÷ 11.1 ≈ 2,250 KV
 
 ## KV and Efficiency
 
-Lower KV motors running at higher voltage are generally more efficient for the same power output. The motor's copper windings have the same resistance regardless of KV, but higher-voltage lower-current operation reduces I²R losses (heat in the windings).
+Lower KV motors running at higher voltage are generally more efficient for the same power output. On the same stator, winding resistance scales as R ∝ 1/KV² (more turns of thinner wire), so copper loss in the motor at equal output is about the same; the higher-voltage, lower-current build saves I²R loss in the battery, ESC and wiring.
 
-This is why 6S builds on a 5" frame achieve better flight times despite similar physical size — the lower KV motor on 6S runs cooler and wastes less energy as heat.
+This is part of why 6S builds on a 5" frame achieve better flight times despite similar physical size — less current means less voltage sag and less energy wasted as heat outside the motor.
 
 ---
 

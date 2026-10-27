@@ -136,7 +136,7 @@ quadrantChart
 ## Gotchas/Warnings
 
 - ⚠️ **Coordinates**: Values must be 0.0 to 1.0
-- ⚠️ **Quadrants**: Numbered 1-4 starting top-right, clockwise
+- ⚠️ **Quadrants**: Numbered 1-4 starting top-right, counter-clockwise
 - ⚠️ **Axes**: Must define both x-axis and y-axis
 - ⚠️ **Labels**: Keep quadrant labels concise
 

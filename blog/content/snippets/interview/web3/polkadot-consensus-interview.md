@@ -251,7 +251,7 @@ graph TB
 
 **4. Era Structure**:
 - **Era**: ~24 hours
-- **Session**: ~1 hour
+- **Session**: ~4 hours (2400 × 6s slots; ~1 hour on Kusama)
 - **Epoch**: Multiple slots
 
 **Key Properties**:

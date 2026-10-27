@@ -18,7 +18,7 @@ Betaflight naudoja dviejų pakopų sistemą:
 flowchart TD
     A([RC signal<br/>lost]) --> B{Stage 1<br/>guard time}
     B -->|Signal returns<br/>before timer| C([Resume normal<br/>flight])
-    B -->|Timer expires<br/>default 300ms| D[Stage 1<br/>Hold last valid RC values]
+    B -->|Timer expires<br/>default 1.5s| D[Stage 1<br/>Hold last valid RC values]
     D --> E{Stage 2<br/>guard time}
     E -->|Signal returns| C
     E -->|Timer expires<br/>default 1s| F{Stage 2<br/>procedure?}
@@ -41,7 +41,7 @@ Dauguma šiuolaikinių imtuvų turi du režimus:
 - **Hold** — išveda paskutines galiojančias reikšmes (pavojinga: Betaflight niekada nesuveikia failsafe)
 - **No pulses / failsafe values** — išveda nulinį signalą arba iš anksto nustatytas reikšmes
 
-Sukonfigūruok imtuvą išvesti **no pulses** arba jo paties failsafe padėtį. ELRS imtuvuose tai vyksta automatiškai — ELRS, nutrūkus ryšiui, išveda failsafe padėtį iš bind konfigūracijos.
+Sukonfigūruok imtuvą išvesti **no pulses** arba jo paties failsafe padėtį. ELRS imtuvuose per CRSF tai vyksta automatiškai — nutrūkus ryšiui, imtuvas tiesiog nustoja siųsti freimus (ELRS failsafe padėtys taikomos tik SBUS/PWM išvestims).
 
 ---
 
@@ -121,7 +121,7 @@ Betaflight blokuoja arm, jei failsafe konfigūracija nepilna:
 status
 
 # Look for arming flags like:
-# NOGYRO, RXLOSS, FAILSAFE, BADVIBES, etc.
+# NOGYRO, RXLOSS, FAILSAFE, NO_ACC_CAL, etc.
 
 # If RXLOSS is shown:
 # - RC link is not connected
@@ -143,6 +143,6 @@ status
 
 ## Pastabos
 
-- ELRS pagal nutylėjimą, nutrūkus ryšiui, išveda failsafe reikšmes, jei tai nustatyta bind metu. Patikrink nukirsdamas TX ir įsitikindamas, kad Receiver tab'as Konfigūratoriuje rodo kanalų reikšmes, pasikeičiančias į failsafe padėtį.
+- Per CRSF ELRS, nutrūkus ryšiui, nustoja siųsti freimus, ir perima paties Betaflight failsafe (ELRS failsafe padėtys taikomos tik SBUS/PWM išvestims). Patikrink nukirsdamas TX ir įsitikindamas, kad Receiver tab'as Konfigūratoriuje rodo failsafe reikšmes.
 - „No pulses“ failsafe išvestis yra geresnė už „hold“ — ji garantuoja, kad Betaflight aptiks praradimą per Stage 1 guard langą.
 - Failsafe neatstoja taisyklės neišskristi už ryšio ribų. Tai kraštutinė priemonė.

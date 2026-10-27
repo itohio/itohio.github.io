@@ -40,7 +40,7 @@ ffmpeg -i input.mp4 -c:v libvpx-vp9 -b:v 1M -pass 2 -c:a libopus output.webm
 ffmpeg -i input.mp4 -c:v libx265 -crf 28 -c:a aac -b:a 128k output.mp4
 
 # Hardware acceleration (NVIDIA)
-ffmpeg -i input.mp4 -c:v hevc_nvenc -preset slow -crf 23 output.mp4
+ffmpeg -i input.mp4 -c:v hevc_nvenc -preset slow -rc vbr -cq 23 output.mp4
 ```
 
 ---

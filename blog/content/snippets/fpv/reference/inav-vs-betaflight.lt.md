@@ -32,9 +32,9 @@ Betaflight į GPS žiūri kaip į saugumo funkciją. INAV į GPS žiūri kaip į
 | Rankinis acro skraidymas      | Puikus            | Geras              |
 | PID kilpos vėlinimas          | ~1 ms tikslas     | ~2–4 ms tipiškai   |
 | GPS Rescue (RTH)              | Bazinis — tik avariniam | Pilnas RTH su stabdymu, hold, misija |
-| Position Hold                 | Nėra              | Taip — POSHOLD režimas |
+| Position Hold                 | POS_HOLD režimas (2025.12+) | Taip — POSHOLD režimas |
 | Waypoint misijos              | Nėra              | Taip — autonominiai maršrutai |
-| Aukščio išlaikymas            | Nėra              | Taip — ALTHOLD režimas |
+| Aukščio išlaikymas            | ALT_HOLD režimas (2025.12+) | Taip — ALTHOLD režimas |
 | Fiksuoto sparno palaikymas    | Ne                | Taip — pilnas palaikymas |
 | Blackbox / derinimo įrankiai  | Puikūs            | Geri               |
 | OSD integracija               | Puiki             | Gera (rodo daugiau GPS duomenų) |

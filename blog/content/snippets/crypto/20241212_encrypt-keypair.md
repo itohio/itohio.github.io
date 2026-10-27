@@ -19,26 +19,26 @@ openssl genrsa -out private.pem 4096
 openssl rsa -in private.pem -pubout -out public.pem
 
 # Encrypt file with public key
-openssl rsautl -encrypt -pubin -inkey public.pem -in message.txt -out encrypted.bin
+openssl pkeyutl -encrypt -pubin -inkey public.pem -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in message.txt -out encrypted.bin
 
 # Decrypt file with private key
-openssl rsautl -decrypt -inkey private.pem -in encrypted.bin -out decrypted.txt
+openssl pkeyutl -decrypt -inkey private.pem -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in encrypted.bin -out decrypted.txt
 
 # For larger files, use hybrid encryption (RSA + AES)
 # Generate random AES key
 openssl rand -base64 32 > aes.key
 
-# Encrypt file with AES
-openssl enc -aes-256-cbc -salt -in largefile.txt -out largefile.enc -pass file:aes.key
+# Encrypt file with AES (openssl enc has no AEAD/MAC: no integrity check; prefer age, or AES-GCM as in the Python examples)
+openssl enc -aes-256-cbc -salt -pbkdf2 -iter 600000 -in largefile.txt -out largefile.enc -pass file:aes.key
 
 # Encrypt AES key with RSA
-openssl rsautl -encrypt -pubin -inkey public.pem -in aes.key -out aes.key.enc
+openssl pkeyutl -encrypt -pubin -inkey public.pem -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in aes.key -out aes.key.enc
 
 # Decrypt AES key with RSA
-openssl rsautl -decrypt -inkey private.pem -in aes.key.enc -out aes.key.dec
+openssl pkeyutl -decrypt -inkey private.pem -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in aes.key.enc -out aes.key.dec
 
 # Decrypt file with AES
-openssl enc -d -aes-256-cbc -in largefile.enc -out largefile.dec -pass file:aes.key.dec
+openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 -in largefile.enc -out largefile.dec -pass file:aes.key.dec
 ```
 
 ---
@@ -85,11 +85,11 @@ diff alice_shared.bin bob_shared.bin  # No output = identical
 # Derive AES key from shared secret
 openssl dgst -sha256 -binary alice_shared.bin > aes.key
 
-# Encrypt with derived key
-openssl enc -aes-256-cbc -salt -in message.txt -out encrypted.bin -pass file:aes.key
+# Encrypt with derived key (no integrity check: prefer age or AES-GCM)
+openssl enc -aes-256-cbc -salt -pbkdf2 -in message.txt -out encrypted.bin -pass file:aes.key
 
 # Decrypt with derived key
-openssl enc -d -aes-256-cbc -in encrypted.bin -out decrypted.txt -pass file:aes.key
+openssl enc -d -aes-256-cbc -pbkdf2 -in encrypted.bin -out decrypted.txt -pass file:aes.key
 ```
 
 ---
@@ -192,7 +192,7 @@ print(f"Decrypted: {plaintext.decode()}")
 from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.kdf.hkdf import HKDF
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.backends import default_backend
 import os
 
@@ -225,40 +225,14 @@ def derive_key(shared_secret):
 
 aes_key = derive_key(alice_shared)
 
-# Encrypt with derived key
+# Encrypt with derived key (AES-GCM: authenticated)
 def encrypt_message(key, plaintext):
-    iv = os.urandom(16)
-    cipher = Cipher(
-        algorithms.AES(key),
-        modes.CBC(iv),
-        backend=default_backend()
-    )
-    encryptor = cipher.encryptor()
-    
-    # Pad plaintext to block size
-    pad_length = 16 - (len(plaintext) % 16)
-    padded = plaintext + bytes([pad_length] * pad_length)
-    
-    ciphertext = encryptor.update(padded) + encryptor.finalize()
-    return iv + ciphertext
+    nonce = os.urandom(12)
+    return nonce + AESGCM(key).encrypt(nonce, plaintext, None)
 
-# Decrypt with derived key
+# Decrypt with derived key (raises InvalidTag if tampered)
 def decrypt_message(key, ciphertext):
-    iv = ciphertext[:16]
-    actual_ciphertext = ciphertext[16:]
-    
-    cipher = Cipher(
-        algorithms.AES(key),
-        modes.CBC(iv),
-        backend=default_backend()
-    )
-    decryptor = cipher.decryptor()
-    
-    padded = decryptor.update(actual_ciphertext) + decryptor.finalize()
-    
-    # Remove padding
-    pad_length = padded[-1]
-    return padded[:-pad_length]
+    return AESGCM(key).decrypt(ciphertext[:12], ciphertext[12:], None)
 
 # Example usage
 message = b"Hello, World!"
@@ -277,7 +251,7 @@ print(f"Decrypted: {decrypted}")
 ```python
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import hashes, serialization
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.backends import default_backend
 import os
 
@@ -295,21 +269,10 @@ class HybridEncryption:
         """Encrypt using hybrid encryption (RSA + AES)"""
         # Generate random AES key
         aes_key = os.urandom(32)
-        iv = os.urandom(16)
+        iv = os.urandom(12)
         
-        # Encrypt data with AES
-        cipher = Cipher(
-            algorithms.AES(aes_key),
-            modes.CBC(iv),
-            backend=default_backend()
-        )
-        encryptor = cipher.encryptor()
-        
-        # Pad plaintext
-        pad_length = 16 - (len(plaintext) % 16)
-        padded = plaintext + bytes([pad_length] * pad_length)
-        
-        ciphertext = encryptor.update(padded) + encryptor.finalize()
+        # Encrypt data with AES-GCM (authenticated)
+        ciphertext = AESGCM(aes_key).encrypt(iv, plaintext, None)
         
         # Encrypt AES key with RSA
         encrypted_key = self.public_key.encrypt(
@@ -335,19 +298,8 @@ class HybridEncryption:
             )
         )
         
-        # Decrypt data with AES
-        cipher = Cipher(
-            algorithms.AES(aes_key),
-            modes.CBC(iv),
-            backend=default_backend()
-        )
-        decryptor = cipher.decryptor()
-        
-        padded = decryptor.update(ciphertext) + decryptor.finalize()
-        
-        # Remove padding
-        pad_length = padded[-1]
-        return padded[:-pad_length]
+        # Decrypt data with AES-GCM (raises InvalidTag if tampered)
+        return AESGCM(aes_key).decrypt(iv, ciphertext, None)
 
 # Example usage
 hybrid = HybridEncryption()

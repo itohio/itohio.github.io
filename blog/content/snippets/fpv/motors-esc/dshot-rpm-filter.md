@@ -74,14 +74,14 @@ Do not run RPM filter on BF versions below 4.1.
 Even with RPM filter, the dynamic notch filter handles non-motor noise (frame resonance, prop wash, bearing noise). Leave it on:
 
 ```
-set dyn_notch_count = 4
-set dyn_notch_q = 250
+set dyn_notch_count = 1      # default 3
+set dyn_notch_q = 500        # default 300; higher Q = narrower notch
 set dyn_notch_min_hz = 100
 set dyn_notch_max_hz = 600
 save
 ```
 
-With RPM filter handling motor harmonics, the dynamic notch can be set conservatively (fewer notches, wider Q) to avoid excessive phase delay.
+With RPM filter handling motor harmonics, the dynamic notch can be set conservatively (fewer, narrower notches — lower count, higher Q) to avoid excessive phase delay.
 
 ---
 
@@ -90,13 +90,13 @@ With RPM filter handling motor harmonics, the dynamic notch can be set conservat
 With RPM filter enabled, you can reduce lowpass filter aggression:
 
 ```
-# Gyro lowpass — more permissive with RPM filter
-set gyro_lowpass_hz = 0           # disable static lowpass (RPM filter handles it)
-set gyro_lowpass2_hz = 0
+# Gyro lowpass — more permissive with RPM filter (names since BF 4.3)
+set gyro_lpf1_static_hz = 0      # disable static lowpass (RPM filter handles it)
+set gyro_lpf2_static_hz = 0
 
 # D-term lowpass — keep this for D-noise
-set dterm_lowpass_hz = 100
-set dterm_lowpass2_hz = 200
+set dterm_lpf1_static_hz = 100
+set dterm_lpf2_static_hz = 200
 ```
 
 The Betaflight cinematic and freestyle presets set these automatically when you apply them.

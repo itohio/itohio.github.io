@@ -74,14 +74,14 @@ Nenaudok RPM filter senesnėse nei 4.1 BF versijose.
 Net su RPM filter, dynamic notch filter tvarko ne-motoro triukšmą (rėmo rezonansą, propwash, guolių triukšmą). Palik jį įjungtą:
 
 ```
-set dyn_notch_count = 4
-set dyn_notch_q = 250
+set dyn_notch_count = 1      # default 3
+set dyn_notch_q = 500        # default 300; higher Q = narrower notch
 set dyn_notch_min_hz = 100
 set dyn_notch_max_hz = 600
 save
 ```
 
-Kai RPM filter tvarko motoro harmonikas, dynamic notch galima nustatyti konservatyviai (mažiau notch'ų, platesnis Q), kad išvengtum per didelio fazės vėlinimo.
+Kai RPM filter tvarko motoro harmonikas, dynamic notch galima nustatyti konservatyviai (mažiau ir siauresnių notch'ų — mažesnis count, didesnis Q), kad išvengtum per didelio fazės vėlinimo.
 
 ---
 
@@ -90,13 +90,13 @@ Kai RPM filter tvarko motoro harmonikas, dynamic notch galima nustatyti konserva
 Su įjungtu RPM filter gali sumažinti lowpass filtrų agresyvumą:
 
 ```
-# Gyro lowpass — more permissive with RPM filter
-set gyro_lowpass_hz = 0           # disable static lowpass (RPM filter handles it)
-set gyro_lowpass2_hz = 0
+# Gyro lowpass — more permissive with RPM filter (names since BF 4.3)
+set gyro_lpf1_static_hz = 0      # disable static lowpass (RPM filter handles it)
+set gyro_lpf2_static_hz = 0
 
 # D-term lowpass — keep this for D-noise
-set dterm_lowpass_hz = 100
-set dterm_lowpass2_hz = 200
+set dterm_lpf1_static_hz = 100
+set dterm_lpf2_static_hz = 200
 ```
 
 Betaflight cinematic ir freestyle preset'ai nustato juos automatiškai, kai juos pritaikai.

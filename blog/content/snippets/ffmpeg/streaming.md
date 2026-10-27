@@ -286,7 +286,7 @@ ffmpeg -f v4l2 -framerate 30 -video_size 1280x720 -i /dev/video0 \
 ```bash
 ffmpeg -re -i input.mp4 \
   -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3000k -bufsize 6000k \
-  -pix_fmt yuv420p -g 50 -r 30 \
+  -pix_fmt yuv420p -g 60 -r 30 \
   -c:a aac -b:a 160k -ar 44100 \
   -f flv rtmp://live.twitch.tv/app/YOUR_STREAM_KEY
 ```

@@ -56,17 +56,17 @@ In BLHeli_32 / AM32 configurator:
 
 | ESC Firmware | Setting Name        | Values                |
 |--------------|--------------------|-----------------------|
-| BLHeli_32    | Motor Timing       | Low / MedLow / Med / MedHigh / High |
+| BLHeli_32    | Motor Timing       | 1–31° or Auto         |
 | AM32         | Motor Timing (deg) | Direct degree input   |
 
-BLHeli_32 "Motor Timing" approximate mapping:
-- Low ≈ 15°
-- MedLow ≈ 18°
-- Medium ≈ 22°
-- MedHigh ≈ 25°
-- High ≈ 30°
+The Low / MedLow / Medium / MedHigh / High names belong to **BLHeli_S**, where they mean:
+- Low = 0°
+- MedLow = 7.5°
+- Medium = 15°
+- MedHigh = 22.5°
+- High = 30°
 
-For efficiency: select **Low**. For freestyle: **Medium**.
+For efficiency: low timing (BLHeli_S **Low**/**MedLow**, BLHeli_32 ~15° or Auto). For freestyle: **Medium** / ~22°.
 
 ---
 

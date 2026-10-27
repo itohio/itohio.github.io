@@ -41,7 +41,7 @@ Pirmas tos dienos skrydis. Laukas atviras, dangus giedras, pastatų nėra. Įjun
 | 1S Matrix 3-in-1 skaitmeninis | ~90s | 20–22 |
 | Pavo20 Pro II | >5min | 2–4 |
 
-1S dronas taip pat naudoja integruotą FC/ESC/VTX plokštę — BetaFPV Matrix 3-in-1, tą pačią plokštę, kuri naudojama Meteor serijos dronuose. Jis nėra mažiau integruotas nei Pavo20. Skiriasi tai, kad jis veikia su vienu 18650 elementu, todėl BEC mažina įtampą nuo 3,7V, o ne nuo kelių elementų akumuliatoriaus. Kitoks BEC darbinis taškas, kitoks harmonikų profilis, kitoks triukšmo lygis GPS juostoje.
+1S dronas taip pat naudoja integruotą FC/ESC/VTX plokštę — BetaFPV Matrix 3-in-1, tą pačią plokštę, kuri naudojama Meteor serijos dronuose. Jis nėra mažiau integruotas nei Pavo20. Skiriasi tai, kad jis veikia su vienu 18650 elementu, todėl jo 5V reguliatorius turi pakelti įtampą nuo 3,7V, o ne mažinti ją nuo kelių elementų akumuliatoriaus. Kitokia reguliatoriaus topologija ir darbinis taškas, kitoks harmonikų profilis, kitoks triukšmo lygis GPS juostoje.
 
 Burbulinio drono korpuse beveik nėra vietos tarp papildomai pritvirtinto GPS modulio ir visko, kas generuoja triukšmą.
 

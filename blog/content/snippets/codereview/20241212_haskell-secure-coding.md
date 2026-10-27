@@ -52,10 +52,10 @@ runCommandGood filename
 ## XSS Prevention
 
 ```haskell
--- ❌ Vulnerable
+-- ❌ Vulnerable: preEscapedToHtml inserts the string raw
 import Text.Blaze.Html5 as H
 displayMessage :: String -> Html
-displayMessage msg = H.div $ toHtml msg
+displayMessage msg = H.div $ preEscapedToHtml msg
 
 -- ✅ Secure: Text.Blaze escapes by default
 import Text.Blaze.Html5 as H
@@ -97,13 +97,11 @@ comparePasswords = (==)
 
 -- ✅ Secure: Constant-time comparison
 import Data.ByteString (ByteString)
-import qualified Data.ByteString as BS
-import Crypto.MAC.HMAC
+import qualified Data.ByteArray as BA
 
+-- (&&) short-circuits, so a hand-rolled fold leaks timing; use memory's constEq
 constantTimeCompare :: ByteString -> ByteString -> Bool
-constantTimeCompare a b = 
-    BS.length a == BS.length b && 
-    BS.foldl' (\acc (x, y) -> acc && x == y) True (BS.zip a b)
+constantTimeCompare = BA.constEq
 ```
 
 ---

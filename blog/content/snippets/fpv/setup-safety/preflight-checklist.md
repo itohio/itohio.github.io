@@ -47,10 +47,10 @@ flowchart TD
 
 | Motor | Position         | Direction |
 |-------|-----------------|-----------|
-| M1    | Rear right      | CCW       |
-| M2    | Front right     | CW        |
-| M3    | Rear left       | CW        |
-| M4    | Front left      | CCW       |
+| M1    | Rear right      | CW        |
+| M2    | Front right     | CCW       |
+| M3    | Rear left       | CCW       |
+| M4    | Front left      | CW        |
 
 **Test without props. Always.**
 
@@ -74,8 +74,8 @@ status
 # RXLOSS    → receiver not connected / failsafe active
 # NOGYRO    → IMU not detected (hardware fault)
 # CALIB     → IMU still calibrating (wait ~10s after powerup)
-# ANGLE     → Angle mode active but accelerometer not calibrated
-# BADVIBES  → excessive vibration on IMU
+# ANGLE     → craft tilted beyond small_angle (default 25°)
+# NO_ACC_CAL → accelerometer not calibrated
 # ARMSWITCH → ARM switch not in disarm position
 ```
 

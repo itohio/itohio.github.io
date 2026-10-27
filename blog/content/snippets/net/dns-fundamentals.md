@@ -96,7 +96,7 @@ host -v example.com
 
 ### MX Records (Mail Routing)
 
-Priority matters - lower number = higher priority.
+Priority matters - lower number = higher priority. New Google Workspace setups use a single record, `1 smtp.google.com.`; the five-record ASPMX set below is the legacy configuration and still works.
 
 ```
 Priority  Hostname

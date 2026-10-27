@@ -44,7 +44,7 @@ from scipy import stats
 import numpy as np
 
 # Generate samples
-samples = np.random.normal(mu=0, sigma=1, size=1000)
+samples = np.random.normal(loc=0, scale=1, size=1000)
 
 # PDF
 x = np.linspace(-4, 4, 100)

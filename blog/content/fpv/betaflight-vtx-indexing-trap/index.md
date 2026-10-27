@@ -94,7 +94,7 @@ graph LR
     class VT1,VT2,VT3 good;
 ```
 
-The mapping is `vtx_power = N` selects `vtxtable[N-1]`. Value `0` isn't "the first entry" — it's out of range, and out-of-range means pit. Value `1` *is* valid, but on a standard Emax-style table `vtxtable[0]` is the **PIT** entry. So the two lowest values I "naturally" reached both meant pit, and the real 400 mW slot at `vtxtable[3]` needed a `4` I never typed.
+The mapping is `vtx_power = N` selects `vtxtable[N-1]`. Value `0` isn't "the first entry" — it means *don't change power*: the range matches, but the VTX keeps whatever power it already had. Value `1` *is* valid, but on a standard Emax-style table `vtxtable[0]` is the **PIT** entry. So the two lowest values I "naturally" reached either left me on pit or selected pit, and the real 400 mW slot at `vtxtable[3]` needed a `4` I never typed.
 
 ---
 
@@ -159,7 +159,7 @@ There was a second, sneakier casualty: `set vtx_power`.
 set vtx_power = 1
 ```
 
-This is the **fallback** power Betaflight applies when the AUX value doesn't match any configured range. I set it to `1` thinking "lowest real power." But `set vtx_power` is *also* 1-based and points at the same table — so `1` = `vtxtable[0]` = **PIT**. That's why any wheel position that slipped between my ranges didn't fall back to a low power; it fell back to pit. Two separate 1-based fields, one wrong assumption, compounding.
+This is the **stored** power — the one Betaflight applies at boot and keeps until a `vtx` range changes it. It is not a fallback for unmatched AUX ranges: when the wheel sits outside every range, the last selection simply stays. I set it to `1` thinking "lowest real power." But `set vtx_power` is *also* 1-based and points at the same table — so `1` = `vtxtable[0]` = **PIT**. That's why the quad booted into pit, and any wheel position that matched no power-changing range just left it there. Two separate 1-based fields, one wrong assumption, compounding.
 
 ---
 
@@ -175,9 +175,9 @@ set vtx_power = 2
 ```
 
 - **`2` / `3` / `4`** now correctly select 25 / 100 / 400 mW. 400 mW is finally reachable at the top of the wheel.
-- **`set vtx_power = 2`** makes the fallback a real 25 mW instead of pit, so an unmatched wheel position drops to low power, not to a dead feed.
+- **`set vtx_power = 2`** makes the boot power a real 25 mW instead of pit, so the feed is alive before the wheel ever matches a range.
 - **Ranges tightened to three zones** across the wheel's travel with no gaps between them — each range's `end` is the next range's `start`.
-- **`900` and `2100`** at the extremes, not `1000`–`2000`, on purpose: on CRSF the channel endpoints overshoot slightly — the top of the wheel reports around **~2012 µs**, not a clean 2000, and the bottom dips below 1000. A range that ends at exactly `2000` leaves the very top of the wheel unmatched, which — thanks to the fallback trap above — used to dump me straight into pit at max wheel. Widening to `900`–`2100` swallows the overshoot so the endpoints stay locked to the zones I want.
+- **`900` and `2100`** at the extremes, not `1000`–`2000`, on purpose: on CRSF the channel endpoints overshoot slightly — the top of the wheel reports around **~2012 µs**, not a clean 2000, and the bottom dips below 1000. A range that ends at exactly `2000` leaves the very top of the wheel unmatched, so the wheel stops switching and the last power (pit, at boot) sticks. Widening to `900`–`2100` swallows the overshoot so the endpoints stay locked to the zones I want.
 
 Reload, and the wheel does what the physical rotation implies: bottom = low, middle = medium, top = 400 mW. No pit surprises.
 

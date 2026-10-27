@@ -88,7 +88,11 @@ if (!is_valid_filename(filename)) {
     return ERROR;
 }
 char* args[] = {"cat", filename, NULL};
-execvp(args[0], args);
+pid_t pid;
+// No shell; spawns a child (bare execvp would replace this process)
+if (posix_spawnp(&pid, args[0], NULL, NULL, args, environ) == 0) {
+    waitpid(pid, NULL, 0);
+}
 ```
 
 ---

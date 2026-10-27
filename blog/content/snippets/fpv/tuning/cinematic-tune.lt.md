@@ -45,7 +45,7 @@ Preset'ai — tai atspirties taškas. Pritaikius:
 1. **Patikrink RPM filter**, ar įjungtas ir ar veikia bidirectional DSHOT (`dshot_bidir = ON`, patikrink `rpmfilter` CLI).
 2. **Sumažink RC smoothing**, jei kadrai atrodo, lyg „ieškotų“ ties centru:
    ```
-   set rc_smoothing_auto_factor = 50
+   set rc_smoothing_auto_factor = 20   # default 30; lower = less smoothing
    ```
 3. **Sumažink feedforward**, jei dronas jaučiasi trūkčiojantis per lėtus panoraminius kadrus:
    ```

@@ -20,7 +20,7 @@ Reduce CPU/GPU voltage to lower temperatures and power consumption while maintai
 - Extended battery life
 - Same or better performance (less thermal throttling)
 
-**Risks**: System instability if too aggressive (easily reversible)
+**Risks**: System instability if too aggressive (easily reversible). Many Intel CPUs lock voltage offsets since the Plundervolt fix (CVE-2019-11157), so offsets may simply have no effect.
 
 ---
 
@@ -167,6 +167,8 @@ sudo systemctl enable ryzenadj
 
 ## NVIDIA GPU Undervolting (Linux)
 
+Note: Linux has no voltage control for NVIDIA; the commands below are a clock offset (overclock) plus a power limit, which only approximate an undervolt.
+
 ```bash
 # Enable coolbits
 sudo nvidia-xconfig --cool-bits=28
@@ -231,8 +233,9 @@ corectrl
 # Or manual via sysfs
 echo "manual" | sudo tee /sys/class/drm/card0/device/power_dpm_force_performance_level
 
-# Set voltage
+# Set minimum SCLK (index 0) to 800 MHz, then commit with "c" - nothing applies until committed
 echo "s 0 800" | sudo tee /sys/class/drm/card0/device/pp_od_clk_voltage
+echo "c" | sudo tee /sys/class/drm/card0/device/pp_od_clk_voltage
 ```
 
 ---

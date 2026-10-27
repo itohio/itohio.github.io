@@ -282,8 +282,8 @@ def decrypt_aes_cbc_hmac(iv, ciphertext, tag, enc_key, mac_key):
 | Mode | IV/Nonce | Reuse Impact |
 |------|----------|--------------|
 | **CBC** | Random, unpredictable | Pattern leakage |
-| **CTR** | Unique (can be counter) | ❌ **Catastrophic** - key recovery |
-| **GCM** | Unique | ❌ **Catastrophic** - auth bypass |
+| **CTR** | Unique (can be counter) | ❌ **Catastrophic** - keystream reuse leaks plaintext XOR |
+| **GCM** | Unique | ❌ **Catastrophic** - plaintext XOR + GHASH key leak (forgeries) |
 
 **Never reuse nonce with same key in CTR/GCM!**
 

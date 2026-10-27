@@ -201,7 +201,7 @@ WMIC Path Win32_Battery Get EstimatedChargeRemaining
 ## Best Practices
 
 1. **Keep charge between 20-80%** for daily use
-2. **Full discharge once a month** to calibrate battery meter
+2. **Avoid full discharges** - they wear Li-ion; only recalibrate the battery meter occasionally if it drifts
 3. **Avoid high temperatures** (keep laptop cool)
 4. **Remove from charger** when fully charged (if no threshold control)
 5. **Store at 50%** if not using for extended period

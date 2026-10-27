@@ -73,10 +73,10 @@ pakete, kuriam viskas buvo gerai.
 skirtumo pamatyti negali. 3,5 V ir 2,9 V laipteliai yra pažeidžiami, nes būtent
 tokias reikšmes praeini po apkrova gerokai anksčiau, nei jas pasieki ramybėje.
 
-EdgeTX įrankius turi: **Duration** reikalauja, kad sąlyga išsilaikytų N
-sekundžių prieš jungtukui tampant teisingu, o **Delay** atideda perėjimą.
-Uždėjus sekundės ar dviejų trukmę žemiesiems laipteliams, netikri signalai dėl
-įtampos kritimo išnyktų beveik visiškai.
+EdgeTX įrankius turi: **Delay** reikalauja, kad sąlyga išsilaikytų N
+sekundžių prieš jungtukui tampant teisingu, o **Duration** nustato, kiek laiko
+jungtukas lieka įjungtas po suveikimo. Uždėjus sekundės ar dviejų delay žemiesiems
+laipteliams, netikri signalai dėl įtampos kritimo išnyktų beveik visiškai.
 
 Neskelbsiu konkrečių skaičių, nes jų dar neišvedžiau iš savo įrašų, o rinktis
 juos iš nuojautos būtų būtent tas spėjimas, su kuriuo visas šis įrašas ir
@@ -114,7 +114,7 @@ tie kadrai nėra dažni.
 Sprendimas, kurio dar nepritaikiau, yra trivialus: **sujungti kiekvieną žemos
 įtampos jungtuką su galiojimo sąlyga**, kažkuo panašiu į `RxBt > 0,5`, kad
 „nėra telemetrijos“ būtų skaitoma kaip „nėra nuomonės“, o ne kaip „katastrofa“.
-Taip pat veiktų `Duration`, pakankamai ilgas, kad pergyventų paleidimo tarpą.
+Taip pat veiktų `Delay`, pakankamai ilgas, kad pergyventų paleidimo tarpą.
 
 Sprendimas, kurį jau *pradėjau*, yra įdomesnis, ir jis paaiškina jungtuką, kuris
 kitaip atrodytų kaip šiukšlė. **L9 yra `RxBt < 3,8 V IR SE-`**, pririštas prie

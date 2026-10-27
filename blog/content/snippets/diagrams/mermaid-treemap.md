@@ -22,24 +22,22 @@ Use treemaps when you need to:
 
 ````markdown
 ```mermaid
-treemap
-    title Project Structure
-    Root
-        Frontend : 40
-        Backend : 35
-        Database : 25
+treemap-beta
+"Project Structure"
+    "Frontend": 40
+    "Backend": 35
+    "Database": 25
 ```
 ````
 
 **Result:**
 
 ```mermaid
-treemap
-    title Project Structure
-    Root
-        Frontend : 40
-        Backend : 35
-        Database : 25
+treemap-beta
+"Project Structure"
+    "Frontend": 40
+    "Backend": 35
+    "Database": 25
 ```
 
 ## Examples
@@ -48,93 +46,89 @@ treemap
 
 ````markdown
 ```mermaid
-treemap
-    title Codebase Structure
-    Root
-        Frontend : 45
-            Components : 20
-            Pages : 15
-            Utils : 10
-        Backend : 35
-            API : 15
-            Services : 12
-            Models : 8
-        Tests : 20
-            Unit : 12
-            Integration : 8
+treemap-beta
+"Codebase Structure"
+    "Frontend"
+        "Components": 20
+        "Pages": 15
+        "Utils": 10
+    "Backend"
+        "API": 15
+        "Services": 12
+        "Models": 8
+    "Tests"
+        "Unit": 12
+        "Integration": 8
 ```
 ````
 
 **Result:**
 
 ```mermaid
-treemap
-    title Codebase Structure
-    Root
-        Frontend : 45
-            Components : 20
-            Pages : 15
-            Utils : 10
-        Backend : 35
-            API : 15
-            Services : 12
-            Models : 8
-        Tests : 20
-            Unit : 12
-            Integration : 8
+treemap-beta
+"Codebase Structure"
+    "Frontend"
+        "Components": 20
+        "Pages": 15
+        "Utils": 10
+    "Backend"
+        "API": 15
+        "Services": 12
+        "Models": 8
+    "Tests"
+        "Unit": 12
+        "Integration": 8
 ```
 
 ### Example 2: Budget Allocation
 
 ````markdown
 ```mermaid
-treemap
-    title Budget Breakdown
-    Total Budget
-        Development : 50
-            Backend : 25
-            Frontend : 20
-            DevOps : 5
-        Marketing : 30
-            Advertising : 15
-            Content : 10
-            Events : 5
-        Operations : 20
-            Infrastructure : 12
-            Support : 8
+treemap-beta
+"Total Budget"
+    "Development"
+        "Backend": 25
+        "Frontend": 20
+        "DevOps": 5
+    "Marketing"
+        "Advertising": 15
+        "Content": 10
+        "Events": 5
+    "Operations"
+        "Infrastructure": 12
+        "Support": 8
 ```
 ````
 
 **Result:**
 
 ```mermaid
-treemap
-    title Budget Breakdown
-    Total Budget
-        Development : 50
-            Backend : 25
-            Frontend : 20
-            DevOps : 5
-        Marketing : 30
-            Advertising : 15
-            Content : 10
-            Events : 5
-        Operations : 20
-            Infrastructure : 12
-            Support : 8
+treemap-beta
+"Total Budget"
+    "Development"
+        "Backend": 25
+        "Frontend": 20
+        "DevOps": 5
+    "Marketing"
+        "Advertising": 15
+        "Content": 10
+        "Events": 5
+    "Operations"
+        "Infrastructure": 12
+        "Support": 8
 ```
 
 ## Notes
 
-- `title` - Optional treemap title
-- Indentation creates hierarchy
-- Values determine rectangle size
+- Keyword is `treemap-beta` (Mermaid 11.8.0+)
+- Every label is double-quoted; leaves are `"Label": value`
+- Indentation creates hierarchy; parents carry no value (their size is the sum of children)
 - Can nest multiple levels
 
 ## Gotchas/Warnings
 
 - ⚠️ **Indentation**: Must be consistent for hierarchy
-- ⚠️ **Values**: Should be positive numbers
+- ⚠️ **Values**: Only on leaves, positive numbers
 - ⚠️ **Nesting**: Can nest multiple levels deep
 - ⚠️ **Proportions**: Rectangle sizes proportional to values
 

@@ -44,7 +44,7 @@ Arba fiziškai apkeisk bet kuriuos du iš trijų fazės laidų probleminiame mot
 
 **Priežastis:** CW propas ant CCW motoro arba propai priskirti ne toms šakoms.
 
-**Sprendimas:** patikrink Betaflight motorų išdėstymo schemą. Kiekviena motoro pozicija pažymėta 1–4 su laukiama sukimosi kryptimi. CW propai (priekinė briauna riečiasi pagal laikrodžio rodyklę, žiūrint iš viršaus) eina ant CCW besisukančių motorų ir atvirkščiai.
+**Sprendimas:** patikrink Betaflight motorų išdėstymo schemą. Kiekviena motoro pozicija pažymėta 1–4 su laukiama sukimosi kryptimi. CW propas eina ant CW besisukančio motoro, CCW propas — ant CCW motoro: propo kryptis apibrėžiama tuo, į kurią pusę jis turi suktis.
 
 Visada pirma suk motorus su NUIMTAIS propais ir vizualiai patikrink kryptį prieš uždėdamas propus.
 
@@ -86,7 +86,7 @@ Visada pirma suk motorus su NUIMTAIS propais ir vizualiai patikrink kryptį prie
 ```
 # For digital systems — set MSP OSD
 set osd_displayport_device = MSP
-set displayport_msp_serial = 1   # match the UART connected to air unit
+# and set the air-unit UART to MSP + DisplayPort in the Ports tab
 save
 ```
 

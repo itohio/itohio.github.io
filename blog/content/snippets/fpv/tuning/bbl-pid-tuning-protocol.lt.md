@@ -77,8 +77,8 @@ set blackbox_device = SPIFLASH   # or SDCARD if available
 # Fields to ensure are logged:
 set blackbox_disable_pids = OFF
 set blackbox_disable_setpoint = OFF
-set blackbox_disable_gyroraw = OFF
-set blackbox_disable_motor = OFF
+set blackbox_disable_gyrounfilt = OFF
+set blackbox_disable_motors = OFF
 save
 ```
 

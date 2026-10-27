@@ -118,7 +118,7 @@ early_stop = keras.callbacks.EarlyStopping(
 
 # Model checkpoint
 checkpoint = keras.callbacks.ModelCheckpoint(
-    'best_model.h5',
+    'best_model.keras',
     monitor='val_accuracy',
     save_best_only=True
 )

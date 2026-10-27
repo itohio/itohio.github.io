@@ -489,8 +489,8 @@ Edit distance allowing insertions, deletions, substitutions, and **transposition
 **Intuition**: Accounts for common typo - swapping two adjacent letters.
 
 **Example**: "CA" → "ABC"
-- Levenshtein: 3 (delete C, delete A, insert A, B, C)
-- Damerau-Levenshtein: 2 (insert A before, insert B after)
+- Levenshtein: 3 (substitute C→A, substitute A→B, insert C)
+- Damerau-Levenshtein: 2 (transpose CA→AC, insert B); restricted OSA gives 3
 
 **Operations**:
 1. Insert

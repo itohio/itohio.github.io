@@ -253,7 +253,7 @@ def split_large_secret(data: bytes, chunk_size: int, threshold: int, num_shares:
     
     return all_shares
 
-def reconstruct_large_secret(shares_list: List[List[Tuple[int, int]]], chunk_size: int) -> bytes:
+def reconstruct_large_secret(shares_list: List[List[Tuple[int, int]]], chunk_size: int, secret_len: int) -> bytes:
     """Reconstruct large data from chunked shares"""
     num_chunks = len(shares_list[0])
     reconstructed_data = b''
@@ -264,9 +264,8 @@ def reconstruct_large_secret(shares_list: List[List[Tuple[int, int]]], chunk_siz
         
         # Handle last chunk (might be shorter)
         if chunk_idx == num_chunks - 1:
-            # Determine actual length
-            chunk_bytes = decode_int_to_bytes(secret_int, chunk_size)
-            chunk_bytes = chunk_bytes.rstrip(b'\x00')  # Remove padding
+            # Use the stored original length (stripping zeros would corrupt secrets ending in 0x00)
+            chunk_bytes = decode_int_to_bytes(secret_int, secret_len - chunk_idx * chunk_size)
         else:
             chunk_bytes = decode_int_to_bytes(secret_int, chunk_size)
         

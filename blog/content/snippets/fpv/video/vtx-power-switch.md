@@ -30,7 +30,7 @@ vtxtable powerlabels 25 100 200 400 600
 
 ## Mode Condition Setup
 
-In Configurator → **Modes** tab, assign `VTX PIT MODE` and/or `VTX POWER LEVEL n` to AUX channel ranges.
+Power-from-switch is configured in Configurator → **VTX** tab (saved as `vtx` CLI lines); pit mode uses the `VTX PIT MODE` mode in the **Modes** tab.
 
 For a 3-position switch cycling through 25 / 200 / 600 mW:
 ```
@@ -54,15 +54,15 @@ vtxtable powerlabels 25 100 200 400 600
 save
 ```
 
-Map the wheel to **AUX3** in the transmitter's mixer, then assign the ranges in Configurator → **Modes** tab (not via raw CLI — mode ranges are edited in the GUI or with the numeric `aux` command). Split the 1000–2000 µs wheel travel into non-overlapping bands:
+Map the wheel to **AUX3** in the transmitter's mixer, then add the bands in Configurator → **VTX** tab, or with `vtx <slot> <aux> <band> <channel> <power> <start> <end>` lines (AUX is 0-based, so AUX3 = 2; band/channel/power 0 = don't change; ranges in 25 µs steps; power is the 1-based `vtxtable` level). Split the 1000–2000 µs wheel travel into non-overlapping bands:
 
 | Wheel band | µs range | Assign |
 |-----------|----------|--------|
-| LOW | 1000–1333 | `VTX PIT MODE` |
-| MID | 1334–1666 | `VTX POWER LEVEL 2` (200 mW) |
-| HIGH | 1667–2000 | `VTX POWER LEVEL 4` (600 mW) |
+| LOW | 1000–1325 | `VTX PIT MODE` (Modes tab) |
+| MID | 1350–1650 | `vtx 0 2 0 0 3 1350 1650` (level 3 = 200 mW) |
+| HIGH | 1675–2000 | `vtx 1 2 0 0 5 1675 2000` (level 5 = 600 mW) |
 
-The `VTX POWER LEVEL n` mode conditions handle the stepping — you don't need exact midpoints, just non-overlapping ranges.
+Outside every band the last selection stays; you don't need exact midpoints, just non-overlapping ranges.
 
 ---
 

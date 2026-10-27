@@ -45,7 +45,7 @@ Presets are a starting point. After applying:
 1. **Verify RPM filter** is enabled and bidirectional DSHOT is working (`dshot_bidir = ON`, check `rpmfilter` in CLI).
 2. **Lower RC smoothing** if the footage looks like it's hunting at center:
    ```
-   set rc_smoothing_auto_factor = 50
+   set rc_smoothing_auto_factor = 20   # default 30; lower = less smoothing
    ```
 3. **Reduce feedforward** if the quad feels twitchy on slow pans:
    ```

@@ -237,7 +237,8 @@ for episode in range(1000):
         
         # Compute advantage
         value = critic(torch.FloatTensor(state))
-        next_value = critic(torch.FloatTensor(next_state))
+        with torch.no_grad():  # TD target is a constant (semi-gradient TD)
+            next_value = critic(torch.FloatTensor(next_state))
         advantage = reward + gamma * next_value * (1 - done) - value
         
         # Update critic

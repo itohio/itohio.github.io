@@ -86,6 +86,8 @@ func process(ctx context.Context) {
 
 ## Pointer to Loop Variable
 
+> Fixed in Go 1.22+: each iteration gets a new variable when `go.mod` says `go 1.22` or later. Still a bug in modules declaring an older version.
+
 ```go
 // ❌ Bad
 var results []*Item

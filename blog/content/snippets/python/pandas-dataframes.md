@@ -563,7 +563,7 @@ for i in range(len(df)):
 df['new_col'] = df['col1'] * 2
 
 # Use query for complex filters
-df.query('age > 30 and city == "NYC"')  # Faster than boolean indexing
+df.query('age > 30 and city == "NYC"')  # Faster than boolean indexing on large frames (numexpr); slower on small ones
 
 # Use eval for complex calculations
 df.eval('new_col = col1 + col2 * col3')

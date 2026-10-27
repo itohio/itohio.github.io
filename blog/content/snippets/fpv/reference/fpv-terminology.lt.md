@@ -45,7 +45,7 @@ Vieno puslapio žinynas su santrumpomis ir terminais, kurie užpildo kiekvieną 
 | **Prop notation** | pvz., **5148**: pirmieji du skaitmenys = skersmuo colio dešimtosiomis (5,1"), kiti du = pitch dešimtosiomis (4,8"). |
 | **Pitch** | Kiek propas pasistumia per apsisukimą idealiame ore. Didesnis pitch = daugiau greičio, daugiau apkrovos. |
 | **Tri-blade / Bi-blade** | Mentelių skaičius. Tri-blade = daugiau traukos vienam RPM, daugiau triukšmo. Bi-blade = sklandžiau, efektyviau greityje. |
-| **CW / CCW** | Sukimasis pagal / prieš laikrodžio rodyklę. Standartinis Betaflight motorų išdėstymas: M1 CCW, M2 CW, M3 CW, M4 CCW (Betaflight props-in). |
+| **CW / CCW** | Sukimasis pagal / prieš laikrodžio rodyklę. Standartinis Betaflight motorų išdėstymas: M1 CW, M2 CCW, M3 CCW, M4 CW (Betaflight props-in). |
 | **T-mount** | Propo tvirtinimas centriniu varžtu. Naudojamas 5" ir didesniems. |
 | **Press-fit** | Propas užspaudžiamas tiesiai ant motoro veleno — dažnas whoop'uose. Patikrink užspaudimo tvirtumą prieš kiekvieną skrydį. |
 | **AUW** | All-up weight (bendras skrydžio svoris). Visa skrendanti masė su baterija. TWR = trauka / AUW. |
@@ -99,7 +99,7 @@ Vieno puslapio žinynas su santrumpomis ir terminais, kurie užpildo kiekvieną 
 | **Horizon / Angle** | Savaiminio išsilyginimo režimai. FC naudoja akselerometrą, kad išlaikytų lygią padėtį. Naudinga tik pradedantiesiems. |
 | **Arming** | Būsena, kai motorai įjungti. Daugumai setup'ų reikia: gero RC ryšio, jokių arming flag'ų, arm jungiklio. |
 | **PID** | Proportional-Integral-Derivative. Valdymo kilpa Betaflight branduolyje. Žr. [PID Basics](../../tuning/pid-basics/). |
-| **Rates** | Kaip stick'o pakrypimas verčiamas į sukimosi greitį (°/s). Keturi stiliai: Betaflight, Actual, KISS, Quickrates. Žr. [Rate Modes](../../tuning/rate-modes/). |
+| **Rates** | Kaip stick'o pakrypimas verčiamas į sukimosi greitį (°/s). Penki stiliai: Betaflight, Raceflight, KISS, Actual, Quickrates. Žr. [Rate Modes](../../tuning/rate-modes/). |
 | **Blackbox** | Skrydžio duomenų registratorius, įmontuotas Betaflight. Log'ina gyro, setpoint, motorus, PID iki 4 kHz. Žr. [Blackbox Logging](../../tuning/blackbox-logging/). |
 | **CLI** | Command Line Interface. Tekstinis terminalas Betaflight Configurator'e tiesioginei parametrų prieigai. `diff all` atsarginei kopijai. |
 | **RPM filter** | Dinaminiai notch filtrai, susieti su motorų elektriniais RPM per DSHOT telemetriją. Reikia bidirectional DSHOT. |

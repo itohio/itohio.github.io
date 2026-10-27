@@ -211,7 +211,7 @@ where $T$ is temperature.
 "The sky is" → "blue" (deterministic)
 ```
 
-**Temperature = 0.7** (default): Balanced creativity
+**Temperature = 0.7** (a common choice; OpenAI and Anthropic APIs default to 1.0): Balanced creativity
 ```
 "The sky is" → "blue" or "clear" or "bright"
 ```

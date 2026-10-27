@@ -190,7 +190,7 @@ Galėjau tiesiogiai maitinti I2S iš ESP32 į DSP. Ir bandžiau tai padaryti, be
 
 ![Tai yra pagrindinis galios stiprintuvas. Jis maitinamas tiesiogiai iš baterijos BMS](power.jpg)
 
-**TPA3110**: Class D efektyvus ir puikiai tinka tokiam mažam uždaram korpusui. Gali duoti 30W kanalui prie 16V į 4Ohm @10% THD. Gal stiprintuvas ir pernelyg galingas, bet iki 10W garsas yra labai švarus ir čipas nekaista net be radiatoriaus! Pridėjau feritinių karoliukų pagal rekomendaciją (iš esmės „iš akies“)
+**TPA3110**: Class D efektyvus ir puikiai tinka tokiam mažam uždaram korpusui. Gali duoti 15W kanalui prie 16V į 8Ohm @10% THD (30W tik sujungus į vieną kanalą (mono PBTL) su 4Ohm apkrova). Gal stiprintuvas ir pernelyg galingas, bet iki 10W garsas yra labai švarus ir čipas nekaista net be radiatoriaus! Pridėjau feritinių karoliukų pagal rekomendaciją (iš esmės „iš akies“)
 
 ![Žadinimo elementai iš arti](exciter.jpg)
 

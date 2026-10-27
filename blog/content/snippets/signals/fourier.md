@@ -65,7 +65,7 @@ Where:
 
 Efficient algorithm for computing DFT. Complexity: $O(N \log N)$ vs $O(N^2)$ for naive DFT.
 
-**Requirement**: $N$ should be a power of 2 for best performance.
+**Note**: Any $N$ works (mixed-radix FFTs in NumPy/SciPy/FFTW); sizes with small prime factors (e.g. powers of 2) are just fastest — see `scipy.fft.next_fast_len`.
 
 ---
 
@@ -274,7 +274,7 @@ fft_result = np.fft.fft(windowed_signal)
 
 ## Practical Tips
 
-1. **Zero-padding**: Increase frequency resolution
+1. **Zero-padding**: Interpolates the spectrum (finer bin spacing); true resolution stays $1/T$ of the recorded duration
    ```python
    N_padded = 2**int(np.ceil(np.log2(len(signal)))) * 2
    signal_padded = np.pad(signal, (0, N_padded - len(signal)))

@@ -33,9 +33,9 @@ y_new = f_cubic(x_new)
 ## 2D Interpolation
 
 ```python
-# 2D regular grid
-f = interpolate.interp2d(x, y, z, kind='cubic')
-z_new = f(x_new, y_new)
+# 2D regular grid (interp2d was removed in SciPy 1.14); z has shape (len(y), len(x))
+f = interpolate.RectBivariateSpline(x, y, z.T, kx=3, ky=3)
+z_new = f(x_new, y_new).T
 
 # 2D scattered data
 f = interpolate.Rbf(x, y, z)

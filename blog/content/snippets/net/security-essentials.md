@@ -11,7 +11,7 @@ Security best practices, OWASP Top 10, secure coding practices, and security tes
 
 ---
 
-## OWASP Top 10 (2021)
+## OWASP Top 10 (2021; superseded by the 2025 edition)
 
 ```mermaid
 graph TD

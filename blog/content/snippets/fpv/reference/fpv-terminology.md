@@ -45,7 +45,7 @@ A single-page reference for the acronyms and terms that fill every FPV forum pos
 | **Prop notation** | e.g., **5148**: first two digits = diameter in tenths of an inch (5.1"), next two = pitch in tenths (4.8"). |
 | **Pitch** | How far a prop advances per revolution in ideal air. Higher pitch = more speed, more load. |
 | **Tri-blade / Bi-blade** | Blade count. Tri-blade = more thrust per RPM, more noise. Bi-blade = smoother, more efficient at speed. |
-| **CW / CCW** | Clockwise / Counter-clockwise rotation. Standard Betaflight motor layout: M1 CCW, M2 CW, M3 CW, M4 CCW (Betaflight props-in). |
+| **CW / CCW** | Clockwise / Counter-clockwise rotation. Standard Betaflight motor layout: M1 CW, M2 CCW, M3 CCW, M4 CW (Betaflight props-in). |
 | **T-mount** | Prop attachment with a central bolt. Used on 5" and larger. |
 | **Press-fit** | Prop slides directly onto motor shaft — common on whoops. Check fit torque before every session. |
 | **AUW** | All-up weight. Total flying mass including battery. TWR = thrust / AUW. |
@@ -99,7 +99,7 @@ A single-page reference for the acronyms and terms that fill every FPV forum pos
 | **Horizon / Angle** | Self-leveling modes. FC uses accelerometer to maintain a level attitude. Useful for beginners only. |
 | **Arming** | State where motors are enabled. Most setups require: RC link good, no arming flags, arm switch. |
 | **PID** | Proportional-Integral-Derivative. The control loop at the core of Betaflight. See [PID Basics](../../tuning/pid-basics/). |
-| **Rates** | How stick deflection maps to rotation speed (°/s). Four styles: Betaflight, Actual, KISS, Quickrates. See [Rate Modes](../../tuning/rate-modes/). |
+| **Rates** | How stick deflection maps to rotation speed (°/s). Five styles: Betaflight, Raceflight, KISS, Actual, Quickrates. See [Rate Modes](../../tuning/rate-modes/). |
 | **Blackbox** | Flight data recorder built into Betaflight. Logs gyro, setpoint, motors, PIDs at up to 4 kHz. See [Blackbox Logging](../../tuning/blackbox-logging/). |
 | **CLI** | Command Line Interface. Text terminal in Betaflight Configurator for direct parameter access. `diff all` to backup. |
 | **RPM filter** | Dynamic notch filters locked to motor electrical RPM via DSHOT telemetry. Requires bidirectional DSHOT. |

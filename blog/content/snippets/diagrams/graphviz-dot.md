@@ -188,7 +188,7 @@ graph Network {
     layout=neato;  // Force-directed layout
     node [shape=box];
     
-    Internet [shape=cloud, fillcolor=lightblue, style=filled];
+    Internet [shape=ellipse, fillcolor=lightblue, style=filled];  // no "cloud" shape in Graphviz
     Router [shape=triangle];
     Switch [shape=box];
     
@@ -216,7 +216,7 @@ graph Network {
     layout=neato;
     node [shape=box];
     
-    Internet [shape=cloud, fillcolor=lightblue, style=filled];
+    Internet [shape=ellipse, fillcolor=lightblue, style=filled];
     Router [shape=triangle];
     Switch [shape=box];
     

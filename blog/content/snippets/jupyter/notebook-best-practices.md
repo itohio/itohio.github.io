@@ -32,8 +32,7 @@ docker run -d \
   --name jupyter \
   -p 8888:8888 \
   -v $(pwd):/home/jovyan/work \
-  -e JUPYTER_ENABLE_LAB=yes \
-  jupyter/scipy-notebook
+  quay.io/jupyter/scipy-notebook
 
 # Get token
 docker logs jupyter
@@ -46,7 +45,7 @@ version: '3.8'
 
 services:
   jupyter:
-    image: jupyter/scipy-notebook:latest
+    image: quay.io/jupyter/scipy-notebook:latest
     container_name: jupyter
     ports:
       - "8888:8888"

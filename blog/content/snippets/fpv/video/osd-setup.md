@@ -46,7 +46,7 @@ The same minimalist element list applies. With digital you have more screen real
 For DJI, enable MSP OSD in CLI:
 ```
 set osd_displayport_device = MSP
-set displayport_msp_serial = <serial port number of DJI air unit>
+# and set the air-unit UART to MSP + DisplayPort in the Ports tab
 save
 ```
 
@@ -107,16 +107,10 @@ save
 
 ## Stats Screen (Post-Disarm)
 
-The stats screen shows after disarm if `stats = ON`. Useful elements:
+The stats screen shows after disarm. Pick its elements in the OSD tab → Stats (stored as `osd_stat_bitmask`): min battery, max current, used mAh, max speed (GPS), max altitude (GPS or baro), total flights. Persistent counters need:
 
 ```
-set stats = ON
-set stats_min_voltage = ON
-set stats_max_current = ON
-set stats_used_mah = ON
-set stats_max_speed = ON    # requires GPS
-set stats_max_altitude = ON # requires GPS or baro
-set stats_total_flights = ON
+set stats_min_armed_time_s = 0   # -1 = off
 save
 ```
 

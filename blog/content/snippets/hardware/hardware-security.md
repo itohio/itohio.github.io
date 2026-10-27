@@ -179,7 +179,7 @@ sudo nano /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on iommu=pt"
 
 # For AMD:
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on iommu=pt"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash iommu=pt"  # AMD IOMMU is on by default (amd_iommu=on is not a valid value)
 
 # Update GRUB
 sudo update-grub
@@ -356,10 +356,12 @@ sudo hdparm --user-master u --security-set-pass password /dev/sda
 # Secure erase
 sudo hdparm --user-master u --security-erase password /dev/sda
 
-# Or use shred
+# shred/dd below only suit HDDs: on SSD/flash, wear levelling leaves old data in spare blocks.
+# For SSDs use the drive's sanitize/secure erase (hdparm above, nvme sanitize/format --ses) or crypto-erase.
+# Or use shred (HDD)
 sudo shred -vfz -n 3 /dev/sda
 
-# Or dd with random data
+# Or dd with random data (HDD)
 sudo dd if=/dev/urandom of=/dev/sda bs=1M status=progress
 ```
 

@@ -170,7 +170,7 @@ graph TB
 **2. Slot Leader Selection**:
 - Probability proportional to stake
 - Uses Verifiable Random Function (VRF)
-- Leaders known in advance (for security)
+- Leader election is private: nobody knows a slot leader until it publishes its block (VRF proof)
 
 **3. Block Creation**:
 - Slot leader creates block
@@ -221,7 +221,7 @@ createBlock leader txs = Block
 **Ouroboros Variants**:
 - **Ouroboros Classic**: Basic PoS
 - **Ouroboros Praos**: Semi-synchronous, private leader selection
-- **Ouroboros Genesis**: No trusted setup
+- **Ouroboros Genesis**: Bootstrap from the genesis block without trusted checkpoints
 - **Ouroboros Chronos**: Time synchronization
 
 **Use Cases**:

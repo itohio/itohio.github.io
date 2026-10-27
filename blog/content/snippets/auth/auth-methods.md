@@ -135,12 +135,12 @@ sequenceDiagram
     
     User->>Client: Click "Login with Google"
     Client->>AuthServer: Redirect to /authorize
-    Note right of Client: client_id, redirect_uri, scope
+    Note right of Client: client_id, redirect_uri, scope, code_challenge (PKCE)
     AuthServer->>User: Show login page
     User->>AuthServer: Enter credentials & authorize
     AuthServer->>Client: Redirect with auth code
     Client->>AuthServer: POST /token
-    Note right of Client: code, client_id, client_secret
+    Note right of Client: code, client_id, client_secret, code_verifier (PKCE)
     AuthServer->>Client: Access token + Refresh token
     
     Note over Client,ResourceServer: Access protected resources

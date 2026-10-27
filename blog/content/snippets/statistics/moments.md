@@ -74,8 +74,8 @@ $$
 $$
 
 - **γ₁ = 0**: Symmetric (normal distribution)
-- **γ₁ > 0**: Right-skewed (tail on right, mean > median)
-- **γ₁ < 0**: Left-skewed (tail on left, mean < median)
+- **γ₁ > 0**: Right-skewed (tail on right; often, but not always, mean > median)
+- **γ₁ < 0**: Left-skewed (tail on left; often, but not always, mean < median)
 
 **Interpretation:** Skewness measures asymmetry. Positive skew means the tail extends to the right; negative skew means the tail extends to the left.
 
@@ -90,8 +90,8 @@ $$
 $$
 
 - **γ₂ = 0**: Mesokurtic (normal distribution)
-- **γ₂ > 0**: Leptokurtic (heavy tails, sharp peak, more outliers)
-- **γ₂ < 0**: Platykurtic (light tails, flat peak, fewer outliers)
+- **γ₂ > 0**: Leptokurtic (heavy tails, more outliers; says little about the peak)
+- **γ₂ < 0**: Platykurtic (light tails, fewer outliers)
 
 **Interpretation:** Kurtosis measures tail heaviness. High kurtosis means more extreme outliers; low kurtosis means fewer outliers.
 

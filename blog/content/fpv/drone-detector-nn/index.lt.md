@@ -118,7 +118,7 @@ Galutinis duomenų rinkinys: ~13 200 įrašų iš viso. Mokymo/validavimo skirst
 graph LR
     W["bangos forma\n10s @ 32kHz"]
     MEL["AugmentMelSTFT\n128 mel × 1000 kadrų"]
-    BB["MobileNetV3 stuburas\nmn20_as\n~16,1M parametrų\nAudioSet-apmokyta"]
+    BB["MobileNetV3 stuburas\nmn20_as\n~17,9M parametrų\nAudioSet-apmokyta"]
     POOL["AdaptiveAvgPool2d(1)"]
     HEAD["DroneHead\n256 paslėptų, dropout 0,4\n→ 10 logitų"]
     OUT["sigmoid → vienai klasei tikimybė"]
@@ -128,7 +128,7 @@ graph LR
 
 ### Kodėl MobileNetV3 / EfficientAT
 
-Stuburas yra `mn20_as` iš EfficientAT šeimos — MobileNetV3-Large, išmasteluotas iki 20 pločio daugiklio, iš anksto apmokytas su visomis 527 AudioSet klasėmis. Ties ~16,1 mln. parametrų ir mAP 0,478 ant AudioSet, tai yra aukso vidurys: `mn10` nepakankamai apmokytas šiai užduočiai, `mn40` per sunkus mobiliajam išvedimui.
+Stuburas yra `mn20_as` iš EfficientAT šeimos — MobileNetV3-Large, išmasteluotas pločio daugikliu 2,0, iš anksto apmokytas su visomis 527 AudioSet klasėmis. Ties ~17,9 mln. parametrų ir mAP 0,478 ant AudioSet, tai yra aukso vidurys: `mn10` nepakankamai apmokytas šiai užduočiai, `mn40` per sunkus mobiliajam išvedimui.
 
 ```python
 class DroneHead(nn.Module):
@@ -260,7 +260,7 @@ flowchart LR
 
 **QAT**: Aiškiausias kelias į INT8 modelį, atitinkantį F1 apsaugą. Dar nebandyta.
 
-**TFLite eksportas**: Blokuojamas dėl platformos suderinamumo — ONNX → TFLite konvertavimo kelias per tf2onnx buvo nepatikimas šiai modelio grafiko topologijai.
+**TFLite eksportas**: Blokuojamas dėl platformos suderinamumo — ONNX → TFLite konvertavimo kelias buvo nepatikimas šiai modelio grafiko topologijai (tf2onnx konvertuoja tik TF → ONNX; ONNX → TFLite įrankiai yra onnx2tf arba litert-torch).
 
 **Srautinis išvedimas įterptinėje aparatinėje įrangoje**: 10 sekundžių langas + 1 sekundės postūmio architektūra buvo sukurta programoms, toleruojančioms delsą. Tinkama srautinė architektūra sumažintų delsą iki mažiau nei 2 sekundžių, tačiau reikalauja architektūros pakeitimų.
 

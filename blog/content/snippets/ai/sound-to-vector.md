@@ -158,14 +158,15 @@ with torch.no_grad():
 ```python
 import torch
 import torch.nn as nn
-from transformers import Wav2Vec2Model, Wav2Vec2Processor
+from transformers import Wav2Vec2Model, Wav2Vec2FeatureExtractor
 
 class Wav2Vec2AudioEncoder(nn.Module):
     def __init__(self, model_name="facebook/wav2vec2-base"):
         super().__init__()
         self.wav2vec2 = Wav2Vec2Model.from_pretrained(model_name)
         self.embedding_dim = self.wav2vec2.config.hidden_size
-        self.processor = Wav2Vec2Processor.from_pretrained(model_name)
+        # base checkpoint has no tokenizer, so Wav2Vec2Processor fails; use the feature extractor
+        self.processor = Wav2Vec2FeatureExtractor.from_pretrained(model_name)
     
     def forward(self, input_values):
         # input_values: [B, L] raw waveform
@@ -212,11 +213,11 @@ class WhisperAudioEncoder(nn.Module):
         self.embedding_dim = self.whisper.config.d_model
         self.processor = WhisperProcessor.from_pretrained(model_name)
     
-    def forward(self, input_features):
-        # input_features: [B, T, F] mel spectrogram features
+    def forward(self, input_features, n_frames=None):
+        # input_features: [B, F, T] log-mel features, zero-padded to 30 s
         outputs = self.whisper.encoder(input_features=input_features)
-        # Mean pooling over time
-        hidden_states = outputs.last_hidden_state
+        # Mean pooling over the real audio only (encoder runs at 50 frames/s)
+        hidden_states = outputs.last_hidden_state[:, :n_frames]
         embedding = hidden_states.mean(dim=1)
         return nn.functional.normalize(embedding, p=2, dim=1)
 
@@ -225,14 +226,18 @@ encoder = WhisperAudioEncoder()
 encoder.eval()
 
 waveform, sample_rate = torchaudio.load("audio.wav")
+# Whisper expects 16kHz
+if sample_rate != 16000:
+    waveform = T.Resample(sample_rate, 16000)(waveform)
 inputs = encoder.processor(
     waveform.squeeze().numpy(),
     sampling_rate=16000,
     return_tensors="pt"
 )
+n_frames = max(1, waveform.shape[-1] // 320)  # 16000 / 50 samples per encoder frame
 
 with torch.no_grad():
-    embedding = encoder(input_features=inputs.input_features)
+    embedding = encoder(input_features=inputs.input_features, n_frames=n_frames)
     # embedding shape: [1, 512]
 ```
 
@@ -284,12 +289,12 @@ import base64
 
 # For audio embeddings, typically use custom models
 # Example with Wav2Vec2 via HuggingFace
-from transformers import Wav2Vec2Model, Wav2Vec2Processor
+from transformers import Wav2Vec2Model, Wav2Vec2FeatureExtractor
 
 class AudioEmbeddings:
     def __init__(self, model_name="facebook/wav2vec2-base"):
         self.model = Wav2Vec2Model.from_pretrained(model_name)
-        self.processor = Wav2Vec2Processor.from_pretrained(model_name)
+        self.processor = Wav2Vec2FeatureExtractor.from_pretrained(model_name)
         self.model.eval()
     
     def embed_audio(self, audio_path):
@@ -320,8 +325,8 @@ documents = [Document(page_content=f"Audio {i}") for i in range(100)]
 
 # Store in vector database
 vectorstore = FAISS.from_embeddings(
-    texts=[doc.page_content for doc in documents],
-    embeddings=audio_embeddings
+    list(zip([doc.page_content for doc in documents], audio_embeddings)),
+    embedding=None  # searched by vector only; pass an Embeddings object to use similarity_search(text)
 )
 
 # Similarity search

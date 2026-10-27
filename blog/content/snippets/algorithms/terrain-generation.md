@@ -75,14 +75,17 @@ func (hm *Heightmap) Normalize() {
 Classic noise function for natural-looking terrain.
 
 ```go
-import "math"
+import (
+    "math"
+    "math/rand"
+)
 
 type PerlinNoise struct {
     permutation []int
 }
 
 func NewPerlinNoise(seed int64) *PerlinNoise {
-    rand.Seed(seed)
+    rng := rand.New(rand.NewSource(seed)) // local source: reproducible (global rand.Seed is a no-op since Go 1.24)
     
     // Generate permutation table
     perm := make([]int, 512)
@@ -93,7 +96,7 @@ func NewPerlinNoise(seed int64) *PerlinNoise {
     
     // Shuffle
     for i := 255; i > 0; i-- {
-        j := rand.Intn(i + 1)
+        j := rng.Intn(i + 1)
         p[i], p[j] = p[j], p[i]
     }
     
@@ -203,14 +206,14 @@ func GenerateDiamondSquare(size int, roughness float64, seed int64) *Heightmap {
         panic("Size must be 2^n + 1")
     }
     
-    rand.Seed(seed)
+    rng := rand.New(rand.NewSource(seed))
     hm := NewHeightmap(size, size)
     
     // Initialize corners
-    hm.Set(0, 0, rand.Float64())
-    hm.Set(size-1, 0, rand.Float64())
-    hm.Set(0, size-1, rand.Float64())
-    hm.Set(size-1, size-1, rand.Float64())
+    hm.Set(0, 0, rng.Float64())
+    hm.Set(size-1, 0, rng.Float64())
+    hm.Set(0, size-1, rng.Float64())
+    hm.Set(size-1, size-1, rng.Float64())
     
     stepSize := size - 1
     scale := 1.0
@@ -226,7 +229,7 @@ func GenerateDiamondSquare(size int, roughness float64, seed int64) *Heightmap {
                        hm.Get(x-halfStep, y+halfStep) +
                        hm.Get(x+halfStep, y+halfStep)) / 4.0
                 
-                hm.Set(x, y, avg+randomRange(-scale, scale))
+                hm.Set(x, y, avg+randomRange(rng, -scale, scale))
             }
         }
         
@@ -253,7 +256,7 @@ func GenerateDiamondSquare(size int, roughness float64, seed int64) *Heightmap {
                     count++
                 }
                 
-                hm.Set(x, y, sum/float64(count)+randomRange(-scale, scale))
+                hm.Set(x, y, sum/float64(count)+randomRange(rng, -scale, scale))
             }
         }
         
@@ -270,8 +273,8 @@ func isPowerOfTwoPlusOne(n int) bool {
     return n > 0 && (n&(n-1)) == 0
 }
 
-func randomRange(min, max float64) float64 {
-    return min + rand.Float64()*(max-min)
+func randomRange(rng *rand.Rand, min, max float64) float64 {
+    return min + rng.Float64()*(max-min)
 }
 ```
 
@@ -287,7 +290,7 @@ type SimplexNoise struct {
 }
 
 func NewSimplexNoise(seed int64) *SimplexNoise {
-    rand.Seed(seed)
+    rng := rand.New(rand.NewSource(seed))
     
     perm := make([]int, 512)
     p := make([]int, 256)
@@ -296,7 +299,7 @@ func NewSimplexNoise(seed int64) *SimplexNoise {
     }
     
     for i := 255; i > 0; i-- {
-        j := rand.Intn(i + 1)
+        j := rng.Intn(i + 1)
         p[i], p[j] = p[j], p[i]
     }
     

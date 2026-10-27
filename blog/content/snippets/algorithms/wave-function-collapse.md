@@ -537,7 +537,7 @@ func ExportToImage(wfc *WFC) {
 
 ## Complexity
 
-**Time**: $O(n^2 \times t \times r)$ where:
+**Time**: $O(n^2 \times t \times r)$ for propagation, plus cell selection: the full-grid min-entropy scan above costs $O(n^2)$ per collapse, so $O(n^4)$ in total unless a priority queue is used. Where:
 - $n$ = grid size
 - $t$ = number of tile types
 - $r$ = number of rules
@@ -549,7 +549,7 @@ func ExportToImage(wfc *WFC) {
 ✅ **Use when**:
 - Need coherent pattern generation
 - Have well-defined tile adjacency rules
-- Want deterministic results (with seed)
+- Want deterministic results (with seed; use a local `rand.New(rand.NewSource(seed))`, not the global `rand`)
 - Need local constraint satisfaction
 
 ❌ **Don't use when**:

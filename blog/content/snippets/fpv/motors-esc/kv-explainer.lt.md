@@ -92,9 +92,9 @@ KV ≈ 25,000 ÷ (14.8 × 0.75) ≈ 25,000 ÷ 11.1 ≈ 2,250 KV
 
 ## KV ir efektyvumas
 
-Žemesnio KV motorai, veikiantys esant aukštesnei įtampai, paprastai efektyvesni tai pačiai atiduodamai galiai. Motoro varinės apvijos turi tą pačią varžą nepriklausomai nuo KV, bet aukštesnės įtampos ir žemesnės srovės darbas sumažina I²R nuostolius (karštį apvijose).
+Žemesnio KV motorai, veikiantys esant aukštesnei įtampai, paprastai efektyvesni tai pačiai atiduodamai galiai. Ant to paties statoriaus apvijų varža kinta kaip R ∝ 1/KV² (daugiau plonesnės vielos vijų), todėl vario nuostoliai motore esant tai pačiai galiai maždaug vienodi; aukštesnės įtampos ir mažesnės srovės build'as sutaupo I²R nuostolius baterijoje, ESC ir laiduose.
 
-Būtent todėl 6S build'ai ant 5" rėmo pasiekia geresnius skrydžio laikus, nepaisant panašaus fizinio dydžio — žemesnio KV motoras su 6S kaista mažiau ir mažiau energijos švaisto kaip karštį.
+Iš dalies būtent todėl 6S build'ai ant 5" rėmo pasiekia geresnius skrydžio laikus, nepaisant panašaus fizinio dydžio — mažesnė srovė reiškia mažesnį įtampos kritimą ir mažiau energijos, švaistomos kaip karštis už motoro ribų.
 
 ---
 
